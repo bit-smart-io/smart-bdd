@@ -1,0 +1,11 @@
+# From https://github.com/github/gitignore/blob/master/Gradle.gitignore
+.gradle
+build/
+
+hs_err_pid*
+
+.idea/*
+!.idea
+out/
+
+*.DS_Store
