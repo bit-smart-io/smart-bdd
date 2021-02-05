@@ -1,0 +1,43 @@
+package source;
+
+import com.thoughtworks.qdox.JavaProjectBuilder;
+import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaSource;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import static java.lang.System.getProperty;
+
+public class JavaSourceWrapper {
+    final JavaProjectBuilder builder = new JavaProjectBuilder();
+    final File javaSourceFile;
+    final JavaSource javaSource;
+    final JavaClass javaClass;
+
+    public JavaSourceWrapper(Class clazz) throws IOException {
+        javaSourceFile = sourceFor(clazz);
+        javaSource = builder.addSource(javaSourceFile);
+        javaClass = builder.getClassByName(clazz.getName());
+    }
+
+    public List<JavaMethod> getMethods() {
+        return javaClass.getMethods();
+    }
+
+    private static File workingDirectory() {
+        return new File(getProperty("user.dir"));
+    }
+
+    /** the test dir is hardcoded for now */
+    private File sourceFor(Class<?> clazz) {
+        final File file = new File(workingDirectory() + File.separator
+            + "src" + File.separator
+            + "test" + File.separator
+            + "java" + File.separator);
+        final String relateSource = clazz.getName().replace('.', File.separatorChar) + ".java";
+        return new File(file.getAbsolutePath() + File.separator + relateSource);
+    }
+}
