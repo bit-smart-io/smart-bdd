@@ -6,7 +6,8 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaSource;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -21,16 +22,10 @@ import java.util.stream.Collectors;
 import static java.lang.System.getProperty;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JavaSourceWrapperTest {
-    private static final String CLASS_NAME = "JavaSourceWrapperTest";
-    private static final String QUALIFIED_CLASS_NAME = "source.JavaSourceWrapperTest";
-    private static final String QUALIFIED_CLASS_PATH = "source/JavaSourceWrapperTest.java";
-
-    @Test
-    void loadJavaSource() throws IOException {
-        final JavaSourceWrapper javaSourceWrapper = new JavaSourceWrapper(this.getClass());
-        assertThat(javaSourceWrapper.getMethods()).isNotNull();
-    }
+class JavaSourceLearningTest {
+    private static final String CLASS_NAME = "JavaSourceLearningTest";
+    private static final String QUALIFIED_CLASS_NAME = "source.JavaSourceLearningTest";
+    private static final String QUALIFIED_CLASS_PATH = "source/JavaSourceLearningTest.java";
 
     /**
      * https://www.baeldung.com/java-list-directory-files
@@ -52,7 +47,7 @@ class JavaSourceWrapperTest {
             + "java" + File.separator);
         assertThat(file).exists();
 
-        final Class<? extends JavaSourceWrapperTest> clazz = this.getClass();
+        final Class<? extends JavaSourceLearningTest> clazz = this.getClass();
         final String relateSource = clazz.getName().replace('.', File.separatorChar) + ".java";
 
         final File javaSourceFile = new File(file.getAbsolutePath() + File.separator + relateSource);
@@ -101,7 +96,7 @@ class JavaSourceWrapperTest {
 
     @Test
     void learningTestGetJavaSourceFromClassPath() {
-        final Class<? extends JavaSourceWrapperTest> clazz = this.getClass();
+        final Class<? extends JavaSourceLearningTest> clazz = this.getClass();
         final String fileLocation = clazz.getName().replace('.', File.separatorChar) + ".java";
         assertThat(fileLocation).isEqualTo(QUALIFIED_CLASS_PATH);
 
@@ -111,7 +106,7 @@ class JavaSourceWrapperTest {
 
     @Test
     void learningTestForClassMethods() {
-        final Class<? extends JavaSourceWrapperTest> clazz = this.getClass();
+        final Class<? extends JavaSourceLearningTest> clazz = this.getClass();
         assertThat(clazz.getSimpleName()).isEqualTo(CLASS_NAME);
         assertThat(clazz.getName()).isEqualTo(QUALIFIED_CLASS_NAME);
         assertThat(clazz.getTypeName()).isEqualTo(QUALIFIED_CLASS_NAME);

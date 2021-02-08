@@ -27,10 +27,10 @@ public class ExecutionListener implements TestExecutionListener {
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         if (testExecutionResult.getStatus() == TestExecutionResult.Status.FAILED) {
-            logger.warning("FAILED >>>> " + testIdentifier);
+            //logger.warning("FAILED >>>> " + testIdentifier);
         } else {
             // now get the contents of the method
-            logger.info("SUCCESS >>>> " + testIdentifier);
+            //logger.info("SUCCESS >>>> " + testIdentifier);
             wordify(testIdentifier);
         }
     }
@@ -44,13 +44,13 @@ public class ExecutionListener implements TestExecutionListener {
         if (source instanceof MethodSource) {
             methodSource = (MethodSource) source;
         } else {
-            logger.info(">>>> testSource not from method:" + source);
+            //logger.info(">>>> testSource not from method:" + source);
             return;
         }
 
         //final Method javaMethod = methodSource.getJavaMethod();
         final String wordify = new WordifyClass().wordify(methodSource.getJavaClass(),  methodSource.getMethodName());
-        logger.info(">>>> wordify: " + wordify);
+        //logger.info(">>>> wordify: " + wordify);
     }
 
     private void debugFields(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {

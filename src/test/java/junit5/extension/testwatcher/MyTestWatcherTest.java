@@ -1,5 +1,6 @@
 package junit5.extension.testwatcher;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,6 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MyTestWatcher.class)
 class MyTestWatcherTest {
+
+    @BeforeAll
+    public static void reset() {
+        MyTestWatcher.clearResults();
+    }
 
     @Order(0)
     @Test
@@ -18,6 +24,7 @@ class MyTestWatcherTest {
     @Order(1)
     @Test
     void secondTest() {
-        assertThat(MyTestWatcher.getResult()).isEqualTo("assert that true is true");
+        assertThat(MyTestWatcher.getResult()).hasSize(1);
+        assertThat(MyTestWatcher.getResult().get(0)).isEqualTo("assert that true is true");
     }
 }

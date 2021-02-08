@@ -17,3 +17,8 @@ Java passing
 * https://github.com/javaparser/javaparser
 
 checkout - https://github.com/reportportal/agent-java-junit5
+
+Parse params
+Or
+Create report in Json.
+What is the report that is currently created?
