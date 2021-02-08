@@ -1,4 +1,4 @@
-package junit5.parsing;
+package junit5.launch;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

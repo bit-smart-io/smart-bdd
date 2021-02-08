@@ -1,4 +1,4 @@
-package junit5.parsing.results;
+package junit5.extension;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;

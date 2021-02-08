@@ -1,4 +1,4 @@
-package junit5.parsing;
+package junit5.launch;
 
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestExecutionResult.Status;
@@ -42,5 +42,4 @@ public class Tester {
             }
         }
     }
-
 }

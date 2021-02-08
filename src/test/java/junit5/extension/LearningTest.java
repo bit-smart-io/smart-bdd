@@ -1,6 +1,7 @@
-package junit5.parsing.results;
+package junit5.extension;
 
 import junit5.bdd.Given;
+import junit5.extension.LearningExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 

@@ -1,4 +1,4 @@
-package junit5.parsing.results;
+package junit5.parsing;
 
 import com.thoughtworks.qdox.model.JavaMethod;
 import org.junit.platform.engine.TestDescriptor;
@@ -27,11 +27,11 @@ public class ExecutionListener implements TestExecutionListener {
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         if (testExecutionResult.getStatus() == TestExecutionResult.Status.FAILED) {
-            //logger.warning("FAILED >>>> " + testIdentifier);
+            logger.warning("FAILED >>>> " + testIdentifier);
         } else {
             // now get the contents of the method
-            //logger.info("SUCCESS >>>> " + testIdentifier);
-            //wordify(testIdentifier);
+            logger.info("SUCCESS >>>> " + testIdentifier);
+            wordify(testIdentifier);
         }
     }
 
