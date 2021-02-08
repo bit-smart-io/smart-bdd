@@ -1,6 +1,6 @@
 package wordify;
 
-public class Wordify {
+public class WordifyString {
     private static final char REPLACE_CHAR = ' ';
     private static final char SPACE = ' ';
     private static final char COMMA = ',';
@@ -13,7 +13,7 @@ public class Wordify {
     private final char[] input;
     private final String original;
 
-    public Wordify(String original) {
+    public WordifyString(String original) {
         this.original = original;
         this.input = original.toCharArray();
     }

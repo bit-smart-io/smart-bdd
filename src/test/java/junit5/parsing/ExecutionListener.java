@@ -9,10 +9,10 @@ import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import source.JavaSourceWrapper;
-import wordify.Wordify;
+import wordify.WordifyClass;
+import wordify.WordifyString;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -48,21 +48,9 @@ public class ExecutionListener implements TestExecutionListener {
             return;
         }
 
-        final Class<?> clazz = methodSource.getJavaClass();
-        try {
-            final JavaSourceWrapper javaSourceWrapper = new JavaSourceWrapper(clazz);
-            final Method javaMethod = methodSource.getJavaMethod();
-            final String methodName = methodSource.getMethodName();
-            final List<JavaMethod> methods = javaSourceWrapper.getMethods();
-
-            logger.info(">>>> methods" + methods);
-            final List<JavaMethod> matchedMethods = methods.stream().filter(m -> m.getName().contains(methodName)).collect(toList());
-            final String sourceCode = matchedMethods.get(0).getSourceCode();
-            String wordify = new Wordify(sourceCode).wordify();
-            logger.info(">>>> wordify: " + wordify);
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Could not load Java source", e);
-        }
+        //final Method javaMethod = methodSource.getJavaMethod();
+        final String wordify = new WordifyClass().wordify(methodSource.getJavaClass(),  methodSource.getMethodName());
+        logger.info(">>>> wordify: " + wordify);
     }
 
     private void debugFields(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
