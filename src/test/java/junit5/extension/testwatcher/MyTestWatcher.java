@@ -12,15 +12,15 @@ import java.util.Optional;
 public class MyTestWatcher implements TestWatcher {
     private static List<String> result = new ArrayList<>();
 
+    @Override
     public void testSuccessful(ExtensionContext context) {
-        final Class<?> clazz = context.getRequiredTestClass();
-        final Optional<Method> method = context.getTestMethod();
+        Class<?> clazz = context.getRequiredTestClass();
+        Optional<Method> method = context.getTestMethod();
         method.ifPresent((m) -> wordify(clazz, m));
     }
 
     private void wordify(Class<?> clazz, Method method) {
-
-        final String wordify = new WordifyClass().wordify(clazz, method.getName());
+        String wordify = new WordifyClass().wordify(clazz, method.getName());
         result.add(wordify);
     }
 
