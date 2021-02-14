@@ -14,13 +14,15 @@ import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
-public class MyTestWatcherWithInterceptor implements TestWatcher, InvocationInterceptor {
-    private static int testCount = 0;
-    private static List<String> result = new ArrayList<>();
-    private static List<List<Object>> params = new ArrayList<>();
+public class TestResultsWatcher implements TestWatcher, InvocationInterceptor {
+    static private TestResults testResults = new TestResults();
+    static private WordifyClass wordify = new WordifyClass();
+
+    static List<String> result = new ArrayList<>();
+    static List<List<Object>> params = new ArrayList<>();
 
     public <T> T interceptTestClassConstructor(Invocation<T> invocation,
-                                                ReflectiveInvocationContext<Constructor<T>> invocationContext, ExtensionContext extensionContext)
+                                               ReflectiveInvocationContext<Constructor<T>> invocationContext, ExtensionContext extensionContext)
         throws Throwable {
         return invocation.proceed();
     }
@@ -32,7 +34,7 @@ public class MyTestWatcherWithInterceptor implements TestWatcher, InvocationInte
 
     public void interceptBeforeEachMethod(Invocation<Void> invocation,
                                            ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
-        testCount++;
+        testResults.incrementTestsPassed();
         invocation.proceed();
     }
 
@@ -69,15 +71,23 @@ public class MyTestWatcherWithInterceptor implements TestWatcher, InvocationInte
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        final List<Object> parameters = params.isEmpty() ? emptyList() : params.get(params.size() - 1);
+        List<Object> parameters = params.isEmpty() ? emptyList() : params.get(params.size() - 1);
         Class<?> clazz = context.getRequiredTestClass();
         Optional<Method> method = context.getTestMethod();
         method.ifPresent((m) -> wordify(clazz, m, parameters));
     }
 
     private void wordify(Class<?> clazz, Method method, List<Object> parameters) {
-        String wordify = new WordifyClass().wordify(clazz, method.getName(), parameters);
+        String wordify = this.wordify.wordify(clazz, method.getName(), parameters);
         result.add(wordify);
+    }
+
+    public static WordifyClass getWordify() {
+        return wordify;
+    }
+
+    public static void setWordify(WordifyClass wordify) {
+        TestResultsWatcher.wordify = wordify;
     }
 
     public static List<String> getResult() {
@@ -91,5 +101,21 @@ public class MyTestWatcherWithInterceptor implements TestWatcher, InvocationInte
     public static void clearResults() {
         result.clear();
         params.clear();
+    }
+
+    public static TestResults getTestResults() {
+        return testResults;
+    }
+
+    static class TestResults {
+        private int testsPassed = 0;
+
+        public int getTestsPassed() {
+            return testsPassed;
+        }
+
+        public void incrementTestsPassed() {
+            testsPassed++;
+        }
     }
 }

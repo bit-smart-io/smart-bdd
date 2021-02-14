@@ -61,7 +61,7 @@ public class FileLoader {
      * TODO test - does it work the same as above?
      */
     public String loadFileJava8Style(String fileName) {
-        final Path path;
+        Path path;
         Stream<String> lines = null;
         String contents = null;
         try {

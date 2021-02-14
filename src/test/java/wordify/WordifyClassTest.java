@@ -26,18 +26,18 @@ class WordifyClassTest {
     @Disabled
     @Test
     void wordifyMethodNotFound() {
-        final String wordify = new WordifyClass().wordify(this.getClass(), "doesNotExistMethod");
+        String wordify = new WordifyClass().wordify(this.getClass(), "doesNotExistMethod");
     }
 
     @Test
     void wordifyTestMethod() {
-        final String wordify = new WordifyClass().wordify(this.getClass(), "methodNoParams");
+        String wordify = new WordifyClass().wordify(this.getClass(), "methodNoParams");
         assertThat(wordify).isEqualTo("assert that true is true");
     }
 
     @Test
     void wordifyTestMethodWithParams() {
-        final String wordify = new WordifyClass().wordify(this.getClass(), "methodWithParams", Arrays.asList("value 1"));
+        String wordify = new WordifyClass().wordify(this.getClass(), "methodWithParams", Arrays.asList("value 1"));
         assertThat(wordify).isEqualTo("assert that value 1 is not null");
     }
 }

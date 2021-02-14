@@ -48,21 +48,21 @@ public class ExecutionListener implements TestExecutionListener {
             return;
         }
 
-        //final Method javaMethod = methodSource.getJavaMethod();
-        final String wordify = new WordifyClass().wordify(methodSource.getJavaClass(),  methodSource.getMethodName());
+        //Method javaMethod = methodSource.getJavaMethod();
+        String wordify = new WordifyClass().wordify(methodSource.getJavaClass(),  methodSource.getMethodName());
         //logger.info(">>>> wordify: " + wordify);
     }
 
     private void debugFields(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-        final String displayName = testIdentifier.getDisplayName();
-        final String legacyReportingName = testIdentifier.getLegacyReportingName();
-        final boolean test = testIdentifier.isTest();
-        final Optional<String> parentId = testIdentifier.getParentId();
-        final Optional<TestSource> source = testIdentifier.getSource();
-        final Set<TestTag> tags = testIdentifier.getTags();
-        final TestDescriptor.Type type = testIdentifier.getType();
-        final String uniqueId = testIdentifier.getUniqueId();
-        final TestExecutionResult.Status status = testExecutionResult.getStatus();
+        String displayName = testIdentifier.getDisplayName();
+        String legacyReportingName = testIdentifier.getLegacyReportingName();
+        boolean test = testIdentifier.isTest();
+        Optional<String> parentId = testIdentifier.getParentId();
+        Optional<TestSource> source = testIdentifier.getSource();
+        Set<TestTag> tags = testIdentifier.getTags();
+        TestDescriptor.Type type = testIdentifier.getType();
+        String uniqueId = testIdentifier.getUniqueId();
+        TestExecutionResult.Status status = testExecutionResult.getStatus();
     }
 
 }

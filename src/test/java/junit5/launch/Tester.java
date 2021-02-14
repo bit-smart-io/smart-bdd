@@ -37,8 +37,8 @@ public class Tester {
 
         @Override
         public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-            if (testExecutionResult.getStatus() == Status.FAILED) {
-                System.err.println(">>>> " + testIdentifier);
+            if (testExecutionResult.getStatus() == Status.SUCCESSFUL) {
+                System.out.println(">>>> " + testIdentifier);
             }
         }
     }

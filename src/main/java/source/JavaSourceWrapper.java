@@ -15,10 +15,10 @@ import java.util.Optional;
 import static java.lang.System.getProperty;
 
 public class JavaSourceWrapper {
-    final JavaProjectBuilder builder = new JavaProjectBuilder();
-    final File javaSourceFile;
-    final JavaSource javaSource;
-    final JavaClass javaClass;
+    private final JavaProjectBuilder builder = new JavaProjectBuilder();
+    private final File javaSourceFile;
+    private final JavaSource javaSource;
+    private final JavaClass javaClass;
 
     public JavaSourceWrapper(Class clazz) throws IOException {
         javaSourceFile = sourceFor(clazz);
@@ -37,7 +37,7 @@ public class JavaSourceWrapper {
      * @return
      */
     public List<JavaParameter> getParams(String methodName) {
-        final Optional<JavaMethod> javaMethod = javaClass.getMethods().stream().filter(m -> m.getName().equals(methodName)).findFirst();
+        Optional<JavaMethod> javaMethod = javaClass.getMethods().stream().filter(m -> m.getName().equals(methodName)).findFirst();
         if (javaMethod.isPresent()) {
             return javaMethod.get().getParameters();
         }
@@ -50,11 +50,11 @@ public class JavaSourceWrapper {
 
     /** the test dir is hardcoded for now */
     private File sourceFor(Class<?> clazz) {
-        final File file = new File(workingDirectory() + File.separator
+        File file = new File(workingDirectory() + File.separator
             + "src" + File.separator
             + "test" + File.separator
             + "java" + File.separator);
-        final String relateSource = clazz.getName().replace('.', File.separatorChar) + ".java";
+        String relateSource = clazz.getName().replace('.', File.separatorChar) + ".java";
         return new File(file.getAbsolutePath() + File.separator + relateSource);
     }
 }

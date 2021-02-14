@@ -15,8 +15,8 @@ class JavaSourceWrapperGetParamsTest {
 
     @Test
     void returnsMethodsFromClass() throws IOException {
-        final JavaSourceWrapper javaSourceWrapper = new JavaSourceWrapper(this.getClass());
-        final List<JavaParameter> params = javaSourceWrapper.getParams("methodWithParams");
+        JavaSourceWrapper javaSourceWrapper = new JavaSourceWrapper(this.getClass());
+        List<JavaParameter> params = javaSourceWrapper.getParams("methodWithParams");
         assertThat(params).hasSize(1);
         assertThat(params.get(0).getName()).isEqualTo("param1");
     }

@@ -37,11 +37,16 @@ public class WordifyClass {
     }
 
     private String updateSourceCode(String sourceCode, List<JavaParameter> parameters, List<Object> parameterValues) {
-        int count = 0;
-        for (JavaParameter param : parameters) {
-            sourceCode = sourceCode.replace(param.getName(), parameterValues.get(count).toString());
-            count++;
+        try {
+            int count = 0;
+            for (JavaParameter param : parameters) {
+                sourceCode = sourceCode.replace(param.getName(), parameterValues.get(count).toString());
+                count++;
+            }
+            return sourceCode;
+        } catch (Exception e) {
+            System.out.println("WordifyClass Error - parameters: " + parameters + ", parameterValues: " + parameterValues + ", sourceCode: " + sourceCode);
+            return sourceCode;
         }
-        return sourceCode;
     }
 }

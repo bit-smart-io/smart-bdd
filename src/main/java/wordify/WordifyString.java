@@ -1,20 +1,21 @@
 package wordify;
 
 public class WordifyString {
-    private static final char REPLACE_CHAR = ' ';
     private static final char SPACE = ' ';
     private static final char COMMA = ',';
     private static final char SEMI_COLON = ';';
+    private static final char HYPHEN = '-';
+    private static final char FULL_STOP = '.';
+    private static final char LEFT_PARENTHESIS = '(';
+    private static final char RIGHT_PARENTHESIS = ')';
 
     private static final char END = '$';
 
     private int index = 0;
     private final StringBuilder result = new StringBuilder();
     private final char[] input;
-    private final String original;
 
     public WordifyString(String original) {
-        this.original = original;
         this.input = original.toCharArray();
     }
 
@@ -66,11 +67,11 @@ public class WordifyString {
     }
 
     private boolean isNumber() {
-        return (current() == '-' || current() == '.' || Character.isDigit(current()));
+        return (current() == HYPHEN || current() == FULL_STOP || Character.isDigit(current()));
     }
 
     private boolean currentIsCharToBeReplaced() {
-        return current() == COMMA || current() == '(' || current() == ')' || current() == '.';
+        return current() == COMMA || current() == LEFT_PARENTHESIS || current() == RIGHT_PARENTHESIS || current() == FULL_STOP;
     }
 
     public String wordify() {

@@ -33,11 +33,11 @@ public class LearningExtension implements BeforeTestExecutionCallback, AfterTest
         logger.info(() ->
             String.format("Method [%s] took %s ms.", testMethod.getName(), duration));
 
-        final Optional<Method> testMethod1 = context.getTestMethod();
-        final Method requiredTestMethod = context.getRequiredTestMethod();
-        final Optional<AnnotatedElement> element = context.getElement();
-        final Optional<Throwable> executionException = context.getExecutionException();
-        final Optional<TestInstance.Lifecycle> testInstanceLifecycle = context.getTestInstanceLifecycle();
+        Optional<Method> testMethod1 = context.getTestMethod();
+        Method requiredTestMethod = context.getRequiredTestMethod();
+        Optional<AnnotatedElement> element = context.getElement();
+        Optional<Throwable> executionException = context.getExecutionException();
+        Optional<TestInstance.Lifecycle> testInstanceLifecycle = context.getTestInstanceLifecycle();
         int i = 0;
     }
 

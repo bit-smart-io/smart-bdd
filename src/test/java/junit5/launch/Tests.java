@@ -11,11 +11,11 @@ public class Tests {
 
     @ParameterizedTest
     @MethodSource("userGenerator")
-    void testFail1(String name, String pw) {
+    void testSuccess(String name, String pw) {
         Assertions.assertEquals(name, pw);
     }
 
     static Stream<Arguments> userGenerator() {
-        return Stream.of(Arguments.of("15138493452", "hlf2016"));
+        return Stream.of(Arguments.of("password", "password"));
     }
 }
