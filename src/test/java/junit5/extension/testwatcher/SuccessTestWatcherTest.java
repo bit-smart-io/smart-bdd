@@ -10,12 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(MyTestWatcher.class)
-class MyTestWatcherTest {
+@ExtendWith(SuccessTestWatcher.class)
+class SuccessTestWatcherTest {
 
     @BeforeAll
     public static void reset() {
-        MyTestWatcher.clearResults();
+        SuccessTestWatcher.clearResults();
     }
 
     @Order(0)
@@ -27,7 +27,7 @@ class MyTestWatcherTest {
     @Order(1)
     @Test
     void secondTest() {
-        assertThat(MyTestWatcher.getResult()).hasSize(1);
-        assertThat(MyTestWatcher.getResult().get(0)).isEqualTo("assert that true is true");
+        assertThat(SuccessTestWatcher.getResults()).hasSize(1);
+        assertThat(SuccessTestWatcher.getResults().get(0)).isEqualTo("assert that true is true");
     }
 }
