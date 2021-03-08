@@ -1,6 +1,5 @@
 package junit5.extension.testwatcher.debug;
 
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestExecutionResult.Status;
@@ -9,9 +8,7 @@ import org.junit.platform.launcher.TestIdentifier;
 import results.junit.testcapture.CaptureTestClass;
 import results.junit.testcapture.CaptureTestMethod;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,89 +19,65 @@ public class TestDebugLauncherTest {
         TestDebugLauncher launcher = new TestDebugLauncher();
         TestListener testListener = new TestListener();
         launcher.launch(testListener);
-        //testListener.getSoftAssertions().assertAll();
-
         assertThat(TestDebugWatcher.getCapturedTestClasses().getClasses()).containsExactly("TestDebugWatcherTest");
 
-        final CaptureTestClass captureTestClass = TestDebugWatcher.getCapturedTestClasses().getCapturedClasses().get("TestDebugWatcherTest");
-        assertThat(captureTestClass).isNotNull();
-        assertThat(captureTestClass.getCapturedMethodsForClass().getMethodNames()).containsExactly(
+        CaptureTestClass capturedTestClass = TestDebugWatcher.getCapturedTestClasses().getCapturedClasses().get("TestDebugWatcherTest");
+        assertThat(capturedTestClass).isNotNull();
+        assertThat(capturedTestClass.getCapturedMethodsForClass().getCapturedMethodNames()).containsExactly(
             "beforeAll",
             "interceptBeforeAllMethod",
-            "interceptTestClassConstructor",
-            "interceptTestClassConstructor",
+            "interceptTestClassConstructor", // firstTest
+            "interceptTestClassConstructor", // secondTest
+            "interceptTestClassConstructor", // thirdParamTest param 1
+            "interceptTestClassConstructor", // thirdParamTest param 2
+            "interceptTestClassConstructor", // thirdParamTest param 3
             "interceptAfterAllMethod",
             "afterAll"
         );
 
-        //TODO capturedCallbacksForTestMethods
-        //OR   capturedEventsForTestMethods
-        ConcurrentHashMap<String, CaptureTestMethod> capturedTestMethods = captureTestClass.getCapturedMethodsForTestMethods();
-        assertThat(Collections.list(capturedTestMethods.keys())).contains(
+        assertThat(capturedTestClass.getMethodNames()).contains(
             "firstTest",
-            "secondTest"
+            "secondTest",
+            "thirdParamTest"
         );
 
-        assertThat(capturedTestMethods.get("firstTest")).isNotNull();
-        assertThat(capturedTestMethods.get("firstTest").getMethodNames()).containsExactly(
+        CaptureTestMethod capturedFirstTestMethod = capturedTestClass.getCapturedTestMethod("firstTest");
+        assertThat(capturedFirstTestMethod.getCapturedMethodNames()).containsExactly(
             "beforeEach",
             "interceptBeforeEachMethod",
             "interceptTestMethod",
             "interceptAfterEachMethod",
             "afterEach");
-        assertThat(capturedTestMethods.get("secondTest").getMethodNames()).containsExactly(
+
+        CaptureTestMethod capturedSecondTestMethod = capturedTestClass.getCapturedTestMethod("firstTest");
+        assertThat(capturedSecondTestMethod.getCapturedMethodNames()).containsExactly(
             "beforeEach",
             "interceptBeforeEachMethod",
             "interceptTestMethod",
             "interceptAfterEachMethod",
             "afterEach");
+
+        List<CaptureTestMethod> capturedThirdParamTestMethods = capturedTestClass.getCapturedTestMethods("thirdParamTest");
+        capturedThirdParamTestMethods.forEach(captureTestMethod -> {
+            assertThat(captureTestMethod.getCapturedMethodNames()).containsExactly(
+                "beforeEach",
+                "interceptBeforeEachMethod",
+                "interceptTestTemplateMethod", // notice that this is interceptTestTemplateMethod
+                "interceptAfterEachMethod",
+                "afterEach");
+        });
+
     }
 
     static class TestListener implements TestExecutionListener {
-        private SoftAssertions softAssertions = new SoftAssertions();
-
-        public SoftAssertions getSoftAssertions() {
-            return softAssertions;
-        }
-
         @Override
         public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
             if (testIdentifier.isTest()) {
                 if (testExecutionResult.getStatus() == Status.SUCCESSFUL) {
-                    List<String> allMethodNames = TestDebugWatcher.getAllMethodNames();
-
-                    if (testIdentifier.getDisplayName().equals("firstTest()")) {
-                        softAssertions.assertThat(allMethodNames).containsExactly(
-                            "beforeAll",
-                            "interceptBeforeAllMethod",
-                            "interceptTestClassConstructor",
-                            "beforeEach",
-                            "interceptBeforeEachMethod",
-                            "interceptTestMethod",
-                            "interceptAfterEachMethod",
-                            "afterEach"
-                        );
-                    } else if (testIdentifier.getDisplayName().equals("secondTest()")) {
-                        softAssertions.assertThat(allMethodNames).containsExactly(
-                            "beforeAll",
-                            "interceptBeforeAllMethod",
-                            "interceptTestClassConstructor",
-                            "beforeEach",
-                            "interceptBeforeEachMethod",
-                            "interceptTestMethod",
-                            "interceptAfterEachMethod",
-                            "afterEach",
-                            "interceptTestClassConstructor",
-                            "beforeEach",
-                            "interceptBeforeEachMethod",
-                            "interceptTestMethod",
-                            "interceptAfterEachMethod",
-                            "afterEach"
-                        );
-                    }
+                    // System.out.println("TEST SUCCESSFUL >>>> " + testIdentifier);
                 }
             } else {
-//                System.out.println("CONTAINER >>>> " + testIdentifier);
+                    // System.out.println("CONTAINER >>>> " + testIdentifier);
             }
         }
     }

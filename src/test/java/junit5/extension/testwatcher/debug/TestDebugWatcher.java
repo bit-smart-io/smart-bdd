@@ -97,7 +97,7 @@ public class TestDebugWatcher implements
     public void interceptTestTemplateMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         CaptureTestMethod captureTestMethod = getCaptureTestMethod(extensionContext);
         captureTestMethod.add("interceptTestTemplateMethod", invocation, invocationContext, extensionContext);
-        allMethodNames.add("interceptTestTemplateMethod");
+        allMethodNames.add("name");
         invocation.proceed();
     }
 

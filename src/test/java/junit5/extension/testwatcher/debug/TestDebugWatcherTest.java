@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -59,5 +61,12 @@ class TestDebugWatcherTest {
     @Test
     void secondTest() {
 
+    }
+
+    @ParameterizedTest
+    @Order(2)
+    @ValueSource(strings = { "value 1", "value 2", "value 3" })
+    void thirdParamTest(String key) {
+        assertThat(key).isNotNull();
     }
 }

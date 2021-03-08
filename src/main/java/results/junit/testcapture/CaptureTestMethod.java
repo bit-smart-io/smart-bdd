@@ -13,19 +13,19 @@ import java.util.List;
 import java.util.Map;
 
 public class CaptureTestMethod {
-    private Map<String, BaseMethod> methodsCaptured = new HashMap<>();
-    private List<String> methodNamesCaptured = new ArrayList<>();
+    private Map<String, BaseMethod> capturedMethods = new HashMap<>();
+    private List<String> capturedMethodsNames = new ArrayList<>();
 
-    public List<String> getMethodNames() {
-        return methodNamesCaptured;
+    public List<String> getCapturedMethodNames() {
+        return capturedMethodsNames;
     }
 
-    public Map<String, BaseMethod> getMethods() {
-        return methodsCaptured;
+    public Map<String, BaseMethod> getCapturedMethods() {
+        return capturedMethods;
     }
 
     public void add(BaseMethod method) {
-        methodNamesCaptured.add(method.getName());
+        capturedMethodsNames.add(method.getName());
         put(method.getName(), method);
     }
 
@@ -37,17 +37,14 @@ public class CaptureTestMethod {
         add(new InterceptBaseMethod(name, invocation, invocationContext, extensionContext));
     }
 
-//    private static int count = 0;
     private void put(String name, BaseMethod method) {
-        methodsCaptured.put(name, method);
-//        System.out.println("" + count + ": " + getMethodNames());
-//        count++;
+        capturedMethods.put(name, method);
     }
 
     @Override
     public String toString() {
         return "ExtensionCalls{" +
-            "extensionMethods=" + methodsCaptured +
+            "extensionMethods=" + capturedMethods +
             '}';
     }
 }
