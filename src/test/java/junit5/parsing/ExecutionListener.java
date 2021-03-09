@@ -1,6 +1,5 @@
 package junit5.parsing;
 
-import com.thoughtworks.qdox.model.JavaMethod;
 import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestSource;
@@ -8,19 +7,15 @@ import org.junit.platform.engine.TestTag;
 import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
-import source.JavaSourceWrapper;
 import wordify.WordifyClass;
-import wordify.WordifyString;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.stream.Collectors.toList;
-
+/**
+ * This has been added to resources/META-INF/services/
+ */
 public class ExecutionListener implements TestExecutionListener {
     private static final Logger logger = Logger.getLogger(ExecutionListener.class.getName());
 
@@ -31,7 +26,7 @@ public class ExecutionListener implements TestExecutionListener {
         } else {
             // now get the contents of the method
             //logger.info("SUCCESS >>>> " + testIdentifier);
-            wordify(testIdentifier);
+            //wordify(testIdentifier);
         }
     }
 
@@ -64,5 +59,4 @@ public class ExecutionListener implements TestExecutionListener {
         String uniqueId = testIdentifier.getUniqueId();
         TestExecutionResult.Status status = testExecutionResult.getStatus();
     }
-
 }

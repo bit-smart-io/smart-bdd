@@ -1,5 +1,6 @@
 package junit5.extension.testwatcher.debug;
 
+import junit5.extension.testwatcher.TestLauncher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestExecutionResult.Status;
@@ -12,16 +13,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestDebugLauncherTest {
+public class DebugLauncherTest {
 
     @Test
     void launchTests() {
-        TestDebugLauncher launcher = new TestDebugLauncher();
+        TestLauncher launcher = new TestLauncher();
         TestListener testListener = new TestListener();
-        launcher.launch(testListener);
-        assertThat(TestDebugWatcher.getCapturedTestClasses().getClasses()).containsExactly("TestDebugWatcherTest");
+        launcher.launch(testListener, ClassUnderTest.class);
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
 
-        CaptureTestClass capturedTestClass = TestDebugWatcher.getCapturedTestClasses().getCapturedClasses().get("TestDebugWatcherTest");
+        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
         assertThat(capturedTestClass).isNotNull();
         assertThat(capturedTestClass.getCapturedMethodsForClass().getCapturedMethodNames()).containsExactly(
             "beforeAll",

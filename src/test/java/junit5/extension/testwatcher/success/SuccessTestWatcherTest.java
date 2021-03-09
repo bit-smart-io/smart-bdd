@@ -1,4 +1,4 @@
-package junit5.extension.testwatcher;
+package junit5.extension.testwatcher.success;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

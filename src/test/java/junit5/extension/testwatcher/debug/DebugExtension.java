@@ -24,14 +24,14 @@ import java.util.List;
 /**
  * Used for learning
  */
-public class TestDebugWatcher implements
+public class DebugExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
     private static final List<String> allMethodNames = new ArrayList<>();
     private static final CaptureTestClasses captureTestClasses = new CaptureTestClasses();
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        CaptureTestClass captureTestClass = captureTestClasses.startNewTestClass(context);
+        CaptureTestClass captureTestClass = captureTestClasses.newCaptureTestClass(context);
         captureTestClass.add(new Callback("beforeAll", context));
         allMethodNames.add("beforeAll");
     }
@@ -39,7 +39,7 @@ public class TestDebugWatcher implements
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         CaptureTestClass captureTestClass = captureTestClasses.getCaptureTestClass(context);
-        CaptureTestMethod captureTestMethod = captureTestClass.startNewTestMethod(context);
+        CaptureTestMethod captureTestMethod = captureTestClass.newCaptureTestMethod(context);
         captureTestMethod.add(new Callback("beforeEach", context));
 
         allMethodNames.add("beforeEach");
@@ -132,7 +132,7 @@ public class TestDebugWatcher implements
 
     private CaptureTestMethod getCaptureTestMethod(ExtensionContext context) {
         CaptureTestClass captureTestClass = captureTestClasses.getCaptureTestClass(context);
-        CaptureTestMethod captureTestMethod = captureTestClass.getTestMethod(context);
+        CaptureTestMethod captureTestMethod = captureTestClass.getCaptureTestMethod(context);
 //        System.out.println("captureTestMethod:" + captureTestMethod);
         return captureTestMethod;
     }

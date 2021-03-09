@@ -21,7 +21,7 @@ public class CaptureTestClasses {
         return capturedClasses.get(getClassName(extensionContext));
     }
 
-    public CaptureTestClass startNewTestClass(ExtensionContext context) {
+    public CaptureTestClass newCaptureTestClass(ExtensionContext context) {
         CaptureTestClass captureTestClass = new CaptureTestClass();
         capturedClasses.put(getClassName(context), captureTestClass);
         return captureTestClass;

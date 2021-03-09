@@ -18,9 +18,9 @@ public class CaptureTestClass {
     private ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContext = new ConcurrentHashMap();
     private CaptureTestMethod capturedMethodsForClass = new CaptureTestMethod();
 
-    public CaptureTestMethod startNewTestMethod(ExtensionContext context) {
+    public CaptureTestMethod newCaptureTestMethod(ExtensionContext context) {
         CaptureTestMethod captureTestMethod = new CaptureTestMethod();
-        final String methodName = getMethodName(context);
+        String methodName = getMethodName(context);
         methodNames.add(methodName);
 
         if(methodNameToContext.containsKey(methodName)){
@@ -35,7 +35,7 @@ public class CaptureTestClass {
         return captureTestMethod;
     }
 
-    public CaptureTestMethod getTestMethod(ExtensionContext context) {
+    public CaptureTestMethod getCaptureTestMethod(ExtensionContext context) {
         return contextToCapturedTestMethod.get(context);
     }
 

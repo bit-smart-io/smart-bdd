@@ -1,4 +1,4 @@
-package junit5.extension.testwatcher.debug;
+package junit5.extension.testwatcher;
 
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
@@ -12,11 +12,11 @@ import java.io.PrintWriter;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class TestDebugLauncher {
+public class TestLauncher {
 
-    public void launch(TestExecutionListener executionListener) {
+    public void launch(TestExecutionListener executionListener, Class<?> clazz) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request().selectors(
-            selectClass(TestDebugWatcherTest.class)).build();
+            selectClass(clazz)).build();
 
         Launcher launcher = LauncherFactory.create();
 

@@ -12,16 +12,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This is used by TestDebugLauncher
  */
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(TestDebugWatcher.class)
-class TestDebugWatcherTest {
+@ExtendWith(DebugExtension.class)
+class ClassUnderTest {
 
     /**
      * adds interceptBeforeAllMethod
@@ -54,13 +52,11 @@ class TestDebugWatcherTest {
     @Order(0)
     @Test
     void firstTest() {
-
     }
 
     @Order(1)
     @Test
     void secondTest() {
-
     }
 
     @ParameterizedTest

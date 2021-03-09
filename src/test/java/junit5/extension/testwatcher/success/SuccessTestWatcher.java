@@ -1,4 +1,4 @@
-package junit5.extension.testwatcher;
+package junit5.extension.testwatcher.success;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
