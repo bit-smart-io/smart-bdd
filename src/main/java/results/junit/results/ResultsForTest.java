@@ -1,4 +1,4 @@
-package results;
+package results.junit.results;
 
 public class ResultsForTest {
     private String wordify;

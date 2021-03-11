@@ -8,15 +8,17 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
-import results.ResultsForClass;
-import results.ResultsForTest;
-import results.ResultsForClasses;
+import results.junit.results.ResultsForClass;
+import results.junit.results.ResultsForTest;
+import results.junit.results.ResultsForClasses;
 import wordify.WordifyExtensionContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
+
+import static results.junit.results.ResultsForTest.Status.*;
 
 public class ResultsExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
@@ -83,6 +85,11 @@ public class ResultsExtension implements
         invocation.proceed();
     }
 
+    public void testSuccessful(ExtensionContext context) {
+        ResultsForTest resultsForTest = getTestResultsForTest(context);
+        resultsForTest.setStatus(PASSED);
+    }
+
     public static ResultsForClasses getTestResultsForClasses() {
         return resultsForClasses;
     }
@@ -102,5 +109,9 @@ public class ResultsExtension implements
         Optional<String> wordify = wordifyExtensionContext.wordify(extensionContext, arguments);
         wordify.ifPresent(resultsForTest::setWordify);
 //        System.out.println(methodName + ", method: " + extensionContext.getTestMethod() + ", wordify: " + wordify);
+    }
+
+    public static void reset() {
+        resultsForClasses = new ResultsForClasses();
     }
 }

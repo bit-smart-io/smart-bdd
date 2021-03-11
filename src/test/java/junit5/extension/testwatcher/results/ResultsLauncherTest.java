@@ -1,27 +1,24 @@
 package junit5.extension.testwatcher.results;
 
-import junit5.extension.testwatcher.TestLauncher;
+import junit5.extension.utils.TestLauncher;
+import junit5.extension.utils.TestListener;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.engine.TestExecutionResult;
-import org.junit.platform.engine.TestExecutionResult.Status;
-import org.junit.platform.launcher.TestExecutionListener;
-import org.junit.platform.launcher.TestIdentifier;
-import results.ResultsForClass;
-import results.ResultsForTest;
+import results.junit.results.ResultsForClass;
+import results.junit.results.ResultsForTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static results.junit.results.ResultsForTest.Status.PASSED;
 
 public class ResultsLauncherTest {
 
     @Test
     void launchTests() {
-        TestLauncher launcher = new TestLauncher();
-        TestListener testListener = new TestListener();
-        launcher.launch(testListener, ClassUnderTest.class);
-        assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly("ClassUnderTest");
+        ResultsExtension.reset();
+        new TestLauncher().launch(new TestListener(), ClassUnderTest.class);
 
+        assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly("ClassUnderTest");
         ResultsForClass resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get("ClassUnderTest");
         assertThat(resultsForClass).isNotNull();
 
@@ -36,23 +33,13 @@ public class ResultsLauncherTest {
 
         ResultsForTest secondTest = resultsForClass.getCapturedTestMethod("secondTest");
         assertThat(secondTest.getWordify()).isEqualTo("assert that \"second test\" is equal to \"second test\"");
-        
+
         List<ResultsForTest> thirdTestResults = resultsForClass.getCapturedTestMethods("thirdParamTest");
         assertThat(thirdTestResults.get(0).getWordify()).isEqualTo("assert that value 1 is not null");
+        assertThat(thirdTestResults.get(0).getStatus()).isEqualTo(PASSED);
         assertThat(thirdTestResults.get(1).getWordify()).isEqualTo("assert that value 2 is not null");
+        assertThat(thirdTestResults.get(1).getStatus()).isEqualTo(PASSED);
         assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("assert that value 3 is not null");
-    }
-
-    static class TestListener implements TestExecutionListener {
-        @Override
-        public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-            if (testIdentifier.isTest()) {
-                if (testExecutionResult.getStatus() == Status.SUCCESSFUL) {
-                    // System.out.println("TEST SUCCESSFUL >>>> " + testIdentifier);
-                }
-            } else {
-                    // System.out.println("CONTAINER >>>> " + testIdentifier);
-            }
-        }
+        assertThat(thirdTestResults.get(2).getStatus()).isEqualTo(PASSED);
     }
 }

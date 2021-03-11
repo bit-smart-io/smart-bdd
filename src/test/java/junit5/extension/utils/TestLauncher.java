@@ -1,4 +1,4 @@
-package junit5.extension.testwatcher;
+package junit5.extension.utils;
 
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;

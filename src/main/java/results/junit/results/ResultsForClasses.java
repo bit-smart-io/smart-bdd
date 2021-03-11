@@ -1,4 +1,4 @@
-package results;
+package results.junit.results;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 

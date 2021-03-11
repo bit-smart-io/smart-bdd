@@ -1,11 +1,8 @@
 package junit5.extension.testwatcher.debug;
 
-import junit5.extension.testwatcher.TestLauncher;
+import junit5.extension.testwatcher.results.ResultsExtension;
+import junit5.extension.utils.TestLauncher;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.engine.TestExecutionResult;
-import org.junit.platform.engine.TestExecutionResult.Status;
-import org.junit.platform.launcher.TestExecutionListener;
-import org.junit.platform.launcher.TestIdentifier;
 import results.junit.testcapture.CaptureTestClass;
 import results.junit.testcapture.CaptureTestMethod;
 
@@ -17,11 +14,10 @@ public class DebugLauncherTest {
 
     @Test
     void launchTests() {
-        TestLauncher launcher = new TestLauncher();
-        TestListener testListener = new TestListener();
-        launcher.launch(testListener, ClassUnderTest.class);
-        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
+        ResultsExtension.reset();
+        new TestLauncher().launch(new junit5.extension.utils.TestListener(), ClassUnderTest.class);
 
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
         CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
         assertThat(capturedTestClass).isNotNull();
         assertThat(capturedTestClass.getCapturedMethodsForClass().getCapturedMethodNames()).containsExactly(
@@ -68,18 +64,5 @@ public class DebugLauncherTest {
                 "afterEach");
         });
 
-    }
-
-    static class TestListener implements TestExecutionListener {
-        @Override
-        public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-            if (testIdentifier.isTest()) {
-                if (testExecutionResult.getStatus() == Status.SUCCESSFUL) {
-                    // System.out.println("TEST SUCCESSFUL >>>> " + testIdentifier);
-                }
-            } else {
-                    // System.out.println("CONTAINER >>>> " + testIdentifier);
-            }
-        }
     }
 }
