@@ -28,6 +28,6 @@ class SuccessTestWatcherTest {
     @Test
     void secondTest() {
         assertThat(SuccessTestWatcher.getResults()).hasSize(1);
-        assertThat(SuccessTestWatcher.getResults().get(0)).isEqualTo("assert that true is true");
+        assertThat(SuccessTestWatcher.getResults().get(0)).isEqualTo("Assert that true is true");
     }
 }

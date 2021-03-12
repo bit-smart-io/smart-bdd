@@ -10,7 +10,6 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WordifyClassTest {
-
     @Test
     void methodNoParams() {
         assertThat(true).isTrue();
@@ -22,7 +21,7 @@ class WordifyClassTest {
         assertThat(key).isNotNull();
     }
 
-    //TODO
+    //TODO handle unhappy path
     @Disabled
     @Test
     void wordifyMethodNotFound() {
@@ -32,12 +31,12 @@ class WordifyClassTest {
     @Test
     void wordifyTestMethod() {
         String wordify = new WordifyClass().wordify(this.getClass(), "methodNoParams");
-        assertThat(wordify).isEqualTo("assert that true is true");
+        assertThat(wordify).isEqualTo("Assert that true is true");
     }
 
     @Test
     void wordifyTestMethodWithParams() {
         String wordify = new WordifyClass().wordify(this.getClass(), "methodWithParams", Arrays.asList("value 1"));
-        assertThat(wordify).isEqualTo("assert that value 1 is not null");
+        assertThat(wordify).isEqualTo("Assert that value 1 is not null");
     }
 }

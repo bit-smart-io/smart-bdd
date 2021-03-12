@@ -1,7 +1,9 @@
 package wordify;
 
 public class WordifyString {
+    private static final char NEW_LINE = '\n';
     private static final char SPACE = ' ';
+    private static final char TAB = '\t';
     private static final char COMMA = ',';
     private static final char SEMI_COLON = ';';
     private static final char HYPHEN = '-';
@@ -16,11 +18,18 @@ public class WordifyString {
     private final char[] input;
 
     public WordifyString(String original) {
-        this.input = original.toCharArray();
+        this.input = original.trim().toCharArray();
+    }
+
+    private void seekPastNewLineToNextCharToWrite() {
+        if (current() == NEW_LINE) {
+            incrementIndex();
+            seekPastNewLineToNextCharToWrite();
+        }
     }
 
     private void seekToNextCharToWrite() {
-        if (current() == SPACE || currentIsCharToBeReplaced()) {
+        if (current() == SPACE || current() == TAB || currentIsCharToBeReplaced()) {
             incrementIndex();
             seekToNextCharToWrite();
         }
@@ -75,11 +84,17 @@ public class WordifyString {
     }
 
     public String wordify() {
+        seekPastNewLineToNextCharToWrite();
         seekToNextCharToWrite();
         appendResult(Character.toTitleCase(current()));
 
         while (inBounds()) {
-            if (currentIsCharToBeReplaced()) {
+            if (current() == NEW_LINE) {
+                seekPastNewLineToNextCharToWrite();
+                seekToNextCharToWrite();
+                result.append(NEW_LINE);
+                appendResult(Character.toTitleCase(current()));
+            } else if (currentIsCharToBeReplaced()) {
                 if (hasNext()) {
                     appendResult(SPACE);
                     seekToNextCharToWrite();

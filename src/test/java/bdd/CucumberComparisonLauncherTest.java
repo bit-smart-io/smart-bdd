@@ -26,10 +26,9 @@ public class CucumberComparisonLauncherTest {
 
         ResultsForTest firstTest = resultsForClass.getCapturedTestMethod("eat5OutOf12");
 
-        // TODO why is there a space at the start of line 2 and 3
         assertThat(firstTest.getWordify()).isEqualTo(
-            "given there are cucumbers 12 \n" +
-            " when i eat cucumbers 5 \n" +
-            " then i should have cucumbers 7");
+            "Given there are cucumbers 12 \n" +
+            "When i eat cucumbers 5 \n" +
+            "Then i should have cucumbers 7");
     }
 }

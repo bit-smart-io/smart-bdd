@@ -1,5 +1,6 @@
 package wordify;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,19 +73,54 @@ public class WordifyStringTest {
         assertThat(new WordifyString(" ( -1 ) ").wordify()).isEqualTo(("-1"));
     }
 
+    /**
+     * See java.lang.Character.isWhitespace
+     */
+    @Test
+    void handlesWhiteSpaceAtStart() {
+        assertThat(new WordifyString(" aB").wordify()).isEqualTo("A b");
+        assertThat(new WordifyString("\taB").wordify()).isEqualTo("A b");
+    }
+
+    @Test
+    void handlesWhiteSpaceAtEnd() {
+        assertThat(new WordifyString(" aB ").wordify()).isEqualTo("A b");
+        assertThat(new WordifyString("\taB\t").wordify()).isEqualTo("A b");
+    }
+
+    @Test
+    void handlesNewLines() {
+        assertThat(new WordifyString("\naB").wordify()).isEqualTo("A b");
+        assertThat(new WordifyString("\na\nb").wordify()).isEqualTo("A\nB");
+        assertThat(new WordifyString("\n\na\nb").wordify()).isEqualTo("A\nB");
+        assertThat(new WordifyString("\n\na\n\nb").wordify()).isEqualTo("A\nB");
+        assertThat(new WordifyString("\n\na\n\nb\n").wordify()).isEqualTo("A\nB");
+
+        assertThat(new WordifyString("\n aB").wordify()).isEqualTo("A b");
+        assertThat(new WordifyString("\n aB ").wordify()).isEqualTo("A b");
+        assertThat(new WordifyString("\na\n b").wordify()).isEqualTo("A\nB");
+    }
+
+    @Disabled
+    @Test
+    void handlesWhiteSpacePotentialRequirement() {
+        //TODO should the white space at the end of a line?
+        assertThat(new WordifyString("\na \nb").wordify()).isEqualTo("A\nB");
+    }
+
+    // Below are tests from yatspec -  added to make sure important features are missed
+
     @Test
     void insertsASingleSpacesBetweenCapitalsAndTrims() {
          assertThat(new WordifyString("replaceAWithB;").wordify()).isEqualTo(("Replace a with b"));
          assertThat(new WordifyString("doesNotBlow").wordify()).isEqualTo(("Does not blow"));
     }
 
-//    //TODO I can't think why you'd want this?
-//    @Ignore
-//    @Test
-//    void wordifyShouldNotRemoveLineBreaks() {
-//        assertThat(Text.wordify("F\nBar")).isEqualTo(("F\nBar"));
-//        assertThat(Text.wordify("Foo\nBar")).isEqualTo(("Foo\nBar"));
-//    }
+    @Test
+    void wordifyShouldNotRemoveLineBreaks() {
+        assertThat(new WordifyString("F\nBar").wordify()).isEqualTo(("F\nBar"));
+        assertThat(new WordifyString("Foo\nBar").wordify()).isEqualTo(("Foo\nBar"));
+    }
 
     @Test
     void insertsSpaceOnFullStops() throws Exception {

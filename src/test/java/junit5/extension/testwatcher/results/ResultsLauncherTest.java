@@ -29,17 +29,17 @@ public class ResultsLauncherTest {
         );
 
         ResultsForTest firstTest = resultsForClass.getCapturedTestMethod("firstTest");
-        assertThat(firstTest.getWordify()).isEqualTo("assert that \"first test\" is equal to \"first test\"");
+        assertThat(firstTest.getWordify()).isEqualTo("Assert that \"first test\" is equal to \"first test\"");
 
         ResultsForTest secondTest = resultsForClass.getCapturedTestMethod("secondTest");
-        assertThat(secondTest.getWordify()).isEqualTo("assert that \"second test\" is equal to \"second test\"");
+        assertThat(secondTest.getWordify()).isEqualTo("Assert that \"second test\" is equal to \"second test\"");
 
         List<ResultsForTest> thirdTestResults = resultsForClass.getCapturedTestMethods("thirdParamTest");
-        assertThat(thirdTestResults.get(0).getWordify()).isEqualTo("assert that value 1 is not null");
+        assertThat(thirdTestResults.get(0).getWordify()).isEqualTo("Assert that value 1 is not null");
         assertThat(thirdTestResults.get(0).getStatus()).isEqualTo(PASSED);
-        assertThat(thirdTestResults.get(1).getWordify()).isEqualTo("assert that value 2 is not null");
+        assertThat(thirdTestResults.get(1).getWordify()).isEqualTo("Assert that value 2 is not null");
         assertThat(thirdTestResults.get(1).getStatus()).isEqualTo(PASSED);
-        assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("assert that value 3 is not null");
+        assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("Assert that value 3 is not null");
         assertThat(thirdTestResults.get(2).getStatus()).isEqualTo(PASSED);
     }
 }
