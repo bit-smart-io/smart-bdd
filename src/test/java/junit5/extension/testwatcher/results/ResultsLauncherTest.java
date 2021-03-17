@@ -3,6 +3,8 @@ package junit5.extension.testwatcher.results;
 import junit5.extension.utils.TestLauncher;
 import junit5.extension.utils.TestListener;
 import org.junit.jupiter.api.Test;
+import results.domain.Results;
+import results.junit.results.ResultsFactory;
 import results.junit.results.ResultsForClass;
 import results.junit.results.ResultsForTest;
 
@@ -41,5 +43,11 @@ public class ResultsLauncherTest {
         assertThat(thirdTestResults.get(1).getStatus()).isEqualTo(PASSED);
         assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("Assert that value 3 is not null");
         assertThat(thirdTestResults.get(2).getStatus()).isEqualTo(PASSED);
+
+        // WIP - below is not in order
+        ResultsFactory resultsFactory = new ResultsFactory();
+        Results results = resultsFactory.create(ResultsExtension.getTestResultsForClasses());
+        assertThat(results).isNotNull();
+        assertThat(results.getResults()).hasSize(5);
     }
 }

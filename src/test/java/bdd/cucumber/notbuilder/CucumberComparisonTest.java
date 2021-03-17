@@ -1,5 +1,6 @@
-package bdd;
+package bdd.cucumber.notbuilder;
 
+import bdd.cucumber.CucumberService;
 import junit5.extension.testwatcher.results.ResultsExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -49,22 +50,6 @@ public class CucumberComparisonTest {
         thenIShouldHaveCucumbers(7);
     }
 
-    @Order(1)
-    @Test
-    void eat5OutOf12UsingBuilder() {
-        // better as it takes a builder
-        // but you have to locate all the builders
-        // given(cucumbers().withAmount(12))
-        // when(iEat().cucumbers().withAmount(5))
-        // then(iShouldHave().cucumbers().withAmount(7))
-
-        // harder to maintain because all builders have to chain of the given builder
-        // easier to write tests after the investment of writing and maintain the given builder
-        // given().cucumbers().withAmount(12))
-        // when().iEat().cucumbers().withAmount(5))
-        // then().iShouldHave().cucumbers().withAmount(7))
-    }
-
     private void givenThereAreCucumbers(int number) {
         cucumberService.setNumberOfCucumbers(number);
     }
@@ -75,21 +60,5 @@ public class CucumberComparisonTest {
 
     private void  thenIShouldHaveCucumbers(int number) {
         assertThat(cucumberService.getNumberOfCucumbers()).isEqualTo(number);
-    }
-
-    class CucumberService {
-        private int numberOfCucumbers;
-
-        public int getNumberOfCucumbers() {
-            return numberOfCucumbers;
-        }
-
-        public void setNumberOfCucumbers(int number) {
-            this.numberOfCucumbers = number;
-        }
-
-        public void eat(int number) {
-            numberOfCucumbers -= number;
-        }
     }
 }

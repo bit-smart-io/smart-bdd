@@ -105,9 +105,8 @@ public class ResultsExtension implements
 
     private void wordify(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, String methodName) {
         ResultsForTest resultsForTest = getTestResultsForTest(extensionContext);
-        List<Object> arguments = invocationContext.getArguments();
-        Optional<String> wordify = wordifyExtensionContext.wordify(extensionContext, arguments);
-        wordify.ifPresent(resultsForTest::setWordify);
+        wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(resultsForTest::setWordify);
+
 //        System.out.println(methodName + ", method: " + extensionContext.getTestMethod() + ", wordify: " + wordify);
     }
 

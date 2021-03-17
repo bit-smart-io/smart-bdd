@@ -25,6 +25,10 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  */
 public class ResultsForClasses {
+    // ClassName extends String
+    // ClassName { String name }
+    // ClassName.from(name)
+    // className(name)
     private ConcurrentHashMap<String, ResultsForClass> resultsForClasses = new ConcurrentHashMap();
 
     public List<String> getClasses() {

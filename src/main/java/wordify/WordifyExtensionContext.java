@@ -10,6 +10,6 @@ public class WordifyExtensionContext {
 
     public Optional<String> wordify(ExtensionContext context, List<Object> parameters) {
         return context.getTestMethod()
-            .map(m -> wordify.wordify(context.getRequiredTestClass(), m.getName(), parameters));
+            .map(method -> wordify.wordify(context.getRequiredTestClass(), method.getName(), parameters));
     }
 }

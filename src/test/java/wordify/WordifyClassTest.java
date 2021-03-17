@@ -15,6 +15,7 @@ class WordifyClassTest {
         assertThat(true).isTrue();
     }
 
+    //TODO are all params under test? i.e. wordify with format and highlight the fields under test
     @ParameterizedTest
     @ValueSource(strings = { "value 1" })
     void methodWithParams(String key) {
@@ -36,6 +37,13 @@ class WordifyClassTest {
 
     @Test
     void wordifyTestMethodWithParams() {
+        String wordify = new WordifyClass().wordify(this.getClass(), "methodWithParams", Arrays.asList("value 1"));
+        assertThat(wordify).isEqualTo("Assert that value 1 is not null");
+    }
+
+    // ut
+    @Test
+    void wordifyTestMethodWithUnderTest() {
         String wordify = new WordifyClass().wordify(this.getClass(), "methodWithParams", Arrays.asList("value 1"));
         assertThat(wordify).isEqualTo("Assert that value 1 is not null");
     }
