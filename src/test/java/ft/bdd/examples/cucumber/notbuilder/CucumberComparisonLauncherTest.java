@@ -1,6 +1,6 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
-import junit5.extension.testwatcher.results.ResultsExtension;
+import junit5.extension.results.ResultsExtension;
 import junit5.extension.utils.TestLauncher;
 import junit5.extension.utils.TestListener;
 import org.junit.jupiter.api.Test;
