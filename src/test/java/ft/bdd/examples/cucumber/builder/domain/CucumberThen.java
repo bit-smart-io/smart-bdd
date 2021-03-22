@@ -1,9 +1,9 @@
-package bdd.cucumber.builder.domain;
+package ft.bdd.examples.cucumber.builder.domain;
 
-public class CucumberGiven {
+public class CucumberThen {
     private final int amount;
 
-    public CucumberGiven(int amount) {
+    public CucumberThen(int amount) {
         this.amount = amount;
     }
 

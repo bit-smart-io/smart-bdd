@@ -1,7 +1,7 @@
 package junit5.launch;
 
 import junit5.extension.testwatcher.debug.DebugExtension;
-import junit5.extension.testwatcher.results.ResultsExtension;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import results.junit.testcapture.CaptureTestClass;
@@ -11,6 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
 
 public class SelectMethodTest {
+    private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
+    private static final String CLASS_UNDER_TEST_NAME = "ClassUnderTest";
+
+    @BeforeEach
+    void setUp() {
+        DebugExtension.reset();
+    }
 
     /**
      * method no-args
@@ -18,14 +25,13 @@ public class SelectMethodTest {
      */
     @Test
     void selectAndRunMethodNoArgs() {
-        ResultsExtension.reset();
         new TestLauncher().launch(
             new junit5.extension.utils.TestListener(),
-            ClassUnderTest.class,
+            CLASS_UNDER_TEST,
             "firstTest");
 
-        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
-        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly(CLASS_UNDER_TEST_NAME);
+        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get(CLASS_UNDER_TEST_NAME);
         assertThat(capturedTestClass).isNotNull();
         assertThat(capturedTestClass.getCapturedMethodsForClass().getCapturedMethodNames()).containsExactly(
             "beforeAll",
@@ -55,14 +61,13 @@ public class SelectMethodTest {
     @Disabled
     @Test
     void selectAndRunMethodWithArgs() {
-        ResultsExtension.reset();
         new TestLauncher().launch(
             new junit5.extension.utils.TestListener(),
-            selectMethod(ClassUnderTest.class, "thirdParamTest")
+            selectMethod(CLASS_UNDER_TEST, "thirdParamTest")
         );
 
-        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
-        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("TestCase");
+        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("TestCase");
 
         assertThat(capturedTestClass.getMethodNames()).containsOnly(
             "thirdParamTest"

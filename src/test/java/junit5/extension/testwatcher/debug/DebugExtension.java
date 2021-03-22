@@ -27,7 +27,7 @@ import java.util.List;
 public class DebugExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
     private static final List<String> allMethodNames = new ArrayList<>();
-    private static final CaptureTestClasses captureTestClasses = new CaptureTestClasses();
+    private static CaptureTestClasses captureTestClasses = new CaptureTestClasses();
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
@@ -135,5 +135,10 @@ public class DebugExtension implements
         CaptureTestMethod captureTestMethod = captureTestClass.getCaptureTestMethod(context);
 //        System.out.println("captureTestMethod:" + captureTestMethod);
         return captureTestMethod;
+    }
+
+    public static void reset() {
+        allMethodNames.clear();
+        captureTestClasses = new CaptureTestClasses();
     }
 }

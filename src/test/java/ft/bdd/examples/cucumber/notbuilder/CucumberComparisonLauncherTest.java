@@ -1,4 +1,4 @@
-package bdd.cucumber.notbuilder;
+package ft.bdd.examples.cucumber.notbuilder;
 
 import junit5.extension.testwatcher.results.ResultsExtension;
 import junit5.extension.utils.TestLauncher;

@@ -1,4 +1,4 @@
-package bdd.cucumber.builder;
+package ft.bdd.examples.cucumber.builder;
 
 import junit5.extension.testwatcher.results.ResultsExtension;
 import org.junit.jupiter.api.MethodOrderer;
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static bdd.cucumber.builder.builders.CucumberGivenBuilder.iHaveCucumbers;
-import static bdd.cucumber.builder.builders.CucumberThenBuilder.iShouldHaveCucumbers;
-import static bdd.cucumber.builder.builders.CucumberWhenBuilder.iEatCucumbers;
+import static ft.bdd.examples.cucumber.builder.builders.CucumberGivenBuilder.iHaveCucumbers;
+import static ft.bdd.examples.cucumber.builder.builders.CucumberThenBuilder.iShouldHaveCucumbers;
+import static ft.bdd.examples.cucumber.builder.builders.CucumberWhenBuilder.iEatCucumbers;
 
 /**
  * // https://cucumber.io/docs/gherkin/reference/

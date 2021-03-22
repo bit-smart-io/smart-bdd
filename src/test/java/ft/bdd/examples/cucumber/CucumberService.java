@@ -1,4 +1,4 @@
-package bdd.cucumber;
+package ft.bdd.examples.cucumber;
 
 public class CucumberService {
     private int numberOfCucumbers;

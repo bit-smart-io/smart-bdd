@@ -1,6 +1,5 @@
 package junit5.extension.testwatcher.debug;
 
-import junit5.extension.testwatcher.results.ResultsExtension;
 import junit5.extension.utils.TestLauncher;
 import org.junit.jupiter.api.Test;
 import results.junit.testcapture.CaptureTestClass;
@@ -14,7 +13,7 @@ public class DebugLauncherTest {
 
     @Test
     void launchTests() {
-        ResultsExtension.reset();
+        DebugExtension.reset();
         new TestLauncher().launch(new junit5.extension.utils.TestListener(), ClassUnderTest.class);
 
         assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
@@ -46,7 +45,7 @@ public class DebugLauncherTest {
             "interceptAfterEachMethod",
             "afterEach");
 
-        CaptureTestMethod capturedSecondTestMethod = capturedTestClass.getCapturedTestMethod("firstTest");
+        CaptureTestMethod capturedSecondTestMethod = capturedTestClass.getCapturedTestMethod("secondTest");
         assertThat(capturedSecondTestMethod.getCapturedMethodNames()).containsExactly(
             "beforeEach",
             "interceptBeforeEachMethod",
@@ -63,6 +62,5 @@ public class DebugLauncherTest {
                 "interceptAfterEachMethod",
                 "afterEach");
         });
-
     }
 }

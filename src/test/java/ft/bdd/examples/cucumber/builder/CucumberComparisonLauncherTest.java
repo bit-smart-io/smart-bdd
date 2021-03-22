@@ -1,4 +1,4 @@
-package bdd.cucumber.builder;
+package ft.bdd.examples.cucumber.builder;
 
 import junit5.extension.testwatcher.results.ResultsExtension;
 import junit5.extension.utils.TestLauncher;

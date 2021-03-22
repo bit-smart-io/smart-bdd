@@ -1,12 +1,12 @@
-package bdd.cucumber.builder;
+package ft.bdd.examples.cucumber.builder;
 
-import bdd.cucumber.CucumberService;
-import bdd.cucumber.builder.domain.CucumberGiven;
-import bdd.cucumber.builder.domain.CucumberThen;
-import bdd.cucumber.builder.domain.CucumberWhen;
-import bdd.cucumber.builder.framework.GivenBuilder;
-import bdd.cucumber.builder.framework.ThenBuilder;
-import bdd.cucumber.builder.framework.WhenBuilder;
+import ft.bdd.examples.cucumber.CucumberService;
+import ft.bdd.examples.cucumber.builder.domain.CucumberGiven;
+import ft.bdd.examples.cucumber.builder.domain.CucumberThen;
+import ft.bdd.examples.cucumber.builder.domain.CucumberWhen;
+import ft.bdd.examples.cucumber.builder.framework.GivenBuilder;
+import ft.bdd.examples.cucumber.builder.framework.ThenBuilder;
+import ft.bdd.examples.cucumber.builder.framework.WhenBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

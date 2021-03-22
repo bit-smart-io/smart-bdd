@@ -15,8 +15,6 @@ import wordify.WordifyExtensionContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Optional;
 
 import static results.junit.results.ResultsForTest.Status.*;
 
@@ -106,7 +104,6 @@ public class ResultsExtension implements
     private void wordify(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, String methodName) {
         ResultsForTest resultsForTest = getTestResultsForTest(extensionContext);
         wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(resultsForTest::setWordify);
-
 //        System.out.println(methodName + ", method: " + extensionContext.getTestMethod() + ", wordify: " + wordify);
     }
 
