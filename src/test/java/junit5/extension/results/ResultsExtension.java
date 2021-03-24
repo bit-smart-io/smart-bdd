@@ -1,5 +1,8 @@
 package junit5.extension.results;
 
+import junit5.results.ResultsForClass;
+import junit5.results.ResultsForClasses;
+import junit5.results.ResultsForTest;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -8,15 +11,13 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
-import results.junit.results.ResultsForClass;
-import results.junit.results.ResultsForTest;
-import results.junit.results.ResultsForClasses;
 import wordify.WordifyExtensionContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import static results.junit.results.ResultsForTest.Status.*;
+import static junit5.results.ResultsForTest.Status.PASSED;
+
 
 public class ResultsExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {

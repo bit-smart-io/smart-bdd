@@ -1,6 +1,6 @@
 package junit5.learning.extension;
 
-import junit5.bdd.Given;
+import junit5.annotations.Given;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 

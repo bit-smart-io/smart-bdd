@@ -1,4 +1,4 @@
-package results.domain;
+package report;
 
 import java.util.ArrayList;
 import java.util.List;

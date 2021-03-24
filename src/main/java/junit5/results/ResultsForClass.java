@@ -1,7 +1,8 @@
-package results.junit.results;
+package junit5.results;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +35,7 @@ public class ResultsForClass {
     }
 
     private String getMethodName(ExtensionContext context) {
-        return context.getTestMethod().map(m -> m.getName()).orElse("could-not-get-method-name");
+        return context.getTestMethod().map(Method::getName).orElse("could-not-get-method-name");
     }
 
     public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {

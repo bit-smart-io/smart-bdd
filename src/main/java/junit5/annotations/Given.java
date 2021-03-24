@@ -1,4 +1,4 @@
-package junit5.bdd;
+package junit5.annotations;
 
 import java.lang.annotation.*;
 

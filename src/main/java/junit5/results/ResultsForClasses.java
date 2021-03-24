@@ -1,4 +1,4 @@
-package results.junit.results;
+package junit5.results;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 

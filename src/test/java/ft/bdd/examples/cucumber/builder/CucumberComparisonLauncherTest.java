@@ -6,8 +6,8 @@ import junit5.extension.utils.TestListener;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import results.junit.results.ResultsForClass;
-import results.junit.results.ResultsForTest;
+import junit5.results.ResultsForClass;
+import junit5.results.ResultsForTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

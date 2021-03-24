@@ -4,8 +4,8 @@ import junit5.extension.debug.DebugExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import results.junit.testcapture.CaptureTestClass;
-import results.junit.testcapture.CaptureTestMethod;
+import junit5.results.debugcapture.CaptureTestClass;
+import junit5.results.debugcapture.CaptureTestMethod;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;

@@ -2,7 +2,6 @@ package wordify;
 
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
-import source.JavaSourceWrapper;
 
 import java.io.IOException;
 import java.util.List;

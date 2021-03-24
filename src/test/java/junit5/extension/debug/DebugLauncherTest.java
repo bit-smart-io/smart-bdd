@@ -2,8 +2,8 @@ package junit5.extension.debug;
 
 import junit5.extension.utils.TestLauncher;
 import org.junit.jupiter.api.Test;
-import results.junit.testcapture.CaptureTestClass;
-import results.junit.testcapture.CaptureTestMethod;
+import junit5.results.debugcapture.CaptureTestClass;
+import junit5.results.debugcapture.CaptureTestMethod;
 
 import java.util.List;
 

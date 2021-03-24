@@ -1,10 +1,10 @@
-package results.junit.testcapture;
+package junit5.results.debugcapture;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
-import results.junit.testcapture.methods.BaseMethod;
-import results.junit.testcapture.methods.InterceptBaseMethod;
+import junit5.results.debugcapture.methods.BaseMethod;
+import junit5.results.debugcapture.methods.InterceptBaseMethod;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

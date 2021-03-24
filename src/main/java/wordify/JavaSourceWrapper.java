@@ -1,4 +1,4 @@
-package source;
+package wordify;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;

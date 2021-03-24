@@ -2,6 +2,7 @@ package source;
 
 import com.thoughtworks.qdox.model.JavaParameter;
 import org.junit.jupiter.api.Test;
+import wordify.JavaSourceWrapper;
 
 import java.io.IOException;
 import java.util.List;

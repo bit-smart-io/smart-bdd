@@ -1,4 +1,4 @@
-package results.domain;
+package report;
 
 public enum Status {
         PASSED,

@@ -1,4 +1,4 @@
-package results.junit.results;
+package junit5.results;
 
 public class ResultsForTest {
     private String wordify;

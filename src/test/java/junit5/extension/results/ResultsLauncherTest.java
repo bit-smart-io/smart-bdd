@@ -2,26 +2,33 @@ package junit5.extension.results;
 
 import junit5.extension.utils.TestLauncher;
 import junit5.extension.utils.TestListener;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import results.domain.Results;
-import results.junit.results.ResultsFactory;
-import results.junit.results.ResultsForClass;
-import results.junit.results.ResultsForTest;
+import report.Results;
+import junit5.results.ReportFactory;
+import junit5.results.ResultsForClass;
+import junit5.results.ResultsForTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static results.junit.results.ResultsForTest.Status.PASSED;
+import static junit5.results.ResultsForTest.Status.PASSED;
 
 public class ResultsLauncherTest {
+    private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
+    private static final String CLASS_UNDER_TEST_NAME = "ClassUnderTest";
+
+    @BeforeEach
+    void setUp() {
+        ResultsExtension.reset();
+    }
 
     @Test
     void launchTests() {
-        ResultsExtension.reset();
-        new TestLauncher().launch(new TestListener(), ClassUnderTest.class);
+        new TestLauncher().launch(new TestListener(), CLASS_UNDER_TEST);
 
-        assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly("ClassUnderTest");
-        ResultsForClass resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get("ClassUnderTest");
+        assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly(CLASS_UNDER_TEST_NAME);
+        ResultsForClass resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get(CLASS_UNDER_TEST_NAME);
         assertThat(resultsForClass).isNotNull();
 
         assertThat(resultsForClass.getMethodNames()).contains(
@@ -43,11 +50,16 @@ public class ResultsLauncherTest {
         assertThat(thirdTestResults.get(1).getStatus()).isEqualTo(PASSED);
         assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("Assert that value 3 is not null");
         assertThat(thirdTestResults.get(2).getStatus()).isEqualTo(PASSED);
+    }
+
+    @Test
+    void componentTest() {
+        new TestLauncher().launch(new TestListener(), CLASS_UNDER_TEST);
 
         // WIP - below is not in order
-        ResultsFactory resultsFactory = new ResultsFactory();
-        Results results = resultsFactory.create(ResultsExtension.getTestResultsForClasses());
+        Results results = ReportFactory.create(ResultsExtension.getTestResultsForClasses());
         assertThat(results).isNotNull();
         assertThat(results.getResults()).hasSize(5);
+
     }
 }

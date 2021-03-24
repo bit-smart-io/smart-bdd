@@ -1,4 +1,4 @@
-package results.junit.testcapture.methods;
+package junit5.results.debugcapture.methods;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
