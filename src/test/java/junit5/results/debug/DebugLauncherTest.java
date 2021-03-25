@@ -1,16 +1,18 @@
 package junit5.results.debug;
 
+import junit5.results.debug.undertest.ClassUnderTest1;
+import junit5.results.debug.utils.debugcapture.CaptureTestClass;
+import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import junit5.results.debug.utils.debugcapture.CaptureTestClass;
-import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
-public class DebugClassLauncherTest {
+public class DebugLauncherTest {
 
     @BeforeEach
     void setUp() {
@@ -18,11 +20,24 @@ public class DebugClassLauncherTest {
     }
 
     @Test
-    void launchTests() {
-        TestLauncher.launch(ClassUnderTest.class);
+    void debugTestsInClass() {
+        TestLauncher.launch(ClassUnderTest1.class);
 
-        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
-        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest1");
+        verifyClassUnderTestMethods("ClassUnderTest1", "class1_");
+    }
+
+    @Test
+    void debugTestsInPackage() {
+        TestLauncher.launch(selectPackage("junit5.results.debug.undertest"));
+
+        assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest1", "ClassUnderTest2");
+        verifyClassUnderTestMethods("ClassUnderTest1", "class1_");
+        verifyClassUnderTestMethods("ClassUnderTest2", "class2_");
+    }
+
+    private void verifyClassUnderTestMethods(String className, String methodPrefix) {
+        CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get(className);
         assertThat(capturedTestClass).isNotNull();
         assertThat(capturedTestClass.getCapturedMethodsForClass().getCapturedMethodNames()).containsExactly(
             "beforeAll",
@@ -36,13 +51,15 @@ public class DebugClassLauncherTest {
             "afterAll"
         );
 
-        assertThat(capturedTestClass.getMethodNames()).contains(
-            "firstTest",
-            "secondTest",
-            "thirdParamTest"
+        assertThat(capturedTestClass.getMethodNames()).containsExactly(
+            methodPrefix + "firstTest",
+            methodPrefix + "secondTest",
+            methodPrefix + "thirdParamTest",
+            methodPrefix + "thirdParamTest",
+            methodPrefix + "thirdParamTest"
         );
 
-        CaptureTestMethod capturedFirstTestMethod = capturedTestClass.getCapturedTestMethod("firstTest");
+        CaptureTestMethod capturedFirstTestMethod = capturedTestClass.getCapturedTestMethod(methodPrefix + "firstTest");
         assertThat(capturedFirstTestMethod.getCapturedMethodNames()).containsExactly(
             "beforeEach",
             "interceptBeforeEachMethod",
@@ -50,7 +67,7 @@ public class DebugClassLauncherTest {
             "interceptAfterEachMethod",
             "afterEach");
 
-        CaptureTestMethod capturedSecondTestMethod = capturedTestClass.getCapturedTestMethod("secondTest");
+        CaptureTestMethod capturedSecondTestMethod = capturedTestClass.getCapturedTestMethod(methodPrefix + "secondTest");
         assertThat(capturedSecondTestMethod.getCapturedMethodNames()).containsExactly(
             "beforeEach",
             "interceptBeforeEachMethod",
@@ -58,7 +75,7 @@ public class DebugClassLauncherTest {
             "interceptAfterEachMethod",
             "afterEach");
 
-        List<CaptureTestMethod> capturedThirdParamTestMethods = capturedTestClass.getCapturedTestMethods("thirdParamTest");
+        List<CaptureTestMethod> capturedThirdParamTestMethods = capturedTestClass.getCapturedTestMethods(methodPrefix + "thirdParamTest");
         capturedThirdParamTestMethods.forEach(captureTestMethod -> {
             assertThat(captureTestMethod.getCapturedMethodNames()).containsExactly(
                 "beforeEach",

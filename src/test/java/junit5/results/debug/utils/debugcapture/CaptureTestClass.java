@@ -13,10 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class CaptureTestClass {
-    private List<String> methodNames = new ArrayList<>();
-    private ConcurrentHashMap<ExtensionContext, CaptureTestMethod> contextToCapturedTestMethod = new ConcurrentHashMap();
-    private ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContext = new ConcurrentHashMap();
-    private CaptureTestMethod capturedMethodsForClass = new CaptureTestMethod();
+    private final List<String> methodNames = new ArrayList<>();
+    private final ConcurrentHashMap<ExtensionContext, CaptureTestMethod> contextToCapturedTestMethod = new ConcurrentHashMap();
+    private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContext = new ConcurrentHashMap();
+    private final CaptureTestMethod capturedMethodsForClass = new CaptureTestMethod();
 
     public CaptureTestMethod newCaptureTestMethod(ExtensionContext context) {
         CaptureTestMethod captureTestMethod = new CaptureTestMethod();

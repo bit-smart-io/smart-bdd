@@ -1,5 +1,6 @@
-package junit5.results.debug;
+package junit5.results.debug.undertest;
 
+import junit5.results.debug.DebugExtension;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,50 +20,50 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @TestMethodOrder(OrderAnnotation.class)
 @ExtendWith(DebugExtension.class)
-class ClassUnderTest {
+public class ClassUnderTest1 {
 
     /**
      * adds interceptBeforeAllMethod
      */
     @BeforeAll
-    public static void beforeAll() {
+    public static void class1_beforeAll() {
     }
 
     /**
      * adds interceptBeforeEachMethod
      */
     @BeforeEach
-    public void beforeEach() {
+    public void class1_beforeEach() {
     }
 
     /**
      * where is interceptAfterAllMethod?
      */
     @AfterAll
-    public static void afterAll() {
+    public static void class1_afterAll() {
     }
 
     /**
      * adds interceptAfterEachMethod
      */
     @AfterEach
-    public void afterEach() {
+    public void class1_afterEach() {
     }
 
     @Order(0)
     @Test
-    void firstTest() {
+    void class1_firstTest() {
     }
 
     @Order(1)
     @Test
-    void secondTest() {
+    void class1_secondTest() {
     }
 
     @ParameterizedTest
     @Order(2)
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void thirdParamTest(String key) {
+    void class1_thirdParamTest(String key) {
         assertThat(key).isNotNull();
     }
 }
