@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 public class CaptureTestClass {
     private final List<String> methodNames = new ArrayList<>();
-    private final ConcurrentHashMap<ExtensionContext, CaptureTestMethod> contextToCapturedTestMethod = new ConcurrentHashMap();
-    private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContext = new ConcurrentHashMap();
+    private final ConcurrentHashMap<ExtensionContext, CaptureTestMethod> contextToCapturedTestMethod = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContext = new ConcurrentHashMap<>();
     private final CaptureTestMethod capturedMethodsForClass = new CaptureTestMethod();
 
     public CaptureTestMethod newCaptureTestMethod(ExtensionContext context) {

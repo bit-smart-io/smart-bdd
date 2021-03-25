@@ -1,4 +1,4 @@
-package junit5.results;
+package ft.report;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

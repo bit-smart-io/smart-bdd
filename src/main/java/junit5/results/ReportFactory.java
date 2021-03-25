@@ -1,8 +1,8 @@
 package junit5.results;
 
-import report.Result;
-import report.Results;
-import report.Status;
+import report.model.Result;
+import report.model.Results;
+import report.model.Status;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,25 +10,25 @@ import java.util.stream.Collectors;
 
 public class ReportFactory {
 
-    public static Results create(ResultsForClasses resultsForClasses) {
+    public static Results create(AllResults allResults) {
         Results results = new Results();
-        Collection<ResultsForClass> resultsForClassList = resultsForClasses.getResultsForClasses().values();
-        List<ResultsForTest> resultsForTests = resultsForClassList.stream().flatMap(resultsForClass -> resultsForClass.getContextToResultsForTest().values().stream()).collect(Collectors.toList());
+        Collection<ClassResults> classResultsList = allResults.getClassNameToClassResults().values();
+        List<TestResult> testResults = classResultsList.stream().flatMap(resultsForClass -> resultsForClass.getContextToTestResult().values().stream()).collect(Collectors.toList());
 
-        resultsForTests.forEach(resultsForTest -> {
+        testResults.forEach(resultsForTest -> {
             results.addResult(new Result(
                 resultsForTest.getWordify(),
                 statusFrom(resultsForTest.getStatus()),
-                "methodName",
-                "className",
-                "packageName")
+                "method name",
+                "class name",
+                "package name")
             );
         });
 
         return results;
     }
 
-    private static Status statusFrom(ResultsForTest.Status status) {
+    private static Status statusFrom(TestResult.Status status) {
         switch (status) {
             case PASSED:
                 return Status.PASSED;

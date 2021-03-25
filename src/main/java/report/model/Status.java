@@ -1,4 +1,4 @@
-package report;
+package report.model;
 
 public enum Status {
         PASSED,

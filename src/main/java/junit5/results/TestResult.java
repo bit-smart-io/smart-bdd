@@ -1,6 +1,6 @@
 package junit5.results;
 
-public class ResultsForTest {
+public class TestResult {
     private String wordify;
     private Status status;
 
@@ -9,7 +9,7 @@ public class ResultsForTest {
         FAILED,
     }
 
-    public ResultsForTest() {
+    public TestResult() {
     }
 
     public String getWordify() {

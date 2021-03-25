@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CaptureTestClasses {
-    private ConcurrentHashMap<String, CaptureTestClass> capturedClasses = new ConcurrentHashMap();
+    private final ConcurrentHashMap<String, CaptureTestClass> capturedClasses = new ConcurrentHashMap<>();
 
     public List<String> getClasses() {
         return Collections.list(capturedClasses.keys());

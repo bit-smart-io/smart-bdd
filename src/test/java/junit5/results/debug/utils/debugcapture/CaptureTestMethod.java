@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CaptureTestMethod {
-    private Map<String, BaseMethod> capturedMethods = new HashMap<>();
-    private List<String> capturedMethodsNames = new ArrayList<>();
+    private final Map<String, BaseMethod> capturedMethods = new HashMap<>();
+    private final List<String> capturedMethodsNames = new ArrayList<>();
 
     public List<String> getCapturedMethodNames() {
         return capturedMethodsNames;

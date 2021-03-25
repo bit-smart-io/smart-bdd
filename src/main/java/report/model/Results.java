@@ -1,4 +1,4 @@
-package report;
+package report.model;
 
 import java.util.ArrayList;
 import java.util.List;

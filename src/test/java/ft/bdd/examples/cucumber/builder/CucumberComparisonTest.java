@@ -1,6 +1,6 @@
 package ft.bdd.examples.cucumber.builder;
 
-import junit5.results.ResultsExtension;
+import report.ResultsExtension;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

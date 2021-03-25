@@ -1,30 +1,29 @@
 package ft.bdd.examples.cucumber.builder;
 
-import junit5.results.ResultsExtension;
+import report.ResultsExtension;
 import junit5.utils.TestLauncher;
-import junit5.utils.TestListener;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import junit5.results.ResultsForClass;
-import junit5.results.ResultsForTest;
+import junit5.results.ClassResults;
+import junit5.results.TestResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CucumberComparisonLauncherTest {
 
-    private static ResultsForClass resultsForClass;
+    private static ClassResults classResults;
 
     @BeforeAll
     public static void setUp() {
         ResultsExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get("CucumberComparisonTest");
+        classResults = ResultsExtension.getTestResultsForClasses().getClassNameToClassResults().get("CucumberComparisonTest");
     }
 
     @Test
     void verifyEat5OutOf12() {
-        ResultsForTest results = resultsForClass.getCapturedTestMethod("eat5OutOf12");
+        TestResult results = classResults.getCapturedTestMethod("eat5OutOf12");
 
         assertThat(results.getWordify()).isEqualTo(
             "Given i have cucumbers with amount 12 \n" +
@@ -38,7 +37,7 @@ public class CucumberComparisonLauncherTest {
     @Disabled
     @Test
     void verifyEat5OutOf12_withAlternateWordify() {
-        ResultsForTest results = resultsForClass.getCapturedTestMethod("eat5OutOf12");
+        TestResult results = classResults.getCapturedTestMethod("eat5OutOf12");
 
         assertThat(results.getWordify()).isEqualTo(
             "Given i have 12 cucumbers \n" +

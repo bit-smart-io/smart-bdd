@@ -1,11 +1,10 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
-import junit5.results.ResultsExtension;
+import report.ResultsExtension;
 import junit5.utils.TestLauncher;
-import junit5.utils.TestListener;
 import org.junit.jupiter.api.Test;
-import junit5.results.ResultsForClass;
-import junit5.results.ResultsForTest;
+import junit5.results.ClassResults;
+import junit5.results.TestResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,14 +16,14 @@ public class CucumberComparisonLauncherTest {
         TestLauncher.launch(CucumberComparisonTest.class);
         assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly("CucumberComparisonTest");
 
-        ResultsForClass resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get("CucumberComparisonTest");
-        assertThat(resultsForClass).isNotNull();
+        ClassResults classResults = ResultsExtension.getTestResultsForClasses().getClassNameToClassResults().get("CucumberComparisonTest");
+        assertThat(classResults).isNotNull();
 
-        assertThat(resultsForClass.getMethodNames()).contains(
+        assertThat(classResults.getMethodNames()).contains(
             "eat5OutOf12"
         );
 
-        ResultsForTest firstTest = resultsForClass.getCapturedTestMethod("eat5OutOf12");
+        TestResult firstTest = classResults.getCapturedTestMethod("eat5OutOf12");
 
         assertThat(firstTest.getWordify()).isEqualTo(
             "Given there are cucumbers 12 \n" +
