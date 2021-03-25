@@ -13,6 +13,9 @@ import java.io.PrintWriter;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
 
+/**
+ * TODO merge with the other TestLauncher
+ */
 public class TestLauncher {
 
     public void launch(TestExecutionListener executionListener, Class<?> clazz, String methodName) {

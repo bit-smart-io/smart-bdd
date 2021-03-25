@@ -15,9 +15,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * This is used by TestDebugLauncher
- */
 @TestMethodOrder(OrderAnnotation.class)
 @ExtendWith(DebugExtension.class)
 class ClassUnderTest {
