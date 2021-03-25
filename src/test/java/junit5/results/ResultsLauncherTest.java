@@ -22,7 +22,7 @@ public class ResultsLauncherTest {
 
     @Test
     void launchTests() {
-        new TestLauncher().launch(new TestListener(), CLASS_UNDER_TEST);
+        TestLauncher.launch(CLASS_UNDER_TEST);
 
         assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly(CLASS_UNDER_TEST_NAME);
         ResultsForClass resultsForClass = ResultsExtension.getTestResultsForClasses().getResultsForClasses().get(CLASS_UNDER_TEST_NAME);
@@ -51,7 +51,7 @@ public class ResultsLauncherTest {
 
     @Test
     void componentTest() {
-        new TestLauncher().launch(new TestListener(), CLASS_UNDER_TEST);
+        TestLauncher.launch(CLASS_UNDER_TEST);
 
         // WIP - below is not in order
         Results results = ReportFactory.create(ResultsExtension.getTestResultsForClasses());

@@ -1,6 +1,8 @@
 package junit5.launch;
 
 import junit5.results.debug.DebugExtension;
+import junit5.utils.TestLauncher;
+import junit5.utils.TestListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -25,8 +27,8 @@ public class SelectMethodTest {
      */
     @Test
     void selectAndRunMethodNoArgs() {
-        new TestLauncher().launch(
-            new junit5.utils.TestListener(),
+        new TestLauncher();
+        TestLauncher.launch(
             CLASS_UNDER_TEST,
             "firstTest");
 
@@ -61,8 +63,7 @@ public class SelectMethodTest {
     @Disabled
     @Test
     void selectAndRunMethodWithArgs() {
-        new TestLauncher().launch(
-            new junit5.utils.TestListener(),
+        TestLauncher.launch(
             selectMethod(CLASS_UNDER_TEST, "thirdParamTest")
         );
 

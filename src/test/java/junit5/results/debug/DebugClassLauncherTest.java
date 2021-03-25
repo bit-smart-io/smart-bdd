@@ -1,6 +1,7 @@
 package junit5.results.debug;
 
 import junit5.utils.TestLauncher;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import junit5.results.debug.utils.debugcapture.CaptureTestClass;
 import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
@@ -9,12 +10,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DebugLauncherTest {
+public class DebugClassLauncherTest {
+
+    @BeforeEach
+    void setUp() {
+        DebugExtension.reset();
+    }
 
     @Test
     void launchTests() {
-        DebugExtension.reset();
-        new TestLauncher().launch(new junit5.utils.TestListener(), ClassUnderTest.class);
+        TestLauncher.launch(ClassUnderTest.class);
 
         assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest");
         CaptureTestClass capturedTestClass = DebugExtension.getCapturedTestClasses().getCapturedClasses().get("ClassUnderTest");
