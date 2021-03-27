@@ -32,9 +32,9 @@ public class ResultsLauncherTest {
         Result result = aResult()
             .withWordify("Assert that \"first test\" is equal to \"first test\"")
             .withStatus(Status.PASSED)
-            .withMethodName("method name")
-            .withClassName("class name")
-            .withPackageName("package name")
+            .withMethodName("firstTest")
+            .withClassName("ClassUnderTest")
+            .withPackageName("ft.report")
             .build();
 
         assertThat(results.getResults()).contains(result);

@@ -19,9 +19,9 @@ public class ReportFactory {
             results.addResult(new Result(
                 resultsForTest.getWordify(),
                 statusFrom(resultsForTest.getStatus()),
-                "method name",
-                "class name",
-                "package name")
+                resultsForTest.getMethodName(),
+                resultsForTest.getClassName(),
+                resultsForTest.getPackageName())
             );
         });
 
