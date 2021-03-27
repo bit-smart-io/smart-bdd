@@ -14,7 +14,7 @@ public class ClassResults {
     private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
 
     public TestResult newResultsForTest(ExtensionContext context) {
-        TestResult testResult = new TestResult();
+        TestResult testResult = testResult(context);
         String methodName = getMethodName(context);
         methodNames.add(methodName);
 
@@ -38,6 +38,11 @@ public class ClassResults {
         return context.getTestMethod().map(Method::getName).orElse("could-not-get-method-name");
     }
 
+    private TestResult testResult(ExtensionContext context) {
+        final Class<?> clazz = context.getRequiredTestClass();
+        return new TestResult(getMethodName(context), clazz.getSimpleName(), clazz.getPackage().getName());
+    }
+
     public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {
         return methodNameToContexts;
     }
@@ -53,7 +58,7 @@ public class ClassResults {
 
     public List<TestResult> getCapturedTestMethods(String testMethodName) {
         return methodNameToContexts.get(testMethodName).stream()
-            .map(context -> contextToTestResult.get(context))
+            .map(contextToTestResult::get)
             .collect(Collectors.toList());
     }
 

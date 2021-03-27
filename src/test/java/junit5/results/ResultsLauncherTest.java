@@ -40,11 +40,15 @@ public class ResultsLauncherTest {
         assertThat(secondTest.getWordify()).isEqualTo("Assert that \"second test\" is equal to \"second test\"");
 
         List<TestResult> thirdTestResults = classResults.getCapturedTestMethods("thirdParamTest");
-        assertThat(thirdTestResults.get(0).getWordify()).isEqualTo("Assert that value 1 is not null");
-        assertThat(thirdTestResults.get(0).getStatus()).isEqualTo(PASSED);
-        assertThat(thirdTestResults.get(1).getWordify()).isEqualTo("Assert that value 2 is not null");
-        assertThat(thirdTestResults.get(1).getStatus()).isEqualTo(PASSED);
-        assertThat(thirdTestResults.get(2).getWordify()).isEqualTo("Assert that value 3 is not null");
-        assertThat(thirdTestResults.get(2).getStatus()).isEqualTo(PASSED);
+        assertThat(thirdTestResults.get(0)).isEqualTo(testResult("Assert that value 1 is not null"));
+        assertThat(thirdTestResults.get(1)).isEqualTo(testResult("Assert that value 2 is not null"));
+        assertThat(thirdTestResults.get(2)).isEqualTo(testResult("Assert that value 3 is not null"));
+    }
+
+    private TestResult testResult(String wordify) {
+        final TestResult testResult = new TestResult("thirdParamTest", CLASS_UNDER_TEST_NAME, "junit5.results");
+        testResult.setWordify(wordify);
+        testResult.setStatus(PASSED);
+        return testResult;
     }
 }
