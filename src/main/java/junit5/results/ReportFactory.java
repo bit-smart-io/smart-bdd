@@ -1,34 +1,56 @@
 package junit5.results;
 
-import report.model.Result;
-import report.model.Results;
+import report.model.ClassResults;
+import report.model.Report;
 import report.model.Status;
+import report.model.TestResult;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class ReportFactory {
 
-    public static Results create(AllResults allResults) {
-        Results results = new Results();
-        Collection<ClassResults> classResultsList = allResults.getClassNameToClassResults().values();
-        List<TestResult> testResults = classResultsList.stream().flatMap(resultsForClass -> resultsForClass.getContextToTestResult().values().stream()).collect(Collectors.toList());
+    public static Report create(AllResults allResults) {
+        Report report = new Report();
+        Collection<junit5.results.ClassResults> classResultsList = allResults.getClassNameToClassResults().values();
 
-        testResults.forEach(resultsForTest -> {
-            results.addResult(new Result(
-                resultsForTest.getWordify(),
-                statusFrom(resultsForTest.getStatus()),
-                resultsForTest.getMethodName(),
-                resultsForTest.getClassName(),
-                resultsForTest.getPackageName())
-            );
-        });
+        classResultsList.forEach(classResult -> report.addClassResult(classResults(classResult)));
 
-        return results;
+        List<junit5.results.TestResult> allTestResults = classResultsList.stream()
+            .flatMap(classResults -> classResults.getContextToTestResult().values().stream())
+            .collect(toList());
+
+        allTestResults.forEach(testResult ->
+            report.addTestResult(testResult(testResult))
+        );
+
+        return report;
     }
 
-    private static Status statusFrom(TestResult.Status status) {
+    private static ClassResults classResults(junit5.results.ClassResults classResults) {
+        return new ClassResults(
+            classResults.getClassName(),
+            classResults.getPackageName(),
+            classResults.getMethodNames(),
+            testResults(classResults.getTestResults()));
+    }
+
+    private static List<TestResult> testResults(List<junit5.results.TestResult> testResults) {
+        return testResults.stream().map(ReportFactory::testResult).collect(toList());
+    }
+
+    private static TestResult testResult(junit5.results.TestResult testResult) {
+        return new TestResult(
+            testResult.getWordify(),
+            statusFrom(testResult.getStatus()),
+            testResult.getMethodName(),
+            testResult.getClassName(),
+            testResult.getPackageName());
+    }
+
+    private static Status statusFrom(junit5.results.TestResult.Status status) {
         switch (status) {
             case PASSED:
                 return Status.PASSED;

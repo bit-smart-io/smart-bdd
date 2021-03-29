@@ -45,7 +45,8 @@ public class AllResults {
     }
 
     public ClassResults newResultsForClass(ExtensionContext context) {
-        ClassResults classResults = new ClassResults();
+        Class<?> clazz = context.getRequiredTestClass();
+        ClassResults classResults = new ClassResults(clazz.getSimpleName(), clazz.getPackage().getName());
         classNameToClassResults.put(getClassName(context), classResults);
         return classResults;
     }

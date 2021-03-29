@@ -10,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static junit5.results.TestResult.Status.PASSED;
 
-public class ResultsLauncherTest {
+public class ReportLauncherTest {
     private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
     private static final String CLASS_UNDER_TEST_NAME = "ClassUnderTest";
 

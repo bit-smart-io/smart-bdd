@@ -1,5 +1,8 @@
 package report.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Objects;
  * java.lang.reflect.Parameter
  * java.lang.reflect.Method#getParameterTypes()
  */
-public class Result {
+public class TestResult {
     private final String wordify;
     private final Status status;
     private final String methodName;
@@ -17,12 +20,13 @@ public class Result {
     // time started
     // time taken
 
-    public Result(
-        String wordify,
-        Status status,
-        String methodName,
-        String className,
-        String packageName)
+    @JsonCreator
+    public TestResult(
+        @JsonProperty("wordify")  String wordify,
+        @JsonProperty("status")  Status status,
+        @JsonProperty("methodName")  String methodName,
+        @JsonProperty("className")  String className,
+        @JsonProperty("packageName")  String packageName)
     {
         this.wordify = wordify;
         this.status = status;
@@ -65,9 +69,9 @@ public class Result {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Result)) return false;
-        Result result = (Result) o;
-        return Objects.equals(wordify, result.wordify) && status == result.status && Objects.equals(methodName, result.methodName) && Objects.equals(className, result.className) && Objects.equals(packageName, result.packageName);
+        if (!(o instanceof TestResult)) return false;
+        TestResult testResult = (TestResult) o;
+        return Objects.equals(wordify, testResult.wordify) && status == testResult.status && Objects.equals(methodName, testResult.methodName) && Objects.equals(className, testResult.className) && Objects.equals(packageName, testResult.packageName);
     }
 
     @Override

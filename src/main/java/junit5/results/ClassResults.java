@@ -9,9 +9,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class ClassResults {
+    private final String className;
+    private final String packageName;
     private final List<String> methodNames = new ArrayList<>();
+    private final List<TestResult> testResults = new ArrayList<>();
     private final ConcurrentHashMap<ExtensionContext, TestResult> contextToTestResult = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
+
+    public ClassResults(String className, String packageName) {
+        this.className = className;
+        this.packageName = packageName;
+    }
 
     public TestResult newResultsForTest(ExtensionContext context) {
         TestResult testResult = testResult(context);
@@ -26,6 +34,7 @@ public class ClassResults {
             methodNameToContexts.put(methodName, contexts);
         }
 
+        testResults.add(testResult);
         contextToTestResult.put(context, testResult);
         return testResult;
     }
@@ -34,13 +43,20 @@ public class ClassResults {
         return contextToTestResult.get(context);
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
     private String getMethodName(ExtensionContext context) {
         return context.getTestMethod().map(Method::getName).orElse("could-not-get-method-name");
     }
 
     private TestResult testResult(ExtensionContext context) {
-        final Class<?> clazz = context.getRequiredTestClass();
-        return new TestResult(getMethodName(context), clazz.getSimpleName(), clazz.getPackage().getName());
+        return new TestResult(getMethodName(context), className, packageName);
     }
 
     public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {
@@ -64,5 +80,9 @@ public class ClassResults {
 
     public ConcurrentHashMap<ExtensionContext, TestResult> getContextToTestResult() {
         return contextToTestResult;
+    }
+
+    public List<TestResult> getTestResults() {
+        return testResults;
     }
 }
