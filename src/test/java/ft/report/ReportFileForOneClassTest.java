@@ -8,37 +8,23 @@ import org.junit.jupiter.api.Test;
 import report.ReportWriter;
 import report.ResultsExtension;
 import report.model.ClassResults;
-import report.model.TestResult;
 import report.model.Report;
 import report.model.Status;
+import report.model.TestResult;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
+import static ft.report.ResultBuilder.aResult;
 import static java.lang.System.getProperty;
 import static org.assertj.core.api.Assertions.assertThat;
-import static ft.report.ResultBuilder.aResult;
 
-public class ReportLauncherTest {
+public class ReportFileForOneClassTest {
     private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
 
     @BeforeEach
     void setUp() {
         ResultsExtension.reset();
-    }
-
-    @Test
-    void createReport() {
-        TestLauncher.launch(CLASS_UNDER_TEST);
-
-        Report report = ReportFactory.create(ResultsExtension.getTestResultsForClasses());
-        assertThat(report).isNotNull();
-        assertThat(report.getTestResults()).hasSize(5);
-
-        assertThat(report.getTestResults()).contains(firstTestResult());
     }
 
     @Test
@@ -64,20 +50,6 @@ public class ReportLauncherTest {
 
     private static File outputDirectory() {
         return new File(getProperty("java.io.tmpdir"));
-    }
-
-    @Test
-    public void whenWriteToTmpFile_thenCorrect() throws IOException {
-        String toWrite = "Hello";
-        File tmpFile = File.createTempFile("test", ".tmp");
-        System.out.println("tmpFile: " + tmpFile);
-        FileWriter writer = new FileWriter(tmpFile);
-        writer.write(toWrite);
-        writer.close();
-
-        BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
-        assertThat(toWrite).isEqualTo(reader.readLine());
-        reader.close();
     }
 
     private TestResult firstTestResult() {

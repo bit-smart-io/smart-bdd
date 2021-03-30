@@ -15,7 +15,7 @@ public class ReportWriter {
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     public void write(Report report) {
-        //report.getClassResultsList().forEach(this::sout);
+//        report.getClassResultsList().forEach(this::sout);
         report.getClassResultsList().forEach(this::write);
     }
 
