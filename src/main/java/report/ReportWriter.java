@@ -54,13 +54,4 @@ public class ReportWriter {
     private static File outputDirectory() {
         return new File(getProperty("java.io.tmpdir"));
     }
-
-//    public void complete(File yatspecOutputDir, Result result) throws Exception {
-//        final File output = outputFile(yatspecOutputDir, result);
-//        output.delete();
-//        output.getParentFile().mkdirs();
-//        String content = render(result);
-//        Files.write(content.getBytes("UTF-8"), output);
-//        System.out.println("Yatspec output:\n" + output);
-//    }
 }
