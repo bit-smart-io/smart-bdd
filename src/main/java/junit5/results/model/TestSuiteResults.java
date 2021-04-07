@@ -30,10 +30,7 @@ import java.util.stream.Collectors;
  * </testsuite>
  */
 public class TestSuiteResults {
-    // TestSuiteResultsId?
-    private final String name;
-    private final String className;
-    private final String packageName;
+    private final TestSuiteResultsId resultsId;
 
     // TestSuiteResultsMetaData
 //    private int tests="8"
@@ -49,10 +46,8 @@ public class TestSuiteResults {
     private final ConcurrentHashMap<ExtensionContext, TestCaseResult> contextToTestResult = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
 
-    public TestSuiteResults(String name, String className, String packageName) {
-        this.name = name;
-        this.className = className;
-        this.packageName = packageName;
+    public TestSuiteResults(TestSuiteResultsId resultsId) {
+        this.resultsId = resultsId;
     }
 
     public TestCaseResult newResultsForTest(ExtensionContext context) {
@@ -77,16 +72,8 @@ public class TestSuiteResults {
         return contextToTestResult.get(context);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public String getPackageName() {
-        return packageName;
+    public TestSuiteResultsId getResultsId() {
+        return resultsId;
     }
 
     public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {
@@ -121,6 +108,6 @@ public class TestSuiteResults {
     }
 
     private TestCaseResult testResult(ExtensionContext context) {
-        return new TestCaseResult(getMethodName(context), className, packageName);
+        return new TestCaseResult(getMethodName(context), resultsId);
     }
 }

@@ -34,9 +34,9 @@ public class ReportFactory {
 
     private static TestSuite classResults(TestSuiteResults testSuiteResults) {
         return new TestSuite(
-            testSuiteResults.getName(),
-            testSuiteResults.getClassName(),
-            testSuiteResults.getPackageName(),
+            testSuiteResults.getResultsId().getName(),
+            testSuiteResults.getResultsId().getClassName(),
+            testSuiteResults.getResultsId().getPackageName(),
             testSuiteResults.getMethodNames(),
             testResults(testSuiteResults.getTestResults()));
     }
@@ -50,8 +50,8 @@ public class ReportFactory {
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getMethodName(),
-            testCaseResult.getClassName(),
-            testCaseResult.getPackageName());
+            testCaseResult.getTestSuiteResultsId().getClassName(),
+            testCaseResult.getTestSuiteResultsId().getPackageName());
     }
 
     private static Status statusFrom(TestCaseResult.Status status) {

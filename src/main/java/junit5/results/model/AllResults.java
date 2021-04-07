@@ -46,10 +46,7 @@ public class AllResults {
 
     public TestSuiteResults newResultsForClass(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
-        TestSuiteResults testSuiteResults = new TestSuiteResults(
-            clazz.getName(),
-            clazz.getSimpleName(),
-            clazz.getPackage().getName());
+        TestSuiteResults testSuiteResults = new TestSuiteResults(new TestSuiteResultsId(clazz));
         classNameToClassResults.put(getClassName(context), testSuiteResults);
         return testSuiteResults;
     }

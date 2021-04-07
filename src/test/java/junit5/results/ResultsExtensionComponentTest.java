@@ -2,6 +2,7 @@ package junit5.results;
 
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestSuiteResults;
+import junit5.results.model.TestSuiteResultsId;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,9 @@ public class ResultsExtensionComponentTest {
         TestSuiteResults testSuiteResults = ResultsExtension.getTestResultsForClasses().getClassNameToClassResults().get(CLASS_UNDER_TEST_NAME);
         assertThat(testSuiteResults).isNotNull();
 
-        assertThat(testSuiteResults.getClassName()).isEqualTo(CLASS_UNDER_TEST_NAME);
-        assertThat(testSuiteResults.getName()).isEqualTo(PACKAGE_NAME + "." + CLASS_UNDER_TEST_NAME);
-        assertThat(testSuiteResults.getPackageName()).isEqualTo(PACKAGE_NAME);
+        assertThat(testSuiteResults.getResultsId().getClassName()).isEqualTo(CLASS_UNDER_TEST_NAME);
+        assertThat(testSuiteResults.getResultsId().getName()).isEqualTo(PACKAGE_NAME + "." + CLASS_UNDER_TEST_NAME);
+        assertThat(testSuiteResults.getResultsId().getPackageName()).isEqualTo(PACKAGE_NAME);
         assertThat(testSuiteResults.getMethodNames()).contains(
             "firstTest",
             "secondTest",
@@ -51,7 +52,7 @@ public class ResultsExtensionComponentTest {
     }
 
     private TestCaseResult testResult(String wordify) {
-        final TestCaseResult testCaseResult = new TestCaseResult("thirdParamTest", CLASS_UNDER_TEST_NAME, PACKAGE_NAME);
+        final TestCaseResult testCaseResult = new TestCaseResult("thirdParamTest", new TestSuiteResultsId(CLASS_UNDER_TEST));
         testCaseResult.setWordify(wordify);
         testCaseResult.setStatus(PASSED);
         return testCaseResult;
