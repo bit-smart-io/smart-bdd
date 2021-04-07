@@ -2,7 +2,7 @@ package report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import report.model.ClassResults;
+import report.model.TestSuite;
 import report.model.Report;
 
 import java.io.File;
@@ -16,7 +16,7 @@ public class ReportWriter {
 
     public void write(Report report) {
 //        report.getClassResultsList().forEach(this::sout);
-        report.getClassResultsList().forEach(this::write);
+        report.getTestSuites().forEach(this::write);
     }
 
     private void prepareDir() {
@@ -25,26 +25,30 @@ public class ReportWriter {
         outputDir.getParentFile().mkdirs();
     }
 
-    private final void sout(ClassResults classResults) {
+    private void sout(TestSuite testSuite) {
         try {
-            String json = mapper.writeValueAsString(classResults);
+            String json = mapper.writeValueAsString(testSuite);
             System.out.println(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private final void write(ClassResults classResults) {
+    private void write(TestSuite testSuite) {
         try {
-            String json = mapper.writeValueAsString(classResults);
-            File file = outputFile("testName");
-            //System.out.println("output: " + file);
+            String json = mapper.writeValueAsString(testSuite);
+            File file = outputFile(fullyQualifiedName(testSuite));
+            System.out.println("output: " + file);
             FileWriter writer = new FileWriter(file);
             writer.write(json);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String fullyQualifiedName(TestSuite testSuite) {
+        return testSuite.getName();
     }
 
     private static File outputFile(String testName) {

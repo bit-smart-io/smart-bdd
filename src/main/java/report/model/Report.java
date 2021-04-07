@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
-    private List<TestResult> testResults = new ArrayList<>();
-    private List<ClassResults> classResultsList = new ArrayList<>();
+    private List<TestCase> testCases = new ArrayList<>();
+    private List<TestSuite> testSuites = new ArrayList<>();
 
-    public List<TestResult> getTestResults() {
-        return testResults;
+    public List<TestCase> getTestCases() {
+        return testCases;
     }
 
-    public List<ClassResults> getClassResultsList() {
-        return classResultsList;
+    public List<TestSuite> getTestSuites() {
+        return testSuites;
     }
 
-    public void addTestResult(TestResult testResult) {
-        testResults.add(testResult);
+    public void addTestResult(TestCase testCase) {
+        testCases.add(testCase);
     }
 
-    public void addClassResult(ClassResults classResults) {
-       this.classResultsList.add(classResults);
+    public void addClassResult(TestSuite testSuite) {
+       this.testSuites.add(testSuite);
     }
 }

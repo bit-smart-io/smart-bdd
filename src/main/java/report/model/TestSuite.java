@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ClassResults {
+public class TestSuite {
+    private final String name;
     private final String className;
     private final String packageName;
     private final List<String> methodNames;
-    private final List<TestResult> testResults;
+    private final List<TestCase> testCases;
 
     // setup,tear down metrics
     // time started
@@ -18,16 +19,22 @@ public class ClassResults {
     //  passing count
 
     @JsonCreator
-    public ClassResults(
+    public TestSuite(
+        @JsonProperty("name") String name,
         @JsonProperty("className") String className,
         @JsonProperty("packageName") String packageName,
         @JsonProperty("methodNames") List<String> methodNames,
-        @JsonProperty("testResults") List<TestResult> testResults)
+        @JsonProperty("testResults") List<TestCase> testCases)
     {
+        this.name = name;
         this.className = className;
         this.packageName = packageName;
         this.methodNames = methodNames;
-        this.testResults = testResults;
+        this.testCases = testCases;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getClassName() {
@@ -42,7 +49,7 @@ public class ClassResults {
         return methodNames;
     }
 
-    public List<TestResult> getTestResults() {
-        return testResults;
+    public List<TestCase> getTestResults() {
+        return testCases;
     }
 }

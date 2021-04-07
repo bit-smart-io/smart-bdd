@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
-public class DebugLauncherTest {
+public class DebugExtensionComponentTest {
 
     @BeforeEach
     void setUp() {

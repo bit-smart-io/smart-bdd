@@ -10,7 +10,7 @@ import java.util.Objects;
  * java.lang.reflect.Parameter
  * java.lang.reflect.Method#getParameterTypes()
  */
-public class TestResult {
+public class TestCase {
     private final String wordify;
     private final Status status;
     private final String methodName;
@@ -21,7 +21,7 @@ public class TestResult {
     // time taken
 
     @JsonCreator
-    public TestResult(
+    public TestCase(
         @JsonProperty("wordify")  String wordify,
         @JsonProperty("status")  Status status,
         @JsonProperty("methodName")  String methodName,
@@ -69,9 +69,9 @@ public class TestResult {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestResult)) return false;
-        TestResult testResult = (TestResult) o;
-        return Objects.equals(wordify, testResult.wordify) && status == testResult.status && Objects.equals(methodName, testResult.methodName) && Objects.equals(className, testResult.className) && Objects.equals(packageName, testResult.packageName);
+        if (!(o instanceof TestCase)) return false;
+        TestCase testCase = (TestCase) o;
+        return Objects.equals(wordify, testCase.wordify) && status == testCase.status && Objects.equals(methodName, testCase.methodName) && Objects.equals(className, testCase.className) && Objects.equals(packageName, testCase.packageName);
     }
 
     @Override

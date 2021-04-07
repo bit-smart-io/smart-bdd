@@ -1,4 +1,4 @@
-package junit5.results;
+package junit5.results.model;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -30,25 +30,28 @@ import java.util.concurrent.ConcurrentHashMap;
  *   className(name)
  */
 public class AllResults {
-    private final ConcurrentHashMap<String, ClassResults> classNameToClassResults = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, TestSuiteResults> classNameToClassResults = new ConcurrentHashMap<>();
 
     public List<String> getClasses() {
         return Collections.list(classNameToClassResults.keys());
     }
 
-    public ConcurrentHashMap<String, ClassResults> getClassNameToClassResults() {
+    public ConcurrentHashMap<String, TestSuiteResults> getClassNameToClassResults() {
         return classNameToClassResults;
     }
 
-    public ClassResults getTestResultsForClass(ExtensionContext extensionContext) {
+    public TestSuiteResults getTestResultsForClass(ExtensionContext extensionContext) {
         return classNameToClassResults.get(getClassName(extensionContext));
     }
 
-    public ClassResults newResultsForClass(ExtensionContext context) {
+    public TestSuiteResults newResultsForClass(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
-        ClassResults classResults = new ClassResults(clazz.getSimpleName(), clazz.getPackage().getName());
-        classNameToClassResults.put(getClassName(context), classResults);
-        return classResults;
+        TestSuiteResults testSuiteResults = new TestSuiteResults(
+            clazz.getName(),
+            clazz.getSimpleName(),
+            clazz.getPackage().getName());
+        classNameToClassResults.put(getClassName(context), testSuiteResults);
+        return testSuiteResults;
     }
 
     public String getClassName(ExtensionContext extensionContext) {

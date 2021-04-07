@@ -1,9 +1,12 @@
 package junit5.results;
 
-import report.model.ClassResults;
+import junit5.results.model.AllResults;
+import junit5.results.model.TestCaseResult;
+import junit5.results.model.TestSuiteResults;
+import report.model.TestSuite;
 import report.model.Report;
 import report.model.Status;
-import report.model.TestResult;
+import report.model.TestCase;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,43 +17,44 @@ public class ReportFactory {
 
     public static Report create(AllResults allResults) {
         Report report = new Report();
-        Collection<junit5.results.ClassResults> classResultsList = allResults.getClassNameToClassResults().values();
+        Collection<TestSuiteResults> testSuiteResultsList = allResults.getClassNameToClassResults().values();
 
-        classResultsList.forEach(classResult -> report.addClassResult(classResults(classResult)));
+        testSuiteResultsList.forEach(classResult -> report.addClassResult(classResults(classResult)));
 
-        List<junit5.results.TestResult> allTestResults = classResultsList.stream()
+        List<TestCaseResult> allTestCaseResults = testSuiteResultsList.stream()
             .flatMap(classResults -> classResults.getContextToTestResult().values().stream())
             .collect(toList());
 
-        allTestResults.forEach(testResult ->
+        allTestCaseResults.forEach(testResult ->
             report.addTestResult(testResult(testResult))
         );
 
         return report;
     }
 
-    private static ClassResults classResults(junit5.results.ClassResults classResults) {
-        return new ClassResults(
-            classResults.getClassName(),
-            classResults.getPackageName(),
-            classResults.getMethodNames(),
-            testResults(classResults.getTestResults()));
+    private static TestSuite classResults(TestSuiteResults testSuiteResults) {
+        return new TestSuite(
+            testSuiteResults.getName(),
+            testSuiteResults.getClassName(),
+            testSuiteResults.getPackageName(),
+            testSuiteResults.getMethodNames(),
+            testResults(testSuiteResults.getTestResults()));
     }
 
-    private static List<TestResult> testResults(List<junit5.results.TestResult> testResults) {
-        return testResults.stream().map(ReportFactory::testResult).collect(toList());
+    private static List<TestCase> testResults(List<TestCaseResult> testCaseResults) {
+        return testCaseResults.stream().map(ReportFactory::testResult).collect(toList());
     }
 
-    private static TestResult testResult(junit5.results.TestResult testResult) {
-        return new TestResult(
-            testResult.getWordify(),
-            statusFrom(testResult.getStatus()),
-            testResult.getMethodName(),
-            testResult.getClassName(),
-            testResult.getPackageName());
+    private static TestCase testResult(TestCaseResult testCaseResult) {
+        return new TestCase(
+            testCaseResult.getWordify(),
+            statusFrom(testCaseResult.getStatus()),
+            testCaseResult.getMethodName(),
+            testCaseResult.getClassName(),
+            testCaseResult.getPackageName());
     }
 
-    private static Status statusFrom(junit5.results.TestResult.Status status) {
+    private static Status statusFrom(TestCaseResult.Status status) {
         switch (status) {
             case PASSED:
                 return Status.PASSED;

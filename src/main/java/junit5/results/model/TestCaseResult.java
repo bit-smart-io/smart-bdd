@@ -1,8 +1,8 @@
-package junit5.results;
+package junit5.results.model;
 
 import java.util.Objects;
 
-public class TestResult {
+public class TestCaseResult {
     private String wordify;
     private Status status;
     private final String methodName;
@@ -14,7 +14,7 @@ public class TestResult {
         FAILED,
     }
 
-    public TestResult(String methodName, String className, String packageName) {
+    public TestCaseResult(String methodName, String className, String packageName) {
         this.methodName = methodName;
         this.className = className;
         this.packageName = packageName;
@@ -62,8 +62,8 @@ public class TestResult {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestResult)) return false;
-        TestResult that = (TestResult) o;
+        if (!(o instanceof TestCaseResult)) return false;
+        TestCaseResult that = (TestCaseResult) o;
         return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(methodName, that.methodName) && Objects.equals(className, that.className) && Objects.equals(packageName, that.packageName);
     }
 

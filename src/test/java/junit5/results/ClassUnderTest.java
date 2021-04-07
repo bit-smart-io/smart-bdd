@@ -7,7 +7,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import report.ResultsExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

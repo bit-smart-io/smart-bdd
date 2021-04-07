@@ -1,7 +1,7 @@
 package ft.report;
 
 import report.model.Status;
-import report.model.TestResult;
+import report.model.TestCase;
 
 public final class ResultBuilder {
     private String wordify;
@@ -42,7 +42,7 @@ public final class ResultBuilder {
         return this;
     }
 
-    public TestResult build() {
-        return new TestResult(wordify, status, methodName, className, packageName);
+    public TestCase build() {
+        return new TestCase(wordify, status, methodName, className, packageName);
     }
 }

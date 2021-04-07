@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
 import ft.bdd.examples.cucumber.CucumberService;
-import report.ResultsExtension;
+import junit5.results.ResultsExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
