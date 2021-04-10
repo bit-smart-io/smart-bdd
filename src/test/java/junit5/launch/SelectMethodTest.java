@@ -1,13 +1,12 @@
 package junit5.launch;
 
-import junit5.results.debug.DebugExtension;
+import junit5.debugextension.DebugExtension;
 import junit5.utils.TestLauncher;
-import junit5.utils.TestListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import junit5.results.debug.utils.debugcapture.CaptureTestClass;
-import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
+import junit5.debugextension.utils.debugcapture.CaptureTestClass;
+import junit5.debugextension.utils.debugcapture.CaptureTestMethod;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;

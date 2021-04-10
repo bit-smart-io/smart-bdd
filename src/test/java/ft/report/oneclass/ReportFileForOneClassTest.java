@@ -15,9 +15,6 @@ import report.model.TestCase;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static ft.report.ResultBuilder.aResult;
 import static java.lang.System.getProperty;
@@ -56,7 +53,7 @@ public class ReportFileForOneClassTest {
     void writeReport() throws IOException {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ResultsExtension.getTestResultsForClasses());
+        Report report = ReportFactory.create(ResultsExtension.getAllResults());
 
         assertThat(report.getTestCases()).contains(firstTestResult());
         ReportWriter reportWriter = new ReportWriter();

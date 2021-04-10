@@ -1,4 +1,4 @@
-package junit5.results.debug;
+package junit5.debugextension;
 
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -8,13 +8,13 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
-import junit5.results.debug.utils.debugcapture.CaptureTestClass;
-import junit5.results.debug.utils.debugcapture.CaptureTestClasses;
-import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
-import junit5.results.debug.utils.debugcapture.methods.Callback;
-import junit5.results.debug.utils.debugcapture.methods.DynamicTest;
-import junit5.results.debug.utils.debugcapture.methods.TestClassConstructor;
-import junit5.results.debug.utils.debugcapture.methods.InterceptTestFactoryBaseMethod;
+import junit5.debugextension.utils.debugcapture.CaptureTestClass;
+import junit5.debugextension.utils.debugcapture.CaptureTestClasses;
+import junit5.debugextension.utils.debugcapture.CaptureTestMethod;
+import junit5.debugextension.utils.debugcapture.methods.Callback;
+import junit5.debugextension.utils.debugcapture.methods.DynamicTest;
+import junit5.debugextension.utils.debugcapture.methods.TestClassConstructor;
+import junit5.debugextension.utils.debugcapture.methods.InterceptTestFactoryBaseMethod;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * Used for learning
+ *
+ * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
  */
 public class DebugExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {

@@ -15,9 +15,13 @@ import wordify.WordifyExtensionContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
-import static junit5.results.model.TestCaseResult.Status.PASSED;
+import static junit5.results.model.TestCaseStatus.PASSED;
 
+/**
+ * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
+ */
 public class ResultsExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
     private static final AllResults allResults = new AllResults();
@@ -44,51 +48,77 @@ public class ResultsExtension implements
         //ResultsForClass captureTestClass = testResultCollector.afterEach(context);
     }
 
+    @Override
     public <T> T interceptTestClassConstructor(Invocation<T> invocation, ReflectiveInvocationContext<Constructor<T>> invocationContext, ExtensionContext extensionContext) throws Throwable {
         return invocation.proceed();
     }
 
+    @Override
     public void interceptBeforeAllMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         invocation.proceed();
     }
 
+    @Override
     public void interceptBeforeEachMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         invocation.proceed();
     }
 
+    @Override
     public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         wordify(invocationContext, extensionContext, "interceptTestMethod");
         invocation.proceed();
     }
 
+    @Override
     public <T> T interceptTestFactoryMethod(Invocation<T> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         wordify(invocationContext, extensionContext, "interceptTestFactoryMethod");
         return invocation.proceed();
     }
 
+    @Override
     public void interceptTestTemplateMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         wordify(invocationContext, extensionContext, "interceptTestTemplateMethod");
         invocation.proceed();
     }
 
+    @Override
     public void interceptDynamicTest(Invocation<Void> invocation, ExtensionContext extensionContext) throws Throwable {
         invocation.proceed();
     }
 
+    @Override
     public void interceptAfterEachMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         invocation.proceed();
     }
 
+    @Override
     public void interceptAfterAllMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         invocation.proceed();
     }
 
+    @Override
     public void testSuccessful(ExtensionContext context) {
         TestCaseResult testCaseResult = getTestResultsForTest(context);
         testCaseResult.setStatus(PASSED);
     }
 
-    public static AllResults getTestResultsForClasses() {
+    @Override
+    public void testDisabled(ExtensionContext context, Optional<String> reason) {
+        TestSuiteResults testSuiteResults = allResults.getTestResultsForClass(context);
+        TestCaseResult testCaseResult = testSuiteResults.newResultsForTest(context);
+    }
+
+    @Override
+    public void testAborted(ExtensionContext context, Throwable cause) {
+        /* no-op */
+    }
+
+    @Override
+    public void testFailed(ExtensionContext context, Throwable cause) {
+        /* no-op */
+    }
+
+    public static AllResults getAllResults() {
         return allResults;
     }
 

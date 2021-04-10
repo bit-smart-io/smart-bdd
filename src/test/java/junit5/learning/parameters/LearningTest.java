@@ -26,6 +26,6 @@ public class LearningTest {
     @DisplayName("RepeatingTest")
     void customDisplayName(RepetitionInfo repInfo, TestInfo testInfo) {
         System.out.println(testInfo.getDisplayName() + "-->" + repInfo.getCurrentRepetition());
-        assertThat(testInfo.getDisplayName() ).startsWith("RepeatingTest ");
+        assertThat(testInfo.getDisplayName()).startsWith("RepeatingTest ");
     }
 }

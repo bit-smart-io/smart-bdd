@@ -24,7 +24,7 @@ public class ReportComponentTest {
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ResultsExtension.getTestResultsForClasses());
+        Report report = ReportFactory.create(ResultsExtension.getAllResults());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(5);
 

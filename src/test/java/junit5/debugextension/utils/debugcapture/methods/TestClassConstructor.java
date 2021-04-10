@@ -1,19 +1,19 @@
-package junit5.results.debug.utils.debugcapture.methods;
+package junit5.debugextension.utils.debugcapture.methods;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 
-public class InterceptTestFactoryBaseMethod<T> extends BaseMethod {
+public class TestClassConstructor<T> extends BaseMethod {
     private final InvocationInterceptor.Invocation<T> invocation;
-    private final ReflectiveInvocationContext<Method> invocationContext;
+    private final ReflectiveInvocationContext<Constructor<T>> invocationContext;
 
-    public InterceptTestFactoryBaseMethod(
+    public TestClassConstructor(
         String name,
         InvocationInterceptor.Invocation<T> invocation,
-        ReflectiveInvocationContext<Method> invocationContext,
+        ReflectiveInvocationContext<Constructor<T>> invocationContext,
         ExtensionContext extensionContext
     ) {
         super(name, extensionContext);
@@ -25,9 +25,10 @@ public class InterceptTestFactoryBaseMethod<T> extends BaseMethod {
         return invocation;
     }
 
-    public ReflectiveInvocationContext<Method> getInvocationContext() {
+    public ReflectiveInvocationContext<Constructor<T>> getInvocationContext() {
         return invocationContext;
     }
+
 
     @Override
     public String toString() {

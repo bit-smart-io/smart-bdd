@@ -1,4 +1,4 @@
-package junit5.results.success;
+package junit5.learning.wordify;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;

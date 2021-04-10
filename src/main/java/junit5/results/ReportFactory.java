@@ -2,6 +2,7 @@ package junit5.results;
 
 import junit5.results.model.AllResults;
 import junit5.results.model.TestCaseResult;
+import junit5.results.model.TestCaseStatus;
 import junit5.results.model.TestSuiteResults;
 import report.model.TestSuite;
 import report.model.Report;
@@ -54,7 +55,7 @@ public class ReportFactory {
             testCaseResult.getTestSuiteResultsId().getPackageName());
     }
 
-    private static Status statusFrom(TestCaseResult.Status status) {
+    private static Status statusFrom(TestCaseStatus status) {
         switch (status) {
             case PASSED:
                 return Status.PASSED;

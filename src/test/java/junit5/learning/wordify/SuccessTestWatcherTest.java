@@ -1,4 +1,4 @@
-package junit5.results.success;
+package junit5.learning.wordify;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

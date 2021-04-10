@@ -31,15 +31,7 @@ import java.util.stream.Collectors;
  */
 public class TestSuiteResults {
     private final TestSuiteResultsId resultsId;
-
-    // TestSuiteResultsMetaData
-//    private int tests="8"
-//    private int skipped="0"
-//    private failures="0"
-//    private errors="0"
-//    private Datetime timestamp="2021-03-30T20:03:44"
-//    private String hostname="Jamess-MacBook-Pro.local"
-//    privat long time="0.021"
+    private final TestSuiteResultsMetadata resultsMetadata = new TestSuiteResultsMetadata();
 
     private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
@@ -51,6 +43,8 @@ public class TestSuiteResults {
     }
 
     public TestCaseResult newResultsForTest(ExtensionContext context) {
+        resultsMetadata.incrementTest();
+
         TestCaseResult testCaseResult = testResult(context);
         String methodName = getMethodName(context);
         methodNames.add(methodName);
@@ -74,6 +68,10 @@ public class TestSuiteResults {
 
     public TestSuiteResultsId getResultsId() {
         return resultsId;
+    }
+
+    public TestSuiteResultsMetadata getResultsMetadata() {
+        return resultsMetadata;
     }
 
     public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {
@@ -108,6 +106,6 @@ public class TestSuiteResults {
     }
 
     private TestCaseResult testResult(ExtensionContext context) {
-        return new TestCaseResult(getMethodName(context), resultsId);
+        return new TestCaseResult(getMethodName(context), new TestSuiteResultsId(context.getRequiredTestClass()));
     }
 }

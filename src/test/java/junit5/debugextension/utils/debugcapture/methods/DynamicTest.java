@@ -1,4 +1,4 @@
-package junit5.results.debug.utils.debugcapture.methods;
+package junit5.debugextension.utils.debugcapture.methods;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;

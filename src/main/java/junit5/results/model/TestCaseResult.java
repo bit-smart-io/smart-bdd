@@ -4,14 +4,9 @@ import java.util.Objects;
 
 public class TestCaseResult {
     private String wordify;
-    private Status status;
+    private TestCaseStatus status;
     private final String methodName;
     private final TestSuiteResultsId testSuiteResultsId;
-
-    public enum Status {
-        PASSED,
-        FAILED,
-    }
 
     public TestCaseResult(String methodName, TestSuiteResultsId testSuiteResultsId) {
         this.methodName = methodName;
@@ -22,7 +17,7 @@ public class TestCaseResult {
         return wordify;
     }
 
-    public Status getStatus() {
+    public TestCaseStatus getStatus() {
         return status;
     }
 
@@ -38,7 +33,7 @@ public class TestCaseResult {
         this.wordify = wordify;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TestCaseStatus status) {
         this.status = status;
     }
 

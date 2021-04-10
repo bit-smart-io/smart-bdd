@@ -1,5 +1,6 @@
-package junit5.results;
+package junit5.results.undertest;
 
+import junit5.results.ResultsExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,29 +11,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * This is used by ResultsLauncherTest
- */
 @TestMethodOrder(OrderAnnotation.class)
 @ExtendWith(ResultsExtension.class)
-class ClassUnderTest {
+public class ClassUnderTest {
 
     @Order(0)
     @Test
-    void firstTest() {
-        assertThat("firstTest").isEqualTo("firstTest");
-    }
-
-    @Order(1)
-    @Test
-    void secondTest() {
-        assertThat("secondTest").isEqualTo("secondTest");
+    void testMethod() {
+        assertThat("testMethod").isEqualTo("testMethod");
     }
 
     @ParameterizedTest
-    @Order(2)
+    @Order(1)
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void thirdParamTest(String key) {
+    void paramTest(String key) {
         assertThat(key).isNotNull();
     }
 }

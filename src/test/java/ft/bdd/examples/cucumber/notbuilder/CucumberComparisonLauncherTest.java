@@ -14,9 +14,9 @@ public class CucumberComparisonLauncherTest {
     void launchTests() {
         ResultsExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ResultsExtension.getTestResultsForClasses().getClasses()).containsExactly("CucumberComparisonTest");
+        assertThat(ResultsExtension.getAllResults().getClasses()).containsExactly("CucumberComparisonTest");
 
-        TestSuiteResults testSuiteResults = ResultsExtension.getTestResultsForClasses().getClassNameToClassResults().get("CucumberComparisonTest");
+        TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToClassResults().get("CucumberComparisonTest");
         assertThat(testSuiteResults).isNotNull();
 
         assertThat(testSuiteResults.getMethodNames()).contains(

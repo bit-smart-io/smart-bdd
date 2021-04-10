@@ -1,6 +1,6 @@
-package junit5.results.debug.undertest;
+package junit5.debugextension.undertest;
 
-import junit5.results.debug.DebugExtension;
+import junit5.debugextension.DebugExtension;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

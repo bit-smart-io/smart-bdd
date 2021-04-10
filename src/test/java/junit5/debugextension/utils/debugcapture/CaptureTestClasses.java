@@ -1,4 +1,4 @@
-package junit5.results.debug.utils.debugcapture;
+package junit5.debugextension.utils.debugcapture;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 

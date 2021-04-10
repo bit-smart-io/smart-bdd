@@ -18,7 +18,7 @@ public class CucumberComparisonLauncherTest {
     public static void setUp() {
         ResultsExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        testSuiteResults = ResultsExtension.getTestResultsForClasses().getClassNameToClassResults().get("CucumberComparisonTest");
+        testSuiteResults = ResultsExtension.getAllResults().getClassNameToClassResults().get("CucumberComparisonTest");
     }
 
     @Test

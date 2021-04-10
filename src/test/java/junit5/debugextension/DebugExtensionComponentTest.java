@@ -1,8 +1,8 @@
-package junit5.results.debug;
+package junit5.debugextension;
 
-import junit5.results.debug.undertest.ClassUnderTest1;
-import junit5.results.debug.utils.debugcapture.CaptureTestClass;
-import junit5.results.debug.utils.debugcapture.CaptureTestMethod;
+import junit5.debugextension.undertest.ClassUnderTest1;
+import junit5.debugextension.utils.debugcapture.CaptureTestClass;
+import junit5.debugextension.utils.debugcapture.CaptureTestMethod;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class DebugExtensionComponentTest {
 
     @Test
     void debugTestsInPackage() {
-        TestLauncher.launch(selectPackage("junit5.results.debug.undertest"));
+        TestLauncher.launch(selectPackage(ClassUnderTest1.class.getPackage().getName()));
 
         assertThat(DebugExtension.getCapturedTestClasses().getClasses()).containsExactly("ClassUnderTest1", "ClassUnderTest2");
         verifyClassUnderTestMethods("ClassUnderTest1", "class1_");
