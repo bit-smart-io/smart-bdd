@@ -17,6 +17,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Optional;
 
+import static junit5.results.model.TestCaseStatus.DISABLED;
 import static junit5.results.model.TestCaseStatus.PASSED;
 
 /**
@@ -29,23 +30,21 @@ public class ResultsExtension implements
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        TestSuiteResults testSuiteResults = allResults.newResultsForClass(context);
+        allResults.newTestSuiteResults(context);
     }
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        TestSuiteResults testSuiteResults = allResults.getTestResultsForClass(context);
-        TestCaseResult testCaseResult = testSuiteResults.newResultsForTest(context);
+        getTestSuiteResults(context).newTestCaseResult(context);
     }
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        //ResultsForClass captureTestClass = testResultCollector.afterAll(context);
+        getTestSuiteResults(context).completedTestCaseResult(context);
     }
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
-        //ResultsForClass captureTestClass = testResultCollector.afterEach(context);
     }
 
     @Override
@@ -98,14 +97,12 @@ public class ResultsExtension implements
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        TestCaseResult testCaseResult = getTestResultsForTest(context);
-        testCaseResult.setStatus(PASSED);
+        getTestCaseResult(context).setStatus(PASSED);
     }
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        TestSuiteResults testSuiteResults = allResults.getTestResultsForClass(context);
-        TestCaseResult testCaseResult = testSuiteResults.newResultsForTest(context);
+        getTestSuiteResults(context).newTestCaseResult(context).setStatus(DISABLED);
     }
 
     @Override
@@ -122,17 +119,17 @@ public class ResultsExtension implements
         return allResults;
     }
 
-    private TestSuiteResults getTestResultsForClass(ExtensionContext context) {
+    private TestSuiteResults getTestSuiteResults(ExtensionContext context) {
         return allResults.getTestResultsForClass(context);
     }
 
-    private TestCaseResult getTestResultsForTest(ExtensionContext context) {
-        TestSuiteResults testSuiteResults = allResults.getTestResultsForClass(context);
+    private TestCaseResult getTestCaseResult(ExtensionContext context) {
+        TestSuiteResults testSuiteResults = getTestSuiteResults(context);
         return testSuiteResults.getResultsForTest(context);
     }
 
     private void wordify(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, String methodName) {
-        TestCaseResult testCaseResult = getTestResultsForTest(extensionContext);
+        TestCaseResult testCaseResult = getTestCaseResult(extensionContext);
         wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(testCaseResult::setWordify);
 //        System.out.println(methodName + ", method: " + extensionContext.getTestMethod() + ", wordify: " + wordify);
     }

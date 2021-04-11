@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
+
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.learning.parameters.LearningTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-03-30T20:03:44" hostname="Jamess-MacBook-Pro.local" time="0.021">
@@ -31,7 +33,7 @@ import java.util.stream.Collectors;
  */
 public class TestSuiteResults {
     private final TestSuiteResultsId resultsId;
-    private final TestSuiteResultsMetadata resultsMetadata = new TestSuiteResultsMetadata();
+    private TestSuiteResultsMetadata resultsMetadata;
 
     private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
@@ -42,14 +44,12 @@ public class TestSuiteResults {
         this.resultsId = resultsId;
     }
 
-    public TestCaseResult newResultsForTest(ExtensionContext context) {
-        resultsMetadata.incrementTest();
-
+    public TestCaseResult newTestCaseResult(ExtensionContext context) {
         TestCaseResult testCaseResult = testResult(context);
         String methodName = getMethodName(context);
         methodNames.add(methodName);
 
-        if(methodNameToContexts.containsKey(methodName)){
+        if(methodNameToContexts.containsKey(methodName)) {
             methodNameToContexts.get(methodName).add(context);
         } else {
             List<ExtensionContext> contexts = new ArrayList<>();
@@ -60,6 +60,10 @@ public class TestSuiteResults {
         testCaseResults.add(testCaseResult);
         contextToTestResult.put(context, testCaseResult);
         return testCaseResult;
+    }
+
+    public void completedTestCaseResult(ExtensionContext context) {
+        resultsMetadata = new TestSuiteResultsMetadataFactory().testSuiteResultsMetadata(testCaseResults);
     }
 
     public TestCaseResult getResultsForTest(ExtensionContext context) {
@@ -106,6 +110,6 @@ public class TestSuiteResults {
     }
 
     private TestCaseResult testResult(ExtensionContext context) {
-        return new TestCaseResult(getMethodName(context), new TestSuiteResultsId(context.getRequiredTestClass()));
+        return new TestCaseResult(getMethodName(context), testSuiteResultsId(context.getRequiredTestClass()));
     }
 }

@@ -7,10 +7,14 @@ public class TestSuiteResultsId {
     private final String className;
     private final String packageName;
 
-    public TestSuiteResultsId(Class<?> clazz) {
-        this.name = clazz.getName();
-        this.className =  clazz.getSimpleName();
-        this.packageName = clazz.getPackage().getName();
+    public TestSuiteResultsId(String name, String className, String packageName) {
+        this.name = name;
+        this.className = className;
+        this.packageName = packageName;
+    }
+
+    public static TestSuiteResultsId testSuiteResultsId(Class<?> clazz) {
+        return new TestSuiteResultsId(clazz.getName(), clazz.getSimpleName(), clazz.getPackage().getName());
     }
 
     public String getName() {

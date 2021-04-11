@@ -11,8 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static junit5.results.model.TestCaseStatus.PASSED;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultsExtensionComponentTest {
     @BeforeEach
@@ -36,6 +37,8 @@ public class ResultsExtensionComponentTest {
         assertResultsId(testSuiteResults, clazz);
 
         assertThat(testSuiteResults.getResultsMetadata().getTestCaseCount()).isEqualTo(4);
+        assertThat(testSuiteResults.getResultsMetadata().getPassedCount()).isEqualTo(4);
+        assertThat(testSuiteResults.getResultsMetadata().getSkippedCount()).isEqualTo(0);
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
             "paramTest",
@@ -43,13 +46,12 @@ public class ResultsExtensionComponentTest {
             "paramTest"
         );
 
-        TestCaseResult firstTest = testSuiteResults.getCapturedTestMethod("testMethod");
-        assertThat(firstTest.getWordify()).isEqualTo("Assert that \"test method\" is equal to \"test method\"");
+        assertThat(testSuiteResults.getCapturedTestMethod("testMethod")).isEqualTo(testMethod());
 
-        List<TestCaseResult> thirdTest = testSuiteResults.getCapturedTestMethods("paramTest");
-        assertThat(thirdTest.get(0)).isEqualTo(passingParamTestCaseResult("Assert that value 1 is not null"));
-        assertThat(thirdTest.get(1)).isEqualTo(passingParamTestCaseResult("Assert that value 2 is not null"));
-        assertThat(thirdTest.get(2)).isEqualTo(passingParamTestCaseResult("Assert that value 3 is not null"));
+        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        assertThat(paramTest.get(0)).isEqualTo(passingParamTestCaseResult("Assert that value 1 is not null"));
+        assertThat(paramTest.get(1)).isEqualTo(passingParamTestCaseResult("Assert that value 2 is not null"));
+        assertThat(paramTest.get(2)).isEqualTo(passingParamTestCaseResult("Assert that value 3 is not null"));
     }
 
     @Test
@@ -59,12 +61,12 @@ public class ResultsExtensionComponentTest {
         assertResultsId(testSuiteResults, clazz);
 
         assertThat(testSuiteResults.getResultsMetadata().getTestCaseCount()).isEqualTo(2);
-        //assertThat(testSuiteResults.getResultsMetadata().getSkippedCount()).isEqualTo(2);
+        assertThat(testSuiteResults.getResultsMetadata().getPassedCount()).isEqualTo(0);
+        assertThat(testSuiteResults.getResultsMetadata().getSkippedCount()).isEqualTo(2);
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
             "paramTest"
         );
-
     }
 
     private void assertResultsId(TestSuiteResults testSuiteResults, Class<?> clazz) {
@@ -79,11 +81,25 @@ public class ResultsExtensionComponentTest {
         return ResultsExtension.getAllResults().getClassNameToClassResults().get(clazz.getSimpleName());
     }
 
-    //TODO create builders for these!
     private TestCaseResult passingParamTestCaseResult(String wordify) {
-        final TestCaseResult testCaseResult = new TestCaseResult("paramTest", new TestSuiteResultsId(ClassUnderTest.class));
-        testCaseResult.setWordify(wordify);
-        testCaseResult.setStatus(PASSED);
-        return testCaseResult;
+        return aTestCaseResult()
+            .withMethodName("paramTest")
+            .withWordify(wordify)
+            .withStatus(PASSED)
+            .withTestSuiteResultsId(testSuiteResultsId())
+            .build();
+    }
+
+    private TestCaseResult testMethod() {
+        return aTestCaseResult()
+            .withMethodName("testMethod")
+            .withWordify("Assert that \"test method\" is equal to \"test method\"")
+            .withStatus(PASSED)
+            .withTestSuiteResultsId(testSuiteResultsId())
+            .build();
+    }
+
+    private TestSuiteResultsId testSuiteResultsId() {
+        return TestSuiteResultsId.testSuiteResultsId(ClassUnderTest.class);
     }
 }

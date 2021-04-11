@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
+
 /**
  * This concept could be generified.
  * We could have:
@@ -44,9 +46,9 @@ public class AllResults {
         return classNameToClassResults.get(getClassName(extensionContext));
     }
 
-    public TestSuiteResults newResultsForClass(ExtensionContext context) {
+    public TestSuiteResults newTestSuiteResults(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
-        TestSuiteResults testSuiteResults = new TestSuiteResults(new TestSuiteResultsId(clazz));
+        TestSuiteResults testSuiteResults = new TestSuiteResults(testSuiteResultsId(clazz));
         classNameToClassResults.put(getClassName(context), testSuiteResults);
         return testSuiteResults;
     }
