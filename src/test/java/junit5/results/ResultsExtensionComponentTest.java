@@ -4,6 +4,8 @@ import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsId;
 import junit5.results.model.TestSuiteResultsMetadata;
+import junit5.results.undertest.AbortedTestCasesUnderTest;
+import junit5.results.undertest.ExceptionThrownTestCasesUnderTest;
 import junit5.results.undertest.ClassUnderTest;
 import junit5.results.undertest.DisabledTestCasesUnderTest;
 import junit5.results.undertest.FailedTestCasesUnderTest;
@@ -90,6 +92,46 @@ public class ResultsExtensionComponentTest {
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(4)
             .withFailedCount(4)
+            .build();
+        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+
+        assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
+            "testMethod",
+            "paramTest",
+            "paramTest",
+            "paramTest"
+        );
+    }
+
+    @Test
+    void resultsForFailedDueToNullPointerTestCases() {
+        Class<?> clazz = ExceptionThrownTestCasesUnderTest.class;
+        TestSuiteResults testSuiteResults = launchTestSuite(clazz);
+        assertResultsId(testSuiteResults, clazz);
+
+        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
+            .withTestCaseCount(4)
+            .withFailedCount(4)
+            .build();
+        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+
+        assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
+            "testMethod",
+            "paramTest",
+            "paramTest",
+            "paramTest"
+        );
+    }
+
+    @Test
+    void resultsForAbortedTestCases() {
+        Class<?> clazz = AbortedTestCasesUnderTest.class;
+        TestSuiteResults testSuiteResults = launchTestSuite(clazz);
+        assertResultsId(testSuiteResults, clazz);
+
+        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
+            .withTestCaseCount(4)
+            .withAbortedCount(4)
             .build();
         assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
 
