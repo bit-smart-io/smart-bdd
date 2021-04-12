@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 import static junit5.results.model.TestCaseStatus.DISABLED;
+import static junit5.results.model.TestCaseStatus.FAILED;
 import static junit5.results.model.TestCaseStatus.PASSED;
 
 /**
@@ -112,7 +113,7 @@ public class ResultsExtension implements
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        /* no-op */
+        getTestCaseResult(context).setStatus(FAILED);
     }
 
     public static AllResults getAllResults() {

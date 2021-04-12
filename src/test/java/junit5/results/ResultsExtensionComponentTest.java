@@ -3,8 +3,10 @@ package junit5.results;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsId;
+import junit5.results.model.TestSuiteResultsMetadata;
 import junit5.results.undertest.ClassUnderTest;
 import junit5.results.undertest.DisabledTestCasesUnderTest;
+import junit5.results.undertest.FailedTestCasesUnderTest;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static junit5.results.model.TestCaseStatus.PASSED;
+import static junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultsExtensionComponentTest {
@@ -25,9 +28,12 @@ public class ResultsExtensionComponentTest {
     void resultsIdContainsCorrectClassInformation() {
         TestLauncher.launch(ClassUnderTest.class);
         TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToClassResults().get("ClassUnderTest");
-        assertThat(testSuiteResults.getResultsId().getClassName()).isEqualTo("ClassUnderTest");
-        assertThat(testSuiteResults.getResultsId().getName()).isEqualTo("junit5.results.undertest.ClassUnderTest");
-        assertThat(testSuiteResults.getResultsId().getPackageName()).isEqualTo("junit5.results.undertest");
+        assertThat(testSuiteResults.getResultsId()).isEqualTo(
+            new TestSuiteResultsId(
+                "junit5.results.undertest.ClassUnderTest",
+                "ClassUnderTest",
+                "junit5.results.undertest")
+        );
     }
 
     @Test
@@ -36,9 +42,12 @@ public class ResultsExtensionComponentTest {
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
         assertResultsId(testSuiteResults, clazz);
 
-        assertThat(testSuiteResults.getResultsMetadata().getTestCaseCount()).isEqualTo(4);
-        assertThat(testSuiteResults.getResultsMetadata().getPassedCount()).isEqualTo(4);
-        assertThat(testSuiteResults.getResultsMetadata().getSkippedCount()).isEqualTo(0);
+        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
+            .withTestCaseCount(4)
+            .withPassedCount(4)
+            .build();
+        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
             "paramTest",
@@ -60,11 +69,34 @@ public class ResultsExtensionComponentTest {
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
         assertResultsId(testSuiteResults, clazz);
 
-        assertThat(testSuiteResults.getResultsMetadata().getTestCaseCount()).isEqualTo(2);
-        assertThat(testSuiteResults.getResultsMetadata().getPassedCount()).isEqualTo(0);
-        assertThat(testSuiteResults.getResultsMetadata().getSkippedCount()).isEqualTo(2);
+        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
+            .withTestCaseCount(2)
+            .withSkippedCount(2)
+            .build();
+        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
+            "paramTest"
+        );
+    }
+
+    @Test
+    void resultsForFailedTestCases() {
+        Class<?> clazz = FailedTestCasesUnderTest.class;
+        TestSuiteResults testSuiteResults = launchTestSuite(clazz);
+        assertResultsId(testSuiteResults, clazz);
+
+        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
+            .withTestCaseCount(4)
+            .withFailedCount(4)
+            .build();
+        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+
+        assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
+            "testMethod",
+            "paramTest",
+            "paramTest",
             "paramTest"
         );
     }

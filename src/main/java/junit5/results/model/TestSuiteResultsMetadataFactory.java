@@ -6,8 +6,8 @@ class TestSuiteResultsMetadataFactory {
     private int testCaseCount;
     private int passedCount;
     private int skippedCount;
-//    private failures="0"
-//    private errors="0"
+    private int failedCount;
+    private int abortedCount;
 //    private Datetime timestamp="2021-03-30T20:03:44"
 //    private String hostname="Jamess-MacBook-Pro.local"
 //    privat long time="0.021"
@@ -22,9 +22,15 @@ class TestSuiteResultsMetadataFactory {
                 case DISABLED:
                     skippedCount++;
                     break;
+                case FAILED:
+                    failedCount++;
+                    break;
+                case ABORTED:
+                    abortedCount++;
+                    break;
             }
         });
 
-        return new TestSuiteResultsMetadata(testCaseCount, passedCount, skippedCount);
+        return new TestSuiteResultsMetadata(testCaseCount, passedCount, skippedCount, failedCount, abortedCount);
     }
 }
