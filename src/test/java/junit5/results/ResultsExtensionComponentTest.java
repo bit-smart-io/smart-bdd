@@ -16,7 +16,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
+import static junit5.results.model.TestCaseStatus.FAILED;
 import static junit5.results.model.TestCaseStatus.PASSED;
+import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
 import static junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,12 +59,12 @@ public class ResultsExtensionComponentTest {
             "paramTest"
         );
 
-        assertThat(testSuiteResults.getCapturedTestMethod("testMethod")).isEqualTo(testMethod());
+        assertThat(testSuiteResults.getCapturedTestMethod("testMethod")).isEqualTo(passedTestMethod());
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
-        assertThat(paramTest.get(0)).isEqualTo(passingParamTestCaseResult("Assert that value 1 is not null"));
-        assertThat(paramTest.get(1)).isEqualTo(passingParamTestCaseResult("Assert that value 2 is not null"));
-        assertThat(paramTest.get(2)).isEqualTo(passingParamTestCaseResult("Assert that value 3 is not null"));
+        assertThat(paramTest.get(0)).isEqualTo(passedParamTestCaseResult("Assert that value 1 is not null"));
+        assertThat(paramTest.get(1)).isEqualTo(passedParamTestCaseResult("Assert that value 2 is not null"));
+        assertThat(paramTest.get(2)).isEqualTo(passedParamTestCaseResult("Assert that value 3 is not null"));
     }
 
     @Test
@@ -101,6 +103,34 @@ public class ResultsExtensionComponentTest {
             "paramTest",
             "paramTest"
         );
+
+        TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
+        assertThat(testMethod).isEqualTo(failedTestMethod());
+        assertThat(testMethod.getCause().getMessage()).isEqualTo(
+            "\n" +
+            "Expecting:\n" +
+            " <\"testMethod\">\n" +
+            "not to be equal to:\n" +
+            " <\"testMethod\">\n");
+        assertThat(testMethod.getCause().getClass()).isNotNull();
+        assertThat(testMethod.getCause().getCause()).isNull();
+        assertThat(testMethod.getCause().getStackTrace()).isNotNull();
+
+        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Assert that value 1 is null"));
+        assertThat(paramTest.get(0).getCause().getMessage()).isEqualTo(
+            "\n" +
+            "Expecting:\n" +
+            " <\"value 1\">\n" +
+            "to be equal to:\n" +
+            " <null>\n" +
+            "but was not.");
+        assertThat(paramTest.get(0).getCause().getClass()).isNotNull();
+        assertThat(paramTest.get(0).getCause().getCause()).isNull();
+        assertThat(paramTest.get(0).getCause().getStackTrace()).isNotNull();
+
+        assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Assert that value 2 is null"));
+        assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResult("Assert that value 3 is null"));
     }
 
     @Test
@@ -155,25 +185,39 @@ public class ResultsExtensionComponentTest {
         return ResultsExtension.getAllResults().getClassNameToClassResults().get(clazz.getSimpleName());
     }
 
-    private TestCaseResult passingParamTestCaseResult(String wordify) {
+    private TestCaseResult passedParamTestCaseResult(String wordify) {
         return aTestCaseResult()
             .withMethodName("paramTest")
             .withWordify(wordify)
             .withStatus(PASSED)
-            .withTestSuiteResultsId(testSuiteResultsId())
+            .withTestSuiteResultsId(testSuiteResultsId(ClassUnderTest.class))
             .build();
     }
 
-    private TestCaseResult testMethod() {
+    private TestCaseResult failedParamTestCaseResult(String wordify) {
+        return aTestCaseResult()
+            .withMethodName("paramTest")
+            .withWordify(wordify)
+            .withStatus(FAILED)
+            .withTestSuiteResultsId(testSuiteResultsId(FailedTestCasesUnderTest.class))
+            .build();
+    }
+
+    private TestCaseResult passedTestMethod() {
         return aTestCaseResult()
             .withMethodName("testMethod")
             .withWordify("Assert that \"test method\" is equal to \"test method\"")
             .withStatus(PASSED)
-            .withTestSuiteResultsId(testSuiteResultsId())
+            .withTestSuiteResultsId(testSuiteResultsId(ClassUnderTest.class))
             .build();
     }
 
-    private TestSuiteResultsId testSuiteResultsId() {
-        return TestSuiteResultsId.testSuiteResultsId(ClassUnderTest.class);
+    private TestCaseResult failedTestMethod() {
+        return aTestCaseResult()
+            .withMethodName("testMethod")
+            .withWordify("Assert that \"test method\" is not equal to \"test method\"")
+            .withStatus(FAILED)
+            .withTestSuiteResultsId(testSuiteResultsId(FailedTestCasesUnderTest.class))
+            .build();
     }
 }

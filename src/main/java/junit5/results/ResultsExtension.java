@@ -114,7 +114,7 @@ public class ResultsExtension implements
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        getTestCaseResult(context).setStatus(FAILED);
+        getTestCaseResult(context).setStatus(FAILED).setCause(cause);
     }
 
     public static AllResults getAllResults() {

@@ -5,6 +5,7 @@ import java.util.Objects;
 public class TestCaseResult {
     private String wordify;
     private TestCaseStatus status;
+    private Throwable cause;
     private final String methodName;
     private final TestSuiteResultsId testSuiteResultsId;
 
@@ -21,6 +22,10 @@ public class TestCaseResult {
         return status;
     }
 
+    public Throwable getCause() {
+        return cause;
+    }
+
     public String getMethodName() {
         return methodName;
     }
@@ -29,14 +34,22 @@ public class TestCaseResult {
         return testSuiteResultsId;
     }
 
-    public void setWordify(String wordify) {
+    public TestCaseResult setWordify(String wordify) {
         this.wordify = wordify;
+        return this;
     }
 
-    public void setStatus(TestCaseStatus status) {
+    public TestCaseResult setStatus(TestCaseStatus status) {
         this.status = status;
+        return this;
     }
 
+    public TestCaseResult setCause(Throwable cause) {
+        this.cause = cause;
+        return this;
+    }
+
+    /** does not include cause */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,11 +58,13 @@ public class TestCaseResult {
         return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(methodName, that.methodName) && Objects.equals(testSuiteResultsId, that.testSuiteResultsId);
     }
 
+    /** does not include cause */
     @Override
     public int hashCode() {
         return Objects.hash(wordify, status, methodName, testSuiteResultsId);
     }
 
+    /** does not include cause */
     @Override
     public String toString() {
         return "TestCaseResult{" +
