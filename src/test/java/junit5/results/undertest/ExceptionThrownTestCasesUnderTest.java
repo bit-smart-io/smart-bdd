@@ -36,11 +36,16 @@ public class ExceptionThrownTestCasesUnderTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void paramTest(String key) {
-        methodThatThrowsAPointerMethod();
+    void paramTest(String param) {
+        methodThatThrowsAPointerMethodWithParameter(param);
     }
 
     private void methodThatThrowsAPointerMethod() {
+        String str = null;
+        str.toLowerCase();
+    }
+
+    private void methodThatThrowsAPointerMethodWithParameter(String param) {
         String str = null;
         str.toLowerCase();
     }

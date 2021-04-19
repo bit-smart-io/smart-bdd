@@ -40,7 +40,7 @@ public class AbortedTestCasesUnderTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void paramTest(String key) {
-        assumeTrue(key.contains("Z"), "abc does not contain Z");
+    void paramTest(String param) {
+        assumeTrue(param.contains("Z"), "abc does not contain Z");
     }
 }

@@ -30,7 +30,7 @@ class ClassUnderTest {
     @ParameterizedTest
     @Order(2)
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void thirdParamTest(String key) {
-        assertThat(key).isNotNull();
+    void thirdParamTest(String param) {
+        assertThat(param).isNotNull();
     }
 }

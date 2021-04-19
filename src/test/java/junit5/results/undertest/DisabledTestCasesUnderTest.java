@@ -32,7 +32,7 @@ public class DisabledTestCasesUnderTest {
     @Disabled
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void paramTest(String key) {
-        assertThat(key).isNotNull();
+    void paramTest(String param) {
+        assertThat(param).isNotNull();
     }
 }

@@ -106,15 +106,15 @@ public class ResultsExtensionComponentTest {
 
         TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethod());
-        assertCause(testMethod.getCause(), "\nExpecting:\n <\"testMethod\">\nnot to be equal to:\n <\"testMethod\">\n");
+        assertCauseWithMessage(testMethod.getCause(), "\nExpecting:\n <\"testMethod\">\nnot to be equal to:\n <\"testMethod\">\n");
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Assert that value 1 is null"));
-        assertCause(paramTest.get(0).getCause(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(0).getCause(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Assert that value 2 is null"));
-        assertCause(paramTest.get(1).getCause(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(1).getCause(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResult("Assert that value 3 is null"));
-        assertCause(paramTest.get(2).getCause(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(2).getCause(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
     }
 
     @Test
@@ -135,6 +135,18 @@ public class ResultsExtensionComponentTest {
             "paramTest",
             "paramTest"
         );
+
+        TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
+        assertThat(testMethod).isEqualTo(failedTestMethodDueToException());
+        assertNullPointerCause(testMethod.getCause());
+
+        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with parameter value 1"));
+        assertNullPointerCause(paramTest.get(0).getCause());
+        assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with parameter value 2"));
+        assertNullPointerCause(paramTest.get(1).getCause());
+        assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with parameter value 3"));
+        assertNullPointerCause(paramTest.get(2).getCause());
     }
 
     @Test
@@ -157,9 +169,16 @@ public class ResultsExtensionComponentTest {
         );
     }
 
-    private void assertCause(Throwable cause, String message) {
+    private void assertCauseWithMessage(Throwable cause, String message) {
         assertThat(cause.getMessage()).isEqualTo(message);
         assertThat(cause.getClass()).isNotNull();
+        assertThat(cause.getCause()).isNull();
+        assertThat(cause.getStackTrace()).isNotNull();
+    }
+
+    private void assertNullPointerCause(Throwable cause) {
+        assertThat(cause.getMessage()).isNull();
+        assertThat(cause.getClass()).isEqualTo(NullPointerException.class);
         assertThat(cause.getCause()).isNull();
         assertThat(cause.getStackTrace()).isNotNull();
     }
@@ -194,6 +213,15 @@ public class ResultsExtensionComponentTest {
             .build();
     }
 
+    private TestCaseResult failedParamTestCaseResultDueToException(String wordify) {
+        return aTestCaseResult()
+            .withMethodName("paramTest")
+            .withWordify(wordify)
+            .withStatus(FAILED)
+            .withTestSuiteResultsId(testSuiteResultsId(ExceptionThrownTestCasesUnderTest.class))
+            .build();
+    }
+
     private TestCaseResult passedTestMethod() {
         return aTestCaseResult()
             .withMethodName("testMethod")
@@ -211,4 +239,14 @@ public class ResultsExtensionComponentTest {
             .withTestSuiteResultsId(testSuiteResultsId(FailedTestCasesUnderTest.class))
             .build();
     }
+
+    private TestCaseResult failedTestMethodDueToException() {
+        return aTestCaseResult()
+            .withMethodName("testMethod")
+            .withWordify("Method that throws a pointer method")
+            .withStatus(FAILED)
+            .withTestSuiteResultsId(testSuiteResultsId(ExceptionThrownTestCasesUnderTest.class))
+            .build();
+    }
+
 }
