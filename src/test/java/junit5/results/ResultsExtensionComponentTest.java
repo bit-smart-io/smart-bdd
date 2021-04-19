@@ -106,31 +106,15 @@ public class ResultsExtensionComponentTest {
 
         TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethod());
-        assertThat(testMethod.getCause().getMessage()).isEqualTo(
-            "\n" +
-            "Expecting:\n" +
-            " <\"testMethod\">\n" +
-            "not to be equal to:\n" +
-            " <\"testMethod\">\n");
-        assertThat(testMethod.getCause().getClass()).isNotNull();
-        assertThat(testMethod.getCause().getCause()).isNull();
-        assertThat(testMethod.getCause().getStackTrace()).isNotNull();
+        assertCause(testMethod.getCause(), "\nExpecting:\n <\"testMethod\">\nnot to be equal to:\n <\"testMethod\">\n");
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Assert that value 1 is null"));
-        assertThat(paramTest.get(0).getCause().getMessage()).isEqualTo(
-            "\n" +
-            "Expecting:\n" +
-            " <\"value 1\">\n" +
-            "to be equal to:\n" +
-            " <null>\n" +
-            "but was not.");
-        assertThat(paramTest.get(0).getCause().getClass()).isNotNull();
-        assertThat(paramTest.get(0).getCause().getCause()).isNull();
-        assertThat(paramTest.get(0).getCause().getStackTrace()).isNotNull();
-
+        assertCause(paramTest.get(0).getCause(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Assert that value 2 is null"));
+        assertCause(paramTest.get(1).getCause(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResult("Assert that value 3 is null"));
+        assertCause(paramTest.get(2).getCause(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
     }
 
     @Test
@@ -171,6 +155,13 @@ public class ResultsExtensionComponentTest {
             "paramTest",
             "paramTest"
         );
+    }
+
+    private void assertCause(Throwable cause, String message) {
+        assertThat(cause.getMessage()).isEqualTo(message);
+        assertThat(cause.getClass()).isNotNull();
+        assertThat(cause.getCause()).isNull();
+        assertThat(cause.getStackTrace()).isNotNull();
     }
 
     private void assertResultsId(TestSuiteResults testSuiteResults, Class<?> clazz) {
