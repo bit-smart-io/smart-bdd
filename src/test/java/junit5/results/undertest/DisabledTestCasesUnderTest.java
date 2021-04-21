@@ -26,13 +26,21 @@ public class DisabledTestCasesUnderTest {
     @Disabled
     @Test
     void testMethod() {
-        assertThat("testMethod").isEqualTo("testMethod");
+        disabledAssertion();
     }
 
     @Disabled
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
+        disabledAssertionWith(param);
+    }
+
+    private void disabledAssertion() {
+        assertThat(true).isTrue();
+    }
+
+    private void disabledAssertionWith(String param) {
         assertThat(param).isNotNull();
     }
 }

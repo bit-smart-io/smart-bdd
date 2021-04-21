@@ -30,12 +30,20 @@ public class FailedTestCasesUnderTest {
 
     @Test
     void testMethod() {
-        assertThat("testMethod").isNotEqualTo("testMethod");
+        failingAssertion();
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
+        failingAssertionWith(param);
+    }
+
+    private void failingAssertion() {
+        assertThat(true).isFalse();
+    }
+
+    private void failingAssertionWith(String param) {
         assertThat(param).isNull();
     }
 }

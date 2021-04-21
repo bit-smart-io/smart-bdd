@@ -30,13 +30,21 @@ public class ClassUnderTest {
     @Order(0)
     @Test
     void testMethod() {
-        assertThat("testMethod").isEqualTo("testMethod");
+        passingAssertion();
     }
 
     @ParameterizedTest
     @Order(1)
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
-    void paramTest(String key) {
-        assertThat(key).isNotNull();
+    void paramTest(String param) {
+        passingAssertionWith(param);
+    }
+
+    private void passingAssertion() {
+        assertThat(true).isTrue();
+    }
+
+    private void passingAssertionWith(String param) {
+        assertThat(param).isNotNull();
     }
 }

@@ -109,7 +109,7 @@ public class ResultsExtension implements
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        getTestCaseResult(context).setStatus(ABORTED);
+        getTestCaseResult(context).setStatus(ABORTED).setCause(cause);
     }
 
     @Override

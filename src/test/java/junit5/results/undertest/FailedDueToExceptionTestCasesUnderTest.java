@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  * </testsuite>
  */
 @ExtendWith(ResultsExtension.class)
-public class ExceptionThrownTestCasesUnderTest {
+public class FailedDueToExceptionTestCasesUnderTest {
 
     @Test
     void testMethod() {
@@ -37,7 +37,7 @@ public class ExceptionThrownTestCasesUnderTest {
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
-        methodThatThrowsAPointerMethodWithParameter(param);
+        methodThatThrowsAPointerMethodWith(param);
     }
 
     private void methodThatThrowsAPointerMethod() {
@@ -45,7 +45,7 @@ public class ExceptionThrownTestCasesUnderTest {
         str.toLowerCase();
     }
 
-    private void methodThatThrowsAPointerMethodWithParameter(String param) {
+    private void methodThatThrowsAPointerMethodWith(String param) {
         String str = null;
         str.toLowerCase();
     }

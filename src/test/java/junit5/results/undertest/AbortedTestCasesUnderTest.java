@@ -35,12 +35,20 @@ public class AbortedTestCasesUnderTest {
 
     @Test
     void testMethod() {
-        assumeTrue("testMethod".contains("Z"), "testMethod does not contain Z");
+        abortingAssertion();
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
-        assumeTrue(param.contains("Z"), "abc does not contain Z");
+        abortingAssertionWith(param);
+    }
+
+    private void abortingAssertion() {
+        assumeTrue("testMethod".contains("z"), "testMethod does not contain Z");
+    }
+
+    private void abortingAssertionWith(String param) {
+        assumeTrue(param.contains("z"), param + " does not contain z");
     }
 }
