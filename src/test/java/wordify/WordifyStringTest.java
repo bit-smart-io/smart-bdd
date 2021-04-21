@@ -101,10 +101,19 @@ public class WordifyStringTest {
         assertThat(new WordifyString("\na\n b").wordify()).isEqualTo("A\nB");
     }
 
+    //TODO should not be lowercase in quotes
+    //TODO space should not be added before Z
+    @Disabled
+    @Test
+    void handlesEdgeCases() {
+        assertThat(new WordifyString("a(\"z\")").wordify()).isEqualTo("A \"z\"");
+        assertThat(new WordifyString("a(\"Z\")").wordify()).isEqualTo("A \"Z\"");
+    }
+
+    //TODO remove white space at the end of a line
     @Disabled
     @Test
     void handlesWhiteSpacePotentialRequirement() {
-        //TODO should the white space at the end of a line?
         assertThat(new WordifyString("\na \nb").wordify()).isEqualTo("A\nB");
     }
 
