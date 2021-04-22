@@ -1,4 +1,4 @@
-package ft.report.oneclass;
+package ft.report.oneclass.wip;
 
 import junit5.results.ReportFactory;
 import junit5.results.ResultsExtension;
@@ -12,7 +12,7 @@ import report.model.TestSuite;
 import shared.undertest.ClassUnderTest;
 
 import static ft.report.builders.TestCaseBuilder.aTestCase;
-import static ft.report.oneclass.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
+import static ft.report.oneclass.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -68,36 +68,36 @@ public class ReportComponentBuilderWipTest {
             this.testSuite = testSuite;
         }
 
-        public static AssertTestSuite assertTestSuite(TestSuite testSuite) {
+        protected static AssertTestSuite assertTestSuite(TestSuite testSuite) {
             return new AssertTestSuite(testSuite);
         }
 
-        public AssertTestSuite withName(String name) {
+        protected AssertTestSuite withName(String name) {
             assertThat(testSuite.getName()).isEqualTo(name);
             return this;
         }
 
-        public AssertTestSuite withClassName(String className) {
+        protected AssertTestSuite withClassName(String className) {
             assertThat(testSuite.getClassName()).isEqualTo(className);
             return this;
         }
 
-        public AssertTestSuite withPackageName(String packageName) {
+        protected AssertTestSuite withPackageName(String packageName) {
             assertThat(testSuite.getPackageName()).isEqualTo(packageName);
             return this;
         }
 
-        public AssertTestSuite withMethodNames(String... methodNames) {
+        protected AssertTestSuite withMethodNames(String... methodNames) {
             assertThat(testSuite.getMethodNames()).containsExactly(methodNames);
             return this;
         }
 
-        public AssertTestSuite withTestCaseContains(TestCase testCase) {
+        protected AssertTestSuite withTestCaseContains(TestCase testCase) {
             assertThat(testSuite.getTestCases()).contains(testCase);
             return this;
         }
 
-        public AssertTestSuite withTestCase(AssertTestCase assertTestCase) {
+        protected AssertTestSuite withTestCase(AssertTestCase assertTestCase) {
             return this;
         }
     }
@@ -109,26 +109,26 @@ public class ReportComponentBuilderWipTest {
             this.testCase = testCase;
         }
 
-        public static AssertTestCase assertTestCase(TestCase testCase) {
+        protected static AssertTestCase assertTestCase(TestCase testCase) {
             return new AssertTestCase(testCase);
         }
 
-        public AssertTestCase withWordify(String wordify) {
+        protected AssertTestCase withWordify(String wordify) {
             assertThat(testCase.getWordify()).isEqualTo(wordify);
             return this;
         }
 
-        public AssertTestCase withStatus(Status status) {
+        protected AssertTestCase withStatus(Status status) {
             assertThat(testCase.getStatus()).isEqualTo(status);
             return this;
         }
 
-        public AssertTestCase withClassName(String className) {
+        protected AssertTestCase withClassName(String className) {
             assertThat(testCase.getClassName()).isEqualTo(className);
             return this;
         }
 
-        public AssertTestCase withPackageName(String packageName) {
+        protected AssertTestCase withPackageName(String packageName) {
             assertThat(testCase.getPackageName()).isEqualTo(packageName);
             return this;
         }

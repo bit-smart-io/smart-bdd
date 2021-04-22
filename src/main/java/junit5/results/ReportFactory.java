@@ -4,10 +4,12 @@ import junit5.results.model.AllResults;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestCaseStatus;
 import junit5.results.model.TestSuiteResults;
+import junit5.results.model.TestSuiteResultsMetadata;
 import report.model.TestSuite;
 import report.model.Report;
 import report.model.Status;
 import report.model.TestCase;
+import report.model.TestSuiteSummary;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +41,18 @@ public class ReportFactory {
             testSuiteResults.getResultsId().getClassName(),
             testSuiteResults.getResultsId().getPackageName(),
             testSuiteResults.getMethodNames(),
-            testResults(testSuiteResults.getTestResults()));
+            testResults(testSuiteResults.getTestResults()),
+            testSuiteSummary(testSuiteResults.getResultsMetadata()));
+
+    }
+
+    private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {
+        return new TestSuiteSummary(
+            metadata.getTestCaseCount(),
+            metadata.getPassedCount(),
+            metadata.getAbortedCount(),
+            metadata.getFailedCount(),
+            metadata.getAbortedCount());
     }
 
     private static List<TestCase> testResults(List<TestCaseResult> testCaseResults) {

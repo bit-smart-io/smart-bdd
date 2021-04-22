@@ -2,6 +2,7 @@ package ft.report.builders;
 
 import report.model.TestCase;
 import report.model.TestSuite;
+import report.model.TestSuiteSummary;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public final class TestSuiteBuilder {
     private String packageName;
     private List<String> methodNames;
     private List<TestCase> testCases;
+    private TestSuiteSummary summary;
 
     private TestSuiteBuilder() {
     }
@@ -44,7 +46,12 @@ public final class TestSuiteBuilder {
         return this;
     }
 
+    public TestSuiteBuilder withSummary(TestSuiteSummary summary) {
+        this.summary = summary;
+        return this;
+    }
+
     public TestSuite build() {
-        return new TestSuite(name, className, packageName, methodNames, testCases);
+        return new TestSuite(name, className, packageName, methodNames, testCases, summary);
     }
 }

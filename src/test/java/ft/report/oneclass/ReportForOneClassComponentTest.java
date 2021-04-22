@@ -3,23 +3,21 @@ package ft.report.oneclass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ft.report.FileLoader;
 import junit5.results.ReportFactory;
+import junit5.results.ResultsExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import report.ReportWriter;
-import junit5.results.ResultsExtension;
-import report.model.TestSuite;
 import report.model.Report;
-import report.model.Status;
-import report.model.TestCase;
+import report.model.TestSuite;
 import shared.undertest.ClassUnderTest;
 
 import java.io.File;
 import java.io.IOException;
 
-import static ft.report.builders.TestCaseBuilder.aTestCase;
+import static ft.report.oneclass.ReportAssertions.assertPassingReport;
+import static ft.report.oneclass.ReportAssertions.assertPassingTestSuite;
 import static java.lang.System.getProperty;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -42,8 +40,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-public class ReportFileForOneClassTest {
+public class ReportForOneClassComponentTest {
     private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -53,18 +52,21 @@ public class ReportFileForOneClassTest {
     @Test
     void writeReport() throws IOException {
         TestLauncher.launch(CLASS_UNDER_TEST);
-
         Report report = ReportFactory.create(ResultsExtension.getAllResults());
+        writeReport(report);
 
-        assertThat(report.getTestCases()).contains(firstTestCase());
+        assertPassingReport(report);
+        assertPassingTestSuite(testSuite());
+    }
+
+    private TestSuite testSuite() throws IOException {
+        String contents = new FileLoader().toString(outputFile(ClassUnderTest.class.getName()));
+        return mapper.readValue(contents, TestSuite.class);
+    }
+
+    private void writeReport(Report report) {
         ReportWriter reportWriter = new ReportWriter();
         reportWriter.write(report);
-
-        String contents = new FileLoader().toString(outputFile(ClassUnderTest.class.getName()));
-        ObjectMapper mapper = new ObjectMapper();
-        TestSuite testSuite = mapper.readValue(contents, TestSuite.class);
-
-        assertThat(testSuite.getTestCases()).contains(firstTestCase());
     }
 
     private static File outputFile(String testName) {
@@ -73,15 +75,5 @@ public class ReportFileForOneClassTest {
 
     private static File outputDirectory() {
         return new File(getProperty("java.io.tmpdir"));
-    }
-
-    private TestCase firstTestCase() {
-        return aTestCase()
-            .withWordify("Passing assertion")
-            .withStatus(Status.PASSED)
-            .withMethodName("testMethod")
-            .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
-            .build();
     }
 }
