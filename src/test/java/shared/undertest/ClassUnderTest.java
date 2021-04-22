@@ -1,4 +1,4 @@
-package junit5.results.undertest;
+package shared.undertest;
 
 import junit5.results.ResultsExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

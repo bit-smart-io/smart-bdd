@@ -8,8 +8,10 @@ import junit5.results.ResultsExtension;
 import report.model.Report;
 import report.model.Status;
 import report.model.TestCase;
+import report.model.TestSuite;
+import shared.undertest.ClassUnderTest;
 
-import static ft.report.ResultBuilder.aResult;
+import static ft.report.builders.TestCaseBuilder.aTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportComponentTest {
@@ -26,18 +28,28 @@ public class ReportComponentTest {
 
         Report report = ReportFactory.create(ResultsExtension.getAllResults());
         assertThat(report).isNotNull();
-        assertThat(report.getTestCases()).hasSize(5);
+        assertThat(report.getTestCases()).hasSize(4);
 
-        assertThat(report.getTestCases()).contains(firstTestResult());
+        assertThat(report.getTestSuites()).hasSize(1);
+        TestSuite testSuite = report.getTestSuites().get(0);
+        assertTestSuite(testSuite);
     }
 
-    private TestCase firstTestResult() {
-        return aResult()
-            .withWordify("Assert that \"first test\" is equal to \"first test\"")
+    private void assertTestSuite(TestSuite testSuite) {
+        assertThat(testSuite.getName()).isEqualTo("shared.undertest.ClassUnderTest");
+        assertThat(testSuite.getClassName()).isEqualTo("ClassUnderTest");
+        assertThat(testSuite.getPackageName()).isEqualTo("shared.undertest");
+        assertThat(testSuite.getMethodNames()).containsExactly("testMethod", "paramTest", "paramTest", "paramTest");
+        assertThat(testSuite.getTestCases()).contains(firstTestCase());
+    }
+
+    private TestCase firstTestCase() {
+        return aTestCase()
+            .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
-            .withMethodName("firstTest")
+            .withMethodName("testMethod")
             .withClassName("ClassUnderTest")
-            .withPackageName("ft.report.oneclass")
+            .withPackageName("shared.undertest")
             .build();
     }
 }

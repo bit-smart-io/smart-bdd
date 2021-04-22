@@ -1,43 +1,43 @@
-package ft.report;
+package ft.report.builders;
 
 import report.model.Status;
 import report.model.TestCase;
 
-public final class ResultBuilder {
+public final class TestCaseBuilder {
     private String wordify;
     private Status status;
     private String methodName;
     private String className;
     private String packageName;
 
-    private ResultBuilder() {
+    private TestCaseBuilder() {
     }
 
-    public static ResultBuilder aResult() {
-        return new ResultBuilder();
+    public static TestCaseBuilder aTestCase() {
+        return new TestCaseBuilder();
     }
 
-    public ResultBuilder withWordify(String wordify) {
+    public TestCaseBuilder withWordify(String wordify) {
         this.wordify = wordify;
         return this;
     }
 
-    public ResultBuilder withStatus(Status status) {
+    public TestCaseBuilder withStatus(Status status) {
         this.status = status;
         return this;
     }
 
-    public ResultBuilder withMethodName(String methodName) {
+    public TestCaseBuilder withMethodName(String methodName) {
         this.methodName = methodName;
         return this;
     }
 
-    public ResultBuilder withClassName(String className) {
+    public TestCaseBuilder withClassName(String className) {
         this.className = className;
         return this;
     }
 
-    public ResultBuilder withPackageName(String packageName) {
+    public TestCaseBuilder withPackageName(String packageName) {
         this.packageName = packageName;
         return this;
     }

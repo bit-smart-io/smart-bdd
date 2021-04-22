@@ -4,11 +4,11 @@ import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsId;
 import junit5.results.model.TestSuiteResultsMetadata;
-import junit5.results.undertest.AbortedTestCasesUnderTest;
-import junit5.results.undertest.FailedDueToExceptionTestCasesUnderTest;
-import junit5.results.undertest.ClassUnderTest;
-import junit5.results.undertest.DisabledTestCasesUnderTest;
-import junit5.results.undertest.FailedTestCasesUnderTest;
+import shared.undertest.AbortedTestCasesUnderTest;
+import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
+import shared.undertest.ClassUnderTest;
+import shared.undertest.DisabledTestCasesUnderTest;
+import shared.undertest.FailedTestCasesUnderTest;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,9 +35,9 @@ public class ResultsExtensionComponentTest {
         TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToClassResults().get("ClassUnderTest");
         assertThat(testSuiteResults.getResultsId()).isEqualTo(
             new TestSuiteResultsId(
-                "junit5.results.undertest.ClassUnderTest",
+                "shared.undertest.ClassUnderTest",
                 "ClassUnderTest",
-                "junit5.results.undertest")
+                "shared.undertest")
         );
     }
 

@@ -12,11 +12,12 @@ import report.model.TestSuite;
 import report.model.Report;
 import report.model.Status;
 import report.model.TestCase;
+import shared.undertest.ClassUnderTest;
 
 import java.io.File;
 import java.io.IOException;
 
-import static ft.report.ResultBuilder.aResult;
+import static ft.report.builders.TestCaseBuilder.aTestCase;
 import static java.lang.System.getProperty;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,7 +56,7 @@ public class ReportFileForOneClassTest {
 
         Report report = ReportFactory.create(ResultsExtension.getAllResults());
 
-        assertThat(report.getTestCases()).contains(firstTestResult());
+        assertThat(report.getTestCases()).contains(firstTestCase());
         ReportWriter reportWriter = new ReportWriter();
         reportWriter.write(report);
 
@@ -63,7 +64,7 @@ public class ReportFileForOneClassTest {
         ObjectMapper mapper = new ObjectMapper();
         TestSuite testSuite = mapper.readValue(contents, TestSuite.class);
 
-        assertThat(testSuite.getTestResults()).contains(firstTestResult());
+        assertThat(testSuite.getTestCases()).contains(firstTestCase());
     }
 
     private static File outputFile(String testName) {
@@ -74,23 +75,13 @@ public class ReportFileForOneClassTest {
         return new File(getProperty("java.io.tmpdir"));
     }
 
-    private TestCase firstTestResult() {
-        return aResult()
-            .withWordify("Assert that \"first test\" is equal to \"first test\"")
+    private TestCase firstTestCase() {
+        return aTestCase()
+            .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
-            .withMethodName("firstTest")
+            .withMethodName("testMethod")
             .withClassName("ClassUnderTest")
-            .withPackageName("ft.report.oneclass")
+            .withPackageName("shared.undertest")
             .build();
     }
-
-//    private TestCase testResult(String method, String wordify) {
-//        return aResult()
-//            .withWordify(wordify)
-//            .withStatus(Status.PASSED)
-//            .withMethodName(method)
-//            .withClassName("ClassUnderTest")
-//            .withPackageName("ft.report.oneclass")
-//            .build();
-//    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TestSuite {
     private final String name;
@@ -12,11 +13,10 @@ public class TestSuite {
     private final List<String> methodNames;
     private final List<TestCase> testCases;
 
-    // setup,tear down metrics
+    // setup, teardown metrics
     // time started
     // time taken
-    // summary?
-    //  passing count
+    //private final TestSuiteSummary summary;
 
     @JsonCreator
     public TestSuite(
@@ -49,7 +49,31 @@ public class TestSuite {
         return methodNames;
     }
 
-    public List<TestCase> getTestResults() {
+    public List<TestCase> getTestCases() {
         return testCases;
+    }
+
+    @Override
+    public String toString() {
+        return "TestSuite{" +
+            "name='" + name + '\'' +
+            ", className='" + className + '\'' +
+            ", packageName='" + packageName + '\'' +
+            ", methodNames=" + methodNames +
+            ", testCases=" + testCases +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestSuite)) return false;
+        TestSuite testSuite = (TestSuite) o;
+        return Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, className, packageName, methodNames, testCases);
     }
 }
