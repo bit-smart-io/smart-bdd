@@ -63,7 +63,7 @@ public class TestSuiteResults {
     }
 
     public void completedTestCaseResult(ExtensionContext context) {
-        resultsMetadata = new TestSuiteResultsMetadataFactory().testSuiteResultsMetadata(testCaseResults);
+        resultsMetadata = TestSuiteResultsMetadataFactory.create(testCaseResults);
     }
 
     public TestCaseResult getResultsForTest(ExtensionContext context) {

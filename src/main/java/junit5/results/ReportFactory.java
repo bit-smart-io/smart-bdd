@@ -5,6 +5,7 @@ import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestCaseStatus;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsMetadata;
+import report.model.HomePage;
 import report.model.TestSuite;
 import report.model.Report;
 import report.model.Status;
@@ -20,22 +21,20 @@ public class ReportFactory {
 
     public static Report create(AllResults allResults) {
         Report report = new Report();
-        Collection<TestSuiteResults> testSuiteResultsList = allResults.getClassNameToClassResults().values();
+        Collection<TestSuiteResults> testSuiteResultsList = allResults.getClassNameToTestSuiteResults().values();
+        testSuiteResultsList.forEach(testSuiteResults -> report.addTestSuite(testSuite(testSuiteResults)));
+        testSuiteResultsList.stream()
+            .flatMap(testSuite -> testSuite.getContextToTestResult().values().stream())
+            .collect(toList())
+            .forEach(testCase -> report.addTestCase(testCase(testCase)));
 
-        testSuiteResultsList.forEach(classResult -> report.addClassResult(classResults(classResult)));
-
-        List<TestCaseResult> allTestCaseResults = testSuiteResultsList.stream()
-            .flatMap(classResults -> classResults.getContextToTestResult().values().stream())
-            .collect(toList());
-
-        allTestCaseResults.forEach(testResult ->
-            report.addTestResult(testResult(testResult))
-        );
-
+        report.setHomePage(
+            new HomePage(ReportIndexFactory.create(report),
+                ReportSummaryFactory.create(report.getTestSuites())));
         return report;
     }
 
-    private static TestSuite classResults(TestSuiteResults testSuiteResults) {
+    private static TestSuite testSuite(TestSuiteResults testSuiteResults) {
         return new TestSuite(
             testSuiteResults.getResultsId().getName(),
             testSuiteResults.getResultsId().getClassName(),
@@ -43,7 +42,6 @@ public class ReportFactory {
             testSuiteResults.getMethodNames(),
             testResults(testSuiteResults.getTestResults()),
             testSuiteSummary(testSuiteResults.getResultsMetadata()));
-
     }
 
     private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {
@@ -56,10 +54,10 @@ public class ReportFactory {
     }
 
     private static List<TestCase> testResults(List<TestCaseResult> testCaseResults) {
-        return testCaseResults.stream().map(ReportFactory::testResult).collect(toList());
+        return testCaseResults.stream().map(ReportFactory::testCase).collect(toList());
     }
 
-    private static TestCase testResult(TestCaseResult testCaseResult) {
+    private static TestCase testCase(TestCaseResult testCaseResult) {
         return new TestCase(
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),

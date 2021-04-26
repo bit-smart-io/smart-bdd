@@ -2,6 +2,7 @@ package report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import report.model.HomePage;
 import report.model.TestSuite;
 import report.model.Report;
 
@@ -13,14 +14,16 @@ import static java.lang.System.getProperty;
 
 public class ReportWriter {
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    TestSuiteFileService testSuiteFileService = new TestSuiteFileService();
 
     public void write(Report report) {
 //        report.getClassResultsList().forEach(this::sout);
+        write(report.getHomePage());
         report.getTestSuites().forEach(this::write);
     }
 
     private void prepareDir() {
-        File outputDir = outputDirectory();
+        File outputDir = testSuiteFileService.outputDirectory();
         outputDir.delete();
         outputDir.getParentFile().mkdirs();
     }
@@ -34,10 +37,10 @@ public class ReportWriter {
         }
     }
 
-    private void write(TestSuite testSuite) {
+    private void write(HomePage homePage) {
         try {
-            String json = mapper.writeValueAsString(testSuite);
-            File file = outputFile(fullyQualifiedName(testSuite));
+            String json = mapper.writeValueAsString(homePage);
+            File file = testSuiteFileService.outputFileForReportIndex();
             System.out.println("output: " + file);
             FileWriter writer = new FileWriter(file);
             writer.write(json);
@@ -47,15 +50,16 @@ public class ReportWriter {
         }
     }
 
-    private String fullyQualifiedName(TestSuite testSuite) {
-        return testSuite.getName();
-    }
-
-    private static File outputFile(String testName) {
-        return new File(outputDirectory(), "TEST-" + testName + "result.json");
-    }
-
-    private static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir"));
+    private void write(TestSuite testSuite) {
+        try {
+            String json = mapper.writeValueAsString(testSuite);
+            File file = testSuiteFileService.outputFile(testSuite);
+            System.out.println("output: " + file);
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

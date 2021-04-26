@@ -1,4 +1,4 @@
-package ft.report.oneclass;
+package ft.report;
 
 import report.model.Report;
 import report.model.Status;
@@ -10,15 +10,6 @@ import static ft.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportAssertions {
-
-    public static void assertPassingReport(Report report) {
-        assertThat(report).isNotNull();
-        assertThat(report.getTestCases()).hasSize(4);
-
-        assertThat(report.getTestSuites()).hasSize(1);
-        TestSuite testSuite = report.getTestSuites().get(0);
-        assertPassingTestSuite(testSuite);
-    }
 
     public static void assertPassingTestSuite(TestSuite testSuite) {
         assertThat(testSuite.getName()).isEqualTo("shared.undertest.ClassUnderTest");

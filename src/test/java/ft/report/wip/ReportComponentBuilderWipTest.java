@@ -1,4 +1,4 @@
-package ft.report.oneclass.wip;
+package ft.report.wip;
 
 import junit5.results.ReportFactory;
 import junit5.results.ResultsExtension;
@@ -12,7 +12,7 @@ import report.model.TestSuite;
 import shared.undertest.ClassUnderTest;
 
 import static ft.report.builders.TestCaseBuilder.aTestCase;
-import static ft.report.oneclass.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
+import static ft.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

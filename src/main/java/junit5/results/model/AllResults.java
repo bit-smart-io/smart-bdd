@@ -32,24 +32,24 @@ import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
  *   className(name)
  */
 public class AllResults {
-    private final ConcurrentHashMap<String, TestSuiteResults> classNameToClassResults = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, TestSuiteResults> classNameToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<String> getClasses() {
-        return Collections.list(classNameToClassResults.keys());
+        return Collections.list(classNameToTestSuiteResults.keys());
     }
 
-    public ConcurrentHashMap<String, TestSuiteResults> getClassNameToClassResults() {
-        return classNameToClassResults;
+    public ConcurrentHashMap<String, TestSuiteResults> getClassNameToTestSuiteResults() {
+        return classNameToTestSuiteResults;
     }
 
     public TestSuiteResults getTestResultsForClass(ExtensionContext extensionContext) {
-        return classNameToClassResults.get(getClassName(extensionContext));
+        return classNameToTestSuiteResults.get(getClassName(extensionContext));
     }
 
     public TestSuiteResults newTestSuiteResults(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
         TestSuiteResults testSuiteResults = new TestSuiteResults(testSuiteResultsId(clazz));
-        classNameToClassResults.put(getClassName(context), testSuiteResults);
+        classNameToTestSuiteResults.put(getClassName(context), testSuiteResults);
         return testSuiteResults;
     }
 
@@ -58,6 +58,6 @@ public class AllResults {
     }
 
     public void reset() {
-        classNameToClassResults.clear();
+        classNameToTestSuiteResults.clear();
     }
 }

@@ -54,6 +54,7 @@ public class FileLoader {
             URI uri = requireNonNull(getClass().getClassLoader().getResource(fileName)).toURI();
             path = Paths.get(uri);
             lines = Files.lines(path);
+            // TODO here I think that we you'd need to add a line break
             contents = lines.collect(Collectors.joining());
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

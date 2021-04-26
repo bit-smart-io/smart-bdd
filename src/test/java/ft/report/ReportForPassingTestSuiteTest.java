@@ -1,23 +1,20 @@
-package ft.report.oneclass;
+package ft.report;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ft.report.FileLoader;
 import junit5.results.ReportFactory;
 import junit5.results.ResultsExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import report.ReportWriter;
 import report.model.Report;
 import report.model.TestSuite;
 import shared.undertest.ClassUnderTest;
 
-import java.io.File;
 import java.io.IOException;
 
-import static ft.report.oneclass.ReportAssertions.assertPassingReport;
-import static ft.report.oneclass.ReportAssertions.assertPassingTestSuite;
-import static java.lang.System.getProperty;
+import static ft.report.ReportAssertions.assertPassingTestSuite;
+import static ft.report.ReportTestUtils.loadTestSuite;
+import static ft.report.ReportTestUtils.writeReport;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -40,9 +37,8 @@ import static java.lang.System.getProperty;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-public class ReportForOneClassComponentTest {
-    private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
-    private final ObjectMapper mapper = new ObjectMapper();
+public class ReportForPassingTestSuiteTest {
+    private static final Class<?> PASSING_CLASS_UNDER_TEST = ClassUnderTest.class;
 
     @BeforeEach
     void setUp() {
@@ -50,30 +46,21 @@ public class ReportForOneClassComponentTest {
     }
 
     @Test
-    void writeReport() throws IOException {
-        TestLauncher.launch(CLASS_UNDER_TEST);
+    void reportForOneClassGeneratedCorrectly() throws IOException {
+        TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
         Report report = ReportFactory.create(ResultsExtension.getAllResults());
         writeReport(report);
 
-        assertPassingReport(report);
-        assertPassingTestSuite(testSuite());
+        assertReport(report);
+        assertPassingTestSuite(loadTestSuite(PASSING_CLASS_UNDER_TEST));
     }
 
-    private TestSuite testSuite() throws IOException {
-        String contents = new FileLoader().toString(outputFile(ClassUnderTest.class.getName()));
-        return mapper.readValue(contents, TestSuite.class);
-    }
+    public static void assertReport(Report report) {
+        assertThat(report).isNotNull();
+        assertThat(report.getTestCases()).hasSize(4);
+        assertThat(report.getTestSuites()).hasSize(1);
 
-    private void writeReport(Report report) {
-        ReportWriter reportWriter = new ReportWriter();
-        reportWriter.write(report);
-    }
-
-    private static File outputFile(String testName) {
-        return new File(outputDirectory(), "TEST-" + testName + "result.json");
-    }
-
-    private static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir"));
+        TestSuite testSuite = report.getTestSuites().get(0);
+        assertPassingTestSuite(testSuite);
     }
 }

@@ -32,7 +32,7 @@ public class ResultsExtensionComponentTest {
     @Test
     void resultsIdContainsCorrectClassInformation() {
         TestLauncher.launch(ClassUnderTest.class);
-        TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToClassResults().get("ClassUnderTest");
+        TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get("ClassUnderTest");
         assertThat(testSuiteResults.getResultsId()).isEqualTo(
             new TestSuiteResultsId(
                 "shared.undertest.ClassUnderTest",
@@ -206,7 +206,7 @@ public class ResultsExtensionComponentTest {
     private TestSuiteResults launchTestSuite(Class<?> clazz) {
         TestLauncher.launch(clazz);
         assertThat(ResultsExtension.getAllResults().getClasses()).containsExactly(clazz.getSimpleName());
-        return ResultsExtension.getAllResults().getClassNameToClassResults().get(clazz.getSimpleName());
+        return ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get(clazz.getSimpleName());
     }
 
     private TestCaseResult passedParamTestCaseResult(String wordify) {
