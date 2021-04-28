@@ -9,27 +9,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
 
 /**
- * This concept could be generified.
- * We could have:
- * - Collector
- *   - ResultsForClass for timing, status, wordify etc...
- *   - ResultsForTest for timing, status, wordify etc...
+ * Naming ideas - Ju5AllResults, Ju5TestCaseStatus - but would that mean all junit 5 class have the prefix?
  *
- *   TimedResult implements Result
- *   - start
- *   - end
- *   - total
- *   This could be applied to:
- *   - ResultsForClass how long did the whole class take
- *   - ResultsForTest how long did the test take
+ * TODO same test with different args?
  *
- *   TODO same test with different args?
- *
- *   Should we use domain objects?
- *   ClassName extends String
- *   ClassName { String name }
- *   ClassName.from(name)
- *   className(name)
+ * Should we use domain objects?
+ * ClassName extends String
+ * ClassName { String name }
+ * ClassName.from(name)
+ * className(name)
  */
 public class AllResults {
     private final ConcurrentHashMap<String, TestSuiteResults> classNameToTestSuiteResults = new ConcurrentHashMap<>();

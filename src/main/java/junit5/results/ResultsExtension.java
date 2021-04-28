@@ -24,6 +24,8 @@ import static junit5.results.model.TestCaseStatus.PASSED;
 
 /**
  * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
+ * TODO maybe this ReportExtension
+ * TODO should this also do all the timings?
  */
 public class ResultsExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
