@@ -1,15 +1,27 @@
 TODOs
 - [x] Parse params
 - [x] Have a context
-- [ ] Have failing tests
+- [x] Have failing tests
+- [x] Capture the failures
+- [x] Stats for passed, skipped, aborted and failed
+- [ ] Handle names of methods that have params
+- [ ] Handle all test factories, templates and dynamic  
+- [ ] Capture standard output and standard error
 - [ ] Handle Strings i.e. anything in quotes
+- [ ] Additional wordifies i.e. swap words around to create more readable sentences
 - [ ] @Given, @When, @Then
 - [ ] @Notes  
-- [ ] UnderTest fields
-- [ ] Log extra for the report
-- [ ] Sequence diagrams  
-- [ ] Create report in Json
-- [ ] Create the website from the report
+- [ ] UnderTest fields - this is to highlight fields, possible change the values
+- [ ] Logger than can added extra text in the report 
+- [ ] Sequence diagrams - mermaid 
+- [x] Create report in Json
+- [ ] Create the website from the report - maybe vue or jquery? Load the json rather than static pages.
+- [ ] Re-run tests endpoints
+- [ ] Re-run tests ui
+- [ ] Update test values in the ui - so that the test can be re-run with different values
+- [ ] Store the tests in a DB
+- [ ] Project structure - need modules/projects 
+- [ ] Use Kotlin for Gradle
 
 Ideas
 -  Closet matching fields. I.e. 3/4 fields match
@@ -54,3 +66,6 @@ private TestSuite assertFirstTestCase() {
       .withOtherField().startsWith(...) 
 }
 ```
+
+Vue No node
+https://github.com/arswaw/VueSpaNONODE
