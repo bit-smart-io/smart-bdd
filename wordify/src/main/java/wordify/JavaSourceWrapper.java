@@ -19,6 +19,7 @@ public class JavaSourceWrapper {
     private final File javaSourceFile;
     private final JavaSource javaSource;
     private final JavaClass javaClass;
+    private final String DEFAULT_SRC_PATH = "src" + File.separatorChar + "test" + File.separatorChar + "java" + File.separatorChar;
 
     public JavaSourceWrapper(Class clazz) throws IOException {
         javaSourceFile = sourceFor(clazz);
@@ -48,13 +49,8 @@ public class JavaSourceWrapper {
         return new File(getProperty("user.dir"));
     }
 
-    /** the test dir is hardcoded for now */
     private File sourceFor(Class<?> clazz) {
-        File file = new File(workingDirectory() + File.separator
-            + "src" + File.separator
-            + "test" + File.separator
-            + "java" + File.separator);
         String relateSource = clazz.getName().replace('.', File.separatorChar) + ".java";
-        return new File(file.getAbsolutePath() + File.separator + relateSource);
+        return new File(workingDirectory()  + File.separator + DEFAULT_SRC_PATH  + relateSource);
     }
 }
