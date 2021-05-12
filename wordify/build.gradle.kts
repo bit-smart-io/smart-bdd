@@ -1,9 +1,10 @@
+//apply(from = "../gradle/dependencies.gradle")
 plugins {
-    java
+    `java-library`
 }
 
-group "org.example"
-version "1.0-SNAPSHOT"
+group = "org.example"
+version = "1.0-SNAPSHOT"
 description = "Wordify Java methods"
 
 repositories {
