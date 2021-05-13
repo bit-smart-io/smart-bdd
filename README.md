@@ -1,12 +1,22 @@
 Learning tests for 'code first' working title.
 
-I think 2 projects.
-* Wordify
-* JUnit 
+Projects:
+* Wordify - parse java code to human readable text
+* Report - to generate json report 
+* Client side report
+* Server test re-runner - api to select a test and parse in params
+
+Reporting ideas:
+* Compare log of previous run - show a diff. Can have a cut down version of the log that only shows the dif - hence what has gone wrong.
+* Send reports to report aggregator on each test, suite, package or at the end
+* Keep track of irregular issues
+
+
+###Misc Notes:
 
 Project Structure:
-ports/junit5
-domain/annotations/Given
+* ports/junit5
+* domain/annotations/Given
 
 Java passing
 * https://github.com/paul-hammant/qdox
