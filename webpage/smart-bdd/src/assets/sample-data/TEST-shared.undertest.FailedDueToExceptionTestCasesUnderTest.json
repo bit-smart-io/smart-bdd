@@ -1,0 +1,48 @@
+{
+  "name": "shared.undertest.FailedDueToExceptionTestCasesUnderTest",
+  "className": "FailedDueToExceptionTestCasesUnderTest",
+  "packageName": "shared.undertest",
+  "methodNames": [
+    "testMethod",
+    "paramTest",
+    "paramTest",
+    "paramTest"
+  ],
+  "summary": {
+    "passed": 0,
+    "skipped": 0,
+    "failed": 4,
+    "aborted": 0,
+    "tests": 4
+  },
+  "testCases": [
+    {
+      "wordify": "Method that throws a pointer method",
+      "status": "FAILED",
+      "methodName": "testMethod",
+      "className": "FailedDueToExceptionTestCasesUnderTest",
+      "packageName": "shared.undertest"
+    },
+    {
+      "wordify": "Method that throws a pointer method with value 1",
+      "status": "FAILED",
+      "methodName": "paramTest",
+      "className": "FailedDueToExceptionTestCasesUnderTest",
+      "packageName": "shared.undertest"
+    },
+    {
+      "wordify": "Method that throws a pointer method with value 2",
+      "status": "FAILED",
+      "methodName": "paramTest",
+      "className": "FailedDueToExceptionTestCasesUnderTest",
+      "packageName": "shared.undertest"
+    },
+    {
+      "wordify": "Method that throws a pointer method with value 3",
+      "status": "FAILED",
+      "methodName": "paramTest",
+      "className": "FailedDueToExceptionTestCasesUnderTest",
+      "packageName": "shared.undertest"
+    }
+  ]
+}

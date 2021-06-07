@@ -1,0 +1,33 @@
+{
+  "links": {
+    "testSuites": [
+      {
+        "name": "shared.undertest.DisabledTestCasesUnderTest",
+        "file": "TEST-shared.undertest.DisabledTestCasesUnderTest.json"
+      },
+      {
+        "name": "shared.undertest.FailedDueToExceptionTestCasesUnderTest",
+        "file": "TEST-shared.undertest.FailedDueToExceptionTestCasesUnderTest.json"
+      },
+      {
+        "name": "shared.undertest.AbortedTestCasesUnderTest",
+        "file": "TEST-shared.undertest.AbortedTestCasesUnderTest.json"
+      },
+      {
+        "name": "shared.undertest.FailedTestCasesUnderTest",
+        "file": "TEST-shared.undertest.FailedTestCasesUnderTest.json"
+      },
+      {
+        "name": "shared.undertest.ClassUnderTest",
+        "file": "TEST-shared.undertest.ClassUnderTest.json"
+      }
+    ]
+  },
+  "summary": {
+    "passed": 4,
+    "skipped": 4,
+    "failed": 8,
+    "aborted": 4,
+    "tests": 18
+  }
+}
