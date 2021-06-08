@@ -1,54 +1,46 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <div>
 
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a
-      href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
-      target="_blank"
-    >
-      Vetur
-    </a>
-    or
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    (if using
-    <code>&lt;script setup&gt;</code>)
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
-
-  <button @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+    <p> {{ indexSummary }} </p>
+    <ul class="no-bullets">
+      <li v-for="link in indexLinks.testSuites">
+        {{ link.name }}
+      </li>
+    </ul>
+<!--    <ul>-->
+<!--      <li v-for="file in indexLinkFiles">-->
+<!--        {{ file }}-->
+<!--      </li>-->
+<!--    </ul>-->
+  </div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
-export default defineComponent({
-  name: 'HelloWorld',
-  props: {
-    msg: {
-      type: String,
-      required: true
+import index from "../assets/sample-data/index.json";
+export default {
+  name: "HelloWorld",
+  computed: {
+    // example of having a list of test suite names
+    indexLinkNames() {
+      return index.links.testSuites.map((item) => {
+        return item.name;
+      })
+    },
+    // example of having a list of test suite files
+    indexLinkFiles() {
+      return index.links.testSuites.map((item) => {
+        return item.file;
+      })
+    },
+    // TODO marshall to an actual object
+    indexLinks() {
+      return index.links;
+    },
+    indexSummary() {
+      return index.summary;
     }
-  },
-  setup: () => {
-    const count = ref(0)
-    return { count }
   }
-})
+};
 </script>
 
 <style scoped>
@@ -66,5 +58,11 @@ code {
   padding: 2px 4px;
   border-radius: 4px;
   color: #304455;
+}
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
 }
 </style>

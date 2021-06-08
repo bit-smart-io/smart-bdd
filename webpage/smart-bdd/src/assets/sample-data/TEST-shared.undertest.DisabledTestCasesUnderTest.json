@@ -1,0 +1,26 @@
+{
+  "name" : "shared.undertest.DisabledTestCasesUnderTest",
+  "className" : "DisabledTestCasesUnderTest",
+  "packageName" : "shared.undertest",
+  "methodNames" : [ "testMethod", "paramTest" ],
+  "summary" : {
+    "passed" : 0,
+    "skipped" : 0,
+    "failed" : 0,
+    "aborted" : 0,
+    "tests" : 2
+  },
+  "testCases" : [ {
+    "wordify" : null,
+    "status" : "FAILED",
+    "methodName" : "testMethod",
+    "className" : "DisabledTestCasesUnderTest",
+    "packageName" : "shared.undertest"
+  }, {
+    "wordify" : null,
+    "status" : "FAILED",
+    "methodName" : "paramTest",
+    "className" : "DisabledTestCasesUnderTest",
+    "packageName" : "shared.undertest"
+  } ]
+}

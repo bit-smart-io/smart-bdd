@@ -1,0 +1,38 @@
+{
+  "name" : "shared.undertest.ClassUnderTest",
+  "className" : "ClassUnderTest",
+  "packageName" : "shared.undertest",
+  "methodNames" : [ "testMethod", "paramTest", "paramTest", "paramTest" ],
+  "summary" : {
+    "passed" : 4,
+    "skipped" : 0,
+    "failed" : 0,
+    "aborted" : 0,
+    "tests" : 4
+  },
+  "testCases" : [ {
+    "wordify" : "Passing assertion",
+    "status" : "PASSED",
+    "methodName" : "testMethod",
+    "className" : "ClassUnderTest",
+    "packageName" : "shared.undertest"
+  }, {
+    "wordify" : "Passing assertion with value 1",
+    "status" : "PASSED",
+    "methodName" : "paramTest",
+    "className" : "ClassUnderTest",
+    "packageName" : "shared.undertest"
+  }, {
+    "wordify" : "Passing assertion with value 2",
+    "status" : "PASSED",
+    "methodName" : "paramTest",
+    "className" : "ClassUnderTest",
+    "packageName" : "shared.undertest"
+  }, {
+    "wordify" : "Passing assertion with value 3",
+    "status" : "PASSED",
+    "methodName" : "paramTest",
+    "className" : "ClassUnderTest",
+    "packageName" : "shared.undertest"
+  } ]
+}
