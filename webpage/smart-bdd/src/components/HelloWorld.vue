@@ -1,9 +1,8 @@
 <template>
   <div>
-
     <p> {{ indexSummary }} </p>
     <ul class="no-bullets">
-      <li v-for="link in indexLinks.testSuites">
+      <li v-for="link in indexLinks.testSuites" @click="showResults(link.file)">
         {{ link.name }}
       </li>
     </ul>
@@ -39,6 +38,12 @@ export default {
     indexSummary() {
       return index.summary;
     }
+  },
+  methods: {
+    showResults(file: string) {
+      // import index from "../assets/sample-data/index.json";
+      return console.log("............file: " + file);
+    },
   }
 };
 </script>
