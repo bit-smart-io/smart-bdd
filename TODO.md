@@ -15,13 +15,14 @@ TODOs
 - [ ] Logger than can added extra text in the report 
 - [ ] Sequence diagrams - mermaid 
 - [x] Create report in Json
+- [x] Website prototype
 - [ ] Create the website from the report - maybe vue or jquery? Load the json rather than static pages.
 - [ ] Re-run tests endpoints
 - [ ] Re-run tests ui
 - [ ] Update test values in the ui - so that the test can be re-run with different values
 - [ ] Store the tests in a DB
 - [ ] Project structure - need modules/projects 
-- [ ] Use Kotlin for Gradle
+- [x] Use Kotlin for Gradle
 
 Ideas
 -  Closet matching fields. I.e. 3/4 fields match
@@ -67,5 +68,13 @@ private TestSuite assertFirstTestCase() {
 }
 ```
 
-Vue No node
-https://github.com/arswaw/VueSpaNONODE
+
+### Add vue web app
+Can't load local files after page has loaded due to security.
+
+Options for the web reports:
+1. Create each test and or suite statically
+2. JSON that contains one or more test suites
+3. Have a start script that starts up a local webserver
+
+It could 1. for local tests and 3. for running more than a test suite 

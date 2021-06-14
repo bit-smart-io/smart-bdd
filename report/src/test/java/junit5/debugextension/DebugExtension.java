@@ -43,7 +43,6 @@ public class DebugExtension implements
         CaptureTestClass captureTestClass = captureTestClasses.getCaptureTestClass(context);
         CaptureTestMethod captureTestMethod = captureTestClass.newCaptureTestMethod(context);
         captureTestMethod.add(new Callback("beforeEach", context));
-
         allMethodNames.add("beforeEach");
     }
 

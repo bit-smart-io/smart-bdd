@@ -1,6 +1,7 @@
 package junit5.results.model;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class TestCaseResult {
     private String wordify;
@@ -22,8 +23,8 @@ public class TestCaseResult {
         return status;
     }
 
-    public Throwable getCause() {
-        return cause;
+    public Optional<Throwable> getCause() {
+        return Optional.ofNullable(cause);
     }
 
     public String getMethodName() {

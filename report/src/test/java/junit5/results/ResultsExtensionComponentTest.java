@@ -53,6 +53,11 @@ public class ResultsExtensionComponentTest {
             .build();
         assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
 
+        // TODO
+        // @ValueSource(strings = { "value 1", "value 2", "value 3" })
+        // paramTest value 1
+        // paramTest value 1, value 2
+
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
             "paramTest",
@@ -108,15 +113,15 @@ public class ResultsExtensionComponentTest {
 
         TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethod());
-        assertCauseWithMessage(testMethod.getCause(), "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
+        assertCauseWithMessage(testMethod.getCause().get(), "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 1"));
-        assertCauseWithMessage(paramTest.get(0).getCause(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(0).getCause().get(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 2"));
-        assertCauseWithMessage(paramTest.get(1).getCause(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(1).getCause().get(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 3"));
-        assertCauseWithMessage(paramTest.get(2).getCause(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(paramTest.get(2).getCause().get(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
     }
 
     @Test
@@ -140,15 +145,15 @@ public class ResultsExtensionComponentTest {
 
         TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethodDueToException());
-        assertNullPointerCause(testMethod.getCause());
+        assertNullPointerCause(testMethod.getCause().get());
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 1"));
-        assertNullPointerCause(paramTest.get(0).getCause());
+        assertNullPointerCause(paramTest.get(0).getCause().get());
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 2"));
-        assertNullPointerCause(paramTest.get(1).getCause());
+        assertNullPointerCause(paramTest.get(1).getCause().get());
         assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 3"));
-        assertNullPointerCause(paramTest.get(2).getCause());
+        assertNullPointerCause(paramTest.get(2).getCause().get());
     }
 
     @Test
@@ -172,15 +177,16 @@ public class ResultsExtensionComponentTest {
 
         TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
         assertThat(testMethod).isEqualTo(abortedTestMethod());
-        assertCauseWithMessage(testMethod.getCause(), "Assumption failed: testMethod does not contain Z");
+        assertThat(testMethod.getCause()).isPresent();
+        assertCauseWithMessage(testMethod.getCause().get(), "Assumption failed: testMethod does not contain Z");
 
         List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 1"));
-        assertCauseWithMessage(paramTest.get(0).getCause(), "Assumption failed: value 1 does not contain z");
+        assertCauseWithMessage(paramTest.get(0).getCause().get(), "Assumption failed: value 1 does not contain z");
         assertThat(paramTest.get(1)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 2"));
-        assertCauseWithMessage(paramTest.get(1).getCause(), "Assumption failed: value 2 does not contain z");
+        assertCauseWithMessage(paramTest.get(1).getCause().get(), "Assumption failed: value 2 does not contain z");
         assertThat(paramTest.get(2)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 3"));
-        assertCauseWithMessage(paramTest.get(2).getCause(), "Assumption failed: value 3 does not contain z");
+        assertCauseWithMessage(paramTest.get(2).getCause().get(), "Assumption failed: value 3 does not contain z");
     }
 
     private void assertCauseWithMessage(Throwable cause, String message) {
