@@ -23,7 +23,7 @@ public class CucumberComparisonLauncherTest {
 
     @Test
     void verifyEat5OutOf12() {
-        TestCaseResult results = testSuiteResults.getCapturedTestMethod("eat5OutOf12");
+        TestCaseResult results = testSuiteResults.getTestCaseResult("eat5OutOf12");
 
         assertThat(results.getWordify()).isEqualTo(
             "Given i have cucumbers with amount 12 \n" +
@@ -37,7 +37,7 @@ public class CucumberComparisonLauncherTest {
     @Disabled
     @Test
     void verifyEat5OutOf12_withAlternateWordify() {
-        TestCaseResult results = testSuiteResults.getCapturedTestMethod("eat5OutOf12");
+        TestCaseResult results = testSuiteResults.getTestCaseResult("eat5OutOf12");
 
         assertThat(results.getWordify()).isEqualTo(
             "Given i have 12 cucumbers \n" +

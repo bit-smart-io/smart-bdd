@@ -7,6 +7,7 @@ public class TestCaseResult {
     private String wordify;
     private TestCaseResultStatus status;
     private Throwable cause;
+    //TODO private List<Object> args;
     private final String methodName;
     private final TestSuiteClass testSuiteClass;
 
@@ -31,7 +32,7 @@ public class TestCaseResult {
         return methodName;
     }
 
-    public TestSuiteClass getTestSuiteResultsId() {
+    public TestSuiteClass getTestSuiteClass() {
         return testSuiteClass;
     }
 

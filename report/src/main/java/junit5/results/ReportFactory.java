@@ -22,7 +22,7 @@ public class ReportFactory {
         Collection<TestSuiteResults> testSuiteResultsList = allResults.getClassNameToTestSuiteResults().values();
         testSuiteResultsList.forEach(testSuiteResults -> report.addTestSuite(testSuite(testSuiteResults)));
         testSuiteResultsList.stream()
-            .flatMap(testSuite -> testSuite.getContextToTestResult().values().stream())
+            .flatMap(testSuite -> testSuite.getContextToTestCaseResult().values().stream())
             .collect(toList())
             .forEach(testCase -> report.addTestCase(testCase(testCase)));
 
@@ -39,7 +39,7 @@ public class ReportFactory {
             testSuiteResults.getTestSuiteClass().getPackageName(),
             testSuiteResults.getMethodNames(),
             testResults(testSuiteResults.getTestResults()),
-            testSuiteSummary(testSuiteResults.getResultsMetadata()));
+            testSuiteSummary(testSuiteResults.getMetadata()));
     }
 
     private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {
@@ -60,8 +60,8 @@ public class ReportFactory {
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getMethodName(),
-            testCaseResult.getTestSuiteResultsId().getClassName(),
-            testCaseResult.getTestSuiteResultsId().getPackageName());
+            testCaseResult.getTestSuiteClass().getClassName(),
+            testCaseResult.getTestSuiteClass().getPackageName());
     }
 
     private static Status statusFrom(TestCaseResultStatus status) {

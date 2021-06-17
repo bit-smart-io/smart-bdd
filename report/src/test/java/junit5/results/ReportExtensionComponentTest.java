@@ -48,7 +48,7 @@ public class ReportExtensionComponentTest {
             .withTestCaseCount(4)
             .withPassedCount(4)
             .build();
-        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
         // TODO
         // @ValueSource(strings = { "value 1", "value 2", "value 3" })
@@ -62,10 +62,10 @@ public class ReportExtensionComponentTest {
             "paramTest"
         );
 
-        assertThat(testSuiteResults.getCapturedTestMethod("testMethod"))
+        assertThat(testSuiteResults.getTestCaseResult("testMethod"))
             .isEqualTo(passedTestMethod());
 
-        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 1"));
         assertThat(paramTest.get(1)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 2"));
         assertThat(paramTest.get(2)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 3"));
@@ -81,7 +81,7 @@ public class ReportExtensionComponentTest {
             .withTestCaseCount(2)
             .withSkippedCount(2)
             .build();
-        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
@@ -99,7 +99,7 @@ public class ReportExtensionComponentTest {
             .withTestCaseCount(4)
             .withFailedCount(4)
             .build();
-        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
@@ -108,11 +108,11 @@ public class ReportExtensionComponentTest {
             "paramTest"
         );
 
-        TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
+        TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethod());
         assertCauseWithMessage(testMethod.getCause().get(), "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
-        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 1"));
         assertCauseWithMessage(paramTest.get(0).getCause().get(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 2"));
@@ -131,7 +131,7 @@ public class ReportExtensionComponentTest {
             .withTestCaseCount(4)
             .withFailedCount(4)
             .build();
-        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
@@ -140,11 +140,11 @@ public class ReportExtensionComponentTest {
             "paramTest"
         );
 
-        TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
+        TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
         assertThat(testMethod).isEqualTo(failedTestMethodDueToException());
         assertNullPointerCause(testMethod.getCause().get());
 
-        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 1"));
         assertNullPointerCause(paramTest.get(0).getCause().get());
         assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 2"));
@@ -163,7 +163,7 @@ public class ReportExtensionComponentTest {
             .withTestCaseCount(4)
             .withAbortedCount(4)
             .build();
-        assertThat(testSuiteResults.getResultsMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
@@ -172,12 +172,12 @@ public class ReportExtensionComponentTest {
             "paramTest"
         );
 
-        TestCaseResult testMethod = testSuiteResults.getCapturedTestMethod("testMethod");
+        TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
         assertThat(testMethod).isEqualTo(abortedTestMethod());
         assertThat(testMethod.getCause()).isPresent();
         assertCauseWithMessage(testMethod.getCause().get(), "Assumption failed: testMethod does not contain Z");
 
-        List<TestCaseResult> paramTest = testSuiteResults.getCapturedTestMethods("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
         assertThat(paramTest.get(0)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 1"));
         assertCauseWithMessage(paramTest.get(0).getCause().get(), "Assumption failed: value 1 does not contain z");
         assertThat(paramTest.get(1)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 2"));

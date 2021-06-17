@@ -23,7 +23,7 @@ public class CucumberComparisonLauncherTest {
             "eat5OutOf12"
         );
 
-        TestCaseResult firstTest = testSuiteResults.getCapturedTestMethod("eat5OutOf12");
+        TestCaseResult firstTest = testSuiteResults.getTestCaseResult("eat5OutOf12");
 
         assertThat(firstTest.getWordify()).isEqualTo(
             "Given there are cucumbers 12 \n" +

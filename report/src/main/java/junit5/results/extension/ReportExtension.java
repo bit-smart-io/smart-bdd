@@ -39,12 +39,12 @@ public class ReportExtension implements
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).newTestCaseResult(context);
+        getTestSuiteResults(context).startTestCase(context);
     }
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).completedTestCaseResult();
+        getTestSuiteResults(context).completeTestCase();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ReportExtension implements
 
         // optional list or zero size list
         // add list of arguments
-        // getTestCaseResult(extensionContext).setStatus(FAILED).setCause(cause);
+        //getTestCaseResult(extensionContext).setStatus(FAILED).setCause(cause);
         // invocationContext.getArguments()
 
         invocation.proceed();
@@ -112,7 +112,7 @@ public class ReportExtension implements
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        getTestSuiteResults(context).newTestCaseResult(context).setStatus(DISABLED);
+        getTestSuiteResults(context).startTestCase(context).setStatus(DISABLED);
     }
 
     @Override
