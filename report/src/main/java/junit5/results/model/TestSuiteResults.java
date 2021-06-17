@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
+import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -32,7 +32,7 @@ import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
  * </testsuite>
  */
 public class TestSuiteResults {
-    private final TestSuiteResultsId resultsId;
+    private final TestSuiteClass testSuiteClass;
     private TestSuiteResultsMetadata resultsMetadata;
 
     private final List<String> methodNames = new ArrayList<>();
@@ -40,8 +40,8 @@ public class TestSuiteResults {
     private final ConcurrentHashMap<ExtensionContext, TestCaseResult> contextToTestResult = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
 
-    public TestSuiteResults(TestSuiteResultsId resultsId) {
-        this.resultsId = resultsId;
+    public TestSuiteResults(TestSuiteClass testSuiteClass) {
+        this.testSuiteClass = testSuiteClass;
     }
 
     public TestCaseResult newTestCaseResult(ExtensionContext context) {
@@ -57,21 +57,21 @@ public class TestSuiteResults {
             methodNameToContexts.put(methodName, contexts);
         }
 
-        testCaseResults.add(testCaseResult);
+        this.testCaseResults.add(testCaseResult);
         contextToTestResult.put(context, testCaseResult);
         return testCaseResult;
     }
 
-    public void completedTestCaseResult(ExtensionContext context) {
+    public void completedTestCaseResult() {
         resultsMetadata = TestSuiteResultsMetadataFactory.create(testCaseResults);
     }
 
-    public TestCaseResult getResultsForTest(ExtensionContext context) {
+    public TestCaseResult getTestCaseResult(ExtensionContext context) {
         return contextToTestResult.get(context);
     }
 
-    public TestSuiteResultsId getResultsId() {
-        return resultsId;
+    public TestSuiteClass getTestSuiteClass() {
+        return testSuiteClass;
     }
 
     public TestSuiteResultsMetadata getResultsMetadata() {

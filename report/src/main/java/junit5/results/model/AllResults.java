@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
+import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
 
 /**
  * Naming ideas - Ju5AllResults, Ju5TestCaseStatus - but would that mean all junit 5 class have the prefix?
@@ -20,6 +20,7 @@ import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
  * className(name)
  */
 public class AllResults {
+    //TODO ConcurrentHashMap<TestSuiteClass, TestSuite> classToResult or just testSuits
     private final ConcurrentHashMap<String, TestSuiteResults> classNameToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<String> getClasses() {

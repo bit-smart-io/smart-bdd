@@ -1,7 +1,7 @@
 package ft.report;
 
 import junit5.results.ReportFactory;
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,14 +27,14 @@ public class ReportForPackageTest {
 
     @BeforeEach
     void setUp() {
-        ResultsExtension.reset();
+        ReportExtension.reset();
     }
 
     @Test
     void reportForOnePackageGeneratedCorrectly() throws IOException {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
 
-        Report report = ReportFactory.create(ResultsExtension.getAllResults());
+        Report report = ReportFactory.create(ReportExtension.getAllResults());
         TestSuiteLinks testSuiteLinks = report.getHomePage().getLinks();
         assertThat(testSuiteLinks.getTestSuites()).contains(
             new TestSuiteNameToFile(

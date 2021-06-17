@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
 import ft.bdd.examples.cucumber.CucumberService;
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * |    20 |   5 |   15 |
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 public class CucumberComparisonTest {
     private CucumberService cucumberService;
 

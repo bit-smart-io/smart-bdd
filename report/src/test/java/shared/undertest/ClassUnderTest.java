@@ -1,6 +1,6 @@
 package shared.undertest;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * </testsuite>
  */
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 public class ClassUnderTest {
 
     @Order(0)

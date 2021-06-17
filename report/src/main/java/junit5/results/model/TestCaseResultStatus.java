@@ -1,6 +1,6 @@
 package junit5.results.model;
 
-public enum TestCaseStatus {
+public enum TestCaseResultStatus {
     PASSED,
     FAILED,
     DISABLED,

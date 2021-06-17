@@ -19,7 +19,7 @@ class TestSuiteResultsMetadataFactory {
 //    private String hostname="Jamess-MacBook-Pro.local"
 //    privat long time="0.021"
 
-        public void increment(TestCaseStatus status) {
+        public void increment(TestCaseResultStatus status) {
             testCount++;
             switch (status) {
                 case PASSED:

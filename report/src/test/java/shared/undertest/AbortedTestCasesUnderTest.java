@@ -1,6 +1,6 @@
 package shared.undertest;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 public class AbortedTestCasesUnderTest {
 
     @Test

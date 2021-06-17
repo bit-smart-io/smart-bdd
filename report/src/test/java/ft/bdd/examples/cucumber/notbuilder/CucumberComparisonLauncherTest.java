@@ -1,6 +1,6 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.Test;
 import junit5.results.model.TestSuiteResults;
@@ -12,11 +12,11 @@ public class CucumberComparisonLauncherTest {
 
     @Test
     void launchTests() {
-        ResultsExtension.reset();
+        ReportExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ResultsExtension.getAllResults().getClasses()).containsExactly("CucumberComparisonTest");
+        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly("CucumberComparisonTest");
 
-        TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
+        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
         assertThat(testSuiteResults).isNotNull();
 
         assertThat(testSuiteResults.getMethodNames()).contains(

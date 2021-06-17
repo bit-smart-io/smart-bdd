@@ -1,7 +1,7 @@
 package ft.report;
 
 import junit5.results.ReportFactory;
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,13 +42,13 @@ public class ReportForPassingTestSuiteTest {
 
     @BeforeEach
     void setUp() {
-        ResultsExtension.reset();
+        ReportExtension.reset();
     }
 
     @Test
     void reportForOneClassGeneratedCorrectly() throws IOException {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        Report report = ReportFactory.create(ResultsExtension.getAllResults());
+        Report report = ReportFactory.create(ReportExtension.getAllResults());
         writeReport(report);
 
         assertReport(report);

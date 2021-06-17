@@ -5,21 +5,21 @@ import java.util.Optional;
 
 public class TestCaseResult {
     private String wordify;
-    private TestCaseStatus status;
+    private TestCaseResultStatus status;
     private Throwable cause;
     private final String methodName;
-    private final TestSuiteResultsId testSuiteResultsId;
+    private final TestSuiteClass testSuiteClass;
 
-    public TestCaseResult(String methodName, TestSuiteResultsId testSuiteResultsId) {
+    public TestCaseResult(String methodName, TestSuiteClass testSuiteClass) {
         this.methodName = methodName;
-        this.testSuiteResultsId = testSuiteResultsId;
+        this.testSuiteClass = testSuiteClass;
     }
 
     public String getWordify() {
         return wordify;
     }
 
-    public TestCaseStatus getStatus() {
+    public TestCaseResultStatus getStatus() {
         return status;
     }
 
@@ -31,8 +31,8 @@ public class TestCaseResult {
         return methodName;
     }
 
-    public TestSuiteResultsId getTestSuiteResultsId() {
-        return testSuiteResultsId;
+    public TestSuiteClass getTestSuiteResultsId() {
+        return testSuiteClass;
     }
 
     public TestCaseResult setWordify(String wordify) {
@@ -40,7 +40,7 @@ public class TestCaseResult {
         return this;
     }
 
-    public TestCaseResult setStatus(TestCaseStatus status) {
+    public TestCaseResult setStatus(TestCaseResultStatus status) {
         this.status = status;
         return this;
     }
@@ -56,13 +56,13 @@ public class TestCaseResult {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(methodName, that.methodName) && Objects.equals(testSuiteResultsId, that.testSuiteResultsId);
+        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(methodName, that.methodName) && Objects.equals(testSuiteClass, that.testSuiteClass);
     }
 
     /** does not include cause */
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, methodName, testSuiteResultsId);
+        return Objects.hash(wordify, status, methodName, testSuiteClass);
     }
 
     /** does not include cause */
@@ -72,7 +72,7 @@ public class TestCaseResult {
             "wordify='" + wordify + '\'' +
             ", status=" + status +
             ", methodName='" + methodName + '\'' +
-            ", testSuiteResultsId=" + testSuiteResultsId +
+            ", testSuiteClass=" + testSuiteClass +
             '}';
     }
 }

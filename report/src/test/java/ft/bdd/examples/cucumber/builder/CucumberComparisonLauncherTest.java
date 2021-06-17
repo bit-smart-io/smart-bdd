@@ -1,6 +1,6 @@
 package ft.bdd.examples.cucumber.builder;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -16,9 +16,9 @@ public class CucumberComparisonLauncherTest {
 
     @BeforeAll
     public static void setUp() {
-        ResultsExtension.reset();
+        ReportExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        testSuiteResults = ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
+        testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
     }
 
     @Test

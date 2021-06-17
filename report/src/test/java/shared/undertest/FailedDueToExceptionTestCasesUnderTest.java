@@ -1,6 +1,6 @@
 package shared.undertest;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 public class FailedDueToExceptionTestCasesUnderTest {
 
     @Test

@@ -1,8 +1,8 @@
 package junit5.results;
 
+import junit5.results.extension.ReportExtension;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestSuiteResults;
-import junit5.results.model.TestSuiteResultsId;
 import junit5.results.model.TestSuiteResultsMetadata;
 import shared.undertest.AbortedTestCasesUnderTest;
 import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
@@ -16,36 +16,33 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
-import static junit5.results.model.TestCaseStatus.ABORTED;
-import static junit5.results.model.TestCaseStatus.FAILED;
-import static junit5.results.model.TestCaseStatus.PASSED;
-import static junit5.results.model.TestSuiteResultsId.testSuiteResultsId;
+import static junit5.results.model.TestCaseResultStatus.ABORTED;
+import static junit5.results.model.TestCaseResultStatus.FAILED;
+import static junit5.results.model.TestCaseResultStatus.PASSED;
+import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
 import static junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResultsExtensionComponentTest {
+public class ReportExtensionComponentTest {
     @BeforeEach
     void setUp() {
-        ResultsExtension.reset();
+        ReportExtension.reset();
     }
 
     @Test
-    void resultsIdContainsCorrectClassInformation() {
+    void verifyTestSuiteClass() {
         TestLauncher.launch(ClassUnderTest.class);
-        TestSuiteResults testSuiteResults = ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get("ClassUnderTest");
-        assertThat(testSuiteResults.getResultsId()).isEqualTo(
-            new TestSuiteResultsId(
-                "shared.undertest.ClassUnderTest",
-                "ClassUnderTest",
-                "shared.undertest")
-        );
+        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("ClassUnderTest");
+        assertThat(testSuiteResults.getTestSuiteClass().getFullyQualifiedName()).isEqualTo("shared.undertest.ClassUnderTest");
+        assertThat(testSuiteResults.getTestSuiteClass().getClassName()).isEqualTo("ClassUnderTest");
+        assertThat(testSuiteResults.getTestSuiteClass().getPackageName()).isEqualTo("shared.undertest");
     }
 
     @Test
-    void resultsForPassingTestCases() {
+    void verifyResultsForPassingTestCases() {
         Class<?> clazz = ClassUnderTest.class;
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
-        assertResultsId(testSuiteResults, clazz);
+        assertTestSuitClass(testSuiteResults, clazz);
 
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(4)
@@ -75,10 +72,10 @@ public class ResultsExtensionComponentTest {
     }
 
     @Test
-    void resultsForDisabledTestCases() {
+    void verifyResultsForDisabledTestCases() {
         Class<?> clazz = DisabledTestCasesUnderTest.class;
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
-        assertResultsId(testSuiteResults, clazz);
+        assertTestSuitClass(testSuiteResults, clazz);
 
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(2)
@@ -93,10 +90,10 @@ public class ResultsExtensionComponentTest {
     }
 
     @Test
-    void resultsForFailedTestCases() {
+    void verifyResultsForFailedTestCases() {
         Class<?> clazz = FailedTestCasesUnderTest.class;
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
-        assertResultsId(testSuiteResults, clazz);
+        assertTestSuitClass(testSuiteResults, clazz);
 
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(4)
@@ -125,10 +122,10 @@ public class ResultsExtensionComponentTest {
     }
 
     @Test
-    void resultsForFailedDueToNullPointerTestCases() {
+    void verifyResultsForFailedDueToNullPointerTestCases() {
         Class<?> clazz = FailedDueToExceptionTestCasesUnderTest.class;
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
-        assertResultsId(testSuiteResults, clazz);
+        assertTestSuitClass(testSuiteResults, clazz);
 
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(4)
@@ -157,10 +154,10 @@ public class ResultsExtensionComponentTest {
     }
 
     @Test
-    void resultsForAbortedTestCases() {
+    void verifyResultsForAbortedTestCases() {
         Class<?> clazz = AbortedTestCasesUnderTest.class;
         TestSuiteResults testSuiteResults = launchTestSuite(clazz);
-        assertResultsId(testSuiteResults, clazz);
+        assertTestSuitClass(testSuiteResults, clazz);
 
         TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
             .withTestCaseCount(4)
@@ -203,16 +200,16 @@ public class ResultsExtensionComponentTest {
         assertThat(cause.getStackTrace()).isNotNull();
     }
 
-    private void assertResultsId(TestSuiteResults testSuiteResults, Class<?> clazz) {
-        assertThat(testSuiteResults.getResultsId().getClassName()).isEqualTo(clazz.getSimpleName());
-        assertThat(testSuiteResults.getResultsId().getName()).isEqualTo(clazz.getPackage().getName() + "." + clazz.getSimpleName());
-        assertThat(testSuiteResults.getResultsId().getPackageName()).isEqualTo(clazz.getPackage().getName());
+    private void assertTestSuitClass(TestSuiteResults testSuiteResults, Class<?> clazz) {
+        assertThat(testSuiteResults.getTestSuiteClass().getClassName()).isEqualTo(clazz.getSimpleName());
+        assertThat(testSuiteResults.getTestSuiteClass().getFullyQualifiedName()).isEqualTo(clazz.getPackage().getName() + "." + clazz.getSimpleName());
+        assertThat(testSuiteResults.getTestSuiteClass().getPackageName()).isEqualTo(clazz.getPackage().getName());
     }
 
     private TestSuiteResults launchTestSuite(Class<?> clazz) {
         TestLauncher.launch(clazz);
-        assertThat(ResultsExtension.getAllResults().getClasses()).containsExactly(clazz.getSimpleName());
-        return ResultsExtension.getAllResults().getClassNameToTestSuiteResults().get(clazz.getSimpleName());
+        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly(clazz.getSimpleName());
+        return ReportExtension.getAllResults().getClassNameToTestSuiteResults().get(clazz.getSimpleName());
     }
 
     private TestCaseResult passedParamTestCaseResult(String wordify) {

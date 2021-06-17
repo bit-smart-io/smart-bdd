@@ -3,9 +3,9 @@ package junit5.results.model;
 //TODO move to test
 public final class TestCaseResultBuilder {
     private String wordify;
-    private TestCaseStatus status;
+    private TestCaseResultStatus status;
     private String methodName;
-    private TestSuiteResultsId testSuiteResultsId;
+    private TestSuiteClass testSuiteClass;
 
     private TestCaseResultBuilder() {
     }
@@ -19,7 +19,7 @@ public final class TestCaseResultBuilder {
         return this;
     }
 
-    public TestCaseResultBuilder withStatus(TestCaseStatus status) {
+    public TestCaseResultBuilder withStatus(TestCaseResultStatus status) {
         this.status = status;
         return this;
     }
@@ -29,13 +29,13 @@ public final class TestCaseResultBuilder {
         return this;
     }
 
-    public TestCaseResultBuilder withTestSuiteResultsId(TestSuiteResultsId testSuiteResultsId) {
-        this.testSuiteResultsId = testSuiteResultsId;
+    public TestCaseResultBuilder withTestSuiteResultsId(TestSuiteClass testSuiteClass) {
+        this.testSuiteClass = testSuiteClass;
         return this;
     }
 
     public TestCaseResult build() {
-        TestCaseResult testCaseResult = new TestCaseResult(methodName, testSuiteResultsId);
+        TestCaseResult testCaseResult = new TestCaseResult(methodName, testSuiteClass);
         testCaseResult.setWordify(wordify);
         testCaseResult.setStatus(status);
         return testCaseResult;

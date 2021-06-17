@@ -2,14 +2,12 @@ package junit5.results;
 
 import junit5.results.model.AllResults;
 import junit5.results.model.TestCaseResult;
-import junit5.results.model.TestCaseStatus;
+import junit5.results.model.TestCaseResultStatus;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsMetadata;
 import report.model.HomePage;
-import report.model.TestSuite;
 import report.model.Report;
 import report.model.Status;
-import report.model.TestCase;
 import report.model.TestSuiteSummary;
 
 import java.util.Collection;
@@ -34,11 +32,11 @@ public class ReportFactory {
         return report;
     }
 
-    private static TestSuite testSuite(TestSuiteResults testSuiteResults) {
-        return new TestSuite(
-            testSuiteResults.getResultsId().getName(),
-            testSuiteResults.getResultsId().getClassName(),
-            testSuiteResults.getResultsId().getPackageName(),
+    private static report.model.TestSuite testSuite(TestSuiteResults testSuiteResults) {
+        return new report.model.TestSuite(
+            testSuiteResults.getTestSuiteClass().getFullyQualifiedName(),
+            testSuiteResults.getTestSuiteClass().getClassName(),
+            testSuiteResults.getTestSuiteClass().getPackageName(),
             testSuiteResults.getMethodNames(),
             testResults(testSuiteResults.getTestResults()),
             testSuiteSummary(testSuiteResults.getResultsMetadata()));
@@ -53,12 +51,12 @@ public class ReportFactory {
             metadata.getAbortedCount());
     }
 
-    private static List<TestCase> testResults(List<TestCaseResult> testCaseResults) {
+    private static List<report.model.TestCase> testResults(List<TestCaseResult> testCaseResults) {
         return testCaseResults.stream().map(ReportFactory::testCase).collect(toList());
     }
 
-    private static TestCase testCase(TestCaseResult testCaseResult) {
-        return new TestCase(
+    private static report.model.TestCase testCase(TestCaseResult testCaseResult) {
+        return new report.model.TestCase(
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getMethodName(),
@@ -66,7 +64,7 @@ public class ReportFactory {
             testCaseResult.getTestSuiteResultsId().getPackageName());
     }
 
-    private static Status statusFrom(TestCaseStatus status) {
+    private static Status statusFrom(TestCaseResultStatus status) {
         switch (status) {
             case PASSED:
                 return Status.PASSED;

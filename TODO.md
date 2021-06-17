@@ -5,6 +5,7 @@ TODOs
 - [x] Capture the failures
 - [x] Stats for passed, skipped, aborted and failed
 - [ ] Handle names of methods that have params
+- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Handle all test factories, templates and dynamic  
 - [ ] Capture standard output and standard error
 - [ ] Handle Strings i.e. anything in quotes

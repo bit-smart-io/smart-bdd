@@ -1,6 +1,6 @@
 package shared.undertest;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 public class DisabledTestCasesUnderTest {
 
     @Disabled

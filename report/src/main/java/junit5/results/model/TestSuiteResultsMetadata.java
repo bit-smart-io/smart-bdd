@@ -2,7 +2,6 @@ package junit5.results.model;
 
 import java.util.Objects;
 
-//TODO TestSuiteResultsSummary?
 public class TestSuiteResultsMetadata {
     //TODO count class?
     private final int testCaseCount;

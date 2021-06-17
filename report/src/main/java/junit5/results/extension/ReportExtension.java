@@ -1,4 +1,4 @@
-package junit5.results;
+package junit5.results.extension;
 
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.AllResults;
@@ -17,17 +17,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Optional;
 
-import static junit5.results.model.TestCaseStatus.ABORTED;
-import static junit5.results.model.TestCaseStatus.DISABLED;
-import static junit5.results.model.TestCaseStatus.FAILED;
-import static junit5.results.model.TestCaseStatus.PASSED;
+import static junit5.results.model.TestCaseResultStatus.ABORTED;
+import static junit5.results.model.TestCaseResultStatus.DISABLED;
+import static junit5.results.model.TestCaseResultStatus.FAILED;
+import static junit5.results.model.TestCaseResultStatus.PASSED;
 
 /**
  * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
  * TODO maybe this ReportExtension
  * TODO should this also do all the timings?
  */
-public class ResultsExtension implements
+public class ReportExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
     private static final AllResults allResults = new AllResults();
     private static final WordifyExtensionContext wordifyExtensionContext = new WordifyExtensionContext();
@@ -44,7 +44,7 @@ public class ResultsExtension implements
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).completedTestCaseResult(context);
+        getTestSuiteResults(context).completedTestCaseResult();
     }
 
     @Override
@@ -69,6 +69,12 @@ public class ResultsExtension implements
     @Override
     public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         wordify(invocationContext, extensionContext, "interceptTestMethod");
+
+        // optional list or zero size list
+        // add list of arguments
+        // getTestCaseResult(extensionContext).setStatus(FAILED).setCause(cause);
+        // invocationContext.getArguments()
+
         invocation.proceed();
     }
 
@@ -129,7 +135,7 @@ public class ResultsExtension implements
 
     private TestCaseResult getTestCaseResult(ExtensionContext context) {
         TestSuiteResults testSuiteResults = getTestSuiteResults(context);
-        return testSuiteResults.getResultsForTest(context);
+        return testSuiteResults.getTestCaseResult(context);
     }
 
     private void wordify(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, String methodName) {

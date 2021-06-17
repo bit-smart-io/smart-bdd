@@ -1,6 +1,6 @@
 package ft.bdd.examples.cucumber.builder;
 
-import junit5.results.ResultsExtension;
+import junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ import static ft.bdd.examples.cucumber.builder.builders.CucumberWhenBuilder.iEat
  * |    20 |   5 |   15 |
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(ResultsExtension.class)
+@ExtendWith(ReportExtension.class)
 
 //TODO what happens when the base class has an extension???
 public class CucumberComparisonTest extends BaseTest {
