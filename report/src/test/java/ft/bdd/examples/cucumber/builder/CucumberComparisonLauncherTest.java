@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestCaseResult;
 
+import static junit5.results.model.ClassSimpleName.classSimpleName;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CucumberComparisonLauncherTest {
@@ -18,7 +19,7 @@ public class CucumberComparisonLauncherTest {
     public static void setUp() {
         ReportExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
+        testSuiteResults = ReportExtension.getAllResults().getTestSuiteResults(classSimpleName(CucumberComparisonTest.class));
     }
 
     @Test

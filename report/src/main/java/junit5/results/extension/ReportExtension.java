@@ -36,7 +36,7 @@ public class ReportExtension implements
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        allResults.newTestSuiteResults(context);
+        allResults.startTestSuite(context);
     }
 
     @Override

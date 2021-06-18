@@ -3,6 +3,7 @@ package junit5.results;
 import junit5.results.extension.ReportExtension;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestCaseResultBuilder;
+import junit5.results.model.TestSuiteClass;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsMetadata;
 import shared.undertest.AbortedTestCasesUnderTest;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
+import static junit5.results.model.ClassSimpleName.classSimpleName;
 import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static junit5.results.model.TestCaseResultStatus.ABORTED;
 import static junit5.results.model.TestCaseResultStatus.FAILED;
@@ -34,10 +36,11 @@ public class ReportExtensionComponentTest {
     @Test
     void verifyTestSuiteClass() {
         TestLauncher.launch(ClassUnderTest.class);
-        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("ClassUnderTest");
-        assertThat(testSuiteResults.getTestSuiteClass().getFullyQualifiedName()).isEqualTo("shared.undertest.ClassUnderTest");
-        assertThat(testSuiteResults.getTestSuiteClass().getClassName()).isEqualTo("ClassUnderTest");
-        assertThat(testSuiteResults.getTestSuiteClass().getPackageName()).isEqualTo("shared.undertest");
+        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getTestSuiteResults(classSimpleName(ClassUnderTest.class));
+        TestSuiteClass testSuiteClass = testSuiteResults.getTestSuiteClass();
+        assertThat(testSuiteClass.getFullyQualifiedName()).isEqualTo("shared.undertest.ClassUnderTest");
+        assertThat(testSuiteClass.getClassName()).isEqualTo("ClassUnderTest");
+        assertThat(testSuiteClass.getPackageName()).isEqualTo("shared.undertest");
     }
 
     @Test
@@ -297,8 +300,8 @@ public class ReportExtensionComponentTest {
 
     private TestSuiteResults launchTestSuite(Class<?> clazz) {
         TestLauncher.launch(clazz);
-        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly(clazz.getSimpleName());
-        return ReportExtension.getAllResults().getClassNameToTestSuiteResults().get(clazz.getSimpleName());
+        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly(classSimpleName(clazz));
+        return ReportExtension.getAllResults().getTestSuiteResults(classSimpleName(clazz));
     }
 
     private TestCaseResultBuilder aPassedParamTestCaseResult() {

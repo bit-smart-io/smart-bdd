@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestCaseResult;
 
+import static junit5.results.model.ClassSimpleName.classSimpleName;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CucumberComparisonLauncherTest {
@@ -14,9 +15,9 @@ public class CucumberComparisonLauncherTest {
     void launchTests() {
         ReportExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly("CucumberComparisonTest");
+        assertThat(ReportExtension.getAllResults().getClasses()).containsExactly(classSimpleName(CucumberComparisonTest.class));
 
-        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getClassNameToTestSuiteResults().get("CucumberComparisonTest");
+        TestSuiteResults testSuiteResults = ReportExtension.getAllResults().getTestSuiteResults(classSimpleName(CucumberComparisonTest.class));
         assertThat(testSuiteResults).isNotNull();
 
         assertThat(testSuiteResults.getMethodNames()).contains(

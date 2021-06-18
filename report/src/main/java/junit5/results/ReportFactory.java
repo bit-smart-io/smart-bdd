@@ -19,9 +19,10 @@ public class ReportFactory {
 
     public static Report create(AllResults allResults) {
         Report report = new Report();
-        Collection<TestSuiteResults> testSuiteResultsList = allResults.getClassNameToTestSuiteResults().values();
+        Collection<TestSuiteResults> testSuiteResultsList = allResults.getTestSuiteResults();
         testSuiteResultsList.forEach(testSuiteResults -> report.addTestSuite(testSuite(testSuiteResults)));
         testSuiteResultsList.stream()
+            // TODO just get TestCaseResults
             .flatMap(testSuite -> testSuite.getContextToTestCaseResult().values().stream())
             .collect(toList())
             .forEach(testCase -> report.addTestCase(testCase(testCase)));
