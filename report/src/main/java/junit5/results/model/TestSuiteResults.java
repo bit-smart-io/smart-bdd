@@ -30,6 +30,8 @@ import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
  * ]]></system-out>
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
+ *
+ * This could be a service to create an immutable TestSuiteResults??
  */
 public class TestSuiteResults {
     private final TestSuiteClass testSuiteClass;
@@ -61,7 +63,7 @@ public class TestSuiteResults {
         return testCaseResult;
     }
 
-    public void completeTestCase() {
+    public void completeTestSuite() {
         metadata = TestSuiteResultsMetadataFactory.create(testCaseResults);
     }
 

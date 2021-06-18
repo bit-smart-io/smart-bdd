@@ -1,11 +1,16 @@
 package junit5.results.model;
 
-//TODO move to test
+import java.util.ArrayList;
+import java.util.List;
+
+//TODO move to test or use to create the TestCaseResult
 public final class TestCaseResultBuilder {
     private String wordify;
     private TestCaseResultStatus status;
     private String methodName;
     private TestSuiteClass testSuiteClass;
+    private List<Object> args = new ArrayList<>();
+    private String name;
 
     private TestCaseResultBuilder() {
     }
@@ -29,8 +34,18 @@ public final class TestCaseResultBuilder {
         return this;
     }
 
-    public TestCaseResultBuilder withTestSuiteResultsId(TestSuiteClass testSuiteClass) {
+    public TestCaseResultBuilder withTestSuiteClass(TestSuiteClass testSuiteClass) {
         this.testSuiteClass = testSuiteClass;
+        return this;
+    }
+
+    public TestCaseResultBuilder withArgs(List<Object> args) {
+        this.args = args;
+        return this;
+    }
+
+    public TestCaseResultBuilder withName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -38,6 +53,8 @@ public final class TestCaseResultBuilder {
         TestCaseResult testCaseResult = new TestCaseResult(methodName, testSuiteClass);
         testCaseResult.setWordify(wordify);
         testCaseResult.setStatus(status);
+        testCaseResult.setArgs(args);
+        testCaseResult.setName(name);
         return testCaseResult;
     }
 }

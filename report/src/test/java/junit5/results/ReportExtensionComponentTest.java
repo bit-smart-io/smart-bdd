@@ -2,6 +2,7 @@ package junit5.results;
 
 import junit5.results.extension.ReportExtension;
 import junit5.results.model.TestCaseResult;
+import junit5.results.model.TestCaseResultBuilder;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.TestSuiteResultsMetadata;
 import shared.undertest.AbortedTestCasesUnderTest;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static junit5.results.model.TestCaseResultStatus.ABORTED;
 import static junit5.results.model.TestCaseResultStatus.FAILED;
@@ -50,11 +52,6 @@ public class ReportExtensionComponentTest {
             .build();
         assertThat(testSuiteResults.getMetadata()).isEqualTo(metadata);
 
-        // TODO
-        // @ValueSource(strings = { "value 1", "value 2", "value 3" })
-        // paramTest value 1
-        // paramTest value 1, value 2
-
         assertThat(testSuiteResults.getMethodNames()).containsExactlyInAnyOrder(
             "testMethod",
             "paramTest",
@@ -63,12 +60,30 @@ public class ReportExtensionComponentTest {
         );
 
         assertThat(testSuiteResults.getTestCaseResult("testMethod"))
-            .isEqualTo(passedTestMethod());
+            .isEqualTo(aPassedTestMethod());
 
         List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
-        assertThat(paramTest.get(0)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 1"));
-        assertThat(paramTest.get(1)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 2"));
-        assertThat(paramTest.get(2)).isEqualTo(passedParamTestCaseResult("Passing assertion with value 3"));
+        assertThat(paramTest.get(0)).isEqualTo(
+            aPassedParamTestCaseResult()
+                .withWordify("Passing assertion with value 1")
+                .withArgs(singletonList("value 1"))
+                .withName("paramTest value 1")
+                .build()
+        );
+        assertThat(paramTest.get(1)).isEqualTo(
+            aPassedParamTestCaseResult()
+                .withWordify("Passing assertion with value 2")
+                .withArgs(singletonList("value 2"))
+                .withName("paramTest value 2")
+                .build()
+        );
+        assertThat(paramTest.get(2)).isEqualTo(
+            aPassedParamTestCaseResult()
+                .withWordify("Passing assertion with value 3")
+                .withArgs(singletonList("value 3"))
+                .withName("paramTest value 3")
+                .build()
+        );
     }
 
     @Test
@@ -109,16 +124,40 @@ public class ReportExtensionComponentTest {
         );
 
         TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
-        assertThat(testMethod).isEqualTo(failedTestMethod());
-        assertCauseWithMessage(testMethod.getCause().get(), "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
+        assertThat(testMethod).isEqualTo(aFailedTestMethod());
+        assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
         List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
-        assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 1"));
-        assertCauseWithMessage(paramTest.get(0).getCause().get(), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
-        assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 2"));
-        assertCauseWithMessage(paramTest.get(1).getCause().get(), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
-        assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResult("Failing assertion with value 3"));
-        assertCauseWithMessage(paramTest.get(2).getCause().get(), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
+        TestCaseResult paramTest1 = paramTest.get(0);
+        TestCaseResult paramTest2 = paramTest.get(1);
+        TestCaseResult paramTest3 = paramTest.get(2);
+
+        assertThat(paramTest1).isEqualTo(
+            aFailedParamTestCaseResult()
+                .withWordify("Failing assertion with value 1")
+                .withArgs(singletonList("value 1"))
+                .withName("paramTest value 1")
+                .build()
+        );
+        assertCauseWithMessage(paramTest1, "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
+
+        assertThat(paramTest2).isEqualTo(
+            aFailedParamTestCaseResult()
+                .withWordify("Failing assertion with value 2")
+                .withArgs(singletonList("value 2"))
+                .withName("paramTest value 2")
+                .build()
+        );
+        assertCauseWithMessage(paramTest2, "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
+
+        assertThat(paramTest3).isEqualTo(
+            aFailedParamTestCaseResult()
+                .withWordify("Failing assertion with value 3")
+                .withArgs(singletonList("value 3"))
+                .withName("paramTest value 3")
+                .build()
+        );
+        assertCauseWithMessage(paramTest3, "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
     }
 
     @Test
@@ -141,16 +180,40 @@ public class ReportExtensionComponentTest {
         );
 
         TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
-        assertThat(testMethod).isEqualTo(failedTestMethodDueToException());
-        assertNullPointerCause(testMethod.getCause().get());
+        assertThat(testMethod).isEqualTo(aFailedTestMethodDueToException());
+        assertNullPointerCause(testMethod);
 
         List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
-        assertThat(paramTest.get(0)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 1"));
-        assertNullPointerCause(paramTest.get(0).getCause().get());
-        assertThat(paramTest.get(1)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 2"));
-        assertNullPointerCause(paramTest.get(1).getCause().get());
-        assertThat(paramTest.get(2)).isEqualTo(failedParamTestCaseResultDueToException("Method that throws a pointer method with value 3"));
-        assertNullPointerCause(paramTest.get(2).getCause().get());
+        TestCaseResult paramTest1 = paramTest.get(0);
+        TestCaseResult paramTest2 = paramTest.get(1);
+        TestCaseResult paramTest3 = paramTest.get(2);
+
+        assertThat(paramTest1).isEqualTo(
+            aFailedParamTestCaseResultDueToException()
+                .withWordify("Method that throws a pointer method with value 1")
+                .withArgs(singletonList("value 1"))
+                .withName("paramTest value 1")
+                .build()
+        );
+        assertNullPointerCause(paramTest1);
+
+        assertThat(paramTest2).isEqualTo(
+            aFailedParamTestCaseResultDueToException()
+                .withWordify("Method that throws a pointer method with value 2")
+                .withArgs(singletonList("value 2"))
+                .withName("paramTest value 2")
+                .build()
+        );
+        assertNullPointerCause(paramTest2);
+
+        assertThat(paramTest3).isEqualTo(
+            aFailedParamTestCaseResultDueToException()
+                .withWordify("Method that throws a pointer method with value 3")
+                .withArgs(singletonList("value 3"))
+                .withName("paramTest value 3")
+                .build()
+        );
+        assertNullPointerCause(paramTest3);
     }
 
     @Test
@@ -173,27 +236,53 @@ public class ReportExtensionComponentTest {
         );
 
         TestCaseResult testMethod = testSuiteResults.getTestCaseResult("testMethod");
-        assertThat(testMethod).isEqualTo(abortedTestMethod());
+        assertThat(testMethod).isEqualTo(anAbortedTestMethod());
         assertThat(testMethod.getCause()).isPresent();
-        assertCauseWithMessage(testMethod.getCause().get(), "Assumption failed: testMethod does not contain Z");
+        assertCauseWithMessage(testMethod, "Assumption failed: testMethod does not contain Z");
 
         List<TestCaseResult> paramTest = testSuiteResults.getTestCaseResults("paramTest");
-        assertThat(paramTest.get(0)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 1"));
-        assertCauseWithMessage(paramTest.get(0).getCause().get(), "Assumption failed: value 1 does not contain z");
-        assertThat(paramTest.get(1)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 2"));
-        assertCauseWithMessage(paramTest.get(1).getCause().get(), "Assumption failed: value 2 does not contain z");
-        assertThat(paramTest.get(2)).isEqualTo(abortedParamTestCaseResultDueToException("Aborting assertion with value 3"));
-        assertCauseWithMessage(paramTest.get(2).getCause().get(), "Assumption failed: value 3 does not contain z");
+        TestCaseResult paramTest1 = paramTest.get(0);
+        TestCaseResult paramTest2 = paramTest.get(1);
+        TestCaseResult paramTest3 = paramTest.get(2);
+
+        assertThat(paramTest1).isEqualTo(
+            anAbortedParamTestCaseResultDueToException()
+                .withWordify("Aborting assertion with value 1")
+                .withArgs(singletonList("value 1"))
+                .withName("paramTest value 1")
+                .build()
+        );
+        assertCauseWithMessage(paramTest1, "Assumption failed: value 1 does not contain z");
+
+        assertThat(paramTest2).isEqualTo(
+            anAbortedParamTestCaseResultDueToException()
+                .withWordify("Aborting assertion with value 2")
+                .withArgs(singletonList("value 2"))
+                .withName("paramTest value 2")
+                .build()
+        );
+        assertCauseWithMessage(paramTest2, "Assumption failed: value 2 does not contain z");
+
+        assertThat(paramTest3).isEqualTo(
+            anAbortedParamTestCaseResultDueToException()
+                .withWordify("Aborting assertion with value 3")
+                .withArgs(singletonList("value 3"))
+                .withName("paramTest value 3")
+                .build()
+        );
+        assertCauseWithMessage(paramTest3, "Assumption failed: value 3 does not contain z");
     }
 
-    private void assertCauseWithMessage(Throwable cause, String message) {
+    private void assertCauseWithMessage(TestCaseResult result, String message) {
+        Throwable cause = result.getCause().orElseThrow(() -> new RuntimeException("Expected cause"));
         assertThat(cause.getMessage()).isEqualTo(message);
         assertThat(cause.getClass()).isNotNull();
         assertThat(cause.getCause()).isNull();
         assertThat(cause.getStackTrace()).isNotNull();
     }
 
-    private void assertNullPointerCause(Throwable cause) {
+    private void assertNullPointerCause(TestCaseResult result) {
+        Throwable cause = result.getCause().orElseThrow(() -> new RuntimeException("Expected cause"));
         assertThat(cause.getMessage()).isNull();
         assertThat(cause.getClass()).isEqualTo(NullPointerException.class);
         assertThat(cause.getCause()).isNull();
@@ -212,75 +301,71 @@ public class ReportExtensionComponentTest {
         return ReportExtension.getAllResults().getClassNameToTestSuiteResults().get(clazz.getSimpleName());
     }
 
-    private TestCaseResult passedParamTestCaseResult(String wordify) {
+    private TestCaseResultBuilder aPassedParamTestCaseResult() {
         return aTestCaseResult()
             .withMethodName("paramTest")
-            .withWordify(wordify)
             .withStatus(PASSED)
-            .withTestSuiteResultsId(testSuiteResultsId(ClassUnderTest.class))
-            .build();
+            .withTestSuiteClass(testSuiteResultsId(ClassUnderTest.class));
     }
 
-    private TestCaseResult failedParamTestCaseResult(String wordify) {
+    private TestCaseResultBuilder aFailedParamTestCaseResult() {
         return aTestCaseResult()
             .withMethodName("paramTest")
-            .withWordify(wordify)
             .withStatus(FAILED)
-            .withTestSuiteResultsId(testSuiteResultsId(FailedTestCasesUnderTest.class))
-            .build();
+            .withTestSuiteClass(testSuiteResultsId(FailedTestCasesUnderTest.class));
     }
 
-    private TestCaseResult failedParamTestCaseResultDueToException(String wordify) {
+    private TestCaseResultBuilder aFailedParamTestCaseResultDueToException() {
         return aTestCaseResult()
             .withMethodName("paramTest")
-            .withWordify(wordify)
             .withStatus(FAILED)
-            .withTestSuiteResultsId(testSuiteResultsId(FailedDueToExceptionTestCasesUnderTest.class))
-            .build();
+            .withTestSuiteClass(testSuiteResultsId(FailedDueToExceptionTestCasesUnderTest.class));
     }
 
-    private TestCaseResult abortedParamTestCaseResultDueToException(String wordify) {
+    private TestCaseResultBuilder anAbortedParamTestCaseResultDueToException() {
         return aTestCaseResult()
             .withMethodName("paramTest")
-            .withWordify(wordify)
             .withStatus(ABORTED)
-            .withTestSuiteResultsId(testSuiteResultsId(AbortedTestCasesUnderTest.class))
-            .build();
+            .withTestSuiteClass(testSuiteResultsId(AbortedTestCasesUnderTest.class));
     }
 
-    private TestCaseResult passedTestMethod() {
+    private TestCaseResult aPassedTestMethod() {
         return aTestCaseResult()
             .withMethodName("testMethod")
+            .withName("testMethod")
             .withWordify("Passing assertion")
             .withStatus(PASSED)
-            .withTestSuiteResultsId(testSuiteResultsId(ClassUnderTest.class))
+            .withTestSuiteClass(testSuiteResultsId(ClassUnderTest.class))
             .build();
     }
 
-    private TestCaseResult failedTestMethod() {
+    private TestCaseResult aFailedTestMethod() {
         return aTestCaseResult()
             .withMethodName("testMethod")
+            .withName("testMethod")
             .withWordify("Failing assertion")
             .withStatus(FAILED)
-            .withTestSuiteResultsId(testSuiteResultsId(FailedTestCasesUnderTest.class))
+            .withTestSuiteClass(testSuiteResultsId(FailedTestCasesUnderTest.class))
             .build();
     }
 
-    private TestCaseResult failedTestMethodDueToException() {
+    private TestCaseResult aFailedTestMethodDueToException() {
         return aTestCaseResult()
             .withMethodName("testMethod")
+            .withName("testMethod")
             .withWordify("Method that throws a pointer method")
             .withStatus(FAILED)
-            .withTestSuiteResultsId(testSuiteResultsId(FailedDueToExceptionTestCasesUnderTest.class))
+            .withTestSuiteClass(testSuiteResultsId(FailedDueToExceptionTestCasesUnderTest.class))
             .build();
     }
 
-    private TestCaseResult abortedTestMethod() {
+    private TestCaseResult anAbortedTestMethod() {
         return aTestCaseResult()
             .withMethodName("testMethod")
+            .withName("testMethod")
             .withWordify("Aborting assertion")
             .withStatus(ABORTED)
-            .withTestSuiteResultsId(testSuiteResultsId(AbortedTestCasesUnderTest.class))
+            .withTestSuiteClass(testSuiteResultsId(AbortedTestCasesUnderTest.class))
             .build();
     }
 }

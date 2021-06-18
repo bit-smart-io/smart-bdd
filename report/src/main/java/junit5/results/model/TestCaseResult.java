@@ -1,13 +1,16 @@
 package junit5.results.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class TestCaseResult {
+public class  TestCaseResult {
     private String wordify;
     private TestCaseResultStatus status;
     private Throwable cause;
-    //TODO private List<Object> args;
+    private List<Object> args = new ArrayList<>();
+    private String name;
     private final String methodName;
     private final TestSuiteClass testSuiteClass;
 
@@ -36,8 +39,17 @@ public class TestCaseResult {
         return testSuiteClass;
     }
 
+    public List<Object> getArgs() {
+        return args;
+    }
+
     public TestCaseResult setWordify(String wordify) {
         this.wordify = wordify;
+        return this;
+    }
+
+    public TestCaseResult setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -51,19 +63,24 @@ public class TestCaseResult {
         return this;
     }
 
+    public TestCaseResult setArgs(List<Object> args) {
+        this.args = args;
+        return this;
+    }
+
     /** does not include cause */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(methodName, that.methodName) && Objects.equals(testSuiteClass, that.testSuiteClass);
+        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(methodName, that.methodName) && Objects.equals(testSuiteClass, that.testSuiteClass);
     }
 
     /** does not include cause */
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, methodName, testSuiteClass);
+        return Objects.hash(wordify, status, args, name, methodName, testSuiteClass);
     }
 
     /** does not include cause */
@@ -72,6 +89,9 @@ public class TestCaseResult {
         return "TestCaseResult{" +
             "wordify='" + wordify + '\'' +
             ", status=" + status +
+            ", cause=" + cause +
+            ", args=" + args +
+            ", name='" + name + '\'' +
             ", methodName='" + methodName + '\'' +
             ", testSuiteClass=" + testSuiteClass +
             '}';

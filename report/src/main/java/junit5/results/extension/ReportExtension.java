@@ -3,6 +3,7 @@ package junit5.results.extension;
 import junit5.results.model.TestSuiteResults;
 import junit5.results.model.AllResults;
 import junit5.results.model.TestCaseResult;
+import junit5.results.utils.TestCaseNameFactory;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -24,13 +25,14 @@ import static junit5.results.model.TestCaseResultStatus.PASSED;
 
 /**
  * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
- * TODO maybe this ReportExtension
  * TODO should this also do all the timings?
+ * TODO WordifyExtensionContext and TestCaseNameFactory need to be injectable and or overridable
  */
 public class ReportExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
     private static final AllResults allResults = new AllResults();
     private static final WordifyExtensionContext wordifyExtensionContext = new WordifyExtensionContext();
+    private static final TestCaseNameFactory testCaseNameFactory = new TestCaseNameFactory();
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
@@ -44,7 +46,7 @@ public class ReportExtension implements
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).completeTestCase();
+        getTestSuiteResults(context).completeTestSuite();
     }
 
     @Override
@@ -66,32 +68,43 @@ public class ReportExtension implements
         invocation.proceed();
     }
 
+    /** normal test without params */
     @Override
     public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
-        wordify(invocationContext, extensionContext, "interceptTestMethod");
-
-        // optional list or zero size list
-        // add list of arguments
-        //getTestCaseResult(extensionContext).setStatus(FAILED).setCause(cause);
-        // invocationContext.getArguments()
-
+        updateTestCaseResult(invocationContext, extensionContext);
         invocation.proceed();
     }
 
+    /**
+     * Using (at)TestFactory??? Not tested.
+     * */
     @Override
     public <T> T interceptTestFactoryMethod(Invocation<T> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
-        wordify(invocationContext, extensionContext, "interceptTestFactoryMethod");
+        updateTestCaseResult(invocationContext, extensionContext);
         return invocation.proceed();
     }
 
+    /**
+     * Pass in params:
+     * (at)ParameterizedTest
+     * (at)ValueSource(strings = { "value 1", "value 2", "value 3" })
+     * void paramTest(String param) {
+     *     passingAssertionWith(param);
+     * }
+     */
     @Override
     public void interceptTestTemplateMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
-        wordify(invocationContext, extensionContext, "interceptTestTemplateMethod");
+        updateTestCaseResult(invocationContext, extensionContext);
         invocation.proceed();
     }
 
+    /**
+     * Using (at)TestFactory??? Not tested.
+     */
     @Override
     public void interceptDynamicTest(Invocation<Void> invocation, ExtensionContext extensionContext) throws Throwable {
+        // no invocationContext???
+        //updateTestCaseResult(invocationContext, extensionContext);
         invocation.proceed();
     }
 
@@ -138,10 +151,11 @@ public class ReportExtension implements
         return testSuiteResults.getTestCaseResult(context);
     }
 
-    private void wordify(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, String methodName) {
+    private void updateTestCaseResult(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) {
         TestCaseResult testCaseResult = getTestCaseResult(extensionContext);
         wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(testCaseResult::setWordify);
-//        System.out.println(methodName + ", method: " + extensionContext.getTestMethod() + ", wordify: " + wordify);
+        testCaseResult.setArgs(invocationContext.getArguments());
+        testCaseResult.setName(testCaseNameFactory.createName(testCaseResult));
     }
 
     public static void reset() {
