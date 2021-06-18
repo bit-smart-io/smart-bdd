@@ -138,6 +138,7 @@ public class ReportComponentBuilderWipTest {
         return aTestCase()
             .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
+            .withName("testMethod")
             .withMethodName("testMethod")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest")

@@ -7,6 +7,7 @@ public final class TestCaseBuilder {
     private String wordify;
     private Status status;
     private String methodName;
+    private String name;
     private String className;
     private String packageName;
 
@@ -32,6 +33,11 @@ public final class TestCaseBuilder {
         return this;
     }
 
+    public TestCaseBuilder withName(String name) {
+        this.name = name;
+        return this;
+    }
+
     public TestCaseBuilder withClassName(String className) {
         this.className = className;
         return this;
@@ -43,6 +49,6 @@ public final class TestCaseBuilder {
     }
 
     public TestCase build() {
-        return new TestCase(wordify, status, methodName, className, packageName);
+        return new TestCase(wordify, status, name, methodName, className, packageName);
     }
 }

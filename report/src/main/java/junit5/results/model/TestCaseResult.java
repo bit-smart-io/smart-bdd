@@ -31,6 +31,10 @@ public class  TestCaseResult {
         return Optional.ofNullable(cause);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getMethodName() {
         return methodName;
     }

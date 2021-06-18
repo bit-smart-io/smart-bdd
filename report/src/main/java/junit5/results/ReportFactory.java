@@ -59,6 +59,7 @@ public class ReportFactory {
         return new report.model.TestCase(
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
+            testCaseResult.getName(),
             testCaseResult.getMethodName(),
             testCaseResult.getTestSuiteClass().getClassName(),
             testCaseResult.getTestSuiteClass().getPackageName());
