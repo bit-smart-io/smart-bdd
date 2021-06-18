@@ -3,7 +3,7 @@ package ft.bdd.examples.cucumber.notbuilder;
 import junit5.results.extension.ReportExtension;
 import junit5.utils.TestLauncher;
 import org.junit.jupiter.api.Test;
-import junit5.results.model.TestSuiteResults;
+import junit5.results.model.TestSuiteResult;
 import junit5.results.model.TestCaseResult;
 
 import static junit5.results.model.ClassSimpleName.classSimpleName;
@@ -17,14 +17,14 @@ public class CucumberComparisonLauncherTest {
         TestLauncher.launch(CucumberComparisonTest.class);
         assertThat(ReportExtension.getResults().getClasses()).containsExactly(classSimpleName(CucumberComparisonTest.class));
 
-        TestSuiteResults testSuiteResults = ReportExtension.getResults().getTestSuiteResults(classSimpleName(CucumberComparisonTest.class));
-        assertThat(testSuiteResults).isNotNull();
+        TestSuiteResult testSuiteResult = ReportExtension.getResults().getTestSuiteResults(classSimpleName(CucumberComparisonTest.class));
+        assertThat(testSuiteResult).isNotNull();
 
-        assertThat(testSuiteResults.getMethodNames()).contains(
+        assertThat(testSuiteResult.getMethodNames()).contains(
             "eat5OutOf12"
         );
 
-        TestCaseResult firstTest = testSuiteResults.getTestCaseResult("eat5OutOf12");
+        TestCaseResult firstTest = testSuiteResult.getTestCaseResult("eat5OutOf12");
 
         assertThat(firstTest.getWordify()).isEqualTo(
             "Given there are cucumbers 12 \n" +

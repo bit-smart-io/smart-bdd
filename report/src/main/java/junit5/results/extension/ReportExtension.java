@@ -1,6 +1,6 @@
 package junit5.results.extension;
 
-import junit5.results.model.TestSuiteResults;
+import junit5.results.model.TestSuiteResult;
 import junit5.results.model.Results;
 import junit5.results.model.TestCaseResult;
 import junit5.results.utils.TestCaseNameFactory;
@@ -41,12 +41,12 @@ public class ReportExtension implements
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).startTestCase(context);
+        getTestSuiteResult(context).startTestCase(context);
     }
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        getTestSuiteResults(context).completeTestSuite();
+        getTestSuiteResult(context).completeTestSuite();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class ReportExtension implements
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        getTestSuiteResults(context).startTestCase(context).setStatus(DISABLED);
+        getTestSuiteResult(context).startTestCase(context).setStatus(DISABLED);
     }
 
     @Override
@@ -142,13 +142,13 @@ public class ReportExtension implements
         return results;
     }
 
-    private TestSuiteResults getTestSuiteResults(ExtensionContext context) {
+    private TestSuiteResult getTestSuiteResult(ExtensionContext context) {
         return results.getTestResultsForClass(context);
     }
 
     private TestCaseResult getTestCaseResult(ExtensionContext context) {
-        TestSuiteResults testSuiteResults = getTestSuiteResults(context);
-        return testSuiteResults.getTestCaseResult(context);
+        TestSuiteResult testSuiteResult = getTestSuiteResult(context);
+        return testSuiteResult.getTestCaseResult(context);
     }
 
     private void updateTestCaseResult(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) {

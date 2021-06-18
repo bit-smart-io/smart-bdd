@@ -8,32 +8,32 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static junit5.results.model.ClassSimpleName.classSimpleName;
-import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
+import static junit5.results.model.TestSuiteClass.testSuiteClass;
 
 public class Results {
-    private final ConcurrentHashMap<ClassSimpleName, TestSuiteResults> classNameToTestSuiteResults = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<ClassSimpleName, TestSuiteResult> classNameToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<ClassSimpleName> getClasses() {
         return Collections.list(classNameToTestSuiteResults.keys());
     }
 
-    public Collection<TestSuiteResults> getTestSuiteResults() {
+    public Collection<TestSuiteResult> getTestSuiteResults() {
         return classNameToTestSuiteResults.values();
     }
 
-    public TestSuiteResults getTestSuiteResults(ClassSimpleName className) {
+    public TestSuiteResult getTestSuiteResults(ClassSimpleName className) {
         return classNameToTestSuiteResults.get(className);
     }
 
-    public TestSuiteResults getTestResultsForClass(ExtensionContext extensionContext) {
+    public TestSuiteResult getTestResultsForClass(ExtensionContext extensionContext) {
         return classNameToTestSuiteResults.get(getClassName(extensionContext));
     }
 
-    public TestSuiteResults startTestSuite(ExtensionContext context) {
+    public TestSuiteResult startTestSuite(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
-        TestSuiteResults testSuiteResults = new TestSuiteResults(testSuiteResultsId(clazz));
-        classNameToTestSuiteResults.put(getClassName(context), testSuiteResults);
-        return testSuiteResults;
+        TestSuiteResult testSuiteResult = new TestSuiteResult(testSuiteClass(clazz));
+        classNameToTestSuiteResults.put(getClassName(context), testSuiteResult);
+        return testSuiteResult;
     }
 
     public ClassSimpleName getClassName(ExtensionContext extensionContext) {

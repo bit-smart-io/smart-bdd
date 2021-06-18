@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TestSuiteClassTest {
-    private final TestSuiteClass testSuiteClass = TestSuiteClass.testSuiteResultsId(TestSuiteClassTest.class);
+    private final TestSuiteClass testSuiteClass = TestSuiteClass.testSuiteClass(TestSuiteClassTest.class);
 
     @Test
     void setsFullyQualifiedName() {

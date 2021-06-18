@@ -3,7 +3,7 @@ package junit5.results;
 import junit5.results.model.Results;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestCaseResultStatus;
-import junit5.results.model.TestSuiteResults;
+import junit5.results.model.TestSuiteResult;
 import junit5.results.model.TestSuiteResultsMetadata;
 import report.model.HomePage;
 import report.model.Report;
@@ -19,13 +19,12 @@ public class ReportFactory {
 
     public static Report create(Results results) {
         Report report = new Report();
-        Collection<TestSuiteResults> testSuiteResultsList = results.getTestSuiteResults();
-        testSuiteResultsList.forEach(testSuiteResults -> report.addTestSuite(testSuite(testSuiteResults)));
-        testSuiteResultsList.stream()
-            // TODO just get TestCaseResults
-            .flatMap(testSuite -> testSuite.getContextToTestCaseResult().values().stream())
+        Collection<TestSuiteResult> testSuiteResults = results.getTestSuiteResults();
+        testSuiteResults.forEach(testSuiteResult -> report.addTestSuite(testSuite(testSuiteResult)));
+        testSuiteResults.stream()
+            .flatMap(testSuite -> testSuite.getTestCaseResults().stream())
             .collect(toList())
-            .forEach(testCase -> report.addTestCase(testCase(testCase)));
+            .forEach(testCaseResult -> report.addTestCase(testCase(testCaseResult)));
 
         report.setHomePage(
             new HomePage(ReportIndexFactory.create(report),
@@ -33,14 +32,14 @@ public class ReportFactory {
         return report;
     }
 
-    private static report.model.TestSuite testSuite(TestSuiteResults testSuiteResults) {
+    private static report.model.TestSuite testSuite(TestSuiteResult testSuiteResult) {
         return new report.model.TestSuite(
-            testSuiteResults.getTestSuiteClass().getFullyQualifiedName(),
-            testSuiteResults.getTestSuiteClass().getClassName(),
-            testSuiteResults.getTestSuiteClass().getPackageName(),
-            testSuiteResults.getMethodNames(),
-            testResults(testSuiteResults.getTestResults()),
-            testSuiteSummary(testSuiteResults.getMetadata()));
+            testSuiteResult.getTestSuiteClass().getFullyQualifiedName(),
+            testSuiteResult.getTestSuiteClass().getClassName(),
+            testSuiteResult.getTestSuiteClass().getPackageName(),
+            testSuiteResult.getMethodNames(),
+            testResults(testSuiteResult.getTestCaseResults()),
+            testSuiteSummary(testSuiteResult.getMetadata()));
     }
 
     private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {

@@ -13,7 +13,7 @@ public class TestSuiteClass {
         this.packageName = packageName;
     }
 
-    public static TestSuiteClass testSuiteResultsId(Class<?> clazz) {
+    public static TestSuiteClass testSuiteClass(Class<?> clazz) {
         return new TestSuiteClass(clazz.getName(), clazz.getSimpleName(), clazz.getPackage().getName());
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
+import static junit5.results.model.TestSuiteClass.testSuiteClass;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -33,7 +33,7 @@ import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
  *
  * This could be a service to create an immutable TestSuiteResults??
  */
-public class TestSuiteResults {
+public class TestSuiteResult {
     private final TestSuiteClass testSuiteClass;
     private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
@@ -41,7 +41,7 @@ public class TestSuiteResults {
     private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
     private TestSuiteResultsMetadata metadata;
 
-    public TestSuiteResults(TestSuiteClass testSuiteClass) {
+    public TestSuiteResult(TestSuiteClass testSuiteClass) {
         this.testSuiteClass = testSuiteClass;
     }
 
@@ -98,11 +98,7 @@ public class TestSuiteResults {
         return methodNames;
     }
 
-    public ConcurrentHashMap<ExtensionContext, TestCaseResult> getContextToTestCaseResult() {
-        return contextToTestCaseResult;
-    }
-
-    public List<TestCaseResult> getTestResults() {
+    public List<TestCaseResult> getTestCaseResults() {
         return testCaseResults;
     }
 
@@ -111,6 +107,6 @@ public class TestSuiteResults {
     }
 
     private TestCaseResult createTestCaseResult(ExtensionContext context) {
-        return new TestCaseResult(getMethodName(context), testSuiteResultsId(context.getRequiredTestClass()));
+        return new TestCaseResult(getMethodName(context), testSuiteClass(context.getRequiredTestClass()));
     }
 }
