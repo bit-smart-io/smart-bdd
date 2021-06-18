@@ -1,6 +1,6 @@
 package junit5.results;
 
-import junit5.results.model.AllResults;
+import junit5.results.model.Results;
 import junit5.results.model.TestCaseResult;
 import junit5.results.model.TestCaseResultStatus;
 import junit5.results.model.TestSuiteResults;
@@ -17,9 +17,9 @@ import static java.util.stream.Collectors.toList;
 
 public class ReportFactory {
 
-    public static Report create(AllResults allResults) {
+    public static Report create(Results results) {
         Report report = new Report();
-        Collection<TestSuiteResults> testSuiteResultsList = allResults.getTestSuiteResults();
+        Collection<TestSuiteResults> testSuiteResultsList = results.getTestSuiteResults();
         testSuiteResultsList.forEach(testSuiteResults -> report.addTestSuite(testSuite(testSuiteResults)));
         testSuiteResultsList.stream()
             // TODO just get TestCaseResults

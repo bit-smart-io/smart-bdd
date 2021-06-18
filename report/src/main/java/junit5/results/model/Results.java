@@ -10,19 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static junit5.results.model.ClassSimpleName.classSimpleName;
 import static junit5.results.model.TestSuiteClass.testSuiteResultsId;
 
-/**
- * Naming ideas - Ju5AllResults, Ju5TestCaseStatus - but would that mean all junit 5 class have the prefix?
- *
- * TODO same test with different args?
- *
- * Should we use domain objects?
- * ClassName extends String
- * ClassName { String name }
- * ClassName.from(name)
- * className(name)
- */
-public class AllResults {
-    //TODO ConcurrentHashMap<TestSuiteClass, TestSuite> classToResult or just testSuits
+public class Results {
     private final ConcurrentHashMap<ClassSimpleName, TestSuiteResults> classNameToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<ClassSimpleName> getClasses() {

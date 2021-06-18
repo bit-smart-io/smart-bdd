@@ -31,7 +31,7 @@ public class ReportComponentBuilderWipTest {
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ReportExtension.getAllResults());
+        Report report = ReportFactory.create(ReportExtension.getResults());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(4);
 

@@ -1,7 +1,7 @@
 package junit5.results.extension;
 
 import junit5.results.model.TestSuiteResults;
-import junit5.results.model.AllResults;
+import junit5.results.model.Results;
 import junit5.results.model.TestCaseResult;
 import junit5.results.utils.TestCaseNameFactory;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -30,13 +30,13 @@ import static junit5.results.model.TestCaseResultStatus.PASSED;
  */
 public class ReportExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
-    private static final AllResults allResults = new AllResults();
+    private static final Results results = new Results();
     private static final WordifyExtensionContext wordifyExtensionContext = new WordifyExtensionContext();
     private static final TestCaseNameFactory testCaseNameFactory = new TestCaseNameFactory();
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        allResults.startTestSuite(context);
+        results.startTestSuite(context);
     }
 
     @Override
@@ -138,12 +138,12 @@ public class ReportExtension implements
         getTestCaseResult(context).setStatus(FAILED).setCause(cause);
     }
 
-    public static AllResults getAllResults() {
-        return allResults;
+    public static Results getResults() {
+        return results;
     }
 
     private TestSuiteResults getTestSuiteResults(ExtensionContext context) {
-        return allResults.getTestResultsForClass(context);
+        return results.getTestResultsForClass(context);
     }
 
     private TestCaseResult getTestCaseResult(ExtensionContext context) {
@@ -159,6 +159,6 @@ public class ReportExtension implements
     }
 
     public static void reset() {
-        allResults.reset();
+        results.reset();
     }
 }

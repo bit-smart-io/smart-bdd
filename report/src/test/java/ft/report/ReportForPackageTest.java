@@ -34,7 +34,7 @@ public class ReportForPackageTest {
     void reportForOnePackageGeneratedCorrectly() throws IOException {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
 
-        Report report = ReportFactory.create(ReportExtension.getAllResults());
+        Report report = ReportFactory.create(ReportExtension.getResults());
         TestSuiteLinks testSuiteLinks = report.getHomePage().getLinks();
         assertThat(testSuiteLinks.getTestSuites()).contains(
             new TestSuiteNameToFile(
