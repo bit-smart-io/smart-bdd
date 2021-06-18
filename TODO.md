@@ -4,7 +4,7 @@ TODOs
 - [x] Have failing tests
 - [x] Capture the failures
 - [x] Stats for passed, skipped, aborted and failed
-- [ ] Handle names of methods that have params
+- [x] Handle names of methods that have params
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Handle all test factories, templates and dynamic  
 - [ ] Capture standard output and standard error
@@ -49,11 +49,11 @@ This has the advantage of being more concise.
 ```
 private TestSuite firstTestSuite() {
     return aTestSuite()
-    .withName("shared.undertest.ClassUnderTest")
-    .withClassName("ClassUnderTest")
-    .withPackageName("shared.undertest")
-    .withMethodNames(asList("testMethod", "paramTest", "paramTest", "paramTest"))
-    .withTestCases(asList(firstTestCase()))
+        .withName("shared.undertest.ClassUnderTest")
+        .withClassName("ClassUnderTest")
+        .withPackageName("shared.undertest")
+        .withMethodNames(asList("testMethod", "paramTest", "paramTest", "paramTest"))
+        .withTestCases(asList(firstTestCase()))
     ...
     .build();
 }
