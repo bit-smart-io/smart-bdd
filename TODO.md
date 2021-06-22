@@ -71,11 +71,10 @@ private TestSuite assertFirstTestCase() {
 
 
 ### Add vue web app
-Can't load local files after page has loaded due to security.
+Can't load local files after page has loaded, possibly complied due to security.
 
 Options for the web reports:
-1. Create each test and or suite statically
-2. JSON that contains one or more test suites
+1. Inject JSON in to index.html
+2. Use npm to compile the webapp
 3. Have a start script that starts up a local webserver
-
-It could 1. for local tests and 3. for running more than a test suite 
+ 

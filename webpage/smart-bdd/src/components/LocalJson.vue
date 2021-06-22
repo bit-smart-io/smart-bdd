@@ -19,12 +19,6 @@
 
     <h4>ClassUnderTest Full JSON</h4>
     <p> {{ classUnderTest }} </p>
-
-<!--    <ul>-->
-<!--      <li v-for="file in indexLinkFiles">-->
-<!--        {{ file }}-->
-<!--      </li>-->
-<!--    </ul>-->
   </div>
 </template>
 
