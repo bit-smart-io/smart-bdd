@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
 import junit5.results.extension.ReportExtension;
-import junit5.utils.TestLauncher;
+import junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.Test;
 import junit5.results.model.TestSuiteResult;
 import junit5.results.model.TestCaseResult;

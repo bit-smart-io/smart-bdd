@@ -11,7 +11,7 @@ import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
 import shared.undertest.ClassUnderTest;
 import shared.undertest.DisabledTestCasesUnderTest;
 import shared.undertest.FailedTestCasesUnderTest;
-import junit5.utils.TestLauncher;
+import junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

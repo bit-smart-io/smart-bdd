@@ -3,7 +3,7 @@ package junit5.debugextension;
 import junit5.debugextension.undertest.ClassUnderTest1;
 import junit5.debugextension.utils.debugcapture.CaptureTestClass;
 import junit5.debugextension.utils.debugcapture.CaptureTestMethod;
-import junit5.utils.TestLauncher;
+import junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

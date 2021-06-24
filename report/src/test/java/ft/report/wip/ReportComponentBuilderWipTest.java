@@ -2,7 +2,7 @@ package ft.report.wip;
 
 import junit5.results.ReportFactory;
 import junit5.results.extension.ReportExtension;
-import junit5.utils.TestLauncher;
+import junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import report.model.Report;

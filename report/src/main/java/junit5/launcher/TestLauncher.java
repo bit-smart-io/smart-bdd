@@ -1,4 +1,4 @@
-package junit5.utils;
+package junit5.launcher;
 
 import org.junit.platform.engine.DiscoverySelector;
 import org.junit.platform.launcher.Launcher;
