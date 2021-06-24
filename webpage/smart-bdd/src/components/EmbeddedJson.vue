@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h4>Load embedded index - Raw Json</h4>
-    <p> {{ jsonIndex }} </p>
+<!--    <h4>Load embedded index - Raw Json</h4>-->
+<!--    <p> {{ jsonIndex }} </p>-->
 
     <h4>Summary Of All Tests</h4>
     <p> {{ jsonIndex.summary }} </p>
@@ -36,13 +36,59 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import TestSuiteResult from "./TestSuiteResult.vue";
-export default {
+
+declare interface TestSuit {
+  name: string;
+  className: string;
+  packageName: string;
+  methodNames: string[];
+  summary: Summary;
+  testCases: TestCase[];
+}
+
+declare interface Summary {
+    passed: number;
+    skipped: number;
+    failed: number;
+    aborted: number;
+    tests: number;
+}
+
+declare interface TestCase {
+  wordify: string;
+  status: string;
+  methodName: string;
+  className: string;
+  packageName: string;
+}
+
+export default defineComponent({
   name: "EmbeddedJson",
   components: { TestSuiteResult },
   data() {
     return {
-      testSuiteResultsJson: ""
+      testSuiteResultsJson: {
+        name: '',
+        className: '',
+        packageName: '',
+        methodNames: [''],
+        summary: {
+          passed: 0,
+          skipped: 0,
+          failed: 0,
+          aborted: 0,
+          tests: 0
+        },
+        testCases: [{
+          wordify: '',
+          status: '',
+          methodName: '',
+          className: '',
+          packageName: ''
+        }],
+      }
     }
   },
   computed: {
@@ -66,14 +112,13 @@ export default {
      * 2. http for either local or remote http
      **/
     loadJson(file: string) {
-      const element = document.getElementById(file)
+      const element = document.getElementById(file);
       if (element) {
-        this.testSuiteResultsJson = JSON.parse(element.innerHTML);
+        this.testSuiteResultsJson = <TestSuit>JSON.parse(element.innerHTML);
       }
-      console.log("............file: " + file);
     },
   }
-};
+});
 </script>
 
 <style scoped>

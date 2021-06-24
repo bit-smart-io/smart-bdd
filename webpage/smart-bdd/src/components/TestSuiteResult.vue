@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div v-if="methodName">
     <h5>{{methodName }}: {{ status }}</h5>
     <p>{{ wordify }}</p>
   </div>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: "TestSuiteResult",
   props: ['wordify', 'status', 'methodName', 'className', 'packageName'],
-};
+});
 </script>
 
 <style scoped>
