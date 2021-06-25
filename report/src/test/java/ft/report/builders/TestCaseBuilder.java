@@ -1,7 +1,7 @@
 package ft.report.builders;
 
-import report.model.Status;
-import report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.Status;
+import io.bitsmart.bdd.report.report.model.TestCase;
 
 public final class TestCaseBuilder {
     private String wordify;

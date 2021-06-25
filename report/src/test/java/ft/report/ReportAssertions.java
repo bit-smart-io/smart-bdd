@@ -1,8 +1,8 @@
 package ft.report;
 
-import report.model.Status;
-import report.model.TestCase;
-import report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.Status;
+import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import static ft.report.builders.TestCaseBuilder.aTestCase;
 import static ft.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;

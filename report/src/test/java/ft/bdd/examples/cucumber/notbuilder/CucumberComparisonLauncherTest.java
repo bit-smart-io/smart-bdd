@@ -1,12 +1,12 @@
 package ft.bdd.examples.cucumber.notbuilder;
 
-import junit5.results.extension.ReportExtension;
-import junit5.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.Test;
-import junit5.results.model.TestSuiteResult;
-import junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 
-import static junit5.results.model.ClassSimpleName.classSimpleName;
+import static io.bitsmart.bdd.report.junit5.results.model.ClassSimpleName.classSimpleName;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CucumberComparisonLauncherTest {

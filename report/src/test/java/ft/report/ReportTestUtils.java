@@ -1,9 +1,9 @@
 package ft.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import report.ReportWriter;
-import report.model.Report;
-import report.model.TestSuite;
+import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import java.io.File;
 import java.io.IOException;

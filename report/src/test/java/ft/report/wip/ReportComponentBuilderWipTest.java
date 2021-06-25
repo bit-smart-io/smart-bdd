@@ -1,14 +1,14 @@
 package ft.report.wip;
 
-import junit5.results.ReportFactory;
-import junit5.results.extension.ReportExtension;
-import junit5.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.results.ReportFactory;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import report.model.Report;
-import report.model.Status;
-import report.model.TestCase;
-import report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.Status;
+import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.TestSuite;
 import shared.undertest.ClassUnderTest;
 
 import static ft.report.builders.TestCaseBuilder.aTestCase;

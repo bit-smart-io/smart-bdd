@@ -1,6 +1,6 @@
 package ft.report.builders;
 
-import report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 
 public final class TestSuiteSummaryBuilder {
     private int testCaseCount;

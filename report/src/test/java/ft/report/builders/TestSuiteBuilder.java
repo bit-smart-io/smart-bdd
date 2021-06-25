@@ -1,8 +1,8 @@
 package ft.report.builders;
 
-import report.model.TestCase;
-import report.model.TestSuite;
-import report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 
 import java.util.List;
 

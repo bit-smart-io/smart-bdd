@@ -1,6 +1,6 @@
 package shared.undertest;
 
-import junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

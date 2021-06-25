@@ -1,15 +1,15 @@
 package ft.report;
 
-import junit5.results.ReportFactory;
-import junit5.results.extension.ReportExtension;
-import junit5.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.results.ReportFactory;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import report.model.Report;
-import report.model.TestSuiteLinks;
-import report.model.TestSuite;
-import report.model.TestSuiteNameToFile;
-import report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
+import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import shared.undertest.ClassUnderTest;
 
 import java.io.IOException;
