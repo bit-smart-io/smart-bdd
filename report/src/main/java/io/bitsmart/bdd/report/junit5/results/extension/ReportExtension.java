@@ -3,7 +3,7 @@ package io.bitsmart.bdd.report.junit5.results.extension;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.Results;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.utils.TestCaseNameFactory;
+import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;

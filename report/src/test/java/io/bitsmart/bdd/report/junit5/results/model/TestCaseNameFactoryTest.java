@@ -1,9 +1,6 @@
-package io.bitsmart.bdd.report.junit5.results.utils;
+package io.bitsmart.bdd.report.junit5.results.model;
 
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import org.junit.jupiter.api.Test;
-
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;

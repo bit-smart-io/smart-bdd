@@ -1,6 +1,4 @@
-package io.bitsmart.bdd.report.junit5.results.utils;
-
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+package io.bitsmart.bdd.report.junit5.results.model;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -71,11 +71,13 @@ public class TestSuiteResult {
         return contextToTestCaseResult.get(context);
     }
 
+    /** only used for testing. Prod code uses getTestCaseResults */
     public TestCaseResult getTestCaseResult(String methodName) {
         ExtensionContext extensionContext = methodNameToContexts.get(methodName).get(0);
         return contextToTestCaseResult.get(extensionContext);
     }
 
+    /** only used for testing. Prod code uses getTestCaseResults */
     public List<TestCaseResult> getTestCaseResults(String methodName) {
         return methodNameToContexts.get(methodName).stream()
             .map(contextToTestCaseResult::get)
