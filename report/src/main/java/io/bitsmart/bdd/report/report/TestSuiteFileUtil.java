@@ -1,12 +1,10 @@
 package io.bitsmart.bdd.report.report;
 
 import io.bitsmart.bdd.report.report.model.TestSuite;
-
 import java.io.File;
-
 import static java.lang.System.getProperty;
 
-public class TestSuiteFileService {
+public class TestSuiteFileUtil {
 
     public File outputDirectory() {
         return new File(getProperty("java.io.tmpdir"));

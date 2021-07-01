@@ -1,6 +1,6 @@
 package ft.report;
 
-import io.bitsmart.bdd.report.junit5.results.ReportFactory;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;

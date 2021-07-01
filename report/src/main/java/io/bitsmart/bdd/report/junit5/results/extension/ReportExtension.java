@@ -4,6 +4,9 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.Results;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
+import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
+import io.bitsmart.bdd.report.report.model.Report;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -47,6 +50,19 @@ public class ReportExtension implements
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
+
+        // if has test TestExecutionListener
+        //   then TestExecutionListener#testPlanExecutionFinished can write the report
+        // else
+        //   can write the report here
+
+        // depending on the strategy write the report and or http post the results/report
+
+        Report report = ReportFactory.create(getResults());
+        ReportWriter reportWriter = new ReportWriter();
+        reportWriter.write(report);
+
+        //where is the report??
     }
 
     @Override

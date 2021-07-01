@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.junit5.results;
+package io.bitsmart.bdd.report.report.adapter;
 
 import io.bitsmart.bdd.report.junit5.results.model.Results;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
@@ -27,7 +27,7 @@ public class ReportFactory {
             .forEach(testCaseResult -> report.addTestCase(testCase(testCaseResult)));
 
         report.setHomePage(
-            new HomePage(ReportIndexFactory.create(report),
+            new HomePage(ReportTestSuiteLinksFactory.create(report),
                 ReportSummaryFactory.create(report.getTestSuites())));
         return report;
     }

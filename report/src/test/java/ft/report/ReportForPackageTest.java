@@ -1,6 +1,6 @@
 package ft.report;
 
-import io.bitsmart.bdd.report.junit5.results.ReportFactory;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ public class ReportForPackageTest {
             new TestSuiteNameToFile(
                 "shared.undertest.ClassUnderTest",
                 "TEST-shared.undertest.ClassUnderTest.json"));
-        assertThat(report.getHomePage().getSummary()).isEqualTo(new TestSuiteSummary(18,4,4,8,4));
+        assertThat(report.getHomePage().getSummary()).isEqualTo(new TestSuiteSummary(19,5,4,8,4));
         writeReport(report);
 
         assertReport(report);
@@ -49,8 +49,8 @@ public class ReportForPackageTest {
 
     public static void assertReport(Report report) {
         assertThat(report).isNotNull();
-        assertThat(report.getTestCases()).hasSize(18);
-        assertThat(report.getTestSuites()).hasSize(5);
+        assertThat(report.getTestCases()).hasSize(19);
+        assertThat(report.getTestSuites()).hasSize(6);
         assertThat(getPassingTestSuite(report, PASSING_CLASS_UNDER_TEST.getName())).isPresent();
         getPassingTestSuite(report, PASSING_CLASS_UNDER_TEST.getName())
             .ifPresent(ReportAssertions::assertPassingTestSuite);

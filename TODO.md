@@ -5,9 +5,11 @@ TODOs
 - [x] Capture the failures
 - [x] Stats for passed, skipped, aborted and failed
 - [x] Handle names of methods that have params
+- [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Handle all test factories, templates and dynamic  
-- [ ] Capture standard output and standard error
+- [x] Capture standard output and standard error mechanism.
+- [ ] Apply Capture standard output and standard error.
 - [ ] Handle Strings i.e. anything in quotes
 - [ ] Additional wordifies i.e. swap words around to create more readable sentences
 - [ ] @Given, @When, @Then

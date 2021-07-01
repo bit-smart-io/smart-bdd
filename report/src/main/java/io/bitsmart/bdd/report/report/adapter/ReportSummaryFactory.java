@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.junit5.results;
+package io.bitsmart.bdd.report.report.adapter;
 
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;

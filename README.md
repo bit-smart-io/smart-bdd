@@ -6,6 +6,12 @@ Projects:
 * Client side report
 * Server test re-runner - api to select a test and parse in params
 
+Group names:
+* root      - io.bitsmart.bdd
+* report    - io.bitsmart.bdd.report
+* wordify   - io.bitsmart.bdd.wordify
+* ft        - io.bitsmart.bdd.ft
+
 Reporting ideas:
 * Compare log of previous run - show a diff. Can have a cut down version of the log that only shows the dif - hence what has gone wrong.
 * Send reports to report aggregator on each test, suite, package or at the end
@@ -24,3 +30,4 @@ Java passing
 
 Other test frameworks:
 * https://github.com/reportportal/agent-java-junit5
+

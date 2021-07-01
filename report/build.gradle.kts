@@ -3,7 +3,7 @@ plugins {
     `java-library`
 }
 
-group = "org.example"
+group = "io.bitsmart.bdd.report"
 version = "1.0-SNAPSHOT"
 description = "Generate the JUnit Report"
 

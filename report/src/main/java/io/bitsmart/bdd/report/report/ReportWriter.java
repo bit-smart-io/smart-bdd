@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static java.lang.System.getProperty;
-
 public class ReportWriter {
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    TestSuiteFileService testSuiteFileService = new TestSuiteFileService();
+    TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
 
     public void write(Report report) {
 //        report.getClassResultsList().forEach(this::sout);
@@ -23,7 +21,7 @@ public class ReportWriter {
     }
 
     private void prepareDir() {
-        File outputDir = testSuiteFileService.outputDirectory();
+        File outputDir = testSuiteFileUtil.outputDirectory();
         outputDir.delete();
         outputDir.getParentFile().mkdirs();
     }
@@ -40,8 +38,8 @@ public class ReportWriter {
     private void write(HomePage homePage) {
         try {
             String json = mapper.writeValueAsString(homePage);
-            File file = testSuiteFileService.outputFileForReportIndex();
-            System.out.println("output: " + file);
+            File file = testSuiteFileUtil.outputFileForReportIndex();
+            System.out.println("output:  file://" + file);
             FileWriter writer = new FileWriter(file);
             writer.write(json);
             writer.close();
@@ -53,8 +51,8 @@ public class ReportWriter {
     private void write(TestSuite testSuite) {
         try {
             String json = mapper.writeValueAsString(testSuite);
-            File file = testSuiteFileService.outputFile(testSuite);
-            System.out.println("output: " + file);
+            File file = testSuiteFileUtil.outputFile(testSuite);
+            System.out.println("output: file://" + file);
             FileWriter writer = new FileWriter(file);
             writer.write(json);
             writer.close();

@@ -3,16 +3,19 @@ plugins {
     `java-library`
 }
 
-group = "io.bitsmart.bdd.wordify"
+group = "io.bitsmart.bdd.ft"
 version = "1.0-SNAPSHOT"
-description = "Wordify Java methods"
+description = "Functional Tests"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("com.thoughtworks.qdox:qdox:2.0.0")
+    implementation(project(":report"))
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
 
     implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")

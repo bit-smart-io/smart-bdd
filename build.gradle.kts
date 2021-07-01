@@ -2,7 +2,7 @@ plugins {
     java
 }
 
-group "org.example"
+group = "io.bitsmart.bdd"
 version "1.0-SNAPSHOT"
 
 repositories {
