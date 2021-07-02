@@ -3,12 +3,12 @@ package io.bitsmart.bdd.report.report.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HomePage {
+public class ReportIndex {
     private final TestSuiteLinks links;
     private final TestSuiteSummary summary;
 
     @JsonCreator
-    public HomePage(
+    public ReportIndex(
         @JsonProperty("links") TestSuiteLinks links,
         @JsonProperty("summary") TestSuiteSummary summary) {
         this.links = links;

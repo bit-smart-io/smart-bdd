@@ -1,4 +1,4 @@
-package ft.bdd.examples.cucumber.builder.framework;
+package io.bitsmart.bdd.report.utils;
 
 public interface GivenBuilder<T> extends Builder<T> {
 

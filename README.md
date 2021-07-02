@@ -5,12 +5,32 @@ Projects:
 * Report - to generate json report 
 * Client side report
 * Server test re-runner - api to select a test and parse in params
+* ft - internal ft
+* smart-test or smart-tdd
 
-Group names:
-* root      - io.bitsmart.bdd
-* report    - io.bitsmart.bdd.report
-* wordify   - io.bitsmart.bdd.wordify
-* ft        - io.bitsmart.bdd.ft
+I think 
+* smart-bdd
+* smart-test - basic test tools for tdd/unit and bdd/ft. smart-test-common, smart-test-utils
+* smart-tdd - tdd tools
+* smart-reporting - shipping results 
+  * create webpage?
+  * file data json/xml
+  * data to db
+  * data to rest service
+    
+The reporting can be used for unit/ft/it/nft etc... maybe need a base project
+ maybe report-model. This is it's own project.
+
+
+Maybe all io.bitsmart.bdd is for bdd and io.bitsmart.test is generic test???
+
+| project name  | package  | description  |   
+|---|---|---|
+| root       | io.bitsmart.bdd | root for repo  |  
+| report     | io.bitsmart.bdd.report  | reporting extension and report creation. Name should be smart-bdd??  | 
+| wordify    | io.bitsmart.bdd.wordify  | wordify java code. wordify or smart-wordify  |   |   |
+| ft         | io.bitsmart.bdd.ft | internal ft |
+| smart-test | io.bitsmart.bdd | testing utils such as builder |
 
 Reporting ideas:
 * Compare log of previous run - show a diff. Can have a cut down version of the log that only shows the dif - hence what has gone wrong.

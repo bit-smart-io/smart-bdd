@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.builder.builders;
 
 import ft.bdd.examples.cucumber.builder.domain.CucumberGiven;
-import ft.bdd.examples.cucumber.builder.framework.GivenBuilder;
+import io.bitsmart.bdd.report.utils.GivenBuilder;
 
 public class CucumberGivenBuilder implements GivenBuilder<CucumberGiven> {
     private int amount;

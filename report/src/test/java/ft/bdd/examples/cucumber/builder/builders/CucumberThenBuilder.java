@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.builder.builders;
 
 import ft.bdd.examples.cucumber.builder.domain.CucumberThen;
-import ft.bdd.examples.cucumber.builder.framework.ThenBuilder;
+import io.bitsmart.bdd.report.utils.ThenBuilder;
 
 public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
     private int amount;

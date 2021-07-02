@@ -2,7 +2,7 @@ package io.bitsmart.bdd.report.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import io.bitsmart.bdd.report.report.model.HomePage;
+import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.Report;
 
@@ -35,9 +35,9 @@ public class ReportWriter {
         }
     }
 
-    private void write(HomePage homePage) {
+    private void write(ReportIndex reportIndex) {
         try {
-            String json = mapper.writeValueAsString(homePage);
+            String json = mapper.writeValueAsString(reportIndex);
             File file = testSuiteFileUtil.outputFileForReportIndex();
             System.out.println("output:  file://" + file);
             FileWriter writer = new FileWriter(file);

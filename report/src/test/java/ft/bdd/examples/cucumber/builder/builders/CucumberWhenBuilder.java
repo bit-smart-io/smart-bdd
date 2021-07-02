@@ -1,7 +1,7 @@
 package ft.bdd.examples.cucumber.builder.builders;
 
 import ft.bdd.examples.cucumber.builder.domain.CucumberWhen;
-import ft.bdd.examples.cucumber.builder.framework.WhenBuilder;
+import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
     private int amount;

@@ -4,9 +4,9 @@ import ft.bdd.examples.cucumber.CucumberService;
 import ft.bdd.examples.cucumber.builder.domain.CucumberGiven;
 import ft.bdd.examples.cucumber.builder.domain.CucumberThen;
 import ft.bdd.examples.cucumber.builder.domain.CucumberWhen;
-import ft.bdd.examples.cucumber.builder.framework.GivenBuilder;
-import ft.bdd.examples.cucumber.builder.framework.ThenBuilder;
-import ft.bdd.examples.cucumber.builder.framework.WhenBuilder;
+import io.bitsmart.bdd.report.utils.GivenBuilder;
+import io.bitsmart.bdd.report.utils.ThenBuilder;
+import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
