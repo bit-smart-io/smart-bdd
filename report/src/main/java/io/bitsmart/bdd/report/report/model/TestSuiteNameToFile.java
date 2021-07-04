@@ -1,12 +1,18 @@
 package io.bitsmart.bdd.report.report.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class TestSuiteNameToFile {
     private final String name;
     private final String file;
 
-    public TestSuiteNameToFile(String name, String file) {
+    @JsonCreator
+    public TestSuiteNameToFile(
+        @JsonProperty("name") String name,
+        @JsonProperty("file") String file) {
         this.name = name;
         this.file = file;
     }

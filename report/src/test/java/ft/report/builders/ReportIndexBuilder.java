@@ -1,12 +1,11 @@
 package ft.report.builders;
 
 import io.bitsmart.bdd.report.report.model.ReportIndex;
-import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
-import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.utils.Builder;
 
-public final class ReportIndexBuilder {
-    private TestSuiteLinks links;
-    private TestSuiteSummary summary;
+public final class ReportIndexBuilder implements Builder<ReportIndex> {
+    private TestSuiteLinksBuilder links;
+    private TestSuiteSummaryBuilder summary;
 
     private ReportIndexBuilder() {
     }
@@ -15,17 +14,18 @@ public final class ReportIndexBuilder {
         return new ReportIndexBuilder();
     }
 
-    public ReportIndexBuilder withLinks(TestSuiteLinks links) {
+    public ReportIndexBuilder withLinks(TestSuiteLinksBuilder links) {
         this.links = links;
         return this;
     }
 
-    public ReportIndexBuilder withSummary(TestSuiteSummary summary) {
+    public ReportIndexBuilder withSummary(TestSuiteSummaryBuilder summary) {
         this.summary = summary;
         return this;
     }
 
+    @Override
     public ReportIndex build() {
-        return new ReportIndex(links, summary);
+        return new ReportIndex(links.build(), summary.build());
     }
 }

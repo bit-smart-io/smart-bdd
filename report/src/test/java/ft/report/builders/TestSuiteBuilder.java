@@ -1,18 +1,17 @@
 package ft.report.builders;
 
-import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.TestSuite;
-import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.utils.Builder;
 
 import java.util.List;
 
-public final class TestSuiteBuilder {
+public final class TestSuiteBuilder implements Builder<TestSuite> {
     private String name;
     private String className;
     private String packageName;
     private List<String> methodNames;
-    private List<TestCase> testCases;
-    private TestSuiteSummary summary;
+    private List<TestCaseBuilder> testCases;
+    private TestSuiteSummaryBuilder summary;
 
     private TestSuiteBuilder() {
     }
@@ -41,17 +40,17 @@ public final class TestSuiteBuilder {
         return this;
     }
 
-    public TestSuiteBuilder withTestCases(List<TestCase> testCases) {
+    public TestSuiteBuilder withTestCases(List<TestCaseBuilder> testCases) {
         this.testCases = testCases;
         return this;
     }
 
-    public TestSuiteBuilder withSummary(TestSuiteSummary summary) {
+    public TestSuiteBuilder withSummary(TestSuiteSummaryBuilder summary) {
         this.summary = summary;
         return this;
     }
 
     public TestSuite build() {
-        return new TestSuite(name, className, packageName, methodNames, testCases, summary);
+        return new TestSuite(name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build());
     }
 }

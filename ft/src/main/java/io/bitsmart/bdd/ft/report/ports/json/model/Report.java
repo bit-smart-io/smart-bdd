@@ -26,7 +26,7 @@ public class Report {
         return testSuites;
     }
 
-    public void setHomePage(ReportIndex reportIndex) {
+    public void setReportIndex(ReportIndex reportIndex) {
         this.reportIndex = reportIndex;
     }
 
@@ -41,7 +41,7 @@ public class Report {
     @Override
     public String toString() {
         return "Report{" +
-            "homePage=" + reportIndex +
+            "reportIndex=" + reportIndex +
             ", testCases=" + testCases +
             ", testSuites=" + testSuites +
             '}';

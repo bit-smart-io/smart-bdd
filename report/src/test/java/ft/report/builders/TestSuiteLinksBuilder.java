@@ -1,12 +1,12 @@
 package ft.report.builders;
 
 import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
-import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.utils.Builder;
 
 import java.util.List;
 
-public final class TestSuiteLinksBuilder {
-    private List<TestSuiteNameToFile> testSuites;
+public final class TestSuiteLinksBuilder implements Builder<TestSuiteLinks> {
+    private List<TestSuiteNameToFileBuilder> testSuites;
 
     private TestSuiteLinksBuilder() {
     }
@@ -15,12 +15,13 @@ public final class TestSuiteLinksBuilder {
         return new TestSuiteLinksBuilder();
     }
 
-    public TestSuiteLinksBuilder withTestSuites(List<TestSuiteNameToFile> testSuites) {
+    public TestSuiteLinksBuilder withTestSuites(List<TestSuiteNameToFileBuilder> testSuites) {
         this.testSuites = testSuites;
         return this;
     }
 
+    @Override
     public TestSuiteLinks build() {
-        return new TestSuiteLinks(testSuites);
+        return new TestSuiteLinks(BuilderUtils.build((testSuites)));
     }
 }

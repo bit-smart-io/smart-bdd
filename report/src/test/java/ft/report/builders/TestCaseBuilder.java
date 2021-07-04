@@ -2,8 +2,9 @@ package ft.report.builders;
 
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.utils.Builder;
 
-public final class TestCaseBuilder {
+public final class TestCaseBuilder implements Builder<TestCase> {
     private String wordify;
     private Status status;
     private String methodName;
@@ -48,6 +49,7 @@ public final class TestCaseBuilder {
         return this;
     }
 
+    @Override
     public TestCase build() {
         return new TestCase(wordify, status, name, methodName, className, packageName);
     }

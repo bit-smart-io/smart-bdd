@@ -3,6 +3,7 @@ package ft.report;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bitsmart.bdd.report.report.ReportWriter;
 import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import java.io.File;
@@ -13,18 +14,27 @@ import static java.lang.System.getProperty;
 public class ReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
-        String contents = new FileLoader().toString(outputFile(clazz.getName()));
-        return MAPPER.readValue(contents, TestSuite.class);
-    }
-
     public static void writeReport(Report report) {
         ReportWriter reportWriter = new ReportWriter();
         reportWriter.write(report);
     }
 
-    public static File outputFile(String testName) {
-        return new File(outputDirectory(), "TEST-" + testName + ".json");
+    public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
+        String contents = new FileLoader().toString(testSuiteFile(clazz));
+        return MAPPER.readValue(contents, TestSuite.class);
+    }
+
+    public static ReportIndex loadReportIndex() throws IOException {
+        String contents = new FileLoader().toString(homePageFile());
+        return MAPPER.readValue(contents, ReportIndex.class);
+    }
+
+    public static File homePageFile() {
+        return new File(outputDirectory(), "index.json");
+    }
+
+    public static File testSuiteFile(Class<?> clazz) {
+        return new File(outputDirectory(), "TEST-" + clazz.getName() + ".json");
     }
 
     public static File outputDirectory() {

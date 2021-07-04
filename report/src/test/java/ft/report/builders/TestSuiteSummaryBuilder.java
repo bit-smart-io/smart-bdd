@@ -1,8 +1,9 @@
 package ft.report.builders;
 
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.utils.Builder;
 
-public final class TestSuiteSummaryBuilder {
+public final class TestSuiteSummaryBuilder implements Builder<TestSuiteSummary> {
     private int testCaseCount;
     private int passedCount;
     private int skippedCount;
