@@ -1,19 +1,19 @@
 package io.bitsmart.bdd.report.report.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Note: this is a domain object holding view objects. This is okay for now.
- *
- *  TODO reportBuilder or are we okay updating this?
- */
 public class Report {
-    private ReportIndex reportIndex;
-    private List<TestCase> testCases = new ArrayList<>();
-    private List<TestSuite> testSuites = new ArrayList<>();
+    private final ReportIndex reportIndex;
+    private final List<TestCase> testCases;
+    private final List<TestSuite> testSuites;
 
+    public Report(ReportIndex reportIndex, List<TestCase> testCases, List<TestSuite> testSuites) {
+        this.reportIndex = reportIndex;
+        this.testCases = testCases;
+        this.testSuites = testSuites;
+    }
+    
     public ReportIndex getHomePage() {
         return reportIndex;
     }
@@ -24,18 +24,6 @@ public class Report {
 
     public List<TestSuite> getTestSuites() {
         return testSuites;
-    }
-
-    public void setReportIndex(ReportIndex reportIndex) {
-        this.reportIndex = reportIndex;
-    }
-
-    public void addTestCase(TestCase testCase) {
-        testCases.add(testCase);
-    }
-
-    public void addTestSuite(TestSuite testSuite) {
-       this.testSuites.add(testSuite);
     }
 
     @Override

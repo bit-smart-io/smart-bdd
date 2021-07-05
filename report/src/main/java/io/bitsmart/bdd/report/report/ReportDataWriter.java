@@ -10,12 +10,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ReportWriter {
+public class ReportDataWriter {
     ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
 
     public void write(Report report) {
-//        report.getClassResultsList().forEach(this::sout);
         write(report.getHomePage());
         report.getTestSuites().forEach(this::write);
     }

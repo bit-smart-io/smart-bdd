@@ -18,18 +18,25 @@ import static java.util.stream.Collectors.toList;
 public class ReportFactory {
 
     public static Report create(Results results) {
-        Report report = new Report();
         Collection<TestSuiteResult> testSuiteResults = results.getTestSuiteResults();
-        testSuiteResults.forEach(testSuiteResult -> report.addTestSuite(testSuite(testSuiteResult)));
-        testSuiteResults.stream()
-            .flatMap(testSuite -> testSuite.getTestCaseResults().stream())
-            .collect(toList())
-            .forEach(testCaseResult -> report.addTestCase(testCase(testCaseResult)));
+        List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
+        List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
+        ReportIndex reportIndex = new ReportIndex(
+            ReportTestSuiteLinksFactory.create(testSuites),
+            ReportSummaryFactory.create(testSuites));
 
-        report.setReportIndex(
-            new ReportIndex(ReportTestSuiteLinksFactory.create(report),
-                ReportSummaryFactory.create(report.getTestSuites())));
-        return report;
+        return new Report(reportIndex, testCases, testSuites);
+    }
+
+    private static List<io.bitsmart.bdd.report.report.model.TestCase> testCases(Collection<TestSuiteResult> testSuiteResults) {
+        return testSuiteResults.stream()
+            .flatMap(testSuite -> testSuite.getTestCaseResults().stream())
+            .map(ReportFactory::testCase)
+            .collect(toList());
+    }
+
+    private static List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites(Collection<TestSuiteResult> testSuiteResults) {
+        return testSuiteResults.stream().map(ReportFactory::testSuite).collect(toList());
     }
 
     private static io.bitsmart.bdd.report.report.model.TestSuite testSuite(TestSuiteResult testSuiteResult) {

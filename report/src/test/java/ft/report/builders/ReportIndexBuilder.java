@@ -3,9 +3,12 @@ package ft.report.builders;
 import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.utils.Builder;
 
+import static ft.report.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
+import static ft.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+
 public final class ReportIndexBuilder implements Builder<ReportIndex> {
-    private TestSuiteLinksBuilder links;
-    private TestSuiteSummaryBuilder summary;
+    private TestSuiteLinksBuilder links = aTestSuiteLinks();
+    private TestSuiteSummaryBuilder summary = aTestSuiteSummary();
 
     private ReportIndexBuilder() {
     }

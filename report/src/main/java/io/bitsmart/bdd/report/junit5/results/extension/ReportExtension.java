@@ -4,7 +4,7 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.Results;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
-import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.bdd.report.report.ReportDataWriter;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -59,8 +59,8 @@ public class ReportExtension implements
         // depending on the strategy write the report and or http post the results/report
 
         Report report = ReportFactory.create(getResults());
-        ReportWriter reportWriter = new ReportWriter();
-        reportWriter.write(report);
+        ReportDataWriter reportDataWriter = new ReportDataWriter();
+        reportDataWriter.write(report);
 
         //where is the report??
     }

@@ -26,14 +26,6 @@ public class TestSuiteNameToFile {
     }
 
     @Override
-    public String toString() {
-        return "TestSuiteNameToFile{" +
-            "name='" + name + '\'' +
-            ", file='" + file + '\'' +
-            '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestSuiteNameToFile)) return false;
@@ -44,5 +36,13 @@ public class TestSuiteNameToFile {
     @Override
     public int hashCode() {
         return Objects.hash(name, file);
+    }
+
+    @Override
+    public String toString() {
+        return "TestSuiteNameToFile{" +
+            "name='" + name + '\'' +
+            ", file='" + file + '\'' +
+            '}';
     }
 }

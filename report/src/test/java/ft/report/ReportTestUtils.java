@@ -1,7 +1,7 @@
 package ft.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.bdd.report.report.ReportDataWriter;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
@@ -15,11 +15,16 @@ public class ReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static void writeReport(Report report) {
-        ReportWriter reportWriter = new ReportWriter();
-        reportWriter.write(report);
+        ReportDataWriter reportDataWriter = new ReportDataWriter();
+        reportDataWriter.write(report);
     }
 
     public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
+        String contents = new FileLoader().toString(testSuiteFile(clazz));
+        return MAPPER.readValue(contents, TestSuite.class);
+    }
+
+    public static TestSuite loadTestSuite(String clazz) throws IOException {
         String contents = new FileLoader().toString(testSuiteFile(clazz));
         return MAPPER.readValue(contents, TestSuite.class);
     }
@@ -35,6 +40,10 @@ public class ReportTestUtils {
 
     public static File testSuiteFile(Class<?> clazz) {
         return new File(outputDirectory(), "TEST-" + clazz.getName() + ".json");
+    }
+
+    public static File testSuiteFile(String clazz) {
+        return new File(outputDirectory(), "TEST-" + clazz + ".json");
     }
 
     public static File outputDirectory() {
