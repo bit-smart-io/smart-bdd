@@ -11,15 +11,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ReportDataWriter {
-    ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
+    private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private final TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
 
     public void write(Report report) {
         write(report.getHomePage());
         report.getTestSuites().forEach(this::write);
     }
 
-    private void prepareDir() {
+    public void prepareDir() {
         File outputDir = testSuiteFileUtil.outputDirectory();
         outputDir.delete();
         outputDir.getParentFile().mkdirs();

@@ -1,12 +1,11 @@
 package io.bitsmart.bdd.report.junit5.results.extension;
 
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.Results;
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
-import io.bitsmart.bdd.report.report.ReportDataWriter;
-import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -15,10 +14,10 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
-import io.bitsmart.wordify.WordifyExtensionContext;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;
@@ -37,6 +36,10 @@ public class ReportExtension implements
     private static final WordifyExtensionContext wordifyExtensionContext = new WordifyExtensionContext();
     private static final TestCaseNameFactory testCaseNameFactory = new TestCaseNameFactory();
 
+    //private static final LocalDateTime dateTime = LocalDateTime.now();
+    //private static final ReportWriter reportWriter = new ReportWriter(dateTime);
+    private static final ReportWriter reportWriter = new ReportWriter();
+
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         results.startTestSuite(context);
@@ -50,19 +53,7 @@ public class ReportExtension implements
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
-
-        // if has test TestExecutionListener
-        //   then TestExecutionListener#testPlanExecutionFinished can write the report
-        // else
-        //   can write the report here
-
-        // depending on the strategy write the report and or http post the results/report
-
-        Report report = ReportFactory.create(getResults());
-        ReportDataWriter reportDataWriter = new ReportDataWriter();
-        reportDataWriter.write(report);
-
-        //where is the report??
+        reportWriter.write(getResults());
     }
 
     @Override

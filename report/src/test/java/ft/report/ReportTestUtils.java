@@ -12,6 +12,7 @@ import java.io.IOException;
 import static java.lang.System.getProperty;
 
 public class ReportTestUtils {
+    private static final String REPORT_TEMP_FOLDER = "io.bitsmart.bdd.report";
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static void writeReport(Report report) {
@@ -46,7 +47,8 @@ public class ReportTestUtils {
         return new File(outputDirectory(), "TEST-" + clazz + ".json");
     }
 
+    //TODO this is ReportDirectoryStrategy, ReportDirectoryStrategyTempFile
     public static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir"));
+        return new File(getProperty("java.io.tmpdir"), REPORT_TEMP_FOLDER);
     }
 }
