@@ -17,3 +17,9 @@ Done. Now run:
   prod 
   npm run build
 ```
+
+If we want axios do this
+```
+npm install axios
+npm install --save axios
+```

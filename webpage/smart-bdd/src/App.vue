@@ -1,16 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <EmbeddedJson/>
+  <LoadJson/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import EmbeddedJson from './components/EmbeddedJson.vue'
+import LoadJson from './components/LoadJson.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    EmbeddedJson
+    LoadJson
   }
 })
 </script>
