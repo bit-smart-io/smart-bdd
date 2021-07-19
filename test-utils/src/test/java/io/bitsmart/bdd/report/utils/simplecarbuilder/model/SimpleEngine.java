@@ -1,12 +1,12 @@
-package io.bitsmart.bdd.report.utils.carbuilder.model;
+package io.bitsmart.bdd.report.utils.simplecarbuilder.model;
 
 import java.util.Objects;
 
-public class Engine {
+public class SimpleEngine {
     final EngineType type;
     final int size;
 
-    public Engine(EngineType type, int size) {
+    public SimpleEngine(EngineType type, int size) {
         this.type = type;
         this.size = size;
     }
@@ -14,8 +14,8 @@ public class Engine {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Engine)) return false;
-        Engine engine = (Engine) o;
+        if (!(o instanceof SimpleEngine)) return false;
+        SimpleEngine engine = (SimpleEngine) o;
         return size == engine.size && type == engine.type;
     }
 

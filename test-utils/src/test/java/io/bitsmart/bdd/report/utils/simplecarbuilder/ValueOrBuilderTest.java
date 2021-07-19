@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.utils.carbuilder;
+package io.bitsmart.bdd.report.utils.simplecarbuilder;
 
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.ValueOrBuilder;
