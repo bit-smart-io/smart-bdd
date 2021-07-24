@@ -135,10 +135,10 @@ export default defineComponent({
   },
   computed: {
     // example of having a list of test suite names
-    indexLinkNames() {
-      return this.indexJson.links.testSuites.map((item) => {
-        return item.name;
-      })
+    indexLinkNames(): string[] {
+        return this.indexJson.links.testSuites.map((item) => {
+          return item.name;
+        })
     },
   },
   methods: {
