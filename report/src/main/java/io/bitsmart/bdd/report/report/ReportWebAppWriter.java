@@ -12,9 +12,11 @@ public class ReportWebAppWriter {
     private final TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
     private final FileUtils fileUtils = new FileUtils();
 
+    //TODO this needs work
+    //TODO creat a static html page
     public void prepare() throws Exception {
-        File dest = testSuiteFileUtil.outputDirectory();
-        Path src =  fileUtils.pathForProjectResource("web");
-        fileUtils.copyFolder(src, dest.toPath());
+//        File dest = testSuiteFileUtil.outputDirectory();
+//        Path src =  fileUtils.pathForProjectResource("web");
+//        fileUtils.copyFolder(src, dest.toPath());
     }
 }

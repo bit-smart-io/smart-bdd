@@ -21,28 +21,28 @@ class ReportWebAppWriterTest {
         System.out.println("output dir: " + outputDirectory);
         System.out.println("output dir exists: " + outputDirectory.exists());
 
-        if (!outputDirectory.exists()) {
-            boolean bool = outputDirectory.mkdir();
-            if (bool) {
-                System.out.println("Directory created successfully");
-            } else {
-                System.out.println("Sorry couldn’t create specified directory");
-            }
-        }
-
-        // for debugging
-        allFilesFor(outputDirectory.toPath()).forEach(System.out::println);
-
-        // list the files
-        // copy some files across
-
-        // now clear and make sure the dir is cleared.
-
-        // inject the temp directory
-        ReportWebAppWriter reportWebAppWriter = new ReportWebAppWriter();
-        reportWebAppWriter.prepare();
-
-        System.out.println("index: " + "file:///" + ReportTestUtils.outputDirectory() + "/index.html");
+//        if (!outputDirectory.exists()) {
+//            boolean bool = outputDirectory.mkdir();
+//            if (bool) {
+//                System.out.println("Directory created successfully");
+//            } else {
+//                System.out.println("Sorry couldn’t create specified directory");
+//            }
+//        }
+//
+//        // for debugging
+//        allFilesFor(outputDirectory.toPath()).forEach(System.out::println);
+//
+//        // list the files
+//        // copy some files across
+//
+//        // now clear and make sure the dir is cleared.
+//
+//        // inject the temp directory
+//        ReportWebAppWriter reportWebAppWriter = new ReportWebAppWriter();
+//        reportWebAppWriter.prepare();
+//
+//        System.out.println("index: " + "file:///" + ReportTestUtils.outputDirectory() + "/index.html");
     }
 
     public List<File> allFilesFor(Path path) throws URISyntaxException, IOException {
