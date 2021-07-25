@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation(project(":report"))
+    implementation(project(":test-utils"))
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")

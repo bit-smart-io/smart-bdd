@@ -51,17 +51,6 @@ public class TestSuiteSummary {
     }
 
     @Override
-    public String toString() {
-        return "TestSuiteSummary{" +
-            "testCaseCount=" + tests +
-            ", passedCount=" + passed +
-            ", skippedCount=" + skipped +
-            ", failedCount=" + failed +
-            ", abortedCount=" + aborted +
-            '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestSuiteSummary)) return false;
@@ -72,5 +61,16 @@ public class TestSuiteSummary {
     @Override
     public int hashCode() {
         return Objects.hash(tests, passed, skipped, failed, aborted);
+    }
+
+    @Override
+    public String toString() {
+        return "TestSuiteSummary{" +
+            "tests=" + tests +
+            ", passed=" + passed +
+            ", skipped=" + skipped +
+            ", failed=" + failed +
+            ", aborted=" + aborted +
+            '}';
     }
 }

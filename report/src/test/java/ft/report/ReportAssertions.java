@@ -17,8 +17,8 @@ public class ReportAssertions {
         assertThat(testSuite.getMethodNames()).containsExactly("testMethod", "paramTest", "paramTest", "paramTest");
         assertThat(testSuite.getSummary()).isEqualTo(
             aTestSuiteSummary()
-                .withTestCaseCount(4)
-                .withPassedCount(4)
+                .withTestCase(4)
+                .withPassed(4)
                 .build());
         assertThat(testSuite.getTestCases()).contains(passingTestCase());
         assertThat(testSuite.getTestCases()).contains(passingParamTestCase());

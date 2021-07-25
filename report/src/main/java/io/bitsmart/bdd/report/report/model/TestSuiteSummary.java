@@ -66,11 +66,11 @@ public class TestSuiteSummary {
     @Override
     public String toString() {
         return "TestSuiteSummary{" +
-            "testCaseCount=" + tests +
-            ", passedCount=" + passed +
-            ", skippedCount=" + skipped +
-            ", failedCount=" + failed +
-            ", abortedCount=" + aborted +
+            "tests=" + tests +
+            ", passed=" + passed +
+            ", skipped=" + skipped +
+            ", failed=" + failed +
+            ", aborted=" + aborted +
             '}';
     }
 }

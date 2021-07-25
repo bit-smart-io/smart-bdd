@@ -1,6 +1,6 @@
-package ft.report.builders;
+package io.bitsmart.bdd.ft.report.ports.json.builders;
 
-import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import  io.bitsmart.bdd.ft.report.ports.json.model.TestSuiteSummary;
 import io.bitsmart.bdd.report.utils.Builder;
 
 public final class TestSuiteSummaryBuilder implements Builder<TestSuiteSummary> {

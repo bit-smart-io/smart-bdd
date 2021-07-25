@@ -39,12 +39,20 @@ public class ReportComponentBuilderWipTest {
         TestSuite testSuite = report.getTestSuites().get(0);
 
         // uses contains as the last statement
+//        assertForTestSuite(testSuite)
+//            .thatNameIs("shared.undertest.ClassUnderTest")
+//            .thatClassNameIs("ClassUnderTest")
+//            .thatPackageNameIs("shared.undertest")
+//            .thatMethodNamesContainsExactly("testMethod", "paramTest", "paramTest", "paramTest")
+//            .thatTestCaseContains(firstTestCase());
+
         AssertTestSuite.assertTestSuite(testSuite)
             .withName("shared.undertest.ClassUnderTest")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest")
             .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest")
             .withTestCaseContains(firstTestCase());
+
 
         // uses contains as the last statement
         AssertTestSuite.assertTestSuite(testSuite)

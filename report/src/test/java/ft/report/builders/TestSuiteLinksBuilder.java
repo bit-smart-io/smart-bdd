@@ -2,6 +2,7 @@ package ft.report.builders;
 
 import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
 import io.bitsmart.bdd.report.utils.Builder;
+import io.bitsmart.bdd.report.utils.BuilderUtils;
 
 import java.util.List;
 

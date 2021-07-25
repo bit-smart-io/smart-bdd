@@ -26,6 +26,7 @@ TODOs
 - [ ] Store the tests in a DB
 - [ ] Project structure - need modules/projects 
 - [x] Use Kotlin for Gradle
+- [ ] Explore when and how builders should be the same for ft and unit tests. See if feasible to sync builders class and or package
 
 Ideas
 -  Closet matching fields. I.e. 3/4 fields match
