@@ -1,3 +1,17 @@
+This is the prototype for the interactive web app. Doing the bare minimum to prove the concept.
+
+Vue 3 was chosen over React as Vue should be more simple.
+
+helper-scripts:
+* `run.sh` starts the webapp in the temp dir
+* `copy-reports` copies from data in the temp dir to the webapp in the temp dir
+
+For now the usage is, run `run.sh` and then `copy-reports` to update the webapp with the last results.
+
+Please note I have not started the static html yet.
+
+Recreation steps for Vue.js 3 with Vite. 
+
 ```shell
 npm install vue@next
 npm install -g @vue/cli

@@ -12,7 +12,7 @@ import java.io.IOException;
 import static java.lang.System.getProperty;
 
 public class ReportTestUtils {
-    private static final String REPORT_TEMP_FOLDER = "io.bitsmart.bdd.report";
+    private static final String REPORT_TEMP_FOLDER = "io.bitsmart.bdd.report/data/";
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static void writeReport(Report report) {

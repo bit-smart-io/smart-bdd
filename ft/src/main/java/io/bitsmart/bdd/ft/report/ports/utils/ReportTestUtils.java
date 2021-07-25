@@ -31,6 +31,6 @@ public class ReportTestUtils {
     }
 
     public static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir"));
+        return new File(getProperty("java.io.tmpdir") +  "io.bitsmart.bdd.report/data/");
     }
 }

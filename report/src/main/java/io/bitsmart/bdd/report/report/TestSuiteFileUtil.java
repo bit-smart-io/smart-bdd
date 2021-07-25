@@ -5,7 +5,7 @@ import java.io.File;
 import static java.lang.System.getProperty;
 
 public class TestSuiteFileUtil {
-    private static final String REPORT_TEMP_FOLDER = "io.bitsmart.bdd.report";
+    private static final String REPORT_TEMP_FOLDER = "io.bitsmart.bdd.report/data/";
 
     public File outputDirectory() {
         return new File(getProperty("java.io.tmpdir"), REPORT_TEMP_FOLDER);
