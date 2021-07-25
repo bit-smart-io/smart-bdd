@@ -3,7 +3,8 @@ This is the prototype for the interactive web app. Doing the bare minimum to pro
 Vue 3 was chosen over React as Vue should be more simple.
 
 helper-scripts:
-* `run.sh` starts the webapp in the temp dir
+* `init.sh` first use and or if you update the webapp run this to copy any changes to webapp in the temp dir
+* `run.sh` starts/runs the webapp in the temp dir
 * `copy-reports` copies from data in the temp dir to the webapp in the temp dir
 
 For now the usage is, run `run.sh` and then `copy-reports` to update the webapp with the last results.
