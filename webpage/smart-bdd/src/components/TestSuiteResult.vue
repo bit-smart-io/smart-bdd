@@ -1,7 +1,7 @@
 <template>
   <div v-if="methodName">
     <h5>{{methodName }}: {{ status }}</h5>
-    <p>{{ wordify }}</p>
+    <p class="msg">{{ wordify }}</p>
   </div>
 </template>
 
@@ -34,5 +34,9 @@ ul.no-bullets {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margins */
+}
+
+.msg {
+  white-space: pre-wrap;
 }
 </style>

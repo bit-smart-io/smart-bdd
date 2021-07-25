@@ -8,6 +8,8 @@ helper-scripts:
 
 For now the usage is, run `run.sh` and then `copy-reports` to update the webapp with the last results.
 
+Prerequisites you need `npm` installed.
+
 Please note I have not started the static html yet.
 
 Recreation steps for Vue.js 3 with Vite. 
