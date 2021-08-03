@@ -3,7 +3,8 @@ include(
     "wordify",
     "report",
     "ft",
-    "test-utils")
+    "test-utils",
+    "sample-fts:bookstore")
 
 //TODO
 //include 'junit5'
