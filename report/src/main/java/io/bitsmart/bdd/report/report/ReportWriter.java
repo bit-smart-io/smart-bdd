@@ -17,9 +17,17 @@ import io.bitsmart.bdd.report.report.model.Report;
  */
 public class ReportWriter {
     private static ReportDataWriter reportDataWriter = new ReportDataWriter();
+    private boolean hasPrepared = false;
 
     public void write(Results results) {
         Report report = ReportFactory.create(results);
         reportDataWriter.write(report);
+    }
+
+    public void prepare() {
+        if (!hasPrepared) {
+            reportDataWriter.prepareDir();
+            hasPrepared = true;
+        }
     }
 }

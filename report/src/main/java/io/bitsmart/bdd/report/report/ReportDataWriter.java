@@ -22,7 +22,7 @@ public class ReportDataWriter {
     public void prepareDir() {
         File outputDir = testSuiteFileUtil.outputDirectory();
         outputDir.delete();
-        outputDir.getParentFile().mkdirs();
+        outputDir.mkdirs();
     }
 
     private void sout(TestSuite testSuite) {
