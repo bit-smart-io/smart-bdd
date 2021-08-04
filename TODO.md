@@ -28,12 +28,36 @@ TODOs
 - [x] Use Kotlin for Gradle
 - [ ] Explore when and how builders should be the same for ft and unit tests. See if feasible to sync builders class and or package
 
+MVP:
+- [ ] is it possible to just use vue now??? Probably not.
+- [ ] static webpage for test suites
+- [ ] static webpage menu 
+- [ ] Or do we just need a sample app with ft?
+    - [ ] Calculator micro service?
+    - [ ] Book store?
+
 Ideas
 -  Closet matching fields. I.e. 3/4 fields match
   - assertThat(actual).isEqualTo(expected);
   - assertThat(list).contains(item);
 - Dummy Objects
-- AssertingClasses 
+- AssertingClasses
+
+How to format text and args? With args we can re-run the test.
+```json
+{
+  "wordify": "Passing assertion with value 2",
+  "wordifyTemplate": "Passing assertion with {{ 0 }} and {{ 1 }} ",
+  "args": [
+    {"type": "String", "value": "string value"},
+    {"type": "Integer", "value": 1}
+  ]
+  "status": "PASSED",
+  "methodName": "paramTest",
+  "className": "ClassUnderTest",
+  "packageName": "shared.undertest"
+}
+```
 
 This is using assertJ as normal
 ```

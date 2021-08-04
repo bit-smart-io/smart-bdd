@@ -15,9 +15,10 @@ import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;
@@ -42,6 +43,7 @@ public class ReportExtension implements
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
+        reportWriter.prepare();
         results.startTestSuite(context);
     }
 
@@ -160,6 +162,10 @@ public class ReportExtension implements
 
     private void updateTestCaseResult(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) {
         TestCaseResult testCaseResult = getTestCaseResult(extensionContext);
+        final List<Object> arguments = invocationContext.getArguments();
+        final Method method = invocationContext.getExecutable();
+        final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+
         wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(testCaseResult::setWordify);
         testCaseResult.setArgs(invocationContext.getArguments());
         testCaseResult.setName(testCaseNameFactory.createName(testCaseResult));
