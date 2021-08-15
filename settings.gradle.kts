@@ -4,7 +4,7 @@ include(
     "report",
     "ft",
     "test-utils",
-    "sample-fts:bookstore")
+    "examples:bookstore")
 
 //TODO
 //include 'junit5'
