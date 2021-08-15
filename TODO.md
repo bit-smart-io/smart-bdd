@@ -1,49 +1,48 @@
-TODOs
+# List of TODOs for the mono repo
+
+### MVP:
+- [ ] Static webpage for test suites - maybe Thymeleaf
+- [ ] Static webpage menu
+- [ ] Add examples
+  - [ ] Book store?
+  - [ ] Calculator micro service - see 
+- [ ] Move learning tests to own project
+- [ ] General code tidy
+
+### Post MVP:
+- [ ] Add to github
+- [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
+- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
+- [ ] Handle all test factories, templates and dynamic
+- [ ] Apply Capture standard output and standard error.
+- [ ] Handle Strings i.e. anything in quotes
+- [ ] Additional wordifies i.e. swap words around to create more readable sentences
+- [ ] @Given, @When, @Then - These would have to be parameter annotations 
+- [ ] @Notes - Can add notes for the feature/scenario 
+- [ ] UnderTest fields - this is to highlight fields, possible change the values
+- [ ] Logger than can added extra text in the report - `log.add('some notes')` 
+- [ ] Sequence diagrams - mermaid
+- [ ] Re-run tests endpoints
+- [ ] Re-run tests ui
+- [ ] Update test values in the ui - so that the test can be re-run with different values
+- [ ] Store the tests in a DB
+- [ ] Explore when and how builders should be the same for ft and unit tests. Is it feasible to sync builders classes and packages?
+- [ ] Add Java 9 modules?
+
+### Done
 - [x] Parse params
 - [x] Have a context
 - [x] Have failing tests
 - [x] Capture the failures
 - [x] Stats for passed, skipped, aborted and failed
 - [x] Handle names of methods that have params
-- [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
-- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
-- [ ] Handle all test factories, templates and dynamic  
 - [x] Capture standard output and standard error mechanism.
-- [ ] Apply Capture standard output and standard error.
-- [ ] Handle Strings i.e. anything in quotes
-- [ ] Additional wordifies i.e. swap words around to create more readable sentences
-- [ ] @Given, @When, @Then
-- [ ] @Notes  
-- [ ] UnderTest fields - this is to highlight fields, possible change the values
-- [ ] Logger than can added extra text in the report 
-- [ ] Sequence diagrams - mermaid 
 - [x] Create report in Json
 - [x] Website prototype
-- [ ] Create the website from the report - maybe vue or jquery? Load the json rather than static pages.
-- [ ] Re-run tests endpoints
-- [ ] Re-run tests ui
-- [ ] Update test values in the ui - so that the test can be re-run with different values
-- [ ] Store the tests in a DB
-- [ ] Project structure - need modules/projects 
 - [x] Use Kotlin for Gradle
-- [ ] Explore when and how builders should be the same for ft and unit tests. See if feasible to sync builders class and or package
+- [x] Project structure - need modules/projects
 
-MVP:
-- [ ] is it possible to just use vue now??? Probably not.
-- [ ] static webpage for test suites
-- [ ] static webpage menu 
-- [ ] Or do we just need a sample app with ft?
-    - [ ] Calculator micro service?
-    - [ ] Book store?
-
-Ideas
--  Closet matching fields. I.e. 3/4 fields match
-  - assertThat(actual).isEqualTo(expected);
-  - assertThat(list).contains(item);
-- Dummy Objects
-- AssertingClasses
-
-How to format text and args? With args we can re-run the test.
+### New args block. With args we can re-run test(s).
 ```json
 {
   "wordify": "Passing assertion with value 2",
@@ -51,7 +50,7 @@ How to format text and args? With args we can re-run the test.
   "args": [
     {"type": "String", "value": "string value"},
     {"type": "Integer", "value": 1}
-  ]
+  ],
   "status": "PASSED",
   "methodName": "paramTest",
   "className": "ClassUnderTest",
@@ -59,6 +58,53 @@ How to format text and args? With args we can re-run the test.
 }
 ```
 
+### Dummy Objects
+Objects that are not under test, but needed to build objects. Potentially these could be ignored when assertJ checks to equality.
+We have defaultBuilders that build a default object 
+```
+private SimpleCarBuilder aDefaultCar() {
+    return aCar()
+        .withEngine(anEngine()
+            .withType(ENGINE_TYPE)
+            .withSize(ENGINE_SIZE));
+}
+
+// style 1
+private SimpleCarBuilder aDummyCar() {
+    return aCar()
+        .withEngine(anEngine()
+            .withType(DUMMY_ENGINE_TYPE)
+            .withSize(DUMMY_ENGINE_SIZE));
+}
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+// style 2
+private SimpleCarBuilder aDummyCar() {
+    return aCar().withEngine(aDummyEngine());
+}
+// updating a dummy engine - it needs to be a real engine with dummy values. This doesn't quite work as it would need lots of boiler plate code.
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+
+// style 3
+private SimpleCarBuilder aDummyCar() {
+    SimpleCarBuilder car1 = aCar().withEngine(aDefaultEngine()).setAsDummy() 
+    SimpleCarBuilder car2 = dummy(aCar().withEngine(aDefaultEngine()));
+    ...
+}
+// updating a dummy engine - it needs to be a real engine with dummy values. If dummy was an annotation then we could add remove at runtime.
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+// assert
+assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
+```
+
+### Linting Builders
+These ideas centre around builders and features that the user may or may not want. That is why linting would be a good tool.
+To achieve consistency in the wordify you'd need the builders to be consistent. Note that wordify can have custom rules,
+these would break down if the builders are not consistent.
+
+### Try to make some tests more concise 
 This is using assertJ as normal
 ```
 private void assertTestSuite(TestSuite testSuite) {
@@ -72,7 +118,7 @@ private void assertTestSuite(TestSuite testSuite) {
 ```
 
 This is using a builder as normal. This is limiting as you must test all the state.
-This has the advantage of being more concise.  
+This has the advantage of being more concise.
 ```
 private TestSuite firstTestSuite() {
     return aTestSuite()
@@ -86,6 +132,14 @@ private TestSuite firstTestSuite() {
 }
 ```
 
+from https://assertj.github.io/doc/#assertj-core-assertions-guide
+It is possible to use `ignoringFields(String... fieldsToIgnore)` to ignore fields. See dummy objects above.
+```
+assertThat(sherlock).usingRecursiveComparison()
+                    .withStrictTypeChecking()
+                    .isEqualTo(detectiveSherlock);
+```
+
 Is something like this possible? It would be more concise?
 ```
 private TestSuite assertFirstTestCase() {
@@ -96,12 +150,14 @@ private TestSuite assertFirstTestCase() {
 }
 ```
 
+### Closet matching
+- Closet matching fields. I.e. 3/4 fields match
+  - `assertThat(actual).isEqualTo(expected);`
+  - `assertThat(list).contains(item);`
 
-### Add vue web app
-Can't load local files after page has loaded, possibly complied due to security.
+### Reporting ideas:
+* Compare log of previous run - show a diff. Can have a cut down version of the log that only shows the dif - hence what
+  has gone wrong.
+* Send reports to report aggregator on each test, suite, package or at the end
+* Keep track of irregular issues
 
-Options for the web reports:
-1. Inject JSON in to index.html
-2. Use npm to compile the webapp
-3. Have a start script that starts up a local webserver
- 
