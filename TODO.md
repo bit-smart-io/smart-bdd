@@ -6,8 +6,9 @@
 - [ ] Add examples
   - [ ] Book store?
   - [ ] Calculator micro service - see 
-- [ ] Move learning tests to own project
+- [x] Move learning tests to own project
 - [ ] General code tidy
+- [ ] Copy write every class
 
 ### Post MVP:
 - [ ] Add to github

@@ -53,11 +53,11 @@ public class TestLauncher {
 
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
-        launcher.registerTestExecutionListeners(listener, executionListener);
+        //launcher.registerTestExecutionListeners(listener, executionListener);
 
         launcher.execute(request);
 
-        TestExecutionSummary summary = listener.getSummary();
-        summary.printTo(new PrintWriter(System.err));
+        // TestExecutionSummary summary = listener.getSummary();
+        // summary.printTo(new PrintWriter(System.err));
     }
 }
