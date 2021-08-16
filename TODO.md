@@ -135,9 +135,10 @@ private TestSuite firstTestSuite() {
 from https://assertj.github.io/doc/#assertj-core-assertions-guide
 It is possible to use `ignoringFields(String... fieldsToIgnore)` to ignore fields. See dummy objects above.
 ```
-assertThat(sherlock).usingRecursiveComparison()
-                    .withStrictTypeChecking()
-                    .isEqualTo(detectiveSherlock);
+assertThat(sherlock)
+  .usingRecursiveComparison()
+  .withStrictTypeChecking()
+  .isEqualTo(detectiveSherlock);
 ```
 
 Is something like this possible? It would be more concise?

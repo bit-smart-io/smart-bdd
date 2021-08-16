@@ -17,7 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *  WIP new idea.
- *  Can have AssertTestSuiteForFirstTest. You can't modify any of the tests only add.
+ *
+ *  TODO May need a new package for this - exploring different builders/tests -
+ *  Ideas for naming the concept - AssertionStrategy, AssertionStyle, AssertionSugar
+ *
+ *  Give it a name - FieldAssertionBuilder
+ *  and compare with alternatives i.e. ignoringFields
  */
 public class ReportComponentBuilderWipTest {
     private static final Class<?> CLASS_UNDER_TEST = ClassUnderTest.class;
