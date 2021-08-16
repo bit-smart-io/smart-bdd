@@ -6,14 +6,15 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.nio.file.Path;
 
-/** TODO the concept doesn't work */
+/**
+ * TODO implement writing HTML possibly Thymeleaf
+ * TODO consider unit testing ReportDataWriter first?
+ * */
 public class ReportWebAppWriter {
-    private static final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    private final TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
-    private final FileUtils fileUtils = new FileUtils();
+//    private static final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+//    private final TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
+//    private final FileUtils fileUtils = new FileUtils();
 
-    //TODO this needs work
-    //TODO creat a static html page
     public void prepare() throws Exception {
 //        File dest = testSuiteFileUtil.outputDirectory();
 //        Path src =  fileUtils.pathForProjectResource("web");

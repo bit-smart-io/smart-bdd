@@ -10,6 +10,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * TODO this is not unit tested.
+ *
+ * https://www.baeldung.com/jimfs-file-system-mocking#:~:text=Jimfs%20is%20an%20in%2Dmemory,nio%20layer.
+ */
 public class ReportDataWriter {
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final TestSuiteFileUtil testSuiteFileUtil = new TestSuiteFileUtil();
