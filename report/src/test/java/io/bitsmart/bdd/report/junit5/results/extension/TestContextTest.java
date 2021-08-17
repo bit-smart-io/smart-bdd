@@ -3,7 +3,7 @@ package io.bitsmart.bdd.report.junit5.results.extension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
-import io.bitsmart.bdd.report.report.ReportWriter;
+import io.bitsmart.bdd.report.report.writers.ReportWriter;
 import io.bitsmart.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;

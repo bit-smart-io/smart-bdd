@@ -4,18 +4,23 @@ import java.util.List;
 import java.util.Objects;
 
 public class Report {
-    private final ReportIndex reportIndex;
+    // ReportIndex is for data.
+    private final DataReportIndex dataReportIndex;
+
+    // Now we need one for html.
+
+
     private final List<TestCase> testCases;
     private final List<TestSuite> testSuites;
 
-    public Report(ReportIndex reportIndex, List<TestCase> testCases, List<TestSuite> testSuites) {
-        this.reportIndex = reportIndex;
+    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites) {
+        this.dataReportIndex = dataReportIndex;
         this.testCases = testCases;
         this.testSuites = testSuites;
     }
     
-    public ReportIndex getIndex() {
-        return reportIndex;
+    public DataReportIndex getIndex() {
+        return dataReportIndex;
     }
 
     public List<TestCase> getTestCases() {
@@ -29,7 +34,7 @@ public class Report {
     @Override
     public String toString() {
         return "Report{" +
-            "reportIndex=" + reportIndex +
+            "reportIndex=" + dataReportIndex +
             ", testCases=" + testCases +
             ", testSuites=" + testSuites +
             '}';
@@ -40,11 +45,11 @@ public class Report {
         if (this == o) return true;
         if (!(o instanceof Report)) return false;
         Report report = (Report) o;
-        return Objects.equals(reportIndex, report.reportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites);
+        return Objects.equals(dataReportIndex, report.dataReportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reportIndex, testCases, testSuites);
+        return Objects.hash(dataReportIndex, testCases, testSuites);
     }
 }

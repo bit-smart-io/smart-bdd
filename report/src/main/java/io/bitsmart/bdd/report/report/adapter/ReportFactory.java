@@ -6,7 +6,7 @@ import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.ReportIndex;
+import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 
@@ -21,11 +21,11 @@ public class ReportFactory {
         Collection<TestSuiteResult> testSuiteResults = testResults.getTestSuiteResults();
         List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
         List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
-        ReportIndex reportIndex = new ReportIndex(
+        DataReportIndex dataReportIndex = new DataReportIndex(
             ReportTestSuiteLinksFactory.create(testSuites),
             ReportSummaryFactory.create(testSuites));
 
-        return new Report(reportIndex, testCases, testSuites);
+        return new Report(dataReportIndex, testCases, testSuites);
     }
 
     private static List<io.bitsmart.bdd.report.report.model.TestCase> testCases(Collection<TestSuiteResult> testSuiteResults) {

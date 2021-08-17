@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.report;
+package io.bitsmart.bdd.report.report.writers;
 
 import io.bitsmart.bdd.report.junit5.listeners.SmartBddConfig;
 import io.bitsmart.bdd.report.report.model.TestSuite;
@@ -6,7 +6,7 @@ import io.bitsmart.bdd.report.report.model.TestSuite;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileNameProvider {
+public class DataFileNameProvider {
 
     public Path dataPath() {
         return Paths.get(SmartBddConfig.getBaseFolder(), SmartBddConfig.getDataFolder());

@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class ReportIndex {
+public class DataReportIndex {
     private final TestSuiteLinks links;
     private final TestSuiteSummary summary;
 
     @JsonCreator
-    public ReportIndex(
+    public DataReportIndex(
         @JsonProperty("links") TestSuiteLinks links,
         @JsonProperty("summary") TestSuiteSummary summary) {
         this.links = links;
@@ -28,8 +28,8 @@ public class ReportIndex {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ReportIndex)) return false;
-        ReportIndex that = (ReportIndex) o;
+        if (!(o instanceof DataReportIndex)) return false;
+        DataReportIndex that = (DataReportIndex) o;
         return Objects.equals(links, that.links) && Objects.equals(summary, that.summary);
     }
 

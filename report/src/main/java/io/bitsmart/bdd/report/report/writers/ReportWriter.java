@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.report;
+package io.bitsmart.bdd.report.report.writers;
 
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
@@ -17,7 +17,7 @@ import io.bitsmart.bdd.report.report.model.Report;
  * Currently there is not delta results and or updating. Creates a new report.
  */
 public class ReportWriter {
-    private final ReportDataWriter reportDataWriter = new ReportDataWriter(new FileNameProvider());
+    private final ReportDataWriter reportDataWriter = new ReportDataWriter(new DataFileNameProvider());
 
     /** TODO in transition. Please see TestResults for more details. */
     public void write(TestResults testResults) {

@@ -8,10 +8,10 @@ import component.report.builders.TestCaseBuilder;
 import component.report.builders.TestSuiteBuilder;
 import component.report.builders.TestSuiteSummaryBuilder;
 import component.report.utils.ReportLoadFileUtils;
-import io.bitsmart.bdd.report.report.FileNameProvider;
-import io.bitsmart.bdd.report.report.ReportDataWriter;
+import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
+import io.bitsmart.bdd.report.report.writers.ReportDataWriter;
 import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.ReportIndex;
+import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 
 class ReportDataWriterTest {
 
-    private final FileNameProvider fileNameProvider = mock(FileNameProvider.class);
+    private final DataFileNameProvider fileNameProvider = mock(DataFileNameProvider.class);
     private final FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
     private final ReportLoadFileUtils fileUtils = new ReportLoadFileUtils();
     private final Path dataPath = fileSystem.getPath("/data");
@@ -79,8 +79,8 @@ class ReportDataWriterTest {
     void writesReportIndex() throws IOException {
         reportDataWriter.prepareDataDirectory();
         reportDataWriter.write(report);
-        ReportIndex loadedReportIndex = fileUtils.loadReportIndex(indexPath);
-        assertThat(loadedReportIndex).isEqualTo(aDefaultReportIndex().build());
+        DataReportIndex loadedDataReportIndex = fileUtils.loadReportIndex(indexPath);
+        assertThat(loadedDataReportIndex).isEqualTo(aDefaultReportIndex().build());
     }
 
     @Test

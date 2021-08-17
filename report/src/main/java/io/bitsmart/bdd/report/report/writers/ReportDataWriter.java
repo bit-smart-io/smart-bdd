@@ -1,11 +1,11 @@
-package io.bitsmart.bdd.report.report;
+package io.bitsmart.bdd.report.report.writers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.bitsmart.bdd.report.report.filehandling.FileRepository;
 import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.ReportIndex;
+import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import java.io.IOException;
@@ -23,9 +23,9 @@ import java.util.Comparator;
 public class ReportDataWriter {
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final FileRepository fileRepository = new FileRepository();
-    private final FileNameProvider fileNameProvider;
+    private final DataFileNameProvider fileNameProvider;
 
-    public ReportDataWriter(FileNameProvider fileNameProvider) {
+    public ReportDataWriter(DataFileNameProvider fileNameProvider) {
         this.fileNameProvider = fileNameProvider;
     }
 
@@ -56,14 +56,14 @@ public class ReportDataWriter {
         return false;
     }
 
-    private void write(ReportIndex reportIndex) {
+    private void write(DataReportIndex dataReportIndex) {
         Path path = fileNameProvider.dataIndex();
         //TODO this is a workaround for running the this framework multiple times locally. This could be fixed.
         // normally you'd always create the file
         if (!Files.exists(path)) {
             fileRepository.create(path);
         }
-        fileRepository.update(path, toJson(reportIndex));
+        fileRepository.update(path, toJson(dataReportIndex));
         System.out.println("output: file://" + path);
     }
 
