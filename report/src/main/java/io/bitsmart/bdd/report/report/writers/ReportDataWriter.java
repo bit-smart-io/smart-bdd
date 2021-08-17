@@ -23,10 +23,10 @@ import java.util.Comparator;
 public class ReportDataWriter {
     private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private final FileRepository fileRepository = new FileRepository();
-    private final DataFileNameProvider fileNameProvider;
+    private final FileNameProvider dataFileNameProvider;
 
-    public ReportDataWriter(DataFileNameProvider fileNameProvider) {
-        this.fileNameProvider = fileNameProvider;
+    public ReportDataWriter(FileNameProvider dataFileNameProvider) {
+        this.dataFileNameProvider = dataFileNameProvider;
     }
 
     public void write(Report report) {
@@ -34,7 +34,7 @@ public class ReportDataWriter {
     }
 
     public void prepareDataDirectory() {
-        final Path dataPath = fileNameProvider.dataPath();
+        final Path dataPath = dataFileNameProvider.path();
         try {
             if (Files.exists(dataPath)) {
                 Files.walk(dataPath)
@@ -57,7 +57,7 @@ public class ReportDataWriter {
     }
 
     private void write(DataReportIndex dataReportIndex) {
-        Path path = fileNameProvider.dataIndex();
+        Path path = dataFileNameProvider.indexFile();
         //TODO this is a workaround for running the this framework multiple times locally. This could be fixed.
         // normally you'd always create the file
         if (!Files.exists(path)) {
@@ -68,7 +68,7 @@ public class ReportDataWriter {
     }
 
     public void write(TestSuite testSuite) {
-        Path path = fileNameProvider.outputFile(testSuite);
+        Path path = dataFileNameProvider.file(testSuite);
         // see above
         if (!Files.exists(path)) {
             fileRepository.create(path);

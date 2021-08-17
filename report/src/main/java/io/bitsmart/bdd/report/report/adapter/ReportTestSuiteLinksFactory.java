@@ -1,22 +1,26 @@
 package io.bitsmart.bdd.report.report.adapter;
 
-import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.report.writers.FileNameProvider;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 public class ReportTestSuiteLinksFactory {
-    private static DataFileNameProvider fileNameProvider = new DataFileNameProvider();
+    private final FileNameProvider fileNameProvider;
 
-    public static TestSuiteLinks create(List<TestSuite> testSuites) {
-        return new TestSuiteLinks(testSuites.stream().map(ReportTestSuiteLinksFactory::testSuiteNameToFile).collect(toList()));
+    public ReportTestSuiteLinksFactory(FileNameProvider fileNameProvider) {
+        this.fileNameProvider = fileNameProvider;
     }
 
-    private static TestSuiteNameToFile testSuiteNameToFile(TestSuite testSuite) {
-        return new TestSuiteNameToFile(testSuite.getName(), fileNameProvider.outputFile(testSuite).getFileName().toString());
+    public TestSuiteLinks create(List<TestSuite> testSuites) {
+        return new TestSuiteLinks(testSuites.stream().map(this::testSuiteNameToFile).collect(toList()));
+    }
+
+    private TestSuiteNameToFile testSuiteNameToFile(TestSuite testSuite) {
+        return new TestSuiteNameToFile(testSuite.getName(), fileNameProvider.file(testSuite).getFileName().toString());
     }
 }

@@ -6,17 +6,20 @@ import io.bitsmart.bdd.report.report.model.TestSuite;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class DataFileNameProvider {
+public class DataFileNameProvider implements FileNameProvider {
 
-    public Path dataPath() {
+    @Override
+    public Path path() {
         return Paths.get(SmartBddConfig.getBaseFolder(), SmartBddConfig.getDataFolder());
     }
 
-    public Path dataIndex() {
-        return dataPath().resolve("index.json");
+    @Override
+    public Path indexFile() {
+        return path().resolve("index.json");
     }
 
-    public Path outputFile(TestSuite testSuite) {
+    @Override
+    public Path file(TestSuite testSuite) {
         return outputFile(fullyQualifiedName(testSuite));
     }
 
@@ -25,6 +28,6 @@ public class DataFileNameProvider {
     }
 
     private Path outputFile(String testName) {
-        return dataPath().resolve("TEST-" + testName + ".json");
+        return path().resolve("TEST-" + testName + ".json");
     }
 }

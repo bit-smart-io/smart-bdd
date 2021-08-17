@@ -8,7 +8,7 @@ import component.report.builders.TestCaseBuilder;
 import component.report.builders.TestSuiteBuilder;
 import component.report.builders.TestSuiteSummaryBuilder;
 import component.report.utils.ReportLoadFileUtils;
-import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
+import io.bitsmart.bdd.report.report.writers.FileNameProvider;
 import io.bitsmart.bdd.report.report.writers.ReportDataWriter;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
@@ -36,21 +36,21 @@ import static org.mockito.Mockito.when;
 
 class ReportDataWriterTest {
 
-    private final DataFileNameProvider fileNameProvider = mock(DataFileNameProvider.class);
+    private final FileNameProvider dataFileNameProvider = mock(FileNameProvider.class);
     private final FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
     private final ReportLoadFileUtils fileUtils = new ReportLoadFileUtils();
     private final Path dataPath = fileSystem.getPath("/data");
     private final Path testSuitePath = dataPath.resolve("testSuite.json");
     private final Path indexPath = dataPath.resolve("index.json");
 
-    private final ReportDataWriter reportDataWriter = new ReportDataWriter(fileNameProvider);
+    private final ReportDataWriter reportDataWriter = new ReportDataWriter(dataFileNameProvider);
     private final Report report = aDefaultReport().build();
 
     @BeforeEach
     void setUp() {
-        when(fileNameProvider.dataPath()).thenReturn(dataPath);
-        when(fileNameProvider.outputFile(any(TestSuite.class))).thenReturn(testSuitePath);
-        when(fileNameProvider.dataIndex()).thenReturn(indexPath);
+        when(dataFileNameProvider.path()).thenReturn(dataPath);
+        when(dataFileNameProvider.file(any(TestSuite.class))).thenReturn(testSuitePath);
+        when(dataFileNameProvider.indexFile()).thenReturn(indexPath);
     }
 
     @Test

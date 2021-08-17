@@ -9,6 +9,7 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,12 +18,15 @@ import static java.util.stream.Collectors.toList;
 
 public class ReportFactory {
 
+    private static final ReportTestSuiteLinksFactory dataTestSuiteLinksFactory = new ReportTestSuiteLinksFactory(new DataFileNameProvider());
+
     public static Report create(TestResults testResults) {
         Collection<TestSuiteResult> testSuiteResults = testResults.getTestSuiteResults();
         List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
         List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
-        DataReportIndex dataReportIndex = new DataReportIndex(
-            ReportTestSuiteLinksFactory.create(testSuites),
+
+         DataReportIndex dataReportIndex = new DataReportIndex(
+             dataTestSuiteLinksFactory.create(testSuites),
             ReportSummaryFactory.create(testSuites));
 
         return new Report(dataReportIndex, testCases, testSuites);
