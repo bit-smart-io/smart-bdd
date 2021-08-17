@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static io.bitsmart.bdd.report.junit5.results.model.ClassSimpleName.classSimpleName;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 
-public class Results {
+public class TestResults {
     private final ConcurrentHashMap<ClassSimpleName, TestSuiteResult> classNameToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<ClassSimpleName> getClasses() {

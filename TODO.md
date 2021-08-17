@@ -9,6 +9,8 @@
 - [x] Move learning tests to own project
 - [ ] General code tidy
 - [ ] Copy write every class
+    - https://choosealicense.com/licenses/mit/ - short and cucumber has this
+    - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
 
 ### Post MVP:
 - [ ] Add to github

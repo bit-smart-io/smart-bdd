@@ -4,7 +4,8 @@ include(
     "report",
     "ft",
     "test-utils",
-    "examples:bookstore")
+    "examples:bookstore",
+    "learning")
 
 //TODO
 //include 'junit5'

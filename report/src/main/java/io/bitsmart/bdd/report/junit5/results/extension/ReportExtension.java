@@ -1,6 +1,6 @@
 package io.bitsmart.bdd.report.junit5.results.extension;
 
-import io.bitsmart.bdd.report.junit5.results.model.Results;
+import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
@@ -33,7 +33,7 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.P
  */
 public class ReportExtension implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
-    private static final Results results = new Results();
+    private static final TestResults testResults = new TestResults();
     private static final WordifyExtensionContext wordifyExtensionContext = new WordifyExtensionContext();
     private static final TestCaseNameFactory testCaseNameFactory = new TestCaseNameFactory();
 
@@ -41,10 +41,27 @@ public class ReportExtension implements
     //private static final ReportWriter reportWriter = new ReportWriter(dateTime);
     private static final ReportWriter reportWriter = new ReportWriter();
 
+    private static boolean isReporting = false;
+
+    public static boolean isReporting() {
+        return isReporting;
+    }
+
+    public static void startReporting() {
+        if (!isReporting) {
+            reportWriter.prepare();
+        }
+        isReporting = true;
+    }
+
+    public static void writeDataIndex() {
+        reportWriter.write(getTestResults());
+    }
+
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        reportWriter.prepare();
-        results.startTestSuite(context);
+        startReporting();
+        testResults.startTestSuite(context);
     }
 
     @Override
@@ -55,7 +72,7 @@ public class ReportExtension implements
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
-        reportWriter.write(getResults());
+        writeDataIndex();
     }
 
     @Override
@@ -147,12 +164,12 @@ public class ReportExtension implements
         getTestCaseResult(context).setStatus(FAILED).setCause(cause);
     }
 
-    public static Results getResults() {
-        return results;
+    public static TestResults getTestResults() {
+        return testResults;
     }
 
     private TestSuiteResult getTestSuiteResult(ExtensionContext context) {
-        return results.getTestResultsForClass(context);
+        return testResults.getTestResultsForClass(context);
     }
 
     private TestCaseResult getTestCaseResult(ExtensionContext context) {
@@ -172,6 +189,6 @@ public class ReportExtension implements
     }
 
     public static void reset() {
-        results.reset();
+        testResults.reset();
     }
 }

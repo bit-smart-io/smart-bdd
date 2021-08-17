@@ -1,6 +1,6 @@
 package io.bitsmart.bdd.report.report;
 
-import io.bitsmart.bdd.report.junit5.results.model.Results;
+import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 
@@ -16,17 +16,18 @@ import io.bitsmart.bdd.report.report.model.Report;
  * Currently there is not delta results and or updating. Creates a new report.
  */
 public class ReportWriter {
-    private static ReportDataWriter reportDataWriter = new ReportDataWriter();
+    private final ReportDataWriter reportDataWriter = new ReportDataWriter(new FileNameProvider());
     private boolean hasPrepared = false;
 
-    public void write(Results results) {
-        Report report = ReportFactory.create(results);
+    // we need to know what is unique, only write once
+    public void write(TestResults testResults) {
+        Report report = ReportFactory.create(testResults);
         reportDataWriter.write(report);
     }
 
     public void prepare() {
         if (!hasPrepared) {
-            reportDataWriter.prepareDir();
+            reportDataWriter.prepareDataDirectory();
             hasPrepared = true;
         }
     }

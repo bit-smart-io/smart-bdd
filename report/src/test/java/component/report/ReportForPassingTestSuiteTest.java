@@ -1,22 +1,29 @@
 package component.report;
 
-import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import com.google.common.jimfs.Configuration;
+import com.google.common.jimfs.Jimfs;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.report.FileNameProvider;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuite;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import shared.undertest.ClassUnderTest;
 
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
 
 import static component.report.ReportAssertions.assertPassingTestSuite;
-import static component.report.ReportTestUtils.loadTestSuite;
-import static component.report.ReportTestUtils.writeReport;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
+ * Example output from JUnit
+ *
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.learning.parameters.LearningTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-03-30T20:03:44" hostname="Jamess-MacBook-Pro.local" time="0.021">
  *   <properties/>
@@ -48,11 +55,9 @@ public class ReportForPassingTestSuiteTest {
     @Test
     void reportForOneClassGeneratedCorrectly() throws IOException {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        Report report = ReportFactory.create(ReportExtension.getResults());
-        writeReport(report);
-
+        Report report = ReportFactory.create(ReportExtension.getTestResults());
+       
         assertReport(report);
-        assertPassingTestSuite(loadTestSuite(PASSING_CLASS_UNDER_TEST));
     }
 
     public static void assertReport(Report report) {

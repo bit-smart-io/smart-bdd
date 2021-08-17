@@ -1,6 +1,6 @@
 package io.bitsmart.bdd.report.report.adapter;
 
-import io.bitsmart.bdd.report.junit5.results.model.Results;
+import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
@@ -17,8 +17,8 @@ import static java.util.stream.Collectors.toList;
 
 public class ReportFactory {
 
-    public static Report create(Results results) {
-        Collection<TestSuiteResult> testSuiteResults = results.getTestSuiteResults();
+    public static Report create(TestResults testResults) {
+        Collection<TestSuiteResult> testSuiteResults = testResults.getTestSuiteResults();
         List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
         List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
         ReportIndex reportIndex = new ReportIndex(

@@ -26,6 +26,7 @@ dependencies {
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.mockito:mockito-all:1.10.19")
+    testImplementation("com.google.jimfs:jimfs:1.1")
 }
 
 tasks.test {
