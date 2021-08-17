@@ -85,7 +85,7 @@ class ReportDataWriterTest {
     @Test
     void writesReportTestSuites() throws IOException {
         reportDataWriter.prepareDataDirectory();
-        reportDataWriter.write(report);
+        reportDataWriter.write(report.getTestSuites().get(0));
         TestSuite testSuite = inMemoryTestUtils.loadTestSuite(testSuitePath);
         assertThat(testSuite).isEqualTo(aDefaultTestSuiteBuilder().build());
     }

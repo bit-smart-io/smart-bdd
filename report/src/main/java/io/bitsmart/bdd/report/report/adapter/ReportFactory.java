@@ -39,7 +39,7 @@ public class ReportFactory {
         return testSuiteResults.stream().map(ReportFactory::testSuite).collect(toList());
     }
 
-    private static io.bitsmart.bdd.report.report.model.TestSuite testSuite(TestSuiteResult testSuiteResult) {
+    public static io.bitsmart.bdd.report.report.model.TestSuite testSuite(TestSuiteResult testSuiteResult) {
         return new io.bitsmart.bdd.report.report.model.TestSuite(
             testSuiteResult.getTestSuiteClass().getFullyQualifiedName(),
             testSuiteResult.getTestSuiteClass().getClassName(),

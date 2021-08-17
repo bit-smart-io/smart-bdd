@@ -52,12 +52,12 @@ public class TestLauncher {
             .build();
 
         Launcher launcher = LauncherFactory.create();
-        SummaryGeneratingListener listener = new SummaryGeneratingListener();
-        launcher.registerTestExecutionListeners(listener, executionListener);
+        //SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        //launcher.registerTestExecutionListeners(listener, executionListener);
 
         launcher.execute(request);
 
-        TestExecutionSummary summary = listener.getSummary();
-        summary.printTo(new PrintWriter(System.err));
+        //TestExecutionSummary summary = listener.getSummary();
+        //summary.printTo(new PrintWriter(System.err));
     }
 }

@@ -1,5 +1,6 @@
 package io.bitsmart.bdd.report.junit5.listeners;
 
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -19,13 +20,14 @@ public class SmartTestExecutionListener implements TestExecutionListener {
 
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
-        logger.info("testPlanExecutionStarted");
-        // init the ReportExtension
+        //logger.info("testPlanExecutionStarted");
+        // init the ReportExtension?
     }
 
     @Override
     public void testPlanExecutionFinished(TestPlan testPlan) {
-        logger.info("testPlanExecutionFinished: " + methodNames.size());
+        //logger.info("testPlanExecutionFinished: " + methodNames + " " + testPlan.containsTests());
+        ReportExtension.writeIndex();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class SmartTestExecutionListener implements TestExecutionListener {
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         methodNames.add(testIdentifier.getDisplayName());
-        logger.info("executionFinished");
+        //logger.info("executionFinished");
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ReportDataWriter {
 
     public void write(Report report) {
         write(report.getHomePage());
-        report.getTestSuites().forEach(this::write);
+        //report.getTestSuites().forEach(this::write);
     }
 
     public void prepareDataDirectory() {
@@ -68,7 +68,7 @@ public class ReportDataWriter {
         System.out.println("output: file://" + path);
     }
 
-    private void write(TestSuite testSuite) {
+    public void write(TestSuite testSuite) {
         Path path = fileNameProvider.outputFile(testSuite);
         // see above
         if (!Files.exists(path)) {

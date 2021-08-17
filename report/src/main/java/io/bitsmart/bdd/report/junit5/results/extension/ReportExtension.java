@@ -54,7 +54,12 @@ public class ReportExtension implements
         isReporting = true;
     }
 
-    public static void writeDataIndex() {
+    public static void writeTestSuiteResults() {
+        getTestResults().getTestSuiteResults().forEach((reportWriter::write));
+    }
+
+    public static void writeIndex() {
+        System.out.println(getTestResults());
         reportWriter.write(getTestResults());
     }
 
@@ -72,7 +77,7 @@ public class ReportExtension implements
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
-        writeDataIndex();
+        writeTestSuiteResults();
     }
 
     @Override
