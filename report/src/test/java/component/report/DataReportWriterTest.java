@@ -9,7 +9,7 @@ import component.report.builders.TestSuiteBuilder;
 import component.report.builders.TestSuiteSummaryBuilder;
 import component.report.utils.ReportLoadFileUtils;
 import io.bitsmart.bdd.report.report.writers.FileNameProvider;
-import io.bitsmart.bdd.report.report.writers.ReportDataWriter;
+import io.bitsmart.bdd.report.report.writers.DataReportWriter;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
@@ -34,7 +34,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ReportDataWriterTest {
+class DataReportWriterTest {
 
     private final FileNameProvider dataFileNameProvider = mock(FileNameProvider.class);
     private final FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
@@ -43,7 +43,7 @@ class ReportDataWriterTest {
     private final Path testSuitePath = dataPath.resolve("testSuite.json");
     private final Path indexPath = dataPath.resolve("index.json");
 
-    private final ReportDataWriter reportDataWriter = new ReportDataWriter(dataFileNameProvider);
+    private final DataReportWriter dataReportWriter = new DataReportWriter(dataFileNameProvider);
     private final Report report = aDefaultReport().build();
 
     @BeforeEach
@@ -62,7 +62,7 @@ class ReportDataWriterTest {
         Files.createFile(testFile);
         assertThat(testFile).exists();
 
-        reportDataWriter.prepareDataDirectory();
+        dataReportWriter.prepareDataDirectory();
         assertThat(testFile).doesNotExist();
         assertThat(dataPath).exists();
     }
@@ -71,22 +71,22 @@ class ReportDataWriterTest {
     void prepareDataDirectory_createsDirectory() throws IOException {
         assertThat(dataPath).doesNotExist();
 
-        reportDataWriter.prepareDataDirectory();
+        dataReportWriter.prepareDataDirectory();
         assertThat(dataPath).exists();
     }
 
     @Test
     void writesReportIndex() throws IOException {
-        reportDataWriter.prepareDataDirectory();
-        reportDataWriter.write(report);
+        dataReportWriter.prepareDataDirectory();
+        dataReportWriter.write(report.getIndex());
         DataReportIndex loadedDataReportIndex = fileUtils.loadReportIndex(indexPath);
         assertThat(loadedDataReportIndex).isEqualTo(aDefaultReportIndex().build());
     }
 
     @Test
     void writesReportTestSuites() throws IOException {
-        reportDataWriter.prepareDataDirectory();
-        reportDataWriter.write(report.getTestSuites().get(0));
+        dataReportWriter.prepareDataDirectory();
+        dataReportWriter.write(report.getTestSuites().get(0));
         TestSuite testSuite = fileUtils.loadTestSuite(testSuitePath);
         assertThat(testSuite).isEqualTo(aDefaultTestSuiteBuilder().build());
     }

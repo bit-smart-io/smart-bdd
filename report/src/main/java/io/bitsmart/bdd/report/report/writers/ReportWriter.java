@@ -9,20 +9,23 @@ import io.bitsmart.bdd.report.report.model.Report;
  * Will need a strategy - write the results/report and or http post the results/report
  */
 public class ReportWriter {
-    private final ReportDataWriter reportDataWriter = new ReportDataWriter(new DataFileNameProvider());
+    private final DataReportWriter dataReportWriter = new DataReportWriter(new DataFileNameProvider());
+    private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlFileNameProvider());
 
     /** TODO in transition. Please see TestResults for more details. */
     public void write(TestResults testResults) {
         Report report = ReportFactory.create(testResults);
-        reportDataWriter.write(report);
+        dataReportWriter.write(report.getIndex());
+        htmlReportWriter.write(report.getIndex());
     }
 
     /** TODO in transition - duplicates ReportFactory.testSuite */
     public void write(TestSuiteResult testSuiteResult) {
-        reportDataWriter.write(ReportFactory.testSuite(testSuiteResult));
+        dataReportWriter.write(ReportFactory.testSuite(testSuiteResult));
     }
 
     public void prepare() {
-        reportDataWriter.prepareDataDirectory();
+        dataReportWriter.prepareDataDirectory();
+        htmlReportWriter.prepareDataDirectory();
     }
 }

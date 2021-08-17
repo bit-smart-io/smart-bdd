@@ -4,12 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Report {
-    // ReportIndex is for data.
+    // ReportIndex is for data. Maybe need one for html?
     private final DataReportIndex dataReportIndex;
-
-    // Now we need one for html.
-
-
     private final List<TestCase> testCases;
     private final List<TestSuite> testSuites;
 
