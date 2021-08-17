@@ -11,6 +11,7 @@
 - [ ] Copy write every class
     - https://choosealicense.com/licenses/mit/ - short and cucumber has this
     - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
+- [ ] Investigate META-INF/Services SmartTestExecutionListener gets exported 
 
 ### Post MVP:
 - [ ] Add to github

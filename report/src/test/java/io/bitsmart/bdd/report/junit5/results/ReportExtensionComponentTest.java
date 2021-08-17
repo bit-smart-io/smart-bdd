@@ -36,7 +36,7 @@ public class ReportExtensionComponentTest {
     @Test
     void verifyTestSuiteClass() {
         TestLauncher.launch(ClassUnderTest.class);
-        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(classSimpleName(ClassUnderTest.class));
+        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(ClassUnderTest.class));
         TestSuiteClass testSuiteClass = testSuiteResult.getTestSuiteClass();
         assertThat(testSuiteClass.getFullyQualifiedName()).isEqualTo("shared.undertest.ClassUnderTest");
         assertThat(testSuiteClass.getClassName()).isEqualTo("ClassUnderTest");
@@ -300,8 +300,8 @@ public class ReportExtensionComponentTest {
 
     private TestSuiteResult launchTestSuite(Class<?> clazz) {
         TestLauncher.launch(clazz);
-        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(classSimpleName(clazz));
-        return ReportExtension.getTestResults().getTestSuiteResults(classSimpleName(clazz));
+        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(testSuiteClass(clazz));
+        return ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(clazz));
     }
 
     private TestCaseResultBuilder aPassedParamTestCaseResult() {

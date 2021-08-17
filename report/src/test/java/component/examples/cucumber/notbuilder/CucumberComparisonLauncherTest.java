@@ -1,12 +1,12 @@
 package component.examples.cucumber.notbuilder;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import org.junit.jupiter.api.Test;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import org.junit.jupiter.api.Test;
 
-import static io.bitsmart.bdd.report.junit5.results.model.ClassSimpleName.classSimpleName;
+import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CucumberComparisonLauncherTest {
@@ -15,9 +15,9 @@ public class CucumberComparisonLauncherTest {
     void launchTests() {
         ReportExtension.reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(classSimpleName(CucumberComparisonTest.class));
+        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(testSuiteClass(CucumberComparisonTest.class));
 
-        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(classSimpleName(CucumberComparisonTest.class));
+        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(CucumberComparisonTest.class));
         assertThat(testSuiteResult).isNotNull();
 
         assertThat(testSuiteResult.getMethodNames()).contains(
