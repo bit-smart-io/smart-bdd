@@ -21,43 +21,22 @@ public class TestLauncher {
 
     public static void launch(Class<?> clazz) {
         DiscoverySelector selector = selectClass(clazz);
-        launch(new TestListener(), selector);
-    }
-
-    public static void launch(TestExecutionListener executionListener, Class<?> clazz) {
-        DiscoverySelector selector = selectClass(clazz);
-        launch(executionListener, selector);
-    }
-
-    public static void launch(TestExecutionListener executionListener, Class<?> clazz, String methodName) {
-        DiscoverySelector selector = selectMethod(clazz, methodName);
-        launch(executionListener, selector);
+        launch(selector);
     }
 
     public static void launch(Class<?> clazz, String methodName) {
         DiscoverySelector selector = selectMethod(clazz, methodName);
-        launch(new TestListener(), selector);
+        launch(selector);
     }
 
     public static void launch(DiscoverySelector... selectors) {
-        launch(new TestListener(), selectors);
-    }
-
-    public static void launch(TestExecutionListener executionListener, DiscoverySelector... selectors) {
-        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
-            .selectors(selectors)
+        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request().selectors(selectors)
            // this would only work if we launched via this Launcher
            // .configurationParameter("junit.platform.output.capture.stdout", "true")
            // .configurationParameter("junit.platform.output.capture.stderr", "true")
             .build();
 
         Launcher launcher = LauncherFactory.create();
-        //SummaryGeneratingListener listener = new SummaryGeneratingListener();
-        //launcher.registerTestExecutionListeners(listener, executionListener);
-
         launcher.execute(request);
-
-        //TestExecutionSummary summary = listener.getSummary();
-        //summary.printTo(new PrintWriter(System.err));
     }
 }

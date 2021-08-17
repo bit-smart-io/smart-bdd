@@ -1,4 +1,4 @@
-package io.bitsmart.bdd.report.junit5.results;
+package component.results;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;

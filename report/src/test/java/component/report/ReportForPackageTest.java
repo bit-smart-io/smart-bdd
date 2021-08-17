@@ -29,11 +29,11 @@ public class ReportForPackageTest {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
 
         Report report = ReportFactory.create(ReportExtension.getTestResults());
-        TestSuiteLinks testSuiteLinks = report.getHomePage().getLinks();
+        TestSuiteLinks testSuiteLinks = report.getIndex().getLinks();
         assertThat(testSuiteLinks.getTestSuites()).contains(
             new TestSuiteNameToFile(
                 "shared.undertest.ClassUnderTest",
                 "TEST-shared.undertest.ClassUnderTest.json"));
-        assertThat(report.getHomePage().getSummary()).isEqualTo(new TestSuiteSummary(19,5,4,8,4));
+        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(19,5,4,8,4));
     }
 }

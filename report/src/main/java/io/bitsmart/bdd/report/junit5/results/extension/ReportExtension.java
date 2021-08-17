@@ -40,27 +40,23 @@ public class ReportExtension implements
     //private static final LocalDateTime dateTime = LocalDateTime.now();
     //private static final ReportWriter reportWriter = new ReportWriter(dateTime);
     private static final ReportWriter reportWriter = new ReportWriter();
-
     private static boolean isReporting = false;
 
-    public static boolean isReporting() {
-        return isReporting;
-    }
-
-    public static void startReporting() {
+    private static void startReporting() {
         if (!isReporting) {
             reportWriter.prepare();
         }
         isReporting = true;
     }
 
-    public static void writeTestSuiteResults() {
+    private static void writeTestSuiteResults() {
         getTestResults().getTestSuiteResults().forEach((reportWriter::write));
     }
 
     public static void writeIndex() {
-        System.out.println(getTestResults());
-        reportWriter.write(getTestResults());
+        if (isReporting) {
+            reportWriter.write(getTestResults());
+        }
     }
 
     @Override

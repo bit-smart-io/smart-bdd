@@ -14,7 +14,7 @@ public class Report {
         this.testSuites = testSuites;
     }
     
-    public ReportIndex getHomePage() {
+    public ReportIndex getIndex() {
         return reportIndex;
     }
 

@@ -30,8 +30,7 @@ public class ReportDataWriter {
     }
 
     public void write(Report report) {
-        write(report.getHomePage());
-        //report.getTestSuites().forEach(this::write);
+        write(report.getIndex());
     }
 
     public void prepareDataDirectory() {

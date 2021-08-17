@@ -7,6 +7,7 @@ import component.report.builders.ReportIndexBuilder;
 import component.report.builders.TestCaseBuilder;
 import component.report.builders.TestSuiteBuilder;
 import component.report.builders.TestSuiteSummaryBuilder;
+import component.report.utils.ReportLoadFileUtils;
 import io.bitsmart.bdd.report.report.FileNameProvider;
 import io.bitsmart.bdd.report.report.ReportDataWriter;
 import io.bitsmart.bdd.report.report.model.Report;
@@ -37,7 +38,7 @@ class ReportDataWriterTest {
 
     private final FileNameProvider fileNameProvider = mock(FileNameProvider.class);
     private final FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
-    private final ReportInMemoryTestUtils inMemoryTestUtils = new ReportInMemoryTestUtils(fileSystem);
+    private final ReportLoadFileUtils fileUtils = new ReportLoadFileUtils();
     private final Path dataPath = fileSystem.getPath("/data");
     private final Path testSuitePath = dataPath.resolve("testSuite.json");
     private final Path indexPath = dataPath.resolve("index.json");
@@ -78,7 +79,7 @@ class ReportDataWriterTest {
     void writesReportIndex() throws IOException {
         reportDataWriter.prepareDataDirectory();
         reportDataWriter.write(report);
-        ReportIndex loadedReportIndex = inMemoryTestUtils.loadReportIndex(indexPath);
+        ReportIndex loadedReportIndex = fileUtils.loadReportIndex(indexPath);
         assertThat(loadedReportIndex).isEqualTo(aDefaultReportIndex().build());
     }
 
@@ -86,7 +87,7 @@ class ReportDataWriterTest {
     void writesReportTestSuites() throws IOException {
         reportDataWriter.prepareDataDirectory();
         reportDataWriter.write(report.getTestSuites().get(0));
-        TestSuite testSuite = inMemoryTestUtils.loadTestSuite(testSuitePath);
+        TestSuite testSuite = fileUtils.loadTestSuite(testSuitePath);
         assertThat(testSuite).isEqualTo(aDefaultTestSuiteBuilder().build());
     }
 

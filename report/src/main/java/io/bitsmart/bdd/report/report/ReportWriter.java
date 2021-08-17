@@ -1,6 +1,7 @@
 package io.bitsmart.bdd.report.report;
 
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 
@@ -17,7 +18,6 @@ import io.bitsmart.bdd.report.report.model.Report;
  */
 public class ReportWriter {
     private final ReportDataWriter reportDataWriter = new ReportDataWriter(new FileNameProvider());
-    private boolean hasPrepared = false;
 
     // we need to know what is unique, only write once
     public void write(TestResults testResults) {
@@ -25,10 +25,11 @@ public class ReportWriter {
         reportDataWriter.write(report);
     }
 
+    public void write(TestSuiteResult testSuiteResult) {
+        reportDataWriter.write(ReportFactory.testSuite(testSuiteResult));
+    }
+
     public void prepare() {
-        if (!hasPrepared) {
-            reportDataWriter.prepareDataDirectory();
-            hasPrepared = true;
-        }
+        reportDataWriter.prepareDataDirectory();
     }
 }
