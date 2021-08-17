@@ -1,8 +1,8 @@
 package io.bitsmart.bdd.report.utils.carbuilder.builders;
 
 import io.bitsmart.bdd.report.utils.Builder;
-import io.bitsmart.bdd.report.utils.carbuilder.model.SimpleEngine;
 import io.bitsmart.bdd.report.utils.carbuilder.model.EngineType;
+import io.bitsmart.bdd.report.utils.carbuilder.model.SimpleEngine;
 
 public final class SimpleEngineBuilder implements Builder<SimpleEngine> {
     EngineType type;

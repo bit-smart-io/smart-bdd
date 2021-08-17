@@ -7,7 +7,7 @@ import io.bitsmart.bdd.report.utils.BuilderUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static component.report.builders.ReportIndexBuilder.*;
+import static component.report.builders.ReportIndexBuilder.aReportIndex;
 
 public final class ReportBuilder implements Builder<Report> {
     private ReportIndexBuilder reportIndex = aReportIndex();

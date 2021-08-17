@@ -1,11 +1,5 @@
 package io.bitsmart.bdd.report.report;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.io.File;
-import java.nio.file.Path;
-
 /**
  * TODO implement writing HTML possibly Thymeleaf
  * TODO consider unit testing ReportDataWriter first?

@@ -1,6 +1,7 @@
 package io.bitsmart.bdd.report.junit5.listeners;
 
 import org.junit.platform.launcher.TestExecutionListener;
+
 import static java.lang.System.getProperty;
 
 public class SmartBddConfig implements TestExecutionListener {

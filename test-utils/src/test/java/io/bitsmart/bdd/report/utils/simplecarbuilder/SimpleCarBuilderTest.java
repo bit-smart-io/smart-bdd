@@ -1,9 +1,9 @@
 package io.bitsmart.bdd.report.utils.simplecarbuilder;
 
 import io.bitsmart.bdd.report.utils.simplecarbuilder.builders.SimpleCarBuilder;
+import io.bitsmart.bdd.report.utils.simplecarbuilder.model.EngineType;
 import io.bitsmart.bdd.report.utils.simplecarbuilder.model.SimpleCar;
 import io.bitsmart.bdd.report.utils.simplecarbuilder.model.SimpleEngine;
-import io.bitsmart.bdd.report.utils.simplecarbuilder.model.EngineType;
 import org.junit.jupiter.api.Test;
 
 import static io.bitsmart.bdd.report.utils.simplecarbuilder.builders.SimpleCarBuilder.aCar;

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.bitsmart.bdd.report.report.filehandling.FileRepository;
+import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
-import io.bitsmart.bdd.report.report.model.Report;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,8 +1,8 @@
 package io.bitsmart.wordify.source;
 
 import com.thoughtworks.qdox.model.JavaParameter;
-import org.junit.jupiter.api.Test;
 import io.bitsmart.wordify.JavaSourceWrapper;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;

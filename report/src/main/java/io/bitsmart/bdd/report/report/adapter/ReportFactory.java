@@ -1,12 +1,12 @@
 package io.bitsmart.bdd.report.report.adapter;
 
-import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus;
+import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
-import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 

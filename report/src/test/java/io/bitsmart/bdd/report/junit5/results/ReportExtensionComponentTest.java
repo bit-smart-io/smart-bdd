@@ -1,30 +1,29 @@
 package io.bitsmart.bdd.report.junit5.results;
 
+import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
-import shared.undertest.AbortedTestCasesUnderTest;
-import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
-import shared.undertest.ClassUnderTest;
-import shared.undertest.DisabledTestCasesUnderTest;
-import shared.undertest.FailedTestCasesUnderTest;
-import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import shared.undertest.AbortedTestCasesUnderTest;
+import shared.undertest.ClassUnderTest;
+import shared.undertest.DisabledTestCasesUnderTest;
+import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
+import shared.undertest.FailedTestCasesUnderTest;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static io.bitsmart.bdd.report.junit5.results.model.ClassSimpleName.classSimpleName;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.FAILED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportExtensionComponentTest {

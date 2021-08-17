@@ -1,20 +1,18 @@
 package io.bitsmart.bdd.report.utils.carbuilder;
 
 import io.bitsmart.bdd.report.utils.carbuilder.builders.CarBuilder;
-import io.bitsmart.bdd.report.utils.carbuilder.model.Car;
-import io.bitsmart.bdd.report.utils.carbuilder.model.SimpleEngine;
-import io.bitsmart.bdd.report.utils.carbuilder.model.EngineType;
 import io.bitsmart.bdd.report.utils.carbuilder.builders.WheelBuilder;
+import io.bitsmart.bdd.report.utils.carbuilder.model.Car;
+import io.bitsmart.bdd.report.utils.carbuilder.model.EngineType;
+import io.bitsmart.bdd.report.utils.carbuilder.model.SimpleEngine;
 import io.bitsmart.bdd.report.utils.carbuilder.model.Wheel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import static io.bitsmart.bdd.report.utils.carbuilder.builders.CarBuilder.aCar;
 import static io.bitsmart.bdd.report.utils.carbuilder.builders.SimpleEngineBuilder.anEngine;
-import static java.util.Collections.emptyList;
 
 class CarBuilderTest {
     private static final EngineType ENGINE_TYPE = EngineType.PETROL;

@@ -1,14 +1,13 @@
 package component.examples.cucumber.builder;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 
-import static io.bitsmart.bdd.report.junit5.results.model.ClassSimpleName.classSimpleName;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static org.assertj.core.api.Assertions.assertThat;
 

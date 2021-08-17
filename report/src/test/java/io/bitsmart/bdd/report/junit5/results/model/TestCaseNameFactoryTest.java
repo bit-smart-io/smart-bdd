@@ -1,9 +1,10 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
 import org.junit.jupiter.api.Test;
+
+import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TestCaseNameFactoryTest {

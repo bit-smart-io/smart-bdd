@@ -1,14 +1,14 @@
 package component.report.wip;
 
-import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.TestSuite;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import shared.undertest.ClassUnderTest;
 
 import static component.report.builders.TestCaseBuilder.aTestCase;

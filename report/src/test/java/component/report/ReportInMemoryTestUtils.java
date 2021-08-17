@@ -2,8 +2,8 @@ package component.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bitsmart.bdd.report.report.FileNameProvider;
-import io.bitsmart.bdd.report.report.filehandling.FileRepository;
 import io.bitsmart.bdd.report.report.ReportDataWriter;
+import io.bitsmart.bdd.report.report.filehandling.FileRepository;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.ReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;

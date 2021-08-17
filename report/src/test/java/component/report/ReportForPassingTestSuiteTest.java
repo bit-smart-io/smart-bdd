@@ -1,10 +1,7 @@
 package component.report;
 
-import com.google.common.jimfs.Configuration;
-import com.google.common.jimfs.Jimfs;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
-import io.bitsmart.bdd.report.report.FileNameProvider;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuite;
@@ -13,13 +10,9 @@ import org.junit.jupiter.api.Test;
 import shared.undertest.ClassUnderTest;
 
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.Path;
 
 import static component.report.ReportAssertions.assertPassingTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Example output from JUnit
