@@ -42,13 +42,13 @@ public class ReportForPassingTestSuiteTest {
 
     @BeforeEach
     void setUp() {
-        ReportExtension.reset();
+        ReportExtension.getTestContext().reset();
     }
 
     @Test
     void reportForOneClassGeneratedCorrectly() throws IOException {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        Report report = ReportFactory.create(ReportExtension.getTestResults());
+        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
        
         assertReport(report);
     }

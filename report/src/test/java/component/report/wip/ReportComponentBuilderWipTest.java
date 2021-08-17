@@ -29,14 +29,14 @@ public class ReportComponentBuilderWipTest {
 
     @BeforeEach
     void setUp() {
-        ReportExtension.reset();
+        ReportExtension.getTestContext().reset();
     }
 
     @Test
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ReportExtension.getTestResults());
+        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(4);
 

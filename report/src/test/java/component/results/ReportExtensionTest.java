@@ -26,16 +26,16 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetada
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ReportExtensionComponentTest {
+public class ReportExtensionTest {
     @BeforeEach
     void setUp() {
-        ReportExtension.reset();
+        ReportExtension.getTestContext().reset();
     }
 
     @Test
     void verifyTestSuiteClass() {
         TestLauncher.launch(ClassUnderTest.class);
-        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(ClassUnderTest.class));
+        TestSuiteResult testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(ClassUnderTest.class));
         TestSuiteClass testSuiteClass = testSuiteResult.getTestSuiteClass();
         assertThat(testSuiteClass.getFullyQualifiedName()).isEqualTo("shared.undertest.ClassUnderTest");
         assertThat(testSuiteClass.getClassName()).isEqualTo("ClassUnderTest");
@@ -299,8 +299,8 @@ public class ReportExtensionComponentTest {
 
     private TestSuiteResult launchTestSuite(Class<?> clazz) {
         TestLauncher.launch(clazz);
-        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(testSuiteClass(clazz));
-        return ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(clazz));
+        assertThat(ReportExtension.getTestContext().getTestResults().getClasses()).containsExactly(testSuiteClass(clazz));
+        return ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(clazz));
     }
 
     private TestCaseResultBuilder aPassedParamTestCaseResult() {

@@ -13,11 +13,11 @@ public class CucumberComparisonLauncherTest {
 
     @Test
     void launchTests() {
-        ReportExtension.reset();
+        ReportExtension.getTestContext().reset();
         TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ReportExtension.getTestResults().getClasses()).containsExactly(testSuiteClass(CucumberComparisonTest.class));
+        assertThat(ReportExtension.getTestContext().getTestResults().getClasses()).containsExactly(testSuiteClass(CucumberComparisonTest.class));
 
-        TestSuiteResult testSuiteResult = ReportExtension.getTestResults().getTestSuiteResults(testSuiteClass(CucumberComparisonTest.class));
+        TestSuiteResult testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(CucumberComparisonTest.class));
         assertThat(testSuiteResult).isNotNull();
 
         assertThat(testSuiteResult.getMethodNames()).contains(

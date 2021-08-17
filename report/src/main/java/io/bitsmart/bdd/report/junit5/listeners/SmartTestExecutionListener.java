@@ -27,7 +27,7 @@ public class SmartTestExecutionListener implements TestExecutionListener {
     @Override
     public void testPlanExecutionFinished(TestPlan testPlan) {
         //logger.info("testPlanExecutionFinished: " + methodNames + " " + testPlan.containsTests());
-        ReportExtension.writeIndex();
+        ReportExtension.getTestContext().writeIndex();
     }
 
     @Override

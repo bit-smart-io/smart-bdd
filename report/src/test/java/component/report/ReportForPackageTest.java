@@ -21,14 +21,14 @@ public class ReportForPackageTest {
 
     @BeforeEach
     void setUp() {
-        ReportExtension.reset();
+        ReportExtension.getTestContext().reset();
     }
 
     @Test
     void reportForOnePackageGeneratedCorrectly() throws IOException {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
 
-        Report report = ReportFactory.create(ReportExtension.getTestResults());
+        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
         TestSuiteLinks testSuiteLinks = report.getIndex().getLinks();
         assertThat(testSuiteLinks.getTestSuites()).contains(
             new TestSuiteNameToFile(
