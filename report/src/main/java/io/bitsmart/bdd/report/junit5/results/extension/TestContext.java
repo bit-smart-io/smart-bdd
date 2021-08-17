@@ -66,7 +66,7 @@ public class TestContext implements
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
-        writeTestSuiteResults();
+        //writeTestSuiteResults();
     }
 
     @Override
@@ -158,14 +158,14 @@ public class TestContext implements
         getTestCaseResult(context).setStatus(FAILED).setCause(cause);
     }
 
-    public void startReporting() {
+    private void startReporting() {
         if (!isReporting) {
             reportWriter.prepare();
         }
         isReporting = true;
     }
 
-    private void writeTestSuiteResults() {
+    public void writeTestSuiteResults() {
         getTestResults().getTestSuiteResults().forEach((reportWriter::write));
     }
 

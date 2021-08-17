@@ -11,37 +11,47 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSui
 
 public class TestResults {
 
-    // ConcurrentHashMap<ClassSimpleName, TestSuiteResult> -> ConcurrentHashMap<TestSuiteClass, TestSuiteResult>
-    //  ReportExtension after all
-    //  - create report TestSuite
-    //  - write report TestSuite
-    //  - accumulate results Map<TestSuiteClass, TestSuiteResultsMetadata>
-    //  - classNameToTestSuiteResults.remove(testSuiteClass)
-    //  SmartTestExecutionListener executionFinished
-    //  - create report index from TestSuiteResultsMetadata
+    /**
+     * Performance improvement.
+     *  usage:
+     *   - write TestSuite
+     *   - updateTestSuiteResultsMetadata
+     *   - removeTestSuite
+     *   - last create report index from all the TestSuiteResultsMetadata
+     *
+     *  private final ConcurrentHashMap<TestSuiteClass, TestSuiteResultsMetadata> testSuiteToTestSuiteResultsMetadata = new ConcurrentHashMap<>();
+     *
+     *  public void removeTestSuite(TestSuiteClass testSuiteClass) {
+     *      testSuiteToTestSuiteResults.remove(testSuiteClass);
+     *  }
+     *
+     *  public void updateTestSuiteResultsMetadata(TestSuiteClass testSuiteClass) {
+     *      testSuiteToTestSuiteResultsMetadata.put(testSuiteClass, testSuiteToTestSuiteResults.get(testSuiteClass).getMetadata());
+     *  }
+     */
 
-    private final ConcurrentHashMap<TestSuiteClass, TestSuiteResult> classNameToTestSuiteResults = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<TestSuiteClass, TestSuiteResult> testSuiteToTestSuiteResults = new ConcurrentHashMap<>();
 
     public List<TestSuiteClass> getClasses() {
-        return Collections.list(classNameToTestSuiteResults.keys());
+        return Collections.list(testSuiteToTestSuiteResults.keys());
     }
 
     public Collection<TestSuiteResult> getTestSuiteResults() {
-        return classNameToTestSuiteResults.values();
+        return testSuiteToTestSuiteResults.values();
     }
 
     public TestSuiteResult getTestSuiteResults(TestSuiteClass testSuiteClass) {
-        return classNameToTestSuiteResults.get(testSuiteClass);
+        return testSuiteToTestSuiteResults.get(testSuiteClass);
     }
 
     public TestSuiteResult getTestResultsForClass(ExtensionContext extensionContext) {
-        return classNameToTestSuiteResults.get(getTestSuiteClass(extensionContext));
+        return testSuiteToTestSuiteResults.get(getTestSuiteClass(extensionContext));
     }
 
     public TestSuiteResult startTestSuite(ExtensionContext context) {
         Class<?> clazz = context.getRequiredTestClass();
         TestSuiteResult testSuiteResult = new TestSuiteResult(testSuiteClass(clazz));
-        classNameToTestSuiteResults.put(getTestSuiteClass(context), testSuiteResult);
+        testSuiteToTestSuiteResults.put(getTestSuiteClass(context), testSuiteResult);
         return testSuiteResult;
     }
 
@@ -50,6 +60,6 @@ public class TestResults {
     }
 
     public void reset() {
-        classNameToTestSuiteResults.clear();
+        testSuiteToTestSuiteResults.clear();
     }
 }

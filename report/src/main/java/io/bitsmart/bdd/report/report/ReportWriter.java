@@ -19,12 +19,13 @@ import io.bitsmart.bdd.report.report.model.Report;
 public class ReportWriter {
     private final ReportDataWriter reportDataWriter = new ReportDataWriter(new FileNameProvider());
 
-    // we need to know what is unique, only write once
+    /** TODO in transition. Please see TestResults for more details. */
     public void write(TestResults testResults) {
         Report report = ReportFactory.create(testResults);
         reportDataWriter.write(report);
     }
 
+    /** TODO in transition - duplicates ReportFactory.testSuite */
     public void write(TestSuiteResult testSuiteResult) {
         reportDataWriter.write(ReportFactory.testSuite(testSuiteResult));
     }
