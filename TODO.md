@@ -1,13 +1,13 @@
 # List of TODOs for the mono repo
 
 ### MVP:
-- [ ] Static webpage for test suites - maybe Thymeleaf
-- [ ] Static webpage menu
+- [x] Static webpage for test suites - maybe Thymeleaf
+- [x] Static webpage menu
 - [ ] Add examples
   - [ ] Book store?
-  - [ ] Calculator micro service - see 
+  - [ ] Calculator microservice - see cucumber examples 
 - [x] Move learning tests to own project
-- [ ] General code tidy
+- [x] General code tidy
 - [ ] Copy write every class
     - https://choosealicense.com/licenses/mit/ - short and cucumber has this
     - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
@@ -15,6 +15,7 @@
 
 ### Post MVP:
 - [ ] Add to github
+- [ ] Parametrised tests (see testCaseResult.setName(...) and verifyThirdTest_paramsWithCustomName). See Notes below.
 - [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Handle all test factories, templates and dynamic
@@ -45,6 +46,23 @@
 - [x] Website prototype
 - [x] Use Kotlin for Gradle
 - [x] Project structure - need modules/projects
+
+### Parametrised tests
+Need something to reflect:
+```
+ParamTest
+* [1] value 1 (PASSED)
+  Passing assertion with value 1
+
+* [2] value 2 (PASSED)
+  Passing assertion with value 2
+```
+This means something like:
+* `testCaseResult.name` = `[1] value 1`
+* `testCaseResult.methodName` = `ParamTest()` should we include the signature???. Could we infer from the params?
+* `testCaseResult.parentTest` = `ParamTest()`. Is this needed to group tests??? Is it the same as `methodName`?
+* `testCaseResult.args` not empty
+
 
 ### New args block. With args we can re-run test(s).
 ```json

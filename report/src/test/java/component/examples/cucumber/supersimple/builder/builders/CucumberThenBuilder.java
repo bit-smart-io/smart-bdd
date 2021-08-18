@@ -1,6 +1,6 @@
-package component.examples.cucumber.builder.builders;
+package component.examples.cucumber.supersimple.builder.builders;
 
-import component.examples.cucumber.builder.domain.CucumberThen;
+import component.examples.cucumber.supersimple.builder.domain.CucumberThen;
 import io.bitsmart.bdd.report.utils.ThenBuilder;
 
 public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {

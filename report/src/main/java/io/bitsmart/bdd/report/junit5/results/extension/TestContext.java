@@ -190,13 +190,15 @@ public class TestContext implements
 
     public void updateTestCaseResult(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) {
         TestCaseResult testCaseResult = getTestCaseResult(extensionContext);
-        final List<Object> arguments = invocationContext.getArguments();
-        final Method method = invocationContext.getExecutable();
-        final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+//        List<Object> arguments = invocationContext.getArguments();
+//        Method method = invocationContext.getExecutable();
+//        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+//        String displayName = extensionContext.getDisplayName();
 
         wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(testCaseResult::setWordify);
         testCaseResult.setArgs(invocationContext.getArguments());
         testCaseResult.setName(testCaseNameFactory.createName(testCaseResult));
+        // testCaseResult.setName(extensionContext.getDisplayName());
     }
 
     public void reset() {

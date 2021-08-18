@@ -1,4 +1,4 @@
-package component.examples.cucumber.builder.domain;
+package component.examples.cucumber.supersimple.builder.domain;
 
 public class CucumberThen {
     private final int amount;

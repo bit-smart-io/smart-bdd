@@ -1,4 +1,4 @@
-package component.examples.cucumber.builder;
+package component.examples.cucumber.supersimple.builder;
 
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.MethodOrderer;
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static component.examples.cucumber.builder.builders.CucumberGivenBuilder.iHaveCucumbers;
-import static component.examples.cucumber.builder.builders.CucumberThenBuilder.iShouldHaveCucumbers;
-import static component.examples.cucumber.builder.builders.CucumberWhenBuilder.iEatCucumbers;
+import static component.examples.cucumber.supersimple.builder.builders.CucumberGivenBuilder.iHaveCucumbers;
+import static component.examples.cucumber.supersimple.builder.builders.CucumberThenBuilder.iShouldHaveCucumbers;
+import static component.examples.cucumber.supersimple.builder.builders.CucumberWhenBuilder.iEatCucumbers;
 
 /**
  * // https://cucumber.io/docs/gherkin/reference/
@@ -46,6 +46,16 @@ public class CucumberComparisonTest extends BaseTest {
         then(iShouldHaveCucumbers().withAmount(7));
     }
 
+    BaseTest context = new BaseTest();
+
+    @Order(1)
+    @Test
+    void eat5OutOf12_context() {
+        context.given(iHaveCucumbers().withAmount(12));
+        context.when(iEatCucumbers().withAmount(5));
+        context.then(iShouldHaveCucumbers().withAmount(7));
+    }
+
     /**
      * harder to maintain because all builders have to chain of the given builder
      * easier to write tests after the investment of writing and maintain the given builder
@@ -53,8 +63,27 @@ public class CucumberComparisonTest extends BaseTest {
      @Order(1)
      @Test
      void eat5OutOf12() {
-        given().cucumbers().withAmount(12))
+        given().iHaveCucumbers().withAmount(12))
         when().iEat().cucumbers().withAmount(5))
         then().iShouldHave().cucumbers().withAmount(7))
      }*/
+
+
+    void example() {
+        //given().iHaveCucumbers().withAmount(12));
+        //the when() builds the given builders in order.
+        // same as given().build()??
+        // given().iHave() adds a new givenBuilder to be executed
+        // given().iHave().aDefaultCumber()
+        // given().iHave().defaultCumbers(12)
+        // given().iHave().cumbersNames(12)
+
+        // when action builders
+        // when().iEat().cucumbers().withAmount(5))
+
+
+        // then().iShouldHave().cucumbers().withAmount(7))
+    }
+
+
 }

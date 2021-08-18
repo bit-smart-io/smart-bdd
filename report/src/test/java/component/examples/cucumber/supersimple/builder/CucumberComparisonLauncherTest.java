@@ -1,4 +1,4 @@
-package component.examples.cucumber.builder;
+package component.examples.cucumber.supersimple.builder;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;

@@ -1,6 +1,6 @@
-package component.examples.cucumber.builder.builders;
+package component.examples.cucumber.supersimple.builder.builders;
 
-import component.examples.cucumber.builder.domain.CucumberGiven;
+import component.examples.cucumber.supersimple.builder.domain.CucumberGiven;
 import io.bitsmart.bdd.report.utils.GivenBuilder;
 
 public class CucumberGivenBuilder implements GivenBuilder<CucumberGiven> {

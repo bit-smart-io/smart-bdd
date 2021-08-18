@@ -91,11 +91,12 @@ Then the book is returned
 | project name  | package  | description  | notes  |
 |---|---|---|---|
 | root       | io.bitsmart.bdd | root for repo  |
-| report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation  | Should be `@smart-bdd`? |
+| report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation (.html and .json)  | Should be `@smart-bdd`? |
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
 | examples   | n/a| examples of using smart-bdd | maybe `io.bitsmart.example.bookstore` | 
+| webpage    | n/a| vue js | replace with react | 
 
 Questions:
 

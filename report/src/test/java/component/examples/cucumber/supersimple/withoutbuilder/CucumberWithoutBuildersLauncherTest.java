@@ -1,4 +1,4 @@
-package component.examples.cucumber.notbuilder;
+package component.examples.cucumber.supersimple.withoutbuilder;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
@@ -9,15 +9,15 @@ import org.junit.jupiter.api.Test;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CucumberComparisonLauncherTest {
+public class CucumberWithoutBuildersLauncherTest {
 
     @Test
     void launchTests() {
         ReportExtension.getTestContext().reset();
-        TestLauncher.launch(CucumberComparisonTest.class);
-        assertThat(ReportExtension.getTestContext().getTestResults().getClasses()).containsExactly(testSuiteClass(CucumberComparisonTest.class));
+        TestLauncher.launch(CucumberWithoutBuildersTest.class);
+        assertThat(ReportExtension.getTestContext().getTestResults().getClasses()).containsExactly(testSuiteClass(CucumberWithoutBuildersTest.class));
 
-        TestSuiteResult testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(CucumberComparisonTest.class));
+        TestSuiteResult testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(CucumberWithoutBuildersTest.class));
         assertThat(testSuiteResult).isNotNull();
 
         assertThat(testSuiteResult.getMethodNames()).contains(

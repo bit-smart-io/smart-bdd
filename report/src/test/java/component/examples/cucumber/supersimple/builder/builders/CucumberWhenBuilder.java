@@ -1,6 +1,6 @@
-package component.examples.cucumber.builder.builders;
+package component.examples.cucumber.supersimple.builder.builders;
 
-import component.examples.cucumber.builder.domain.CucumberWhen;
+import component.examples.cucumber.supersimple.builder.domain.CucumberWhen;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {

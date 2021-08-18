@@ -1,6 +1,6 @@
-package component.examples.cucumber.notbuilder;
+package component.examples.cucumber.supersimple.withoutbuilder;
 
-import component.examples.cucumber.CucumberService;
+import component.examples.cucumber.supersimple.SuperSimpleCucumberService;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -8,20 +8,21 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * // https://cucumber.io/docs/gherkin/reference/
+ * Example to show without using any builder api.
+ *
+ * Please adjacent launcher test for the output.
+ *
+ * Below is an extract from https://cucumber.io/docs/gherkin/reference/
  * Scenario: eat 5 out of 12
  * Given there are 12 cucumbers
  * When I eat 5 cucumbers
  * Then I should have 7 cucumbers
- *
- * Scenario: eat 5 out of 20
- * Given there are 20 cucumbers
- * When I eat 5 cucumbers
- * Then I should have 15 cucumbers
  *
  * Scenario Outline: eating
  * Given there are <start> cucumbers
@@ -34,12 +35,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(ReportExtension.class)
-public class CucumberComparisonTest {
-    private CucumberService cucumberService;
+public class CucumberWithoutBuildersTest {
+    private SuperSimpleCucumberService superSimpleCucumberService;
 
     @BeforeEach
     private void reset() {
-        cucumberService = new CucumberService();
+        superSimpleCucumberService = new SuperSimpleCucumberService();
     }
 
     @Order(0)
@@ -50,15 +51,24 @@ public class CucumberComparisonTest {
         thenIShouldHaveCucumbers(7);
     }
 
+    @Order(1)
+    @ParameterizedTest(name = "#{index} - Eat {1} out of {0}")
+    @CsvSource({"12,5,7", "20,5,15"})
+    void eat(int start, int eat, int left) {
+        givenThereAreCucumbers(start);
+        whenIEatCucumbers(eat);
+        thenIShouldHaveCucumbers(left);
+    }
+
     private void givenThereAreCucumbers(int number) {
-        cucumberService.setNumberOfCucumbers(number);
+        superSimpleCucumberService.setNumberOfCucumbers(number);
     }
 
     private void whenIEatCucumbers(int number) {
-        cucumberService.eat(number);
+        superSimpleCucumberService.eat(number);
     }
 
     private void  thenIShouldHaveCucumbers(int number) {
-        assertThat(cucumberService.getNumberOfCucumbers()).isEqualTo(number);
+        assertThat(superSimpleCucumberService.getNumberOfCucumbers()).isEqualTo(number);
     }
 }
