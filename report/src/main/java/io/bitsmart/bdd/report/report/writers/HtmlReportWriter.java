@@ -9,6 +9,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HtmlReportWriter extends AbstractReportWriter {
 
@@ -17,18 +18,16 @@ public class HtmlReportWriter extends AbstractReportWriter {
     }
 
     public void write(DataReportIndex dataReportIndex) {
-        List<TestSuiteNameToFile> testSuites = dataReportIndex.getLinks().getTestSuites();
-        String links = "<p> Place holder data: </p><pre>" + testSuites + "</pre>";
-
-        String contents = "<html></body><h1>Index</h1>" + links + "</body><html>";
-        write(fileNameProvider.indexFile(), contents);
+        String html = templateEngine().process("index.html",  contextForReportIndex(dataReportIndex));
+        write(fileNameProvider.indexFile(), html);
     }
 
     public void write(TestSuite testSuite) {
-        write(fileNameProvider.file(testSuite), testSuiteToHTML(testSuite));
+        String html = templateEngine().process("test-suite.html",  contextForTextSuite(testSuite));
+        write(fileNameProvider.file(testSuite), html);
     }
 
-    private String testSuiteToHTML(TestSuite testSuite) {
+    private TemplateEngine templateEngine() {
         TemplateEngine templateEngine = new TemplateEngine();
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
         resolver.setPrefix("/templates/");
@@ -36,9 +35,26 @@ public class HtmlReportWriter extends AbstractReportWriter {
         resolver.setCharacterEncoding("UTF-8");
         resolver.setTemplateMode(TemplateMode.HTML);
         templateEngine.setTemplateResolver(resolver);
-        Context ct = new Context();
-        ct.setVariable("testSuite", testSuite);
-        ct.setVariable("testCases", testSuite.getTestCases());
-        return templateEngine.process("test-suite.html", ct);
+        return templateEngine;
+    }
+
+    private Context contextForReportIndex(DataReportIndex dataReportIndex) {
+        List<TestSuiteNameToFile> links = dataReportIndex.getLinks().getTestSuites().stream()
+            .map(l ->
+                new TestSuiteNameToFile(l.getName(), l.getFile().replace(".json", ".html")))
+            .collect(Collectors.toList());
+
+        Context context = new Context();
+        context.setVariable("dataReportIndex", dataReportIndex);
+        context.setVariable("summary", dataReportIndex.getSummary());
+        context.setVariable("links", links);
+        return context;
+    }
+
+    private Context contextForTextSuite(TestSuite testSuite) {
+        Context context = new Context();
+        context.setVariable("testSuite", testSuite);
+        context.setVariable("testCases", testSuite.getTestCases());
+        return context;
     }
 }

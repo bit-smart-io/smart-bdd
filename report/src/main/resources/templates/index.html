@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Name & Date HTML example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<h2>Summary of all Tests</h2>
+<p th:text="'Summary: '
+    + 'passed: ' + ${summary.passed}
+    + ', skipped: ' + ${summary.skipped}
+    + ', failed: ' + ${summary.failed}
+    + ', aborted: ' + ${summary.aborted}
+    + ', tests: ' + ${summary.tests}"
+/>
+
+<div>
+    <ul>
+        <li th:each="link : ${links}">
+            <a th:href="${link.file}" th:text="${link.name}"></a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
