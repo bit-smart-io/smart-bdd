@@ -22,6 +22,7 @@ public class ReportWriter {
     /** TODO in transition - duplicates ReportFactory.testSuite */
     public void write(TestSuiteResult testSuiteResult) {
         dataReportWriter.write(ReportFactory.testSuite(testSuiteResult));
+        htmlReportWriter.write(ReportFactory.testSuite(testSuiteResult));
     }
 
     public void prepare() {
