@@ -57,11 +57,40 @@ project to reduce both of them.
 
 With thanks to https://github.com/bodar/yatspec who did a similar project that worked with JUnit 4.
 
+### smart-bdd usage:
+
+Please see `example:books`.
+
+1. Import the `report` project `testImplementation(project(":report"))`
+2. Copy the file `org.junit.platform.launcher.TestExecutionListener` to `src/test/resources/META-INF/services`
+3. Add `@ExtendWith(ReportExtension.class)` to any class that you want to generate a report from.
+
+Currently, after you un a test the report file locations will be printed to the console.
+
+```
+@ExtendWith(ReportExtension.class)
+public class GetBookTest {
+    @Test
+    public void getBook() {
+        whenGetBookIsCalled();
+        thenTheBookIsReturned();
+    }
+    ...
+}
+```
+
+Will produce the following step defs:
+
+```
+When get book is called 
+Then the book is returned
+```
+
 ### smart-bdd projects:
 
 | project name  | package  | description  | notes  |
 |---|---|---|---|
-| root       | io.bitsmart.bdd | root for repo  |  
+| root       | io.bitsmart.bdd | root for repo  |
 | report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation  | Should be `@smart-bdd`? |
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
@@ -69,13 +98,16 @@ With thanks to https://github.com/bodar/yatspec who did a similar project that w
 | examples   | n/a| examples of using smart-bdd | maybe `io.bitsmart.example.bookstore` | 
 
 Questions:
+
 * Should everything be prefixed with `smart-`? `smart-report`, `smart-wordify`, `smart-test-utils` etc...
 * Need to understand what projects relate to bdd, tdd and or testing.
 * Maybe all `io.bitsmart.bdd`, `io.bitsmart.tdd`, and `io.bitsmart.test`?
 
 ### smart-bdd projects to do:
-* client-side-report or webpage or webapp - dynamic React web app. Have created a Vue.js app, React would be better. 
-* test-re-runner - rest app to select a test and parse in params. FT's have a dependency on this and can therefore spin up Spring Boot app? 
+
+* client-side-report or webpage or webapp - dynamic React web app. Have created a Vue.js app, React would be better.
+* test-re-runner - rest app to select a test and parse in params. FT's have a dependency on this and can therefore spin
+  up Spring Boot app?
 * smart-report-shipper - shipping results
     * create webpage?
     * file data json/xml
