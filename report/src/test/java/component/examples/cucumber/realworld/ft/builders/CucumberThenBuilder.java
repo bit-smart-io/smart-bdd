@@ -19,6 +19,10 @@ public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
         return new CucumberThenBuilder();
     }
 
+    public static CucumberThenBuilder iShouldHave(CucumberBuilder... cucumbers) {
+        return new CucumberThenBuilder().with(cucumbers);
+    }
+
     public CucumberThenBuilder withAmount(int amount) {
         this.amount = amount;
         return this;
@@ -29,7 +33,7 @@ public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
         return this;
     }
 
-    public ThenBuilder<CucumberThen> matching(CucumberBuilder... cucumbers) {
+    public CucumberThenBuilder with(CucumberBuilder... cucumbers) {
         this.cucumbers = asList(cucumbers);
         return this;
     }

@@ -9,8 +9,13 @@ public final class UserGivenBuilder implements Builder<UserGiven>  {
     private UserGivenBuilder() {
     }
 
-    public static UserGivenBuilder anUserGiven() {
+    public static UserGivenBuilder iAm() {
         return new UserGivenBuilder();
+    }
+
+    public UserGivenBuilder notHungry() {
+        this.isHungry = false;
+        return this;
     }
 
     public UserGivenBuilder withIsHungry(boolean isHungry) {

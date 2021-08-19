@@ -3,6 +3,7 @@ package component.examples.cucumber.realworld.ft;
 import component.examples.cucumber.realworld.app.CucumberService;
 import component.examples.cucumber.realworld.ft.builders.CucumberBuilder;
 import component.examples.cucumber.realworld.ft.builders.CucumberGivenBuilder;
+import component.examples.cucumber.realworld.ft.builders.UserGivenBuilder;
 import component.examples.cucumber.realworld.ft.domain.CucumberGiven;
 import component.examples.cucumber.realworld.ft.domain.CucumberThen;
 import component.examples.cucumber.realworld.ft.domain.CucumberWhen;
@@ -20,12 +21,12 @@ public class BaseTest {
         given(CucumberGivenBuilder.iHave(cucumbers));
     }
 
-//    public void given(GivenBuilder<UserGiven> builder) {
-//        UserGiven given = builder.build();
-//        cucumberService.setHungry(given.isHungry());
-//    }
+    public void given(UserGivenBuilder builder) {
+        UserGiven given = builder.build();
+        cucumberService.setHungry(given.isHungry());
+    }
 
-    public void given(GivenBuilder<CucumberGiven> builder) {
+    public void given(CucumberGivenBuilder builder) {
         CucumberGiven cucumberGiven = builder.build();
         cucumberService.setCucumbers(cucumberGiven.getCucumbers());
     }

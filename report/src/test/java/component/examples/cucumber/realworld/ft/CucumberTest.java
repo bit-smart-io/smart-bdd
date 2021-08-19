@@ -10,8 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static component.examples.cucumber.realworld.ft.builders.CucumberBuilder.aCucumber;
 import static component.examples.cucumber.realworld.ft.builders.CucumberBuilder.andACucumber;
 import static component.examples.cucumber.realworld.ft.builders.CucumberGivenBuilder.iHave;
+import static component.examples.cucumber.realworld.ft.builders.CucumberThenBuilder.iShouldHave;
 import static component.examples.cucumber.realworld.ft.builders.CucumberThenBuilder.iShouldHaveCucumbers;
 import static component.examples.cucumber.realworld.ft.builders.CucumberWhenBuilder.iRequestToEatCucumbers;
+import static component.examples.cucumber.realworld.ft.builders.UserGivenBuilder.iAm;
 
 /**
  * Tutorial and example usage
@@ -110,26 +112,21 @@ public class CucumberTest extends BaseTest {
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft_betterAssertion() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
         when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().matching(aCucumber().withColour("blue")));
+        then(iShouldHave(aCucumber().withColour("blue")));
     }
 
     /**
      * Adding a new feature of not hungry
      *
-     * You could put all the state CucumberGivenBuilder, but that is not scalable. We'll create a new UserGivenBuilder.
-     *
-     * Create: UserGivenBuilder implements Builder<UserGiven>
-     *  UserGiven
-     *
+     * Create new given(UserGivenBuilder builder)
      */
     @Order(5)
     @Test
     void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft() {
-        //given(iAm(notHungry()));
+        given(iAm().notHungry());
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
         when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().matching(aCucumber().withColour("blue")));
-        //then(iShouldHaveCucumbers(aCucumber().withColour("blue")));
+        then(iShouldHaveCucumbers().withAmount(2));
     }
 
     //global state
