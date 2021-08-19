@@ -1,4 +1,4 @@
-package component.examples.cucumber.supersimple.builder;
+package component.examples.cucumber.verysimple.builder;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
@@ -11,15 +11,15 @@ import org.junit.jupiter.api.Test;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CucumberComparisonLauncherTest {
+public class SimpleCucumberResultsTest {
 
     private static TestSuiteResult testSuiteResult;
 
     @BeforeAll
     public static void setUp() {
         ReportExtension.getTestContext().reset();
-        TestLauncher.launch(CucumberComparisonTest.class);
-        testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(CucumberComparisonTest.class));
+        TestLauncher.launch(SimpleCucumberTest.class);
+        testSuiteResult = ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(SimpleCucumberTest.class));
     }
 
     @Test

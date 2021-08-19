@@ -1,6 +1,6 @@
-package component.examples.cucumber.supersimple;
+package component.examples.cucumber.verysimple;
 
-public class SuperSimpleCucumberService {
+public class SimpleCucumberService {
     private int numberOfCucumbers;
 
     public int getNumberOfCucumbers() {

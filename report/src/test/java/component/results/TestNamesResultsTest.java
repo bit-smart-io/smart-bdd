@@ -1,25 +1,17 @@
 package component.results;
 
-import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import shared.undertest.TestNamesTest;
 
-import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ReportExtensionForTestNamesTest {
-    private static TestSuiteResult testSuiteResult;
+public class TestNamesResultsTest extends AbstractResultsForClass {
 
-    @BeforeAll
-    static void beforeAll() {
-        ReportExtension.getTestContext().reset();
-        TestLauncher.launch(TestNamesTest.class);
-        testSuiteResult = testSuiteResult(TestNamesTest.class);
+    @Override
+    public Class<?> classUnderTest() {
+        return TestNamesTest.class;
     }
 
     @Test
@@ -52,13 +44,5 @@ public class ReportExtensionForTestNamesTest {
 
         assertThat(testCase(6).getName()).isEqualTo("#0 - value = 3");
         assertThat(testCase(6).getMethodName()).isEqualTo("paramTestWithCustomName");
-    }
-
-    private TestCaseResult testCase(int index) {
-        return testSuiteResult.getTestCaseResults().get(index);
-    }
-
-    private static TestSuiteResult testSuiteResult(Class<?> clazz) {
-        return ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(clazz));
     }
 }

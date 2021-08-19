@@ -1,15 +1,16 @@
-package component.examples.cucumber.supersimple.builder.builders;
+package component.examples.cucumber.realworld.ft.builders;
 
-import component.examples.cucumber.supersimple.builder.domain.CucumberWhen;
+import component.examples.cucumber.realworld.ft.domain.CucumberWhen;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
     private int amount;
+    private String colour;
 
     private CucumberWhenBuilder() {
     }
 
-    public static CucumberWhenBuilder iEatCucumbers() {
+    public static CucumberWhenBuilder iRequestToEatCucumbers() {
         return new CucumberWhenBuilder();
     }
 
@@ -18,7 +19,12 @@ public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
         return this;
     }
 
+    public CucumberWhenBuilder withColour(String colour) {
+        this.colour = colour;
+        return this;
+    }
+
     public CucumberWhen build() {
-        return new CucumberWhen(amount);
+        return new CucumberWhen(amount, colour);
     }
 }

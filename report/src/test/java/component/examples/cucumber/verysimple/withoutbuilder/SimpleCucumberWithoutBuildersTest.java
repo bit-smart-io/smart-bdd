@@ -1,6 +1,6 @@
-package component.examples.cucumber.supersimple.withoutbuilder;
+package component.examples.cucumber.verysimple.withoutbuilder;
 
-import component.examples.cucumber.supersimple.SuperSimpleCucumberService;
+import component.examples.cucumber.verysimple.SimpleCucumberService;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Example to show without using any builder api.
  *
- * Please adjacent launcher test for the output.
+ * Please see adjacent launcher test for the output.
  *
  * Below is an extract from https://cucumber.io/docs/gherkin/reference/
  * Scenario: eat 5 out of 12
@@ -35,12 +35,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(ReportExtension.class)
-public class CucumberWithoutBuildersTest {
-    private SuperSimpleCucumberService superSimpleCucumberService;
+public class SimpleCucumberWithoutBuildersTest {
+    private SimpleCucumberService simpleCucumberService;
 
     @BeforeEach
     private void reset() {
-        superSimpleCucumberService = new SuperSimpleCucumberService();
+        simpleCucumberService = new SimpleCucumberService();
     }
 
     @Order(0)
@@ -61,14 +61,14 @@ public class CucumberWithoutBuildersTest {
     }
 
     private void givenThereAreCucumbers(int number) {
-        superSimpleCucumberService.setNumberOfCucumbers(number);
+        simpleCucumberService.setNumberOfCucumbers(number);
     }
 
     private void whenIEatCucumbers(int number) {
-        superSimpleCucumberService.eat(number);
+        simpleCucumberService.eat(number);
     }
 
     private void  thenIShouldHaveCucumbers(int number) {
-        assertThat(superSimpleCucumberService.getNumberOfCucumbers()).isEqualTo(number);
+        assertThat(simpleCucumberService.getNumberOfCucumbers()).isEqualTo(number);
     }
 }
