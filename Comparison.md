@@ -1,5 +1,6 @@
-Consider this example of
-playing a film with subtitles:
+##Cucumber comparison work in progress
+
+Consider this example of playing a film with subtitles:
 
 - `Playing a film with no stubtitles`
 - `Playing a film without stubtitles`
@@ -21,6 +22,6 @@ are now:
 - `Playing a film with stubtitles set to 'non' and audio set to 'Dolby DTS-HD Master Audio'`
 
 We now have quite few options and possibly a lot to refactor if we want to make all the tests consistent i.e., using
-same notation to set state. What if want to add playback seed? Do keep adding to the same step? 
+same notation to set state. What if you want to add playback speed? Do keep adding fields to the same step? 
 
 Thus far we have been hiding the underlying abstraction that is playback settings.

@@ -59,14 +59,12 @@ With thanks to https://github.com/bodar/yatspec who did a similar project that w
 
 ### smart-bdd usage:
 
-Please see `example:books`.
-
+Please see `example:cucumbers`.
 1. Import the `report` project `testImplementation(project(":report"))`
 2. Copy the file `org.junit.platform.launcher.TestExecutionListener` to `src/test/resources/META-INF/services`
 3. Add `@ExtendWith(ReportExtension.class)` to any class that you want to generate a report from.
 
-Currently, after you un a test the report file locations will be printed to the console.
-
+#### Example to from `example:bookstore`
 ```
 @ExtendWith(ReportExtension.class)
 public class GetBookTest {
@@ -80,10 +78,25 @@ public class GetBookTest {
 ```
 
 Will produce the following step defs:
-
 ```
 When get book is called 
 Then the book is returned
+```
+
+#### Example to from `example:cucumbers`
+```
+void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
+    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+    when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+    then(iShouldHaveCucumbers().withAmount(1).withColour("blue"));
+}
+```
+
+Will produce the following step defs:
+```
+Given I have a cucumber with colour "red" and a cucumber with colour "blue" 
+When I request to eat cucumbers with amount 1 with colour "red" 
+Then I should have cucumbers with amount 1 with colour "blue"
 ```
 
 ### smart-bdd projects:
@@ -95,7 +108,7 @@ Then the book is returned
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
-| examples   | n/a| examples of using smart-bdd | maybe `io.bitsmart.example.bookstore` | 
+| examples   | n/a| examples of using smart-bdd |  | 
 | webpage    | n/a| vue js | replace with react | 
 
 Questions:

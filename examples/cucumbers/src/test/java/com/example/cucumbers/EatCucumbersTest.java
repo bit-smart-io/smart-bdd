@@ -1,14 +1,17 @@
 package com.example.cucumbers;
 
-import com.example.cucumbers.builders.CucumberBuilder;
-import com.example.cucumbers.builders.CucumberGivenBuilder;
-import com.example.cucumbers.builders.CucumberThenBuilder;
-import com.example.cucumbers.builders.CucumberWhenBuilder;
 import com.example.cucumbers.builders.UserGivenBuilder;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import static com.example.cucumbers.builders.CucumberBuilder.aCucumber;
+import static com.example.cucumbers.builders.CucumberBuilder.andACucumber;
+import static com.example.cucumbers.builders.CucumberGivenBuilder.iHave;
+import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHave;
+import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHaveCucumbers;
+import static com.example.cucumbers.builders.CucumberWhenBuilder.iRequestToEatCucumbers;
 
 /**
  * Tutorial and example usage of builders
@@ -46,9 +49,9 @@ public class EatCucumbersTest extends BaseTest {
     @Order(0)
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft() {
-        given(CucumberGivenBuilder.iHave(CucumberBuilder.aCucumber().withColour("red")));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHaveCucumbers().withAmount(0));
+        given(iHave(aCucumber().withColour("red")));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHaveCucumbers().withAmount(0));
     }
 
     /**
@@ -63,9 +66,9 @@ public class EatCucumbersTest extends BaseTest {
     @Order(1)
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft_omittingIHave() {
-        given(CucumberBuilder.aCucumber().withColour("red"));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHaveCucumbers().withAmount(0));
+        given(aCucumber().withColour("red"));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHaveCucumbers().withAmount(0));
     }
 
     /**
@@ -79,9 +82,9 @@ public class EatCucumbersTest extends BaseTest {
     @Order(2)
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneCucumberLeft() {
-        given(CucumberGivenBuilder.iHave(CucumberBuilder.aCucumber().withColour("red"), CucumberBuilder.andACucumber().withColour("blue")));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHaveCucumbers().withAmount(1));
+        given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHaveCucumbers().withAmount(1));
     }
 
     /**
@@ -92,9 +95,9 @@ public class EatCucumbersTest extends BaseTest {
     @Order(3)
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
-        given(CucumberGivenBuilder.iHave(CucumberBuilder.aCucumber().withColour("red"), CucumberBuilder.andACucumber().withColour("blue")));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHaveCucumbers().withAmount(1).withColour("blue"));
+        given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHaveCucumbers().withAmount(1).withColour("blue"));
     }
 
     /**
@@ -103,9 +106,9 @@ public class EatCucumbersTest extends BaseTest {
     @Order(4)
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft_betterAssertion() {
-        given(CucumberGivenBuilder.iHave(CucumberBuilder.aCucumber().withColour("red"), CucumberBuilder.andACucumber().withColour("blue")));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHave(CucumberBuilder.aCucumber().withColour("blue")));
+        given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHave(aCucumber().withColour("blue")));
     }
 
     /**
@@ -117,8 +120,8 @@ public class EatCucumbersTest extends BaseTest {
     @Test
     void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft() {
         given(UserGivenBuilder.iAm().notHungry());
-        given(CucumberGivenBuilder.iHave(CucumberBuilder.aCucumber().withColour("red"), CucumberBuilder.andACucumber().withColour("blue")));
-        when(CucumberWhenBuilder.iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(CucumberThenBuilder.iShouldHaveCucumbers().withAmount(2));
+        given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        then(iShouldHaveCucumbers().withAmount(2));
     }
 }
