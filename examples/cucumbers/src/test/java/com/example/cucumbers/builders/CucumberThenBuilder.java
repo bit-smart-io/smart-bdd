@@ -8,7 +8,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
-    private Integer amount;
+    private Integer quantity;
     private String colour;
     private List<CucumberBuilder> cucumbers;
 
@@ -23,8 +23,8 @@ public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
         return new CucumberThenBuilder().with(cucumbers);
     }
 
-    public CucumberThenBuilder withAmount(int amount) {
-        this.amount = amount;
+    public CucumberThenBuilder withQuantity(int quantity) {
+        this.quantity = quantity;
         return this;
     }
 
@@ -40,7 +40,7 @@ public class CucumberThenBuilder implements ThenBuilder<CucumberThen> {
 
 
     public CucumberThen build() {
-        return new CucumberThen(amount, colour, cucumbers);
+        return new CucumberThen(quantity, colour, cucumbers);
     }
 
 

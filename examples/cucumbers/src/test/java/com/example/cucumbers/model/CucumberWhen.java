@@ -1,16 +1,16 @@
 package com.example.cucumbers.model;
 
 public class CucumberWhen {
-    private final int amount;
+    private final int quantity;
     private final String colour;
 
-    public CucumberWhen(int amount, String colour) {
-        this.amount = amount;
+    public CucumberWhen(int quantity, String colour) {
+        this.quantity = quantity;
         this.colour = colour;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getColour() {

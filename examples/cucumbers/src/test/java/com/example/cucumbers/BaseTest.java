@@ -53,7 +53,7 @@ public class BaseTest {
 
     public void when(WhenBuilder<CucumberWhen> builder) {
         CucumberWhen cucumberWhen = builder.build();
-        cucumberService.eat(cucumberWhen.getAmount(), cucumberWhen.getColour());
+        cucumberService.eat(cucumberWhen.getQuantity(), cucumberWhen.getColour());
     }
 
     public void then(ThenBuilder<CucumberThen> builder) {
@@ -61,7 +61,7 @@ public class BaseTest {
 
         cucumberThen.getColour().ifPresent(colour -> cucumberService.getCucumbers()
             .forEach((cucumber -> assertThat(cucumber.getColour()).isEqualTo(colour))));
-        cucumberThen.getAmount().ifPresent(amount -> assertThat(cucumberService.getCucumbers().size()).isEqualTo(amount));
+        cucumberThen.getQuantity().ifPresent(quantity -> assertThat(cucumberService.getCucumbers().size()).isEqualTo(quantity));
         cucumberThen.getCucumbers().ifPresent(cucumbers -> assertThat(cucumberService.getCucumbers().containsAll(cucumbers)));
     }
 }

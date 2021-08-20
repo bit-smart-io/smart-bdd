@@ -29,8 +29,8 @@ public class EatCucumbersTest extends BaseTest {
      * <p>
      * Output:
      * Given I have a cucumber with colour "red"
-     * When I request to eat cucumbers with amount 1 with colour "red"
-     * Then I should have cucumbers with amount 0
+     * When I request to eat cucumbers with quantity 1 with colour "red"
+     * Then I should have cucumbers with quantity 0
      * <p>
      * If you follow the naming convention you should construct an API that is easy to read, use and maintain.
      * - iHave() is syntax sugar for CucumberGivenBuilder - setup state
@@ -50,8 +50,8 @@ public class EatCucumbersTest extends BaseTest {
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft() {
         given(iHave(aCucumber().withColour("red")));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().withAmount(0));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        then(iShouldHaveCucumbers().withQuantity(0));
     }
 
     /**
@@ -67,8 +67,8 @@ public class EatCucumbersTest extends BaseTest {
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft_omittingIHave() {
         given(aCucumber().withColour("red"));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().withAmount(0));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        then(iShouldHaveCucumbers().withQuantity(0));
     }
 
     /**
@@ -76,15 +76,15 @@ public class EatCucumbersTest extends BaseTest {
      *
      * Output:
      * Given I have a cucumber with colour "red" and a cucumber with colour "blue"
-     * When I request to eat cucumbers with amount 1 with colour "red"
-     * Then I should have cucumbers with amount 1
+     * When I request to eat cucumbers with quantity 1 with colour "red"
+     * Then I should have cucumbers with quantity 1
      */
     @Order(2)
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneCucumberLeft() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().withAmount(1));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        then(iShouldHaveCucumbers().withQuantity(1));
     }
 
     /**
@@ -96,8 +96,8 @@ public class EatCucumbersTest extends BaseTest {
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().withAmount(1).withColour("blue"));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        then(iShouldHaveCucumbers().withQuantity(1).withColour("blue"));
     }
 
     /**
@@ -107,7 +107,7 @@ public class EatCucumbersTest extends BaseTest {
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft_betterAssertion() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
         then(iShouldHave(aCucumber().withColour("blue")));
     }
 
@@ -121,7 +121,7 @@ public class EatCucumbersTest extends BaseTest {
     void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft() {
         given(UserGivenBuilder.iAm().notHungry());
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-        then(iShouldHaveCucumbers().withAmount(2));
+        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        then(iShouldHaveCucumbers().withQuantity(2));
     }
 }

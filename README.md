@@ -87,16 +87,16 @@ Then the book is returned
 ```
 void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
     given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-    when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
-    then(iShouldHaveCucumbers().withAmount(1).withColour("blue"));
+    when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+    then(iShouldHaveCucumbers().withquantity(1));
 }
 ```
 
 Will produce the following step defs:
 ```
 Given I have a cucumber with colour "red" and a cucumber with colour "blue" 
-When I request to eat cucumbers with amount 1 with colour "red" 
-Then I should have cucumbers with amount 1 with colour "blue"
+When I request to eat cucumbers with quantity 1 with colour "red" 
+Then I should have cucumbers with quantity 1 with colour "blue"
 ```
 
 ### smart-bdd projects:

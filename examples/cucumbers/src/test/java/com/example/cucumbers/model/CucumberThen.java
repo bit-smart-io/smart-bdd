@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class CucumberThen {
-    private final Integer amount;
+    private final Integer quantity;
     private final String colour;
     private final List<CucumberBuilder> cucumbers;
 
-    public CucumberThen(Integer amount, String colour, List<CucumberBuilder> cucumbers) {
-        this.amount = amount;
+    public CucumberThen(Integer quantity, String colour, List<CucumberBuilder> cucumbers) {
+        this.quantity = quantity;
         this.colour = colour;
         this.cucumbers = cucumbers;
     }
 
-    public Optional<Integer> getAmount() {
-        return Optional.ofNullable(amount);
+    public Optional<Integer> getQuantity() {
+        return Optional.ofNullable(quantity);
     }
 
     public Optional<String> getColour() {

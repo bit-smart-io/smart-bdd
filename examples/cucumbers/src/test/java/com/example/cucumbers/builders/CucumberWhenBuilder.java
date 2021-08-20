@@ -4,7 +4,7 @@ import com.example.cucumbers.model.CucumberWhen;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
-    private int amount;
+    private int quantity;
     private String colour;
 
     private CucumberWhenBuilder() {
@@ -14,8 +14,8 @@ public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
         return new CucumberWhenBuilder();
     }
 
-    public CucumberWhenBuilder withAmount(int amount) {
-        this.amount = amount;
+    public CucumberWhenBuilder withQuantity(int quantity) {
+        this.quantity = quantity;
         return this;
     }
 
@@ -25,6 +25,6 @@ public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
     }
 
     public CucumberWhen build() {
-        return new CucumberWhen(amount, colour);
+        return new CucumberWhen(quantity, colour);
     }
 }

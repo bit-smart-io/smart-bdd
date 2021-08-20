@@ -56,18 +56,18 @@ public class EatCucumbersWithoutBuildersTest {
         thenIShouldHaveCucumbers(left);
     }
 
-    private void givenThereAreCucumbers(int amount, String colour) {
-        final List<Cucumber> cucumbers = IntStream.range(0, amount)
+    private void givenThereAreCucumbers(int quantity, String colour) {
+        final List<Cucumber> cucumbers = IntStream.range(0, quantity)
             .mapToObj(i -> CucumberBuilder.aCucumber().withColour(colour).build())
             .collect(Collectors.toList());
         cucumberService.setCucumbers(cucumbers);
     }
 
-    private void whenIEatCucumbers(int amount, String colour) {
-        cucumberService.eat(amount, colour);
+    private void whenIEatCucumbers(int quantity, String colour) {
+        cucumberService.eat(quantity, colour);
     }
 
-    private void  thenIShouldHaveCucumbers(int amount) {
-        assertThat(cucumberService.getCucumbers().size()).isEqualTo(amount);
+    private void  thenIShouldHaveCucumbers(int quantity) {
+        assertThat(cucumberService.getCucumbers().size()).isEqualTo(quantity);
     }
 }
