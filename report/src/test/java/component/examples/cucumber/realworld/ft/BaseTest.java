@@ -8,13 +8,34 @@ import component.examples.cucumber.realworld.ft.domain.CucumberGiven;
 import component.examples.cucumber.realworld.ft.domain.CucumberThen;
 import component.examples.cucumber.realworld.ft.domain.CucumberWhen;
 import component.examples.cucumber.realworld.ft.domain.UserGiven;
-import io.bitsmart.bdd.report.utils.GivenBuilder;
+import io.bitsmart.bdd.report.junit5.annotations.InjectTestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.extension.ContextExtensionParameterResolver;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.utils.ThenBuilder;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.TestReporter;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith({ReportExtension.class, ContextExtensionParameterResolver.class})
 public class BaseTest {
+
+    /**
+     * Example of what can be injected in the before class.
+     *
+     * @param testCaseResult update the results with data such as request/response http headers and body.
+     * @param testInfo basic test info
+     * @param testReporter not hooked up to smart bdd yet
+     */
+    @BeforeEach
+    void setUp(@InjectTestCaseResult TestCaseResult testCaseResult, TestInfo testInfo, TestReporter testReporter) {
+        System.out.println("testCaseResult: " + testCaseResult);
+    }
+
     CucumberService cucumberService = new CucumberService();
 
     public void given(CucumberBuilder... cucumbers) {
@@ -31,7 +52,6 @@ public class BaseTest {
         cucumberService.setCucumbers(cucumberGiven.getCucumbers());
     }
 
-
     public void when(WhenBuilder<CucumberWhen> builder) {
         CucumberWhen cucumberWhen = builder.build();
         cucumberService.eat(cucumberWhen.getAmount(), cucumberWhen.getColour());
@@ -45,5 +65,4 @@ public class BaseTest {
         cucumberThen.getAmount().ifPresent(amount -> assertThat(cucumberService.getCucumbers().size()).isEqualTo(amount));
         cucumberThen.getCucumbers().ifPresent(cucumbers -> assertThat(cucumberService.getCucumbers().containsAll(cucumbers)));
     }
-
 }

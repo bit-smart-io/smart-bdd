@@ -19,7 +19,6 @@ import static component.examples.cucumber.realworld.ft.builders.UserGivenBuilder
  * Tutorial and example usage
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(ReportExtension.class)
 public class CucumberTest extends BaseTest {
 
     /**
@@ -128,7 +127,4 @@ public class CucumberTest extends BaseTest {
         when(iRequestToEatCucumbers().withAmount(1).withColour("red"));
         then(iShouldHaveCucumbers().withAmount(2));
     }
-
-    //global state
-    //void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveAllTheCucumbersLeft() {
 }

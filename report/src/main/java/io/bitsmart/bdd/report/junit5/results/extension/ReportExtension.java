@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
@@ -23,7 +26,9 @@ import java.util.Optional;
  * TODO WordifyExtensionContext and TestCaseNameFactory need to be injectable and or overridable
  */
 public class ReportExtension implements
-    BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
+    BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor, ParameterResolver {
+
+    private final TestCaseResultParameterResolver resultParameterResolver = new TestCaseResultParameterResolver();
 
     private static final TestContext testContext = new TestContext(
         new TestResults(),
@@ -135,5 +140,15 @@ public class ReportExtension implements
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         testContext.testFailed(context, cause);
+    }
+
+    @Override
+    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        return resultParameterResolver.supportsParameter(parameterContext, extensionContext);
+    }
+
+    @Override
+    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        return resultParameterResolver.resolveParameter(parameterContext, extensionContext);
     }
 }

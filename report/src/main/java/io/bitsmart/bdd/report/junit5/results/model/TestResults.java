@@ -13,21 +13,23 @@ public class TestResults {
 
     /**
      * Performance improvement.
-     *  usage:
-     *   - write TestSuite
-     *   - updateTestSuiteResultsMetadata
-     *   - removeTestSuite
-     *   - last create report index from all the TestSuiteResultsMetadata
-     *
-     *  private final ConcurrentHashMap<TestSuiteClass, TestSuiteResultsMetadata> testSuiteToTestSuiteResultsMetadata = new ConcurrentHashMap<>();
-     *
-     *  public void removeTestSuite(TestSuiteClass testSuiteClass) {
-     *      testSuiteToTestSuiteResults.remove(testSuiteClass);
-     *  }
-     *
-     *  public void updateTestSuiteResultsMetadata(TestSuiteClass testSuiteClass) {
-     *      testSuiteToTestSuiteResultsMetadata.put(testSuiteClass, testSuiteToTestSuiteResults.get(testSuiteClass).getMetadata());
-     *  }
+     * usage:
+     * <p>
+     * - For each test suite
+     * -- write TestSuite
+     * -- updateTestSuiteResultsMetadata
+     * -- removeTestSuite
+     * - After all tests are complete, create report index from all the TestSuiteResultsMetadata
+     * <p>
+     * private final ConcurrentHashMap<TestSuiteClass, TestSuiteResultsMetadata> testSuiteToTestSuiteResultsMetadata = new ConcurrentHashMap<>();
+     * <p>
+     * public void removeTestSuite(TestSuiteClass testSuiteClass) {
+     * testSuiteToTestSuiteResults.remove(testSuiteClass);
+     * }
+     * <p>
+     * public void updateTestSuiteResultsMetadata(TestSuiteClass testSuiteClass) {
+     * testSuiteToTestSuiteResultsMetadata.put(testSuiteClass, testSuiteToTestSuiteResults.get(testSuiteClass).getMetadata());
+     * }
      */
 
     private final ConcurrentHashMap<TestSuiteClass, TestSuiteResult> testSuiteToTestSuiteResults = new ConcurrentHashMap<>();
