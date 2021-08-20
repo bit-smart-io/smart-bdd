@@ -5,6 +5,7 @@ include(
     "ft",
     "test-utils",
     "examples:bookstore",
+    "examples:cucumbers",
     "learning")
 
 //TODO
