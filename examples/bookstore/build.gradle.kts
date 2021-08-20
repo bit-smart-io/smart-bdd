@@ -8,7 +8,7 @@ apply(plugin = "io.spring.dependency-management")
 
 group = "io.bitsmart.bdd.example"
 version = "1.0-SNAPSHOT"
-description = "Bookstore"
+description = "Bookstore example"
 
 repositories {
     mavenCentral()
