@@ -1,19 +1,21 @@
 # List of TODOs for the mono repo
 
 ### MVP:
+
 - [x] Static webpage for test suites - maybe Thymeleaf
 - [x] Static webpage menu
 - [ ] Add examples
-  - [ ] Book store?
-  - [ ] Calculator microservice - see cucumber examples 
+    - [ ] Book store?
+    - [ ] Calculator microservice - see cucumber examples
 - [x] Move learning tests to own project
 - [x] General code tidy
 - [ ] Copy write every class
     - https://choosealicense.com/licenses/mit/ - short and cucumber has this
     - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
-- [ ] Investigate META-INF/Services SmartTestExecutionListener gets exported 
+- [ ] Investigate META-INF/Services SmartTestExecutionListener gets exported
 
 ### Post MVP:
+
 - [ ] Add to github
 - [ ] Parametrised tests (see testCaseResult.setName(...) and verifyThirdTest_paramsWithCustomName). See Notes below.
 - [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
@@ -22,19 +24,21 @@
 - [ ] Apply Capture standard output and standard error.
 - [ ] Handle Strings i.e. anything in quotes
 - [ ] Additional wordifies i.e. swap words around to create more readable sentences
-- [ ] @Given, @When, @Then - These would have to be parameter annotations 
-- [ ] @Notes - Can add notes for the feature/scenario 
+- [ ] @Given, @When, @Then - These would have to be parameter annotations
+- [ ] @Notes - Can add notes for the feature/scenario
 - [ ] UnderTest fields - this is to highlight fields, possible change the values
-- [ ] Logger than can added extra text in the report - `log.add('some notes')` 
+- [ ] Logger than can added extra text in the report - `log.add('some notes')`
 - [ ] Sequence diagrams - mermaid
 - [ ] Re-run tests endpoints
 - [ ] Re-run tests ui
 - [ ] Update test values in the ui - so that the test can be re-run with different values
 - [ ] Store the tests in a DB
-- [ ] Explore when and how builders should be the same for ft and unit tests. Is it feasible to sync builders classes and packages?
+- [ ] Explore when and how builders should be the same for ft and unit tests. Is it feasible to sync builders classes
+  and packages?
 - [ ] Add Java 9 modules?
 
 ### Done
+
 - [x] Parse params
 - [x] Have a context
 - [x] Have failing tests
@@ -47,8 +51,32 @@
 - [x] Use Kotlin for Gradle
 - [x] Project structure - need modules/projects
 
+### Actions
+
+Wrap given() body in async actions. This is make test set parallel
+
+### Mutation tests
+
+#### Setup and givens:
+
+Once givens steps are wrapped in actions. You can check if all the setup actions are required. Imagine you have 4 setup
+actions numbered 1,2,3,4. You could run 1. 1,2. 1,2,3. 1,2,3,4. 1,3 etc... Setup actions could duplicate default state,
+that is valid.
+
+The @Given annotation allows for running the test with different values. I.e. my_test(@Given int quantity) could be run
+for argument value 0,1,2,3 etc...
+
+It gets interesting when combine actions and parameter values for mutation tests.
+
+### Test titles to be wordified
+
+Test method names could benefit from being wordified. How to implement. Java properties, overridden in test via an
+injected config object?
+
 ### Parametrised tests
-Need something to reflect:
+
+Need something to reflect a test matrix:
+
 ```
 ParamTest
 * [1] value 1 (PASSED)
@@ -57,21 +85,29 @@ ParamTest
 * [2] value 2 (PASSED)
   Passing assertion with value 2
 ```
+
 This means something like:
+
 * `testCaseResult.name` = `[1] value 1`
 * `testCaseResult.methodName` = `ParamTest()` should we include the signature???. Could we infer from the params?
 * `testCaseResult.parentTest` = `ParamTest()`. Is this needed to group tests??? Is it the same as `methodName`?
 * `testCaseResult.args` not empty
 
-
 ### New args block. With args we can re-run test(s).
+
 ```json
 {
   "wordify": "Passing assertion with value 2",
   "wordifyTemplate": "Passing assertion with {{ 0 }} and {{ 1 }} ",
   "args": [
-    {"type": "String", "value": "string value"},
-    {"type": "Integer", "value": 1}
+    {
+      "type": "String",
+      "value": "string value"
+    },
+    {
+      "type": "Integer",
+      "value": 1
+    }
   ],
   "status": "PASSED",
   "methodName": "paramTest",
@@ -81,8 +117,10 @@ This means something like:
 ```
 
 ### Dummy Objects
-Objects that are not under test, but needed to build objects. Potentially these could be ignored when assertJ checks to equality.
-We have defaultBuilders that build a default object 
+
+Objects that are not under test, but needed to build objects. Potentially these could be ignored when assertJ checks to
+equality. We have defaultBuilders that build a default object
+
 ```
 private SimpleCarBuilder aDefaultCar() {
     return aCar()
@@ -122,12 +160,15 @@ assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
 ```
 
 ### Linting Builders
-These ideas centre around builders and features that the user may or may not want. That is why linting would be a good tool.
-To achieve consistency in the wordify you'd need the builders to be consistent. Note that wordify can have custom rules,
-these would break down if the builders are not consistent.
 
-### Try to make some tests more concise 
+These ideas centre around builders and features that the user may or may not want. That is why linting would be a good
+tool. To achieve consistency in the wordify you'd need the builders to be consistent. Note that wordify can have custom
+rules, these would break down if the builders are not consistent.
+
+### Try to make some tests more concise
+
 This is using assertJ as normal
+
 ```
 private void assertTestSuite(TestSuite testSuite) {
     assertThat(testSuite.getName()).isEqualTo("shared.undertest.ClassUnderTest");
@@ -139,8 +180,9 @@ private void assertTestSuite(TestSuite testSuite) {
 }
 ```
 
-This is using a builder as normal. This is limiting as you must test all the state.
-This has the advantage of being more concise.
+This is using a builder as normal. This is limiting as you must test all the state. This has the advantage of being more
+concise.
+
 ```
 private TestSuite firstTestSuite() {
     return aTestSuite()
@@ -156,6 +198,7 @@ private TestSuite firstTestSuite() {
 
 from https://assertj.github.io/doc/#assertj-core-assertions-guide
 It is possible to use `ignoringFields(String... fieldsToIgnore)` to ignore fields. See dummy objects above.
+
 ```
 assertThat(sherlock)
   .usingRecursiveComparison()
@@ -164,6 +207,7 @@ assertThat(sherlock)
 ```
 
 Is something like this possible? It would be more concise?
+
 ```
 private TestSuite assertFirstTestCase() {
     aTestSuiteAssertionBuilder()
@@ -174,11 +218,13 @@ private TestSuite assertFirstTestCase() {
 ```
 
 ### Closet matching
+
 - Closet matching fields. I.e. 3/4 fields match
-  - `assertThat(actual).isEqualTo(expected);`
-  - `assertThat(list).contains(item);`
+    - `assertThat(actual).isEqualTo(expected);`
+    - `assertThat(list).contains(item);`
 
 ### Reporting ideas:
+
 * Compare log of previous run - show a diff. Can have a cut down version of the log that only shows the dif - hence what
   has gone wrong.
 * Send reports to report aggregator on each test, suite, package or at the end

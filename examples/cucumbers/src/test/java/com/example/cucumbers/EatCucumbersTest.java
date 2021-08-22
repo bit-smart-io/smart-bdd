@@ -12,6 +12,7 @@ import static com.example.cucumbers.builders.CucumberGivenBuilder.iHave;
 import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHave;
 import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHaveCucumbers;
 import static com.example.cucumbers.builders.CucumberWhenBuilder.iRequestToEatCucumbers;
+import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
 
 /**
  * Tutorial and example usage of builders
@@ -119,9 +120,47 @@ public class EatCucumbersTest extends BaseTest {
     @Order(5)
     @Test
     void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft() {
-        given(UserGivenBuilder.iAm().notHungry());
+        given(iAm().notHungry());
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
         when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(2));
+    }
+
+    /**
+     * Next tests:
+     * - show how to add notes. log.text("this is some addition info maybe useful information about the cucumbers")
+     * - show how to add uml, maybe an interaction diagram. log.uml(). Very useful for downstream dependencies.
+     * - show async set actions. given body in an action.
+     * - show how to add new wordify expressions. wordify().add(). Maybe
+     * From: When I request to eat cucumbers with quantity 1 with colour "red"
+     * To: When I request to eat 1 red cucumber
+     * 1 and red need to be highlighted in the html test report
+     * You need to specify verbs, nouns, subjects etc... and it may be possible
+     * - show my_test(@Given int amount, @Given String colour).
+     */
+    @Test
+    void todo() {
+        //TODO
+    }
+
+    /**
+     * Idea:
+     *  - can you generate a better title for the test?
+     *  - or just wordify the title?
+     *
+     *  In this class, the method titles are same as the test wordify but condensed
+     *
+     * For example
+     * "Given user given builder I am not hungry
+     * Given I have a cucumber with colour "red" and a cucumber with colour "blue"
+     * When I request to eat cucumbers with quantity 1 with colour "red"
+     * Then I should have cucumbers with quantity 2"
+     *
+     * Has the title givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft
+     * The title is kinda what the test should have been
+     */
+    @Test
+    void generate_title_idea() {
+       //TODO
     }
 }
