@@ -4,6 +4,7 @@ import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
+import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
@@ -54,17 +55,17 @@ public class ReportExtensionTest {
             .build();
         assertThat(testSuiteResult.getMetadata()).isEqualTo(metadata);
 
-        assertThat(testSuiteResult.getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest",
-            "paramTest",
-            "paramTest"
+        assertThat(testSuiteResult.getMethods()).containsExactlyInAnyOrder(
+            method("testMethod"),
+            method("paramTest"),
+            method("paramTest"),
+            method("paramTest")
         );
 
-        assertThat(testSuiteResult.getTestCaseResult("testMethod"))
+        assertThat(testSuiteResult.getTestCaseResult(method("testMethod")))
             .isEqualTo(aPassedTestMethod());
 
-        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults(method("paramTest"));
         assertThat(paramTest.get(0)).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with value 1")
@@ -100,9 +101,9 @@ public class ReportExtensionTest {
             .build();
         assertThat(testSuiteResult.getMetadata()).isEqualTo(metadata);
 
-        assertThat(testSuiteResult.getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest"
+        assertThat(testSuiteResult.getMethods()).containsExactlyInAnyOrder(
+            method("testMethod"),
+            method("paramTest")
         );
     }
 
@@ -118,18 +119,18 @@ public class ReportExtensionTest {
             .build();
         assertThat(testSuiteResult.getMetadata()).isEqualTo(metadata);
 
-        assertThat(testSuiteResult.getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest",
-            "paramTest",
-            "paramTest"
+        assertThat(testSuiteResult.getMethods()).containsExactlyInAnyOrder(
+            method("testMethod"),
+            method("paramTest"),
+            method("paramTest"),
+            method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult.getTestCaseResult("testMethod");
+        TestCaseResult testMethod = testSuiteResult.getTestCaseResult(method("testMethod"));
         assertThat(testMethod).isEqualTo(aFailedTestMethod());
         assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
-        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults(method("paramTest"));
         TestCaseResult paramTest1 = paramTest.get(0);
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
@@ -174,18 +175,18 @@ public class ReportExtensionTest {
             .build();
         assertThat(testSuiteResult.getMetadata()).isEqualTo(metadata);
 
-        assertThat(testSuiteResult.getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest",
-            "paramTest",
-            "paramTest"
+        assertThat(testSuiteResult.getMethods()).containsExactlyInAnyOrder(
+            method("testMethod"),
+            method("paramTest"),
+            method("paramTest"),
+            method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult.getTestCaseResult("testMethod");
+        TestCaseResult testMethod = testSuiteResult.getTestCaseResult(method("testMethod"));
         assertThat(testMethod).isEqualTo(aFailedTestMethodDueToException());
         assertNullPointerCause(testMethod);
 
-        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults(method("paramTest"));
         TestCaseResult paramTest1 = paramTest.get(0);
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
@@ -230,19 +231,19 @@ public class ReportExtensionTest {
             .build();
         assertThat(testSuiteResult.getMetadata()).isEqualTo(metadata);
 
-        assertThat(testSuiteResult.getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest",
-            "paramTest",
-            "paramTest"
+        assertThat(testSuiteResult.getMethods()).containsExactlyInAnyOrder(
+            method("testMethod"),
+            method("paramTest"),
+            method("paramTest"),
+            method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult.getTestCaseResult("testMethod");
+        TestCaseResult testMethod = testSuiteResult.getTestCaseResult(method("testMethod"));
         assertThat(testMethod).isEqualTo(anAbortedTestMethod());
         assertThat(testMethod.getCause()).isPresent();
         assertCauseWithMessage(testMethod, "Assumption failed: testMethod does not contain Z");
 
-        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults("paramTest");
+        List<TestCaseResult> paramTest = testSuiteResult.getTestCaseResults(method("paramTest"));
         TestCaseResult paramTest1 = paramTest.get(0);
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
@@ -305,35 +306,35 @@ public class ReportExtensionTest {
 
     private TestCaseResultBuilder aPassedParamTestCaseResult() {
         return aTestCaseResult()
-            .withMethodName("paramTest")
+            .withMethod(method("paramTest"))
             .withStatus(PASSED)
             .withTestSuiteClass(testSuiteClass(ClassUnderTest.class));
     }
 
     private TestCaseResultBuilder aFailedParamTestCaseResult() {
         return aTestCaseResult()
-            .withMethodName("paramTest")
+            .withMethod(method("paramTest"))
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass(FailedTestCasesUnderTest.class));
     }
 
     private TestCaseResultBuilder aFailedParamTestCaseResultDueToException() {
         return aTestCaseResult()
-            .withMethodName("paramTest")
+            .withMethod(method("paramTest"))
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass(FailedDueToExceptionTestCasesUnderTest.class));
     }
 
     private TestCaseResultBuilder anAbortedParamTestCaseResultDueToException() {
         return aTestCaseResult()
-            .withMethodName("paramTest")
+            .withMethod(method("paramTest"))
             .withStatus(ABORTED)
             .withTestSuiteClass(testSuiteClass(AbortedTestCasesUnderTest.class));
     }
 
     private TestCaseResult aPassedTestMethod() {
         return aTestCaseResult()
-            .withMethodName("testMethod")
+            .withMethod(method("testMethod"))
             .withName("testMethod")
             .withWordify("Passing assertion")
             .withStatus(PASSED)
@@ -343,7 +344,7 @@ public class ReportExtensionTest {
 
     private TestCaseResult aFailedTestMethod() {
         return aTestCaseResult()
-            .withMethodName("testMethod")
+            .withMethod(method("testMethod"))
             .withName("testMethod")
             .withWordify("Failing assertion")
             .withStatus(FAILED)
@@ -353,7 +354,7 @@ public class ReportExtensionTest {
 
     private TestCaseResult aFailedTestMethodDueToException() {
         return aTestCaseResult()
-            .withMethodName("testMethod")
+            .withMethod(method("testMethod"))
             .withName("testMethod")
             .withWordify("Method that throws a pointer method")
             .withStatus(FAILED)
@@ -363,11 +364,15 @@ public class ReportExtensionTest {
 
     private TestCaseResult anAbortedTestMethod() {
         return aTestCaseResult()
-            .withMethodName("testMethod")
+            .withMethod(method("testMethod"))
             .withName("testMethod")
             .withWordify("Aborting assertion")
             .withStatus(ABORTED)
             .withTestSuiteClass(testSuiteClass(AbortedTestCasesUnderTest.class))
             .build();
+    }
+
+    private TestMethod method(String name) {
+        return new TestMethod(name);
     }
 }

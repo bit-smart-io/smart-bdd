@@ -37,6 +37,6 @@ class TestCaseNameFactoryTest {
 
     private TestCaseResultBuilder aDefaultTestCaseResult() {
         return aTestCaseResult()
-            .withMethodName("methodName");
+            .withMethod(new TestMethod("methodName"));
     }
 }

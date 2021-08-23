@@ -2,13 +2,13 @@ package io.bitsmart.bdd.report.junit5.results.model;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
+import static io.bitsmart.bdd.report.junit5.results.model.TestMethod.testMethod;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -35,10 +35,21 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSui
  */
 public class TestSuiteResult {
     private final TestSuiteClass testSuiteClass;
-    private final List<String> methodNames = new ArrayList<>();
+    private final List<TestMethod> methods = new ArrayList<>();
+
+    /** all results including different params and or repeated test */
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
     private final ConcurrentHashMap<ExtensionContext, TestCaseResult> contextToTestCaseResult = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, List<ExtensionContext>> methodNameToContexts = new ConcurrentHashMap<>();
+
+    /**
+     * This seems to be only used for tests!!
+     * could this be test instance to params/repeat i.e. Method to List<ExtensionContext>
+     * paramTest(int i)
+     * paramTest(int i, String s)
+     * method name is paramTest. But to uniquely identify it should be Method?
+     */
+    private final ConcurrentHashMap<TestMethod, List<ExtensionContext>> methodToContexts = new ConcurrentHashMap<>();
+
     private TestSuiteResultsMetadata metadata;
 
     public TestSuiteResult(TestSuiteClass testSuiteClass) {
@@ -47,15 +58,15 @@ public class TestSuiteResult {
 
     public TestCaseResult startTestCase(ExtensionContext context) {
         TestCaseResult testCaseResult = createTestCaseResult(context);
-        String methodName = getMethodName(context);
-        methodNames.add(methodName);
+        TestMethod method = method(context);
+        methods.add(method);
 
-        if (methodNameToContexts.containsKey(methodName)) {
-            methodNameToContexts.get(methodName).add(context);
+        if (methodToContexts.containsKey(method)) {
+            methodToContexts.get(method).add(context);
         } else {
             List<ExtensionContext> contexts = new ArrayList<>();
             contexts.add(context);
-            methodNameToContexts.put(methodName, contexts);
+            methodToContexts.put(method, contexts);
         }
 
         this.testCaseResults.add(testCaseResult);
@@ -72,14 +83,14 @@ public class TestSuiteResult {
     }
 
     /** only used for testing. Prod code uses getTestCaseResults */
-    public TestCaseResult getTestCaseResult(String methodName) {
-        ExtensionContext extensionContext = methodNameToContexts.get(methodName).get(0);
+    public TestCaseResult getTestCaseResult(TestMethod method) {
+        ExtensionContext extensionContext = methodToContexts.get(method).get(0);
         return contextToTestCaseResult.get(extensionContext);
     }
 
     /** only used for testing. Prod code uses getTestCaseResults */
-    public List<TestCaseResult> getTestCaseResults(String methodName) {
-        return methodNameToContexts.get(methodName).stream()
+    public List<TestCaseResult> getTestCaseResults(TestMethod method) {
+        return methodToContexts.get(method).stream()
             .map(contextToTestCaseResult::get)
             .collect(Collectors.toList());
     }
@@ -92,23 +103,23 @@ public class TestSuiteResult {
         return metadata;
     }
 
-    public ConcurrentHashMap<String, List<ExtensionContext>> getMethodNameToContext() {
-        return methodNameToContexts;
+    public ConcurrentHashMap<TestMethod, List<ExtensionContext>> getMethodNameToContext() {
+        return methodToContexts;
     }
 
-    public List<String> getMethodNames() {
-        return methodNames;
+    public List<TestMethod> getMethods() {
+        return methods;
     }
 
     public List<TestCaseResult> getTestCaseResults() {
         return testCaseResults;
     }
 
-    private String getMethodName(ExtensionContext context) {
-        return context.getTestMethod().map(Method::getName).orElse("could-not-get-method-name");
+    private TestMethod method(ExtensionContext context) {
+        return testMethod(context.getTestMethod().orElse(null));
     }
 
     private TestCaseResult createTestCaseResult(ExtensionContext context) {
-        return new TestCaseResult(getMethodName(context), testSuiteClass(context.getRequiredTestClass()));
+        return new TestCaseResult(method(context), testSuiteClass(context.getRequiredTestClass()));
     }
 }

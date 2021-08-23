@@ -3,6 +3,7 @@ package component.results;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -30,5 +31,9 @@ public abstract class AbstractResultsForClass {
 
     private TestSuiteResult testSuiteResult(Class<?> clazz) {
         return ReportExtension.getTestContext().getTestResults().getTestSuiteResults(testSuiteClass(clazz));
+    }
+
+    public TestMethod method(String name) {
+        return new TestMethod(name);
     }
 }

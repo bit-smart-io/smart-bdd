@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 
 public class TestCaseNameFactory {
     public String createName(TestCaseResult testCaseResult) {
-        String methodName = testCaseResult.getMethodName();
+        String methodName = testCaseResult.getMethod().getName();
         List<Object> args = testCaseResult.getArgs();
         if (args.size() == 0) {
             return methodName;
         }
 
-        return testCaseResult.getMethodName() + args.stream().map(Object::toString).collect(Collectors.joining(", ", " ", ""));
+        return testCaseResult.getMethod().getName() + args.stream().map(Object::toString).collect(Collectors.joining(", ", " ", ""));
     }
 }

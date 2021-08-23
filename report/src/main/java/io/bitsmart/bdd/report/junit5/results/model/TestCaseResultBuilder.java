@@ -7,7 +7,7 @@ import java.util.List;
 public final class TestCaseResultBuilder {
     private String wordify;
     private TestCaseResultStatus status;
-    private String methodName;
+    private TestMethod method;
     private TestSuiteClass testSuiteClass;
     private List<Object> args = new ArrayList<>();
     private String name;
@@ -29,8 +29,8 @@ public final class TestCaseResultBuilder {
         return this;
     }
 
-    public TestCaseResultBuilder withMethodName(String methodName) {
-        this.methodName = methodName;
+    public TestCaseResultBuilder withMethod(TestMethod method) {
+        this.method = method;
         return this;
     }
 
@@ -50,7 +50,7 @@ public final class TestCaseResultBuilder {
     }
 
     public TestCaseResult build() {
-        TestCaseResult testCaseResult = new TestCaseResult(methodName, testSuiteClass);
+        TestCaseResult testCaseResult = new TestCaseResult(method, testSuiteClass);
         testCaseResult.setWordify(wordify);
         testCaseResult.setStatus(status);
         testCaseResult.setArgs(args);

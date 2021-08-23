@@ -2,6 +2,7 @@ package io.bitsmart.bdd.report.report.adapter;
 
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus;
+import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
@@ -48,7 +49,7 @@ public class ReportFactory {
             testSuiteResult.getTestSuiteClass().getFullyQualifiedName(),
             testSuiteResult.getTestSuiteClass().getClassName(),
             testSuiteResult.getTestSuiteClass().getPackageName(),
-            testSuiteResult.getMethodNames(),
+            testSuiteResult.getMethods().stream().map(TestMethod::getName).collect(toList()),
             testResults(testSuiteResult.getTestCaseResults()),
             testSuiteSummary(testSuiteResult.getMetadata()));
     }
@@ -71,7 +72,7 @@ public class ReportFactory {
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getName(),
-            testCaseResult.getMethodName(),
+            testCaseResult.getMethod().getName(),
             testCaseResult.getTestSuiteClass().getClassName(),
             testCaseResult.getTestSuiteClass().getPackageName());
     }
