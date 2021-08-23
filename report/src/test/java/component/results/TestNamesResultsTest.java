@@ -7,7 +7,7 @@ import shared.undertest.TestNamesTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestNamesResultsTest extends AbstractResultsForClass {
+public class TestNamesResultsTest extends AbstractResultsForTestSuite {
 
     @Override
     public Class<?> classUnderTest() {
