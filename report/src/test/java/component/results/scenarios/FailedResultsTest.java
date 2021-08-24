@@ -38,7 +38,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
         );
 
         TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
-        assertThat(testMethod).isEqualTo(aFailedTestMethod());
+        assertEqualsIgnoringCause(testMethod, aFailedTestMethod());
         assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
         List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
@@ -46,7 +46,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
 
-        assertThat(paramTest1).isEqualTo(
+        assertEqualsIgnoringCause(paramTest1,
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 1")
                 .withArgs(singletonList("value 1"))
@@ -55,7 +55,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
         );
         assertCauseWithMessage(paramTest1, "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
 
-        assertThat(paramTest2).isEqualTo(
+        assertEqualsIgnoringCause(paramTest2,
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 2")
                 .withArgs(singletonList("value 2"))
@@ -64,7 +64,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
         );
         assertCauseWithMessage(paramTest2, "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
 
-        assertThat(paramTest3).isEqualTo(
+        assertEqualsIgnoringCause(paramTest3,
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 3")
                 .withArgs(singletonList("value 3"))

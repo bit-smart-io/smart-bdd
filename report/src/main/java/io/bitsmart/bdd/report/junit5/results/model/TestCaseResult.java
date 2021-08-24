@@ -6,12 +6,33 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * TODO remove temp note.
- * how to handle repeats?
- * add method. with grouping, method needs to group by meth+sig+args+repeat.
- * private TestSuiteMethodInvocation method; //args, repeat, etc...
+ *
  */
 public class TestCaseResult {
+    //TODO classes to add
+    // TestSuiteWordify
+    // - beforeAll
+    // - beforeEach
+    // - afterAll
+    // - afterEach
+    // TestCaseWordify
+    // - scenario
+    // - method
+    // - methodInvocation with params
+    // Wordify text/markdown/html
+    // - text example given something
+    // - html example <span class="given">given</> something
+    // - markdown
+    // Timings
+    // - beforeAll
+    // - beforeEach
+    // - afterAll
+    // - afterEach
+    // - testcase
+    // TestSuiteMethodInvocation
+    // - args, repeat, etc...
+    //TODO How to handle repeats?
+
     private String wordify;
     private TestCaseResultStatus status;
     private Throwable cause;
@@ -19,6 +40,7 @@ public class TestCaseResult {
     private String name;
     private TestMethod method;
     private final TestSuiteClass testSuiteClass;
+    //private final Notes notes = new Notes();
 
     public TestCaseResult(TestMethod method, TestSuiteClass testSuiteClass) {
         this.method = method;
@@ -78,28 +100,19 @@ public class TestCaseResult {
         return this;
     }
 
-    /**
-     * does not include cause
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(method, that.method) && Objects.equals(testSuiteClass, that.testSuiteClass);
+        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(method, that.method) && Objects.equals(testSuiteClass, that.testSuiteClass);
     }
 
-    /**
-     * does not include cause
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, args, name, method, testSuiteClass);
+        return Objects.hash(wordify, status, cause, args, name, method, testSuiteClass);
     }
 
-    /**
-     * does not include cause
-     */
     @Override
     public String toString() {
         return "TestCaseResult{" +
@@ -108,7 +121,7 @@ public class TestCaseResult {
             ", cause=" + cause +
             ", args=" + args +
             ", name='" + name + '\'' +
-            ", method='" + method + '\'' +
+            ", method=" + method +
             ", testSuiteClass=" + testSuiteClass +
             '}';
     }

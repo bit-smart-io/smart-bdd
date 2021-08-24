@@ -38,7 +38,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         );
 
         TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
-        assertThat(testMethod).isEqualTo(aFailedTestMethodDueToException());
+        assertEqualsIgnoringCause(testMethod, aFailedTestMethodDueToException());
         assertNullPointerCause(testMethod);
 
         List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
@@ -46,7 +46,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
 
-        assertThat(paramTest1).isEqualTo(
+        assertEqualsIgnoringCause(paramTest1,
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 1")
                 .withArgs(singletonList("value 1"))
@@ -55,7 +55,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         );
         assertNullPointerCause(paramTest1);
 
-        assertThat(paramTest2).isEqualTo(
+        assertEqualsIgnoringCause(paramTest2,
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 2")
                 .withArgs(singletonList("value 2"))
@@ -64,7 +64,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         );
         assertNullPointerCause(paramTest2);
 
-        assertThat(paramTest3).isEqualTo(
+        assertEqualsIgnoringCause(paramTest3,
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 3")
                 .withArgs(singletonList("value 3"))

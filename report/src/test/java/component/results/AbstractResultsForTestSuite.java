@@ -55,4 +55,8 @@ public abstract class AbstractResultsForTestSuite {
         assertThat(cause.getCause()).isNull();
         assertThat(cause.getStackTrace()).isNotNull();
     }
+
+    protected void assertEqualsIgnoringCause(TestCaseResult actual, TestCaseResult expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "cause");
+    }
 }

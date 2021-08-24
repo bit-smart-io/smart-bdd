@@ -38,7 +38,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
         );
 
         TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
-        assertThat(testMethod).isEqualTo(anAbortedTestMethod());
+        assertEqualsIgnoringCause(testMethod, anAbortedTestMethod());
+        assertThat(testMethod).isEqualToIgnoringGivenFields(anAbortedTestMethod(), "cause");
         assertThat(testMethod.getCause()).isPresent();
         assertCauseWithMessage(testMethod, "Assumption failed: testMethod does not contain Z");
 
@@ -47,7 +48,7 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
         TestCaseResult paramTest2 = paramTest.get(1);
         TestCaseResult paramTest3 = paramTest.get(2);
 
-        assertThat(paramTest1).isEqualTo(
+        assertEqualsIgnoringCause(paramTest1,
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 1")
                 .withArgs(singletonList("value 1"))
@@ -56,7 +57,7 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
         );
         assertCauseWithMessage(paramTest1, "Assumption failed: value 1 does not contain z");
 
-        assertThat(paramTest2).isEqualTo(
+        assertEqualsIgnoringCause(paramTest2,
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 2")
                 .withArgs(singletonList("value 2"))
@@ -65,7 +66,7 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
         );
         assertCauseWithMessage(paramTest2, "Assumption failed: value 2 does not contain z");
 
-        assertThat(paramTest3).isEqualTo(
+        assertEqualsIgnoringCause(paramTest3,
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 3")
                 .withArgs(singletonList("value 3"))
