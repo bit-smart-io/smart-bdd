@@ -2,6 +2,7 @@ package shared.undertest;
 
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -28,12 +29,15 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 @ExtendWith(ReportExtension.class)
 public class FailedDueToExceptionTestCasesUnderTest {
+    private static Boolean enabled = false;
 
+    @EnabledIf("isEnabled")
     @Test
     void testMethod() {
         methodThatThrowsAPointerMethod();
     }
 
+    @EnabledIf("isEnabled")
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
@@ -48,5 +52,13 @@ public class FailedDueToExceptionTestCasesUnderTest {
     private void methodThatThrowsAPointerMethodWith(String param) {
         String str = null;
         str.toLowerCase();
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

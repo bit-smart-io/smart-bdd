@@ -1,5 +1,7 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public final class TestCaseResultBuilder {
     private TestSuiteClass testSuiteClass;
     private List<Object> args = new ArrayList<>();
     private String name;
+    private Notes notes;
 
     private TestCaseResultBuilder() {
     }
@@ -49,8 +52,13 @@ public final class TestCaseResultBuilder {
         return this;
     }
 
+    public TestCaseResultBuilder withNotes(Notes notes) {
+        this.notes = notes;
+        return this;
+    }
+
     public TestCaseResult build() {
-        TestCaseResult testCaseResult = new TestCaseResult(method, testSuiteClass);
+        TestCaseResult testCaseResult = new TestCaseResult(method, testSuiteClass, notes);
         testCaseResult.setWordify(wordify);
         testCaseResult.setStatus(status);
         testCaseResult.setArgs(args);

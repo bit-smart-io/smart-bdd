@@ -16,33 +16,33 @@ public class TestNamesResultsTest extends AbstractResultsForTestSuite {
 
     @Test
     void verifyFirstTest_noParams() {
-        TestCaseResult testCaseResult = testCase(0);
+        TestCaseResult testCaseResult = testCaseResult(0);
         assertThat(testCaseResult.getName()).isEqualTo("testMethod");
         assertThat(testCaseResult.getMethod()).isEqualTo(method("testMethod"));
     }
 
     @Test
     void verifySecondTest_paramsNoCustomName() {
-        assertThat(testCase(1).getName()).isEqualTo("paramTest value 1");
-        assertThat(testCase(1).getMethod()).isEqualTo(method("paramTest"));
+        assertThat(testCaseResult(1).getName()).isEqualTo("paramTest value 1");
+        assertThat(testCaseResult(1).getMethod()).isEqualTo(method("paramTest"));
 
-        assertThat(testCase(2).getName()).isEqualTo("paramTest value 2");
-        assertThat(testCase(2).getMethod()).isEqualTo(method("paramTest"));
+        assertThat(testCaseResult(2).getName()).isEqualTo("paramTest value 2");
+        assertThat(testCaseResult(2).getMethod()).isEqualTo(method("paramTest"));
 
-        assertThat(testCase(3).getName()).isEqualTo("paramTest value 3");
-        assertThat(testCase(3).getMethod()).isEqualTo(method("paramTest"));
+        assertThat(testCaseResult(3).getName()).isEqualTo("paramTest value 3");
+        assertThat(testCaseResult(3).getMethod()).isEqualTo(method("paramTest"));
     }
 
     @Disabled
     @Test
     void verifyThirdTest_paramsWithCustomName() {
-        assertThat(testCase(4).getName()).isEqualTo("#0 - value = 1");
-        assertThat(testCase(4).getMethod()).isEqualTo(method("paramTestWithCustomName"));
+        assertThat(testCaseResult(4).getName()).isEqualTo("#0 - value = 1");
+        assertThat(testCaseResult(4).getMethod()).isEqualTo(method("paramTestWithCustomName"));
 
-        assertThat(testCase(5).getName()).isEqualTo("#0 - value = 2");
-        assertThat(testCase(5).getMethod()).isEqualTo(method("paramTestWithCustomName"));
+        assertThat(testCaseResult(5).getName()).isEqualTo("#0 - value = 2");
+        assertThat(testCaseResult(5).getMethod()).isEqualTo(method("paramTestWithCustomName"));
 
-        assertThat(testCase(6).getName()).isEqualTo("#0 - value = 3");
-        assertThat(testCase(6).getMethod()).isEqualTo(method("paramTestWithCustomName"));
+        assertThat(testCaseResult(6).getName()).isEqualTo("#0 - value = 3");
+        assertThat(testCaseResult(6).getMethod()).isEqualTo(method("paramTestWithCustomName"));
     }
 }

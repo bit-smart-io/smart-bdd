@@ -3,11 +3,9 @@ package component.results.scenarios;
 import component.results.AbstractResultsForTestSuite;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.Test;
 import shared.undertest.ClassUnderTest;
-
-import java.util.List;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
@@ -25,12 +23,12 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
     @Test
     void verifyResultsForPassingTestCases() {
         assertTestSuitClass(testSuiteResult(), classUnderTest());
-
-        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
-            .withTestCaseCount(4)
-            .withPassedCount(4)
-            .build();
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+            aTestSuiteResultsMetadata()
+                .withTestCaseCount(4)
+                .withPassedCount(4)
+                .build()
+        );
 
         assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
             method("testMethod"),
@@ -39,25 +37,23 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
             method("paramTest")
         );
 
-        assertThat(testSuiteResult().getTestCaseResult(method("testMethod")))
-            .isEqualTo(aPassedTestCaseResult());
+        assertThat(testSuiteResult().getTestCaseResult(method("testMethod"))).isEqualTo(aPassedTestCaseResult());
 
-        List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
-        assertThat(paramTest.get(0)).isEqualTo(
+        assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with value 1")
                 .withArgs(singletonList("value 1"))
                 .withName("paramTest value 1")
                 .build()
         );
-        assertThat(paramTest.get(1)).isEqualTo(
+        assertThat(secondTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with value 2")
                 .withArgs(singletonList("value 2"))
                 .withName("paramTest value 2")
                 .build()
         );
-        assertThat(paramTest.get(2)).isEqualTo(
+        assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with value 3")
                 .withArgs(singletonList("value 3"))
@@ -70,7 +66,8 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
         return aTestCaseResult()
             .withMethod(method("paramTest"))
             .withStatus(PASSED)
-            .withTestSuiteClass(testSuiteClass());
+            .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes());
     }
 
     private TestCaseResult aPassedTestCaseResult() {
@@ -80,6 +77,7 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
             .withWordify("Passing assertion")
             .withStatus(PASSED)
             .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes())
             .build();
     }
 }

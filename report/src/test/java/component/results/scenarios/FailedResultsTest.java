@@ -1,9 +1,12 @@
 package component.results.scenarios;
 
 import component.results.AbstractResultsForTestSuite;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import shared.undertest.FailedTestCasesUnderTest;
 
@@ -15,7 +18,17 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetada
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FailedResultsTest extends AbstractResultsForTestSuite  {
+public class FailedResultsTest extends AbstractResultsForTestSuite {
+
+    @BeforeAll
+    public static void enableTest() {
+        FailedTestCasesUnderTest.setEnabled(true);
+    }
+
+    @AfterAll
+    public static void disableTest() {
+        FailedTestCasesUnderTest.setEnabled(false);
+    }
 
     @Override
     public Class<?> classUnderTest() {
@@ -24,11 +37,11 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
 
     @Test
     void verifyResultsForFailedTestCases() {
-        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
-            .withTestCaseCount(4)
-            .withFailedCount(4)
-            .build();
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+            aTestSuiteResultsMetadata()
+                .withTestCaseCount(4)
+                .withFailedCount(4)
+                .build());
 
         assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
             method("testMethod"),
@@ -41,44 +54,40 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
         assertEqualsIgnoringCause(testMethod, aFailedTestMethod());
         assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 
-        List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
-        TestCaseResult paramTest1 = paramTest.get(0);
-        TestCaseResult paramTest2 = paramTest.get(1);
-        TestCaseResult paramTest3 = paramTest.get(2);
-
-        assertEqualsIgnoringCause(paramTest1,
+        assertEqualsIgnoringCause(firstTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 1")
                 .withArgs(singletonList("value 1"))
                 .withName("paramTest value 1")
                 .build()
         );
-        assertCauseWithMessage(paramTest1, "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(firstTestCaseResult("paramTest"), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
 
-        assertEqualsIgnoringCause(paramTest2,
+        assertEqualsIgnoringCause(secondTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 2")
                 .withArgs(singletonList("value 2"))
                 .withName("paramTest value 2")
                 .build()
         );
-        assertCauseWithMessage(paramTest2, "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(secondTestCaseResult("paramTest"), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
 
-        assertEqualsIgnoringCause(paramTest3,
+        assertEqualsIgnoringCause(thirdTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
                 .withWordify("Failing assertion with value 3")
                 .withArgs(singletonList("value 3"))
                 .withName("paramTest value 3")
                 .build()
         );
-        assertCauseWithMessage(paramTest3, "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(thirdTestCaseResult("paramTest"), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
     }
 
     private TestCaseResultBuilder aFailedParamTestCaseResult() {
         return aTestCaseResult()
             .withMethod(method("paramTest"))
             .withStatus(FAILED)
-            .withTestSuiteClass(testSuiteClass());
+            .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes());
     }
 
     private TestCaseResult aFailedTestMethod() {
@@ -88,6 +97,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite  {
             .withWordify("Failing assertion")
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes())
             .build();
     }
 }

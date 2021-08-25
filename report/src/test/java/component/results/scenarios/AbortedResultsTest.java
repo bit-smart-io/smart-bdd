@@ -1,6 +1,7 @@
 package component.results.scenarios;
 
 import component.results.AbstractResultsForTestSuite;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
@@ -15,7 +16,7 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetada
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbortedResultsTest extends AbstractResultsForTestSuite  {
+public class AbortedResultsTest extends AbstractResultsForTestSuite {
 
     @Override
     public Class<?> classUnderTest() {
@@ -24,11 +25,11 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
 
     @Test
     void verifyResultsForAbortedTestCases() {
-        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
-            .withTestCaseCount(4)
-            .withAbortedCount(4)
-            .build();
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+            aTestSuiteResultsMetadata()
+                .withTestCaseCount(4)
+                .withAbortedCount(4)
+                .build());
 
         assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
             method("testMethod"),
@@ -37,50 +38,46 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
             method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
+        TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, anAbortedTestMethod());
         assertThat(testMethod).isEqualToIgnoringGivenFields(anAbortedTestMethod(), "cause");
         assertThat(testMethod.getCause()).isPresent();
         assertCauseWithMessage(testMethod, "Assumption failed: testMethod does not contain Z");
 
-        List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
-        TestCaseResult paramTest1 = paramTest.get(0);
-        TestCaseResult paramTest2 = paramTest.get(1);
-        TestCaseResult paramTest3 = paramTest.get(2);
-
-        assertEqualsIgnoringCause(paramTest1,
+        assertEqualsIgnoringCause(firstTestCaseResult("paramTest"),
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 1")
                 .withArgs(singletonList("value 1"))
                 .withName("paramTest value 1")
                 .build()
         );
-        assertCauseWithMessage(paramTest1, "Assumption failed: value 1 does not contain z");
+        assertCauseWithMessage(firstTestCaseResult("paramTest"), "Assumption failed: value 1 does not contain z");
 
-        assertEqualsIgnoringCause(paramTest2,
+        assertEqualsIgnoringCause(secondTestCaseResult("paramTest"),
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 2")
                 .withArgs(singletonList("value 2"))
                 .withName("paramTest value 2")
                 .build()
         );
-        assertCauseWithMessage(paramTest2, "Assumption failed: value 2 does not contain z");
+        assertCauseWithMessage(secondTestCaseResult("paramTest"), "Assumption failed: value 2 does not contain z");
 
-        assertEqualsIgnoringCause(paramTest3,
+        assertEqualsIgnoringCause(thirdTestCaseResult("paramTest"),
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 3")
                 .withArgs(singletonList("value 3"))
                 .withName("paramTest value 3")
                 .build()
         );
-        assertCauseWithMessage(paramTest3, "Assumption failed: value 3 does not contain z");
+        assertCauseWithMessage(thirdTestCaseResult("paramTest"), "Assumption failed: value 3 does not contain z");
     }
 
     private TestCaseResultBuilder anAbortedParamTestCaseResultDueToException() {
         return aTestCaseResult()
             .withMethod(method("paramTest"))
             .withStatus(ABORTED)
-            .withTestSuiteClass(testSuiteClass());
+            .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes());
     }
 
     private TestCaseResult anAbortedTestMethod() {
@@ -90,6 +87,7 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite  {
             .withWordify("Aborting assertion")
             .withStatus(ABORTED)
             .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes())
             .build();
     }
 }

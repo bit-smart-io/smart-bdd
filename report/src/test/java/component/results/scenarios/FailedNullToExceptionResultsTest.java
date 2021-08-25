@@ -1,9 +1,12 @@
 package component.results.scenarios;
 
 import component.results.AbstractResultsForTestSuite;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
 
@@ -17,6 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuite  {
 
+    @BeforeAll
+    public static void enableTest() {
+        FailedDueToExceptionTestCasesUnderTest.setEnabled(true);
+    }
+
+    @AfterAll
+    public static void disableTest() {
+        FailedDueToExceptionTestCasesUnderTest.setEnabled(false);
+    }
+
     @Override
     public Class<?> classUnderTest() {
         return FailedDueToExceptionTestCasesUnderTest.class;
@@ -24,11 +37,12 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
 
     @Test
     void verifyResultsForFailedDueToNullPointerTestCases() {
-        TestSuiteResultsMetadata metadata = aTestSuiteResultsMetadata()
-            .withTestCaseCount(4)
-            .withFailedCount(4)
-            .build();
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(metadata);
+        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+            aTestSuiteResultsMetadata()
+                .withTestCaseCount(4)
+                .withFailedCount(4)
+                .build()
+        );
 
         assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
             method("testMethod"),
@@ -41,37 +55,32 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         assertEqualsIgnoringCause(testMethod, aFailedTestMethodDueToException());
         assertNullPointerCause(testMethod);
 
-        List<TestCaseResult> paramTest = testSuiteResult().getTestCaseResults(method("paramTest"));
-        TestCaseResult paramTest1 = paramTest.get(0);
-        TestCaseResult paramTest2 = paramTest.get(1);
-        TestCaseResult paramTest3 = paramTest.get(2);
-
-        assertEqualsIgnoringCause(paramTest1,
+        assertEqualsIgnoringCause(firstTestCaseResult("paramTest"),
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 1")
                 .withArgs(singletonList("value 1"))
                 .withName("paramTest value 1")
                 .build()
         );
-        assertNullPointerCause(paramTest1);
+        assertNullPointerCause(firstTestCaseResult("paramTest"));
 
-        assertEqualsIgnoringCause(paramTest2,
+        assertEqualsIgnoringCause(secondTestCaseResult("paramTest"),
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 2")
                 .withArgs(singletonList("value 2"))
                 .withName("paramTest value 2")
                 .build()
         );
-        assertNullPointerCause(paramTest2);
+        assertNullPointerCause(secondTestCaseResult("paramTest"));
 
-        assertEqualsIgnoringCause(paramTest3,
+        assertEqualsIgnoringCause(thirdTestCaseResult("paramTest"),
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 3")
                 .withArgs(singletonList("value 3"))
                 .withName("paramTest value 3")
                 .build()
         );
-        assertNullPointerCause(paramTest3);
+        assertNullPointerCause(thirdTestCaseResult("paramTest"));
     }
 
     private void assertNullPointerCause(TestCaseResult result) {
@@ -86,7 +95,8 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
         return aTestCaseResult()
             .withMethod(method("paramTest"))
             .withStatus(FAILED)
-            .withTestSuiteClass(testSuiteClass());
+            .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes());
     }
 
     private TestCaseResult aFailedTestMethodDueToException() {
@@ -96,6 +106,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
             .withWordify("Method that throws a pointer method")
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass())
+            .withNotes(new Notes())
             .build();
     }
 }

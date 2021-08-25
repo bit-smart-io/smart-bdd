@@ -7,9 +7,13 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.ClassUnderTest;
+import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
+import shared.undertest.FailedTestCasesUnderTest;
 
 import java.io.IOException;
 
@@ -18,6 +22,18 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPacka
 
 public class ReportForPackageTest {
     private static final String PACKAGE_NAME = ClassUnderTest.class.getPackage().getName();
+
+    @BeforeAll
+    public static void enableTest() {
+        FailedTestCasesUnderTest.setEnabled(true);
+        FailedDueToExceptionTestCasesUnderTest.setEnabled(true);
+    }
+
+    @AfterAll
+    public static void disableTest() {
+        FailedTestCasesUnderTest.setEnabled(false);
+        FailedDueToExceptionTestCasesUnderTest.setEnabled(false);
+    }
 
     @BeforeEach
     void setUp() {

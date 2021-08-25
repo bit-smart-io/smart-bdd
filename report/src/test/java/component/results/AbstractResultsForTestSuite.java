@@ -8,6 +8,8 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractResultsForTestSuite {
@@ -26,8 +28,28 @@ public abstract class AbstractResultsForTestSuite {
         return TestSuiteClass.testSuiteClass(classUnderTest());
     }
 
-    public TestCaseResult testCase(int index) {
+    public TestCaseResult testCaseResult(int index) {
         return testSuiteResult.getTestCaseResults().get(index);
+    }
+
+    public TestCaseResult testCaseResult(String methodName) {
+        return testSuiteResult().getTestCaseResult(method(methodName));
+    }
+
+    public TestCaseResult firstTestCaseResult(String methodName) {
+        return testCaseResults(methodName).get(0);
+    }
+
+    public TestCaseResult secondTestCaseResult(String methodName) {
+        return testCaseResults(methodName).get(1);
+    }
+
+    public TestCaseResult thirdTestCaseResult(String methodName) {
+        return testCaseResults(methodName).get(2);
+    }
+
+    public List<TestCaseResult> testCaseResults(String methodName) {
+        return testSuiteResult().getTestCaseResults(method(methodName));
     }
 
     public TestSuiteResult testSuiteResult() {

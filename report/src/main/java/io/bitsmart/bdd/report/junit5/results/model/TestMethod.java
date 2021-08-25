@@ -10,7 +10,11 @@ import java.util.Objects;
  */
 public class TestMethod {
 
+    /** Name i.e. testMethod */
     private final String name;
+
+//    /** Name i.e. testMethod(), testMethod(Method) etc... */
+//    private final String nameWithParams;
 
     public TestMethod(String name) {
         this.name = name;

@@ -1,5 +1,6 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.ArrayList;
@@ -120,6 +121,6 @@ public class TestSuiteResult {
     }
 
     private TestCaseResult createTestCaseResult(ExtensionContext context) {
-        return new TestCaseResult(method(context), testSuiteClass(context.getRequiredTestClass()));
+        return new TestCaseResult(method(context), testSuiteClass(context.getRequiredTestClass()), new Notes());
     }
 }

@@ -1,13 +1,12 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- *
- */
 public class TestCaseResult {
     //TODO classes to add
     // TestSuiteWordify
@@ -40,11 +39,12 @@ public class TestCaseResult {
     private String name;
     private TestMethod method;
     private final TestSuiteClass testSuiteClass;
-    //private final Notes notes = new Notes();
+    private final Notes notes;
 
-    public TestCaseResult(TestMethod method, TestSuiteClass testSuiteClass) {
+    public TestCaseResult(TestMethod method, TestSuiteClass testSuiteClass, Notes notes) {
         this.method = method;
         this.testSuiteClass = testSuiteClass;
+        this.notes = notes;
     }
 
     public String getWordify() {
@@ -73,6 +73,10 @@ public class TestCaseResult {
 
     public List<Object> getArgs() {
         return args;
+    }
+
+    public Notes getNotes() {
+        return notes;
     }
 
     public TestCaseResult setWordify(String wordify) {
@@ -105,12 +109,12 @@ public class TestCaseResult {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(method, that.method) && Objects.equals(testSuiteClass, that.testSuiteClass);
+        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(method, that.method) && Objects.equals(testSuiteClass, that.testSuiteClass) && Objects.equals(notes, that.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, cause, args, name, method, testSuiteClass);
+        return Objects.hash(wordify, status, cause, args, name, method, testSuiteClass, notes);
     }
 
     @Override
@@ -123,6 +127,7 @@ public class TestCaseResult {
             ", name='" + name + '\'' +
             ", method=" + method +
             ", testSuiteClass=" + testSuiteClass +
+            ", notes=" + notes +
             '}';
     }
 }
