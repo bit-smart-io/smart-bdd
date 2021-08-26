@@ -2,6 +2,7 @@ package io.bitsmart.bdd.report.report.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.bitsmart.bdd.report.report.model.notes.Notes;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +14,7 @@ public class TestSuite {
     private final List<String> methodNames;
     private final List<TestCase> testCases;
     private final TestSuiteSummary summary;
+    private final Notes notes;
     // setup, teardown metrics
     // time started
     // time taken
@@ -24,7 +26,8 @@ public class TestSuite {
         @JsonProperty("packageName") String packageName,
         @JsonProperty("methodNames") List<String> methodNames,
         @JsonProperty("testResults") List<TestCase> testCases,
-        @JsonProperty("summary") TestSuiteSummary summary)
+        @JsonProperty("summary") TestSuiteSummary summary,
+        @JsonProperty("notes") Notes notes)
     {
         this.name = name;
         this.className = className;
@@ -32,6 +35,7 @@ public class TestSuite {
         this.methodNames = methodNames;
         this.testCases = testCases;
         this.summary = summary;
+        this.notes = notes;
     }
 
     public String getName() {
@@ -58,6 +62,23 @@ public class TestSuite {
         return summary;
     }
 
+    public Notes getNotes() {
+        return notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestSuite)) return false;
+        TestSuite testSuite = (TestSuite) o;
+        return Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary) && Objects.equals(notes, testSuite.notes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, className, packageName, methodNames, testCases, summary, notes);
+    }
+
     @Override
     public String toString() {
         return "TestSuite{" +
@@ -67,19 +88,7 @@ public class TestSuite {
             ", methodNames=" + methodNames +
             ", testCases=" + testCases +
             ", summary=" + summary +
+            ", notes=" + notes +
             '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TestSuite)) return false;
-        TestSuite testSuite = (TestSuite) o;
-        return Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, className, packageName, methodNames, testCases, summary);
     }
 }

@@ -2,6 +2,7 @@ package component.report.builders;
 
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 
 public final class TestCaseBuilder implements Builder<TestCase> {
@@ -11,6 +12,7 @@ public final class TestCaseBuilder implements Builder<TestCase> {
     private String name;
     private String className;
     private String packageName;
+    private Notes notes;
 
     private TestCaseBuilder() {
     }
@@ -49,8 +51,13 @@ public final class TestCaseBuilder implements Builder<TestCase> {
         return this;
     }
 
+    public TestCaseBuilder withNotes(Notes notes) {
+        this.notes = notes;
+        return this;
+    }
+
     @Override
     public TestCase build() {
-        return new TestCase(wordify, status, name, methodName, className, packageName);
+        return new TestCase(wordify, status, name, methodName, className, packageName, notes);
     }
 }

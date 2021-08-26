@@ -1,6 +1,7 @@
 package component.report.builders;
 
 import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
@@ -16,6 +17,7 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
     private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseBuilder> testCases = new ArrayList<>();;
     private TestSuiteSummaryBuilder summary = aTestSuiteSummary();
+    private Notes notes;
 
     private TestSuiteBuilder() {
     }
@@ -56,7 +58,12 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
         return this;
     }
 
+    public TestSuiteBuilder withNotes(Notes notes) {
+        this.notes = notes;
+        return this;
+    }
+
     public TestSuite build() {
-        return new TestSuite(name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build());
+        return new TestSuite(name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build(), notes);
     }
 }

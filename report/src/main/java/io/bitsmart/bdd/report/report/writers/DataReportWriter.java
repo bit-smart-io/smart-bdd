@@ -6,8 +6,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 public class DataReportWriter extends AbstractReportWriter {
-    private final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private final ObjectMapper mapper = new ObjectMapper()
+        .enable(SerializationFeature.INDENT_OUTPUT)
+        .setSerializationInclusion(NON_NULL);
 
     public DataReportWriter(FileNameProvider dataFileNameProvider) {
         super(dataFileNameProvider);

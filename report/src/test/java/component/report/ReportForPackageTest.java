@@ -50,6 +50,6 @@ public class ReportForPackageTest {
             new TestSuiteNameToFile(
                 "shared.undertest.ClassUnderTest",
                 "TEST-shared.undertest.ClassUnderTest.json"));
-        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(26,12,4,8,4));
+        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(26, 12, 4, 8, 4));
     }
 }

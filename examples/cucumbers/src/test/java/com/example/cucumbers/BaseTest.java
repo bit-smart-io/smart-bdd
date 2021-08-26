@@ -11,6 +11,7 @@ import io.bitsmart.bdd.report.junit5.annotations.InjectTestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.extension.ContextExtensionParameterResolver;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.ThenBuilder;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ReportExtension.class, ContextExtensionParameterResolver.class})
 public class BaseTest {
 
+    private final CucumberService cucumberService = new CucumberService();
+    private Notes notes;
+
     /**
      * Example of what can be injected in the before class.
      *
@@ -33,9 +37,8 @@ public class BaseTest {
     @BeforeEach
     void setUp(@InjectTestCaseResult TestCaseResult testCaseResult, TestInfo testInfo, TestReporter testReporter) {
         System.out.println("testCaseResult: " + testCaseResult);
+        this.notes = testCaseResult.getNotes();
     }
-
-    CucumberService cucumberService = new CucumberService();
 
     public void given(CucumberBuilder... cucumbers) {
         given(CucumberGivenBuilder.iHave(cucumbers));
@@ -43,6 +46,9 @@ public class BaseTest {
 
     public void given(UserGivenBuilder builder) {
         UserGiven given = builder.build();
+        if (!given.isHungry()) {
+            notes.text().add("Not hungry, so will not eat");
+        }
         cucumberService.setHungry(given.isHungry());
     }
 

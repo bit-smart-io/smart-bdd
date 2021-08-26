@@ -6,6 +6,8 @@ import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
+import io.bitsmart.bdd.report.junit5.results.model.notes.TextNotes;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
@@ -51,7 +53,8 @@ public class ReportFactory {
             testSuiteResult.getTestSuiteClass().getPackageName(),
             testSuiteResult.getMethods().stream().map(TestMethod::getName).collect(toList()),
             testResults(testSuiteResult.getTestCaseResults()),
-            testSuiteSummary(testSuiteResult.getMetadata()));
+            testSuiteSummary(testSuiteResult.getMetadata()),
+            null);
     }
 
     private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {
@@ -74,7 +77,18 @@ public class ReportFactory {
             testCaseResult.getName(),
             testCaseResult.getMethod().getName(),
             testCaseResult.getTestSuiteClass().getClassName(),
-            testCaseResult.getTestSuiteClass().getPackageName());
+            testCaseResult.getTestSuiteClass().getPackageName(),
+            notes(testCaseResult.getNotes()));
+    }
+
+    private static io.bitsmart.bdd.report.report.model.notes.Notes notes(Notes notes) {
+        if (notes.text().getNotes().size() == 0) {
+            return null;
+        }
+
+        final TextNotes textNotes = new TextNotes();
+        textNotes.getNotes().addAll(notes.text().getNotes());
+        return new io.bitsmart.bdd.report.report.model.notes.Notes(textNotes);
     }
 
     private static Status statusFrom(TestCaseResultStatus status) {

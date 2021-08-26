@@ -1,6 +1,5 @@
 package com.example.cucumbers;
 
-import com.example.cucumbers.builders.UserGivenBuilder;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -74,7 +73,7 @@ public class EatCucumbersTest extends BaseTest {
 
     /**
      * Incremental update. Notice the optional syntax sugar andACucumber()
-     *
+     * <p>
      * Output:
      * Given I have a cucumber with colour "red" and a cucumber with colour "blue"
      * When I request to eat cucumbers with quantity 1 with colour "red"
@@ -90,7 +89,7 @@ public class EatCucumbersTest extends BaseTest {
 
     /**
      * Let's update the expected state to assert on colour.
-     *
+     * <p>
      * withColour is a little ambitious. It really means all expected cucumbers to be blue.
      */
     @Order(3)
@@ -114,8 +113,15 @@ public class EatCucumbersTest extends BaseTest {
 
     /**
      * Adding a new feature of not hungry
-     *
+     * <p>
      * Create new given(UserGivenBuilder builder)
+     * <pre>
+     * With this new feature we are adding some notes. This shows how we can add to the report.
+     * if (!given.isHungry()) {
+     *   notes().text().add("Not hungry, so will not eat");
+     * }
+     * </pre>
+     * The is
      */
     @Order(5)
     @Test
@@ -127,9 +133,11 @@ public class EatCucumbersTest extends BaseTest {
     }
 
     /**
+     * <pre>
      * Next tests:
-     * - show how to add notes. log.text("this is some addition info maybe useful information about the cucumbers")
-     * - show how to add uml, maybe an interaction diagram. log.uml(). Very useful for downstream dependencies.
+     * - show how to add uml, maybe an interaction diagram.
+     *  - notes().uml().add() Very useful for downstream dependencies.
+     *  - Explore testCase().notes().uml(), testSuites().notes().uml()
      * - show async set actions. given body in an action.
      * - show how to add new wordify expressions. wordify().add(). Maybe
      * From: When I request to eat cucumbers with quantity 1 with colour "red"
@@ -137,6 +145,7 @@ public class EatCucumbersTest extends BaseTest {
      * 1 and red need to be highlighted in the html test report
      * You need to specify verbs, nouns, subjects etc... and it may be possible
      * - show my_test(@Given int amount, @Given String colour).
+     * </pre>
      */
     @Test
     void todo() {
@@ -145,22 +154,22 @@ public class EatCucumbersTest extends BaseTest {
 
     /**
      * Idea:
-     *  - can you generate a better title for the test?
-     *  - or just wordify the title?
-     *
-     *  In this class, the method titles are same as the test wordify but condensed
-     *
+     * - can you generate a better title for the test?
+     * - or just wordify the title?
+     * <p>
+     * In this class, the method titles are same as the test wordify but condensed
+     * <p>
      * For example
      * "Given user given builder I am not hungry
      * Given I have a cucumber with colour "red" and a cucumber with colour "blue"
      * When I request to eat cucumbers with quantity 1 with colour "red"
      * Then I should have cucumbers with quantity 2"
-     *
+     * <p>
      * Has the title givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft
      * The title is kinda what the test should have been
      */
     @Test
     void generate_title_idea() {
-       //TODO
+        //TODO
     }
 }

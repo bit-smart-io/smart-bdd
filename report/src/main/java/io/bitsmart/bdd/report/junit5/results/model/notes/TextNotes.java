@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class TextNotes {
-    private final List<String> textNotes = new ArrayList<>();
+    private final List<String> notes = new ArrayList<>();
 
-    public List<String> getTextNotes() {
-        return textNotes;
+    public List<String> getNotes() {
+        return notes;
     }
 
     public void add(String note) {
-        textNotes.add(note);
+        notes.add(note);
     }
 
     @Override
@@ -20,18 +20,18 @@ public class TextNotes {
         if (this == o) return true;
         if (!(o instanceof TextNotes)) return false;
         TextNotes textNotes1 = (TextNotes) o;
-        return Objects.equals(textNotes, textNotes1.textNotes);
+        return Objects.equals(notes, textNotes1.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNotes);
+        return Objects.hash(notes);
     }
 
     @Override
     public String toString() {
         return "TextNotes{" +
-            "textNotes=" + textNotes +
+            "textNotes=" + notes +
             '}';
     }
 }
