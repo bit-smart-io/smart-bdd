@@ -7,11 +7,20 @@ Create interactive feature files from Java code:
 - Ability to re-run tests.
 - Show downstream interactions with diagrams.
 - Capture downstream data such as HTTP request/response headers and body.
-- More consistent as builders as used to set state and exercise the system under test.
-- More productive as you are encouraged to use best practices and don't have the complexities of the steps 1-3 below.
-- Test results as data so that historical test results can be persisted and queried.
+- Steps wrapped in actions:
+  - So that they can be executed asynchronously to improve performance
+  - Validate correctness of the scenario by adding/removing and or mutating steps and asserting the expected state and or behavior.
+- More consistent as builders are used to set state and exercise the system under test.
+- More productive as you are encouraged to use best practices and don't have the complexities of traditional glue layers.
+- Results can be persisted so that previous test results can be queried.
 
-This is stark contrast to existing frameworks: Cucumber, JBehave, Concordion etc...
+The projects aim is to:
+- Improve the quality and usefulness of the documentation 
+- Improve the confidence and coverage of the tests 
+- Improve the performance of the tests 
+- Improve the productivity of writing and maintaining the tests
+
+The fundamental approach is in stark contrast to existing frameworks: Cucumber, JBehave, Concordion etc...
 
 Traditionally have approximately four layers:
 
@@ -36,7 +45,7 @@ Traditionally have approximately four layers:
 
 Adding new data, steps and or features is not linear because of the following:
 
-* Due to complexity
+* Complexity
 * Coupling to between layers
 * Limitations in the glue layer
     * Forcing step definitions to be constructed in a certain way. Possibly not the way you planned and or wanted.
