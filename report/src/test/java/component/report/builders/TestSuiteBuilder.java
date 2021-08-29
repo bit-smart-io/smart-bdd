@@ -11,6 +11,7 @@ import java.util.List;
 import static component.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 
 public final class TestSuiteBuilder implements Builder<TestSuite> {
+    private String title;
     private String name;
     private String className;
     private String packageName;
@@ -24,6 +25,11 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
 
     public static TestSuiteBuilder aTestSuite() {
         return new TestSuiteBuilder();
+    }
+
+    public TestSuiteBuilder withTitle(String title) {
+        this.title = title;
+        return this;
     }
 
     public TestSuiteBuilder withName(String name) {
@@ -64,6 +70,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
     }
 
     public TestSuite build() {
-        return new TestSuite(name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build(), notes);
+        return new TestSuite(title, name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build(), notes);
     }
 }

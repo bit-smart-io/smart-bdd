@@ -15,10 +15,8 @@ import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Optional;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;

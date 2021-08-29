@@ -51,10 +51,16 @@ public class TestSuiteResult {
      */
     private final ConcurrentHashMap<TestMethod, List<ExtensionContext>> methodToContexts = new ConcurrentHashMap<>();
 
+    private final String title;
+
+    private final Notes notes;
+
     private TestSuiteResultsMetadata metadata;
 
-    public TestSuiteResult(TestSuiteClass testSuiteClass) {
+    public TestSuiteResult(TestSuiteClass testSuiteClass, String title, Notes notes) {
         this.testSuiteClass = testSuiteClass;
+        this.title = title;
+        this.notes = notes;
     }
 
     public TestCaseResult startTestCase(ExtensionContext context) {
@@ -96,6 +102,10 @@ public class TestSuiteResult {
             .collect(Collectors.toList());
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public TestSuiteClass getTestSuiteClass() {
         return testSuiteClass;
     }
@@ -114,6 +124,10 @@ public class TestSuiteResult {
 
     public List<TestCaseResult> getTestCaseResults() {
         return testCaseResults;
+    }
+
+    public Notes getNotes() {
+        return notes;
     }
 
     private TestMethod method(ExtensionContext context) {

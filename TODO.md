@@ -68,6 +68,51 @@ for argument value 0,1,2,3 etc...
 
 It gets interesting when combine actions and parameter values for mutation tests.
 
+### Adding notes
+
+#### Feature notes
+
+For docs there are 2 choices:
+
+1. @BeforeEach calls notes()/doc() once. If testSuiteNotes().text().size() == 0 then add notes. Means that notes could
+   only be added in the setuo()/notes()/doc() method.
+2. @Notes/@Doc annotation
+
+With feature documentation you probably only want text, html and or markdown. If you want to inject uml then you'll need
+to insert notes that are of type text, html, markdown, uml. Maybe need feature().notes().text() .html(), .markdown(),
+.uml(). The corresponding scenario().notes()
+Add in order you have added. i.e. using add():
+
+```
+scenario().notes().text().add("this is an explanation. Below is a diagram.")
+scenario().notes().uml().add(...)
+scenario().notes().markdown().add("some notes with markdown formatting")
+```
+
+Or assuming `add` is the only thing you want to do it can be omitted:
+
+```
+scenario().notes().text("this is an explanation. Below is a diagram.")
+scenario().notes().uml(...)
+scenario().notes().markdown("some notes with markdown formatting")
+```
+
+Feature and scenario can have the same notes() object, but feature has a title.
+
+#### Scenario Notes
+
+`scenario().notes()` or just `notes()` as it will be used more and it could be implied. Prefix scenario and feature is
+better than testCase and testSuite as it would look like:
+
+```
+testCase().notes().uml()
+testSuite().notes().uml()
+```
+
+Parent object/accessor `scenario()`/`feature()`. Else `notes().feature()` and `notes().uml()` adding a note and
+specifying where to add the note doesn't work keyed off of off `notes()`
+Could there be `scenario().store(key, value)`, `scenario().context()` or `scenario().metric()` etc...?
+
 ### Test titles to be wordified
 
 Test method names could benefit from being wordified. How to implement. Java properties, overridden in test via an
@@ -93,16 +138,21 @@ This means something like:
 * `testCaseResult.parentTest` = `ParamTest()`. Is this needed to group tests??? Is it the same as `methodName`?
 * `testCaseResult.args` not empty
 
+#### Options:
+
+* scenario parent and scenario child.
+* Or a test is identified with parametrized scenario? `methodName` field relates the parametrized scenarios.
+
 ### New args block. With args we can re-run test(s).
 
 ```json
 {
-  "wordify": "Passing assertion with value 2",
-  "wordifyTemplate": "Passing assertion with {{ 0 }} and {{ 1 }} ",
+  "wordify": "Passing assertion with string value 'blah' with int value 1",
+  "wordifyTemplate": "Passing assertion with string value '{{ 0 }}' with int value {{ 1 }} ",
   "args": [
     {
       "type": "String",
-      "value": "string value"
+      "value": "blah"
     },
     {
       "type": "Integer",
@@ -115,6 +165,7 @@ This means something like:
   "packageName": "shared.undertest"
 }
 ```
+
 
 ### Dummy Objects
 

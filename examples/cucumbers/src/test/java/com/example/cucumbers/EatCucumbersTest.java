@@ -20,6 +20,14 @@ import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
 public class EatCucumbersTest extends BaseTest {
 
     /**
+     * TODO Work in progress for the feature documentation and notes. See README.md.
+     */
+    @Override
+    public void doc() {
+        featureNotes("Working progress for example of usage Smart BDD");
+    }
+
+    /**
      * First test shows the basic building blocks of using builders.
      * Builders are not mandatory - if you have a non-trivial app to test, using builders is your best option!
      * <p>

@@ -1,5 +1,7 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+import io.bitsmart.wordify.WordifyString;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.Collection;
@@ -51,8 +53,9 @@ public class TestResults {
     }
 
     public TestSuiteResult startTestSuite(ExtensionContext context) {
-        Class<?> clazz = context.getRequiredTestClass();
-        TestSuiteResult testSuiteResult = new TestSuiteResult(testSuiteClass(clazz));
+        TestSuiteClass testSuiteClass = testSuiteClass(context.getRequiredTestClass());
+        String title = new WordifyString(testSuiteClass.getClassName()).wordify();
+        TestSuiteResult testSuiteResult = new TestSuiteResult(testSuiteClass, title, new Notes());
         testSuiteToTestSuiteResults.put(getTestSuiteClass(context), testSuiteResult);
         return testSuiteResult;
     }

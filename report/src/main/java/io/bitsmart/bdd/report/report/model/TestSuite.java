@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TestSuite {
+    private final String title;
     private final String name;
     private final String className;
     private final String packageName;
@@ -21,6 +22,7 @@ public class TestSuite {
 
     @JsonCreator
     public TestSuite(
+        @JsonProperty("title") String title,
         @JsonProperty("name") String name,
         @JsonProperty("className") String className,
         @JsonProperty("packageName") String packageName,
@@ -29,6 +31,7 @@ public class TestSuite {
         @JsonProperty("summary") TestSuiteSummary summary,
         @JsonProperty("notes") Notes notes)
     {
+        this.title = title;
         this.name = name;
         this.className = className;
         this.packageName = packageName;
@@ -36,6 +39,10 @@ public class TestSuite {
         this.testCases = testCases;
         this.summary = summary;
         this.notes = notes;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getName() {
@@ -71,18 +78,19 @@ public class TestSuite {
         if (this == o) return true;
         if (!(o instanceof TestSuite)) return false;
         TestSuite testSuite = (TestSuite) o;
-        return Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary) && Objects.equals(notes, testSuite.notes);
+        return Objects.equals(title, testSuite.title) && Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary) && Objects.equals(notes, testSuite.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, className, packageName, methodNames, testCases, summary, notes);
+        return Objects.hash(title, name, className, packageName, methodNames, testCases, summary, notes);
     }
 
     @Override
     public String toString() {
         return "TestSuite{" +
-            "name='" + name + '\'' +
+            "title='" + title + '\'' +
+            ", name='" + name + '\'' +
             ", className='" + className + '\'' +
             ", packageName='" + packageName + '\'' +
             ", methodNames=" + methodNames +

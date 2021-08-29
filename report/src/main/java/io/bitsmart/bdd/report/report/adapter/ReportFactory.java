@@ -48,13 +48,14 @@ public class ReportFactory {
 
     public static io.bitsmart.bdd.report.report.model.TestSuite testSuite(TestSuiteResult testSuiteResult) {
         return new io.bitsmart.bdd.report.report.model.TestSuite(
+            testSuiteResult.getTitle(),
             testSuiteResult.getTestSuiteClass().getFullyQualifiedName(),
             testSuiteResult.getTestSuiteClass().getClassName(),
             testSuiteResult.getTestSuiteClass().getPackageName(),
             testSuiteResult.getMethods().stream().map(TestMethod::getName).collect(toList()),
             testResults(testSuiteResult.getTestCaseResults()),
             testSuiteSummary(testSuiteResult.getMetadata()),
-            null);
+            notes(testSuiteResult.getNotes()));
     }
 
     private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {

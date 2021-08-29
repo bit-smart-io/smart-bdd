@@ -7,9 +7,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
+
 <section class="section">
+    <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="./index.html">index</a></li>
+            <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
+        </ul>
+    </nav>
     <div class="container">
-        <h1 class="title" th:text="'Results for: ' + ${testSuite.name}"></h1>
+<!--        TODO where to put the -->
+        <span class="title">
+            <span class="has-text-success">Feature: </span>
+            <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
+        </span>
+
+        <span class="content" th:if="${testSuite.notes}">
+            <span th:each="note : ${testSuite.notes.textNotes.notes}">
+                <p>
+                    <span style="white-space: pre-wrap" th:text="${note}"></span>
+                </p>
+            </span>
+        </span>
+        <br />
+
         <div>
             <div class="content" th:each="testCase : ${testCases}">
                 <span class="title is-6 is-spaced pt-5" th:text="${testCase.name} + ' (' + ${testCase.status} + ')'"/>

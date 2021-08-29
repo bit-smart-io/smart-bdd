@@ -8,9 +8,11 @@ import com.example.cucumbers.model.CucumberThen;
 import com.example.cucumbers.model.CucumberWhen;
 import com.example.cucumbers.model.UserGiven;
 import io.bitsmart.bdd.report.junit5.annotations.InjectTestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.extension.ContextExtensionParameterResolver;
+import io.bitsmart.bdd.report.junit5.annotations.InjectTestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.TestSuiteResultParameterResolver;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.ThenBuilder;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
@@ -21,11 +23,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith({ReportExtension.class, ContextExtensionParameterResolver.class})
-public class BaseTest {
+@ExtendWith({ReportExtension.class, TestSuiteResultParameterResolver.class})
+public abstract class BaseTest {
 
     private final CucumberService cucumberService = new CucumberService();
     private Notes notes;
+    private Notes testSuiteNotes;
 
     /**
      * Example of what can be injected in the before class.
@@ -35,9 +38,30 @@ public class BaseTest {
      * @param testReporter not hooked up to smart bdd yet
      */
     @BeforeEach
-    void setUp(@InjectTestCaseResult TestCaseResult testCaseResult, TestInfo testInfo, TestReporter testReporter) {
+    void setUp(
+        @InjectTestCaseResult TestCaseResult testCaseResult,
+        @InjectTestSuiteResult TestSuiteResult testSuiteResult,
+        TestInfo testInfo,
+        TestReporter testReporter)
+    {
         System.out.println("testCaseResult: " + testCaseResult);
+
+        //TODO work out the api for this see README.md
         this.notes = testCaseResult.getNotes();
+        this.testSuiteNotes = testSuiteResult.getNotes();
+        doc();
+    }
+
+    public abstract void doc();
+
+    public void featureNotes(String notes) {
+        if (testSuiteNotes().text().getNotes().size() == 0) {
+            testSuiteNotes().text().add(notes);
+        }
+    }
+
+    public Notes testSuiteNotes() {
+        return testSuiteNotes;
     }
 
     public void given(CucumberBuilder... cucumbers) {
