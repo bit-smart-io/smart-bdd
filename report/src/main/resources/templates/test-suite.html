@@ -9,46 +9,47 @@
 <body>
 
 <section class="section">
+
     <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
         <ul>
             <li><a href="./index.html">index</a></li>
             <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
         </ul>
     </nav>
+
     <div class="container">
-<!--        TODO where to put the -->
-        <span class="title">
-            <span class="has-text-success">Feature: </span>
-            <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
-        </span>
-
-        <span class="content" th:if="${testSuite.notes}">
-            <span th:each="note : ${testSuite.notes.textNotes.notes}">
-                <p>
-                    <span style="white-space: pre-wrap" th:text="${note}"></span>
-                </p>
-            </span>
-        </span>
-        <br />
-
-        <div>
-            <div class="content" th:each="testCase : ${testCases}">
-                <span class="title is-6 is-spaced pt-5" th:text="${testCase.name} + ' (' + ${testCase.status} + ')'"/>
-                <span>
-                    <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
-                    <span th:if="${testCase.notes}">
-                        <span th:each="note : ${testCase.notes.textNotes.notes}">
-                            <p>
-                                <span>Note: </span>
-                                <span style="white-space: pre-wrap" class="green" th:text="${note}"></span>
-                            </p>
-                        </span>
-                    </span>
+        <div class="pb-6">
+            <h1 class="title">
+                <span class="has-text-success">Feature: </span>
+                <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
+            </h1>
+            <h2 class="subtitle" th:if="${testSuite.notes}">
+                <span th:each="note : ${testSuite.notes.textNotes.notes}">
+                    <p>
+                        <span style="white-space: pre-wrap" th:text="${note}"></span>
+                    </p>
                 </span>
-            </div>
+            </h2>
+        </div> <!-- end title -->
+        <div class="content pb-4" th:each="testCase : ${testCases}">
+            <h4 class="title">
+                <span class="has-text-success">Scenario: </span>
+                <span th:text="${testCase.name} + ' (' + ${testCase.status} + ')'"/>
+            </h4>
+            <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
+            <span th:if="${testCase.notes}">
+                <span th:each="note : ${testCase.notes.textNotes.notes}">
+                    <p>
+                        <span>Note: </span>
+                        <span style="white-space: pre-wrap" class="green" th:text="${note}"></span>
+                    </p>
+                </span>
+            </span>
         </div>
-    </div>
+    </div><!-- end container -->
 </section>
+</div>
+</div>
 </body>
 
 <footer class="footer">
