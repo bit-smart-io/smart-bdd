@@ -24,27 +24,34 @@ import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Logger;
 
 /**
  * This has been added to resources/META-INF/services/
  */
 public class SmartTestExecutionListener implements TestExecutionListener {
-    private static final Logger logger = Logger.getLogger(SmartTestExecutionListener.class.getName());
-    private List methodNames = new CopyOnWriteArrayList();
+    private static final Logger logger = LoggerFactory.getLogger(SmartTestExecutionListener.class.getName());
+    private final List<String> methodNames = new CopyOnWriteArrayList<>();
 
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
-        //logger.info("testPlanExecutionStarted");
+        logger.debug("testPlanExecutionStarted: " + testPlan.containsTests() + ", roots: " + testPlan.getRoots());
         // init the ReportExtension?
     }
 
     @Override
     public void testPlanExecutionFinished(TestPlan testPlan) {
-        //logger.info("testPlanExecutionFinished: " + methodNames + " " + testPlan.containsTests());
+        logger.debug("testPlanExecutionFinished123: " + methodNames + " " + testPlan.containsTests());
+//        final Set<TestIdentifier> roots = testPlan.getRoots();
+//        roots.forEach(root -> logger.debug("tags: " + root.getTags()));
+//        roots.forEach(root -> logger.debug("source: " + root.getSource()));
+//        roots.forEach(root -> logger.debug("id: " + root.getParentId()));
+
         ReportExtension.getTestContext().writeIndex();
         ReportExtension.getTestContext().writeTestSuiteResults();
     }

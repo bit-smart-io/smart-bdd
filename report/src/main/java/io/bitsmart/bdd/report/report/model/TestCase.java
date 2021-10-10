@@ -43,12 +43,12 @@ public class TestCase {
 
     @JsonCreator
     public TestCase(
-        @JsonProperty("wordify")  String wordify,
-        @JsonProperty("status")  Status status,
-        @JsonProperty("name")  String name,
-        @JsonProperty("methodName")  String methodName,
-        @JsonProperty("className")  String className,
-        @JsonProperty("packageName")  String packageName,
+        @JsonProperty("wordify") String wordify,
+        @JsonProperty("status") Status status,
+        @JsonProperty("name") String name,
+        @JsonProperty("methodName") String methodName,
+        @JsonProperty("className") String className,
+        @JsonProperty("packageName") String packageName,
         @JsonProperty("notes") Notes notes)
     {
         this.wordify = wordify;

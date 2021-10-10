@@ -16,28 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.model;
+plugins {
+    `java-library`
+}
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+group = "io.bitsmart.bdd"
+version = "1.0-SNAPSHOT"
+description = "Java dependencies"
 
-public class ReportIndex {
-    private final TestSuiteLinks links;
-    private final TestSuiteSummary summary;
+repositories {
+    mavenCentral()
+}
 
-    @JsonCreator
-    public ReportIndex(
-        @JsonProperty("links") TestSuiteLinks links,
-        @JsonProperty("summary") TestSuiteSummary summary) {
-        this.links = links;
-        this.summary = summary;
-    }
+dependencies {
+    implementation("ch.qos.logback:logback-classic:1.2.6")
+    implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 
-    public TestSuiteLinks getLinks() {
-        return links;
-    }
+    implementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    implementation("org.junit.platform:junit-platform-runner:1.7.0")
 
-    public TestSuiteSummary getSummary() {
-        return summary;
-    }
+    testImplementation("org.assertj:assertj-core:3.11.1")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    exclude("**/ClassUnderTest.class")
+    exclude("**/undertest")
 }

@@ -18,7 +18,9 @@
 
 package io.bitsmart.bdd.ft;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.ReportIndex;
+import io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteNameToFileBuilder;
+import io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteSummaryBuilder;
+import io.bitsmart.bdd.ft.report.ports.json.model.DataReportIndex;
 import io.bitsmart.bdd.ft.report.ports.json.model.Status;
 import io.bitsmart.bdd.ft.report.ports.json.model.TestSuite;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
@@ -28,15 +30,28 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import static io.bitsmart.bdd.ft.report.ports.json.builders.TestCaseBuilder.aTestCase;
+import static io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
-import static io.bitsmart.bdd.ft.report.ports.utils.ReportTestUtils.loadReportIndex;
-import static io.bitsmart.bdd.ft.report.ports.utils.ReportTestUtils.loadTestSuite;
+import static io.bitsmart.bdd.ft.report.ports.utils.DataReportTestUtils.loadReportIndex;
+import static io.bitsmart.bdd.ft.report.ports.utils.DataReportTestUtils.loadTestSuite;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Due to the static nature of ReportExtension, this class can't be annotated with ReportExtension
+ * Due to the static nature of ReportExtension, this class can't be annotated with ReportExtension.
+ *
+ * TODO address the below
+ * SmartTestExecutionListener will write the index and test suites files twice as it will also listen to this as a test.
+ * There's no point adding logic to SmartTestExecutionListener as this is specific to how it is run here.
+ * Else we could check a tag and or annotation maybe?
  * */
-public class ReportTest {
+public class DataReportTest {
+
+    // TODO
+    // create the reports once
+    // test html report
+    // html report to summarise failures. DO we want a table
+    // still need a project where competitors reports are stored
 
     private static TestSuite testSuite;
 
@@ -66,18 +81,9 @@ public class ReportTest {
      */
     @Test
     void generatesIndexJson() throws IOException {
-        ReportIndex reportIndex = loadReportIndex();
-        assertThat(reportIndex).isNotNull();
-    }
-
-    @Test
-    void generatesTestSuiteJson() {
-        assertThat(testSuite).isNotNull();
-        assertThat(testSuite.getName()).isEqualTo("io.bitsmart.bdd.ft.ClassUnderTest");
-        assertThat(testSuite.getClassName()).isEqualTo("ClassUnderTest");
-        assertThat(testSuite.getPackageName()).isEqualTo("io.bitsmart.bdd.ft");
-        assertThat(testSuite.getMethodNames()).containsExactly("testMethod", "paramTest", "paramTest", "paramTest");
-        assertThat(testSuite.getSummary()).isEqualTo(aTestSuiteSummary().withTestCase(4).withPassed(4).withSkipped(0).withFailed(0).withAborted(0).build());
+        DataReportIndex reportIndex = loadReportIndex();
+        assertThat(reportIndex.getLinks()).isEqualTo(aTestSuiteLinks().withTestSuites(singletonList(classUnderTestTestSuiteNameToFileBuilder())).build());
+        assertThat(reportIndex.getSummary()).isEqualTo(classUnderTestTestSuiteSummaryBuilder().build());
     }
 
     /**
@@ -126,6 +132,17 @@ public class ReportTest {
      * }
      */
     @Test
+    void generatesTestSuiteJson() {
+        assertThat(testSuite).isNotNull();
+        assertThat(testSuite.getTitle()).isEqualTo("Class under test");
+        assertThat(testSuite.getName()).isEqualTo("io.bitsmart.bdd.ft.ClassUnderTest");
+        assertThat(testSuite.getClassName()).isEqualTo("ClassUnderTest");
+        assertThat(testSuite.getPackageName()).isEqualTo("io.bitsmart.bdd.ft");
+        assertThat(testSuite.getMethodNames()).containsExactly("testMethod", "paramTest", "paramTest", "paramTest");
+        assertThat(testSuite.getSummary()).isEqualTo(classUnderTestTestSuiteSummaryBuilder().build());
+    }
+
+    @Test
     void generatesTestCaseJsonForTestMethod() {
         assertThat(testSuite.getTestCases()).contains(
             aTestCase()
@@ -136,5 +153,15 @@ public class ReportTest {
                 .withStatus(Status.PASSED)
                 .withWordify("Passing assertion")
                 .build());
+    }
+
+    public static TestSuiteSummaryBuilder classUnderTestTestSuiteSummaryBuilder() {
+        return aTestSuiteSummary().withTestCase(4).withPassed(4).withSkipped(0).withFailed(0).withAborted(0);
+    }
+
+    public static TestSuiteNameToFileBuilder classUnderTestTestSuiteNameToFileBuilder() {
+        return TestSuiteNameToFileBuilder.aTestSuiteNameToFile()
+            .withName("io.bitsmart.bdd.ft.ClassUnderTest")
+            .withFile("TEST-io.bitsmart.bdd.ft.ClassUnderTest.json");
     }
 }

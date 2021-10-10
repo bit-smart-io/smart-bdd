@@ -16,51 +16,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.model;
+package io.bitsmart.bdd.ft.report.ports.json.model.notes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
 import java.util.Objects;
 
-public class TestSuiteNameToFile {
-    private final String name;
-    private final String file;
+public class TextNotes {
+    private final List<String> notes;
 
     @JsonCreator
-    public TestSuiteNameToFile(
-        @JsonProperty("name") String name,
-        @JsonProperty("file") String file) {
-        this.name = name;
-        this.file = file;
+    public TextNotes(@JsonProperty("notes") List<String> notes) {
+        this.notes = notes;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getFile() {
-        return file;
+    public List<String> getNotes() {
+        return notes;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestSuiteNameToFile)) return false;
-        TestSuiteNameToFile that = (TestSuiteNameToFile) o;
-        return Objects.equals(name, that.name) && Objects.equals(file, that.file);
+        if (!(o instanceof TextNotes)) return false;
+        TextNotes textNotes = (TextNotes) o;
+        return Objects.equals(notes, textNotes.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, file);
+        return Objects.hash(notes);
     }
 
     @Override
     public String toString() {
-        return "TestSuiteNameToFile{" +
-            "name='" + name + '\'' +
-            ", file='" + file + '\'' +
+        return "TextNotes{" +
+            "notes=" + notes +
             '}';
     }
 }

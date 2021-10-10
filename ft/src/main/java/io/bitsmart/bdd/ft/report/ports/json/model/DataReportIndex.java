@@ -23,44 +23,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class TestSuiteNameToFile {
-    private final String name;
-    private final String file;
+public class DataReportIndex {
+    private final TestSuiteLinks links;
+    private final TestSuiteSummary summary;
 
     @JsonCreator
-    public TestSuiteNameToFile(
-        @JsonProperty("name") String name,
-        @JsonProperty("file") String file) {
-        this.name = name;
-        this.file = file;
+    public DataReportIndex(
+        @JsonProperty("links") TestSuiteLinks links,
+        @JsonProperty("summary") TestSuiteSummary summary) {
+        this.links = links;
+        this.summary = summary;
     }
 
-    public String getName() {
-        return name;
+    public TestSuiteLinks getLinks() {
+        return links;
     }
 
-    public String getFile() {
-        return file;
+    public TestSuiteSummary getSummary() {
+        return summary;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestSuiteNameToFile)) return false;
-        TestSuiteNameToFile that = (TestSuiteNameToFile) o;
-        return Objects.equals(name, that.name) && Objects.equals(file, that.file);
+        if (!(o instanceof DataReportIndex)) return false;
+        DataReportIndex that = (DataReportIndex) o;
+        return Objects.equals(links, that.links) && Objects.equals(summary, that.summary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, file);
+        return Objects.hash(links, summary);
     }
 
     @Override
     public String toString() {
-        return "TestSuiteNameToFile{" +
-            "name='" + name + '\'' +
-            ", file='" + file + '\'' +
+        return "ReportIndex{" +
+            "links=" + links +
+            ", summary=" + summary +
             '}';
     }
 }

@@ -19,7 +19,7 @@
 package io.bitsmart.bdd.ft.report.ports.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitsmart.bdd.ft.report.ports.json.model.ReportIndex;
+import io.bitsmart.bdd.ft.report.ports.json.model.DataReportIndex;
 import io.bitsmart.bdd.ft.report.ports.json.model.TestSuite;
 
 import java.io.File;
@@ -27,7 +27,7 @@ import java.io.IOException;
 
 import static java.lang.System.getProperty;
 
-public class ReportTestUtils {
+public class DataReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
@@ -35,9 +35,9 @@ public class ReportTestUtils {
         return MAPPER.readValue(contents, TestSuite.class);
     }
 
-    public static ReportIndex loadReportIndex() throws IOException {
+    public static DataReportIndex loadReportIndex() throws IOException {
         String contents = new FileLoader().toString(homePageFile());
-        return MAPPER.readValue(contents, ReportIndex.class);
+        return MAPPER.readValue(contents, DataReportIndex.class);
     }
 
     public static File homePageFile() {

@@ -32,7 +32,7 @@ public class Report {
         this.testCases = testCases;
         this.testSuites = testSuites;
     }
-    
+
     public DataReportIndex getIndex() {
         return dataReportIndex;
     }
