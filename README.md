@@ -141,7 +141,8 @@ Questions:
 ### Testing Locally
 
 ### Deploying Locally
-`./gradlew :report:publishToMavenLocal`
+Create report, test-utils, test-utils  
+`./gradlew publishToMavenLocal`
 
 To check the jar was created in maven local  
 `ls -la ~/.m2/repository/io/bitsmart/bdd/report/1.0-SNAPSHOT`

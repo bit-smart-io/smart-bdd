@@ -18,11 +18,8 @@
 
 plugins {
     id("smart-bdd.java-lib")
+    id("maven-publish")
 }
-
-group = "io.bitsmart.bdd.wordify"
-version = "1.0-SNAPSHOT"
-description = "Wordify Java methods"
 
 repositories {
     mavenCentral()
@@ -38,4 +35,15 @@ tasks.test {
     useJUnitPlatform()
     exclude("**/ClassUnderTest.class")
     exclude("**/undertest")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            group = "io.bitsmart.bdd"
+            version = "1.0-SNAPSHOT"
+            description = "Wordify Java methods"
+            from(components["java"])
+        }
+    }
 }
