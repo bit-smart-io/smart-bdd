@@ -26,8 +26,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":wordify"))
-    implementation(project(":test-utils"))
+    api(project(":wordify"))
+    api(project(":test-utils"))
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
