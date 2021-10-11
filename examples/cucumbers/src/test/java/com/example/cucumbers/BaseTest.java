@@ -62,7 +62,7 @@ public abstract class BaseTest {
         TestInfo testInfo,
         TestReporter testReporter)
     {
-        System.out.println("testCaseResult: " + testCaseResult);
+        //System.out.println("testCaseResult: " + testCaseResult);
 
         //TODO work out the api for this see README.md
         this.notes = testCaseResult.getNotes();

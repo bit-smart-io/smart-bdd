@@ -18,11 +18,8 @@
 
 plugins {
     id("smart-bdd.java-lib")
+    id("maven-publish")
 }
-
-group = "io.bitsmart.bdd.report"
-version = "1.0-SNAPSHOT"
-description = "Generate the JUnit Report"
 
 repositories {
     mavenCentral()
@@ -45,4 +42,15 @@ tasks.test {
     useJUnitPlatform()
     exclude("**/ClassUnderTest.class")
     exclude("**/undertest")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            group = "io.bitsmart.bdd"
+            version = "1.0-SNAPSHOT"
+            description = "Generate the JUnit Report"
+            from(components["java"])
+        }
+    }
 }

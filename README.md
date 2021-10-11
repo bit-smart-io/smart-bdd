@@ -136,3 +136,10 @@ Questions:
     * file data json/xml
     * data to db
     * data to rest service
+
+
+### Testing Locally
+
+### Deploying Locally
+`./gradlew :report:publishToMavenLocal`
+`ls -la ~/.m2/repository/io/bitsmart/bdd/report/1.0-SNAPSHOT`
