@@ -142,4 +142,9 @@ Questions:
 
 ### Deploying Locally
 `./gradlew :report:publishToMavenLocal`
+
+To check the jar was created in maven local  
 `ls -la ~/.m2/repository/io/bitsmart/bdd/report/1.0-SNAPSHOT`
+
+Then use the following in your app  
+`testImplementation("io.bitsmart.bdd:report:1.0-SNAPSHOT")`
