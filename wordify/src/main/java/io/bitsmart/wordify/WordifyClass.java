@@ -57,7 +57,8 @@ public class WordifyClass {
         try {
             int count = 0;
             for (JavaParameter param : parameters) {
-                sourceCode = sourceCode.replace(param.getName(), parameterValues.get(count).toString());
+                String value = parameterValues.get(count) == null ? "null" : parameterValues.get(count).toString();
+                sourceCode = sourceCode.replace(param.getName(), value);
                 count++;
             }
             return sourceCode;

@@ -176,4 +176,11 @@ public class WordifyStringTest {
     void assertJStyleTests() throws Exception {
         assertThat(new WordifyString("assertThat(true).isEqualTo(true)").wordify()).isEqualTo(("Assert that true is equal to true"));
     }
+
+    @Disabled("This doesn't work with the current parser")
+    @Test
+    void handlesConstants() throws Exception {
+        assertThat(new WordifyString("UPPERCASE").wordify()).isEqualTo(("UPPERCASE"));
+        assertThat(new WordifyString("assert(TRUE)").wordify()).isEqualTo(("Assert TRUE"));
+    }
 }
