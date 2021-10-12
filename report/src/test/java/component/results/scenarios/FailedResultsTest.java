@@ -22,13 +22,10 @@ import component.results.AbstractResultsForTestSuite;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import shared.undertest.FailedTestCasesUnderTest;
-
-import java.util.List;
+import shared.undertest.basic.FailedTestCasesUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.FAILED;

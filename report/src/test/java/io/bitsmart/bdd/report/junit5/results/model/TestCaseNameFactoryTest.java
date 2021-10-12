@@ -53,6 +53,12 @@ class TestCaseNameFactoryTest {
         assertThat(testCaseNameFactory.createName(testCaseResult)).isEqualTo("methodName 1, 2");
     }
 
+    @Test
+    void createName_withOneNullArg() {
+        TestCaseResult testCaseResult = aDefaultTestCaseResult().withArgs(singletonList(null)).build();
+        assertThat(testCaseNameFactory.createName(testCaseResult)).isEqualTo("methodName null");
+    }
+
     private TestCaseResultBuilder aDefaultTestCaseResult() {
         return aTestCaseResult()
             .withMethod(new TestMethod("methodName"));

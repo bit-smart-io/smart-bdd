@@ -29,6 +29,7 @@ public class TestCaseNameFactory {
             return methodName;
         }
 
-        return testCaseResult.getMethod().getName() + args.stream().map(Object::toString).collect(Collectors.joining(", ", " ", ""));
+        return testCaseResult.getMethod().getName() +
+            args.stream().map(arg -> arg == null ? "null" : arg.toString()).collect(Collectors.joining(", ", " ", ""));
     }
 }

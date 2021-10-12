@@ -25,7 +25,7 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import shared.undertest.ClassUnderTest;
+import shared.undertest.basic.ClassUnderTest;
 
 import java.io.IOException;
 
@@ -73,7 +73,7 @@ public class ReportForPassingTestSuiteTest {
 
     public static void assertReport(Report report) {
         assertThat(report).isNotNull();
-        assertThat(report.getTestCases()).hasSize(4);
+        assertThat(report.getTestCases()).hasSize(6);
         assertThat(report.getTestSuites()).hasSize(1);
 
         TestSuite testSuite = report.getTestSuites().get(0);

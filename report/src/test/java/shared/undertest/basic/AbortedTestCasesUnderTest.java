@@ -16,64 +16,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package shared.undertest;
+package shared.undertest.basic;
 
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
- * <?xml version="1.0" encoding="UTF-8"?>
- * <testsuite name="junit5.results.undertest.FailedTestCasesUnderTest" tests="4" skipped="0" failures="4" errors="0" timestamp="2021-04-12T20:09:43" hostname="Jamess-MacBook-Pro.local" time="0.189">
- *   <properties/>
- *   <testcase name="testMethod()" classname="junit5.results.undertest.FailedTestCasesUnderTest" time="0.12">
- *     <failure message="java.lang.AssertionError: &#10;Expecting:&#10; &lt;&quot;testMethod&quot;&gt;&#10;not to be equal to:&#10; &lt;&quot;testMethod&quot;&gt;&#10;" type="java.lang.AssertionError">java.lang.AssertionError:
- * Expecting:
- *  &lt;&quot;testMethod&quot;&gt;
- * not to be equal to:
- *  &lt;&quot;testMethod&quot;&gt;
+ * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
  *
- * 	at junit5.results.undertest.FailedTestCasesUnderTest.testMethod(FailedTestCasesUnderTest.java:16) ...
+ * <?xml version="1.0" encoding="UTF-8"?>
+ * <testsuite name="junit5.results.undertest.AbortedTestCasesUnderTest" tests="4" skipped="4" failures="0" errors="0" timestamp="2021-04-12T20:09:43" hostname="Jamess-MacBook-Pro.local" time="0.011">
+ *   <properties/>
+ *   <testcase name="testMethod()" classname="junit5.results.undertest.AbortedTestCasesUnderTest" time="0.002">
+ *     <skipped/>
+ *   </testcase>
+ *   <testcase name="[1] value 1" classname="junit5.results.undertest.AbortedTestCasesUnderTest" time="0.002">
+ *     <skipped/>
+ *   </testcase>
+ *   <testcase name="[2] value 2" classname="junit5.results.undertest.AbortedTestCasesUnderTest" time="0.002">
+ *     <skipped/>
+ *   </testcase>
+ *   <testcase name="[3] value 3" classname="junit5.results.undertest.AbortedTestCasesUnderTest" time="0.002">
+ *     <skipped/>
  *   </testcase>
  *   <system-out><![CDATA[]]></system-out>
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
 @ExtendWith(ReportExtension.class)
-public class FailedTestCasesUnderTest {
-    private static Boolean enabled = false;
+public class AbortedTestCasesUnderTest {
 
-    @EnabledIf("isEnabled")
     @Test
     void testMethod() {
-        failingAssertion();
+        abortingAssertion();
     }
 
-    @EnabledIf("isEnabled")
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
-        failingAssertionWith(param);
+        abortingAssertionWith(param);
     }
 
-    private void failingAssertion() {
-        assertThat(true).isFalse();
+    private void abortingAssertion() {
+        assumeTrue("testMethod".contains("z"), "testMethod does not contain Z");
     }
 
-    private void failingAssertionWith(String param) {
-        assertThat(param).isNull();
-    }
-
-    public static boolean isEnabled() {
-        return enabled;
-    }
-
-    public static void setEnabled(Boolean isEnabled) {
-        enabled = isEnabled;
+    private void abortingAssertionWith(String param) {
+        assumeTrue(param.contains("z"), param + " does not contain z");
     }
 }

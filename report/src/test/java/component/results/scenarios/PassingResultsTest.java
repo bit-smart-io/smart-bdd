@@ -23,7 +23,7 @@ import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.Test;
-import shared.undertest.ClassUnderTest;
+import shared.undertest.basic.ClassUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
@@ -43,8 +43,8 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
         assertTestSuitClass(testSuiteResult(), classUnderTest());
         assertThat(testSuiteResult().getMetadata()).isEqualTo(
             aTestSuiteResultsMetadata()
-                .withTestCaseCount(4)
-                .withPassedCount(4)
+                .withTestCaseCount(6)
+                .withPassedCount(6)
                 .build()
         );
 
@@ -52,7 +52,9 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
             method("testMethod"),
             method("paramTest"),
             method("paramTest"),
-            method("paramTest")
+            method("paramTest"),
+            method("paramTestWithNulls"),
+            method("paramTestWithNulls")
         );
 
         assertThat(testSuiteResult().getTestCaseResult(method("testMethod"))).isEqualTo(aPassedTestCaseResult());

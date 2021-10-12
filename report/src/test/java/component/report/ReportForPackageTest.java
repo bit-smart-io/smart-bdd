@@ -29,9 +29,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import shared.undertest.ClassUnderTest;
-import shared.undertest.FailedDueToExceptionTestCasesUnderTest;
-import shared.undertest.FailedTestCasesUnderTest;
+import shared.undertest.basic.ClassUnderTest;
+import shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest;
+import shared.undertest.basic.FailedTestCasesUnderTest;
 
 import java.io.IOException;
 
@@ -66,8 +66,8 @@ public class ReportForPackageTest {
         TestSuiteLinks testSuiteLinks = report.getIndex().getLinks();
         assertThat(testSuiteLinks.getTestSuites()).contains(
             new TestSuiteNameToFile(
-                "shared.undertest.ClassUnderTest",
-                "TEST-shared.undertest.ClassUnderTest.json"));
-        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(26, 12, 4, 8, 4));
+                "shared.undertest.basic.ClassUnderTest",
+                "TEST-shared.undertest.basic.ClassUnderTest.json"));
+        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));
     }
 }

@@ -16,24 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.results;
+package shared.undertest.basic;
 
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import shared.undertest.basic.ClassUnderTest;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestSuiteClassResultsTest extends AbstractResultsForTestSuite  {
+@TestMethodOrder(OrderAnnotation.class)
+@ExtendWith(ReportExtension.class)
+public class OutputStreamClassUnderTest {
 
-    @Override
-    public Class<?> classUnderTest() {
-        return ClassUnderTest.class;
+    @Order(0)
+    @Test
+    void testMethod() {
+        System.out.println("system.out for testMethod");
+        System.err.println("system.err for testMethod");
+        passingAssertion();
     }
 
-    @Test
-    void verifyTestSuiteClass() {
-        assertThat(testSuiteClass().getFullyQualifiedName()).isEqualTo("shared.undertest.basic.ClassUnderTest");
-        assertThat(testSuiteClass().getClassName()).isEqualTo("ClassUnderTest");
-        assertThat(testSuiteClass().getPackageName()).isEqualTo("shared.undertest.basic");
+    private void passingAssertion() {
+        assertThat(true).isTrue();
     }
 }

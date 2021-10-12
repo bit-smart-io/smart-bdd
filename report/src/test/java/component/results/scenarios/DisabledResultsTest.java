@@ -19,9 +19,8 @@
 package component.results.scenarios;
 
 import component.results.AbstractResultsForTestSuite;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import org.junit.jupiter.api.Test;
-import shared.undertest.DisabledTestCasesUnderTest;
+import shared.undertest.basic.DisabledTestCasesUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;

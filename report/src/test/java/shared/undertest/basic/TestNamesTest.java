@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package shared.undertest;
+package shared.undertest.basic;
 
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

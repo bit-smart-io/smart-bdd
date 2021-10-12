@@ -21,7 +21,7 @@ package component.results;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import shared.undertest.TestNamesTest;
+import shared.undertest.basic.TestNamesTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package shared.undertest;
+package shared.undertest.basic;
 
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -25,9 +25,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -58,11 +63,27 @@ public class ClassUnderTest {
         passingAssertionWith(param);
     }
 
+    @ParameterizedTest
+    @MethodSource
+    @Order(2)
+    void paramTestWithNulls(String param1, String param2) {
+        passingAssertionWith(param1, param2);
+    }
+
+    static Stream<Arguments> paramTestWithNulls() {
+        return Stream.of(
+            arguments(null, "value 2"),
+            arguments("value 3", null));
+    }
+
     private void passingAssertion() {
         assertThat(true).isTrue();
     }
 
     private void passingAssertionWith(String param) {
         assertThat(param).isNotNull();
+    }
+
+    private void passingAssertionWith(String param1, String param2) {
     }
 }

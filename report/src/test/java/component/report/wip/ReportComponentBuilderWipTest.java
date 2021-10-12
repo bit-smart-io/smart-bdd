@@ -27,7 +27,7 @@ import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import shared.undertest.ClassUnderTest;
+import shared.undertest.basic.ClassUnderTest;
 
 import static component.report.builders.TestCaseBuilder.aTestCase;
 import static component.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
@@ -56,7 +56,7 @@ public class ReportComponentBuilderWipTest {
 
         Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
         assertThat(report).isNotNull();
-        assertThat(report.getTestCases()).hasSize(4);
+        assertThat(report.getTestCases()).hasSize(6);
 
         assertThat(report.getTestSuites()).hasSize(1);
         TestSuite testSuite = report.getTestSuites().get(0);
@@ -70,25 +70,25 @@ public class ReportComponentBuilderWipTest {
 //            .thatTestCaseContains(firstTestCase());
 
         AssertTestSuite.assertTestSuite(testSuite)
-            .withName("shared.undertest.ClassUnderTest")
+            .withName("shared.undertest.basic.ClassUnderTest")
             .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
-            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest")
+            .withPackageName("shared.undertest.basic")
+            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls")
             .withTestCaseContains(firstTestCase());
 
 
         // uses contains as the last statement
         AssertTestSuite.assertTestSuite(testSuite)
-            .withName("shared.undertest.ClassUnderTest")
+            .withName("shared.undertest.basic.ClassUnderTest")
             .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
-            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest")
+            .withPackageName("shared.undertest.basic")
+            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls")
             .withTestCase(
                 assertTestCase(testSuite.getTestCases().get(0))
                     .withWordify("Passing assertion")
                     .withStatus(Status.PASSED)
                     .withClassName("ClassUnderTest")
-                    .withPackageName("shared.undertest")
+                    .withPackageName("shared.undertest.basic")
             );
     }
 
@@ -172,7 +172,7 @@ public class ReportComponentBuilderWipTest {
             .withName("testMethod")
             .withMethodName("testMethod")
             .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
+            .withPackageName("shared.undertest.basic")
             .build();
     }
 }

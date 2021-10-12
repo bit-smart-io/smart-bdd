@@ -22,11 +22,8 @@ import component.results.AbstractResultsForTestSuite;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import org.junit.jupiter.api.Test;
-import shared.undertest.AbortedTestCasesUnderTest;
-
-import java.util.List;
+import shared.undertest.basic.AbortedTestCasesUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;

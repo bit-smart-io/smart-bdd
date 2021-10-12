@@ -29,14 +29,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ReportAssertions {
 
     public static void assertPassingTestSuite(TestSuite testSuite) {
-        assertThat(testSuite.getName()).isEqualTo("shared.undertest.ClassUnderTest");
+        assertThat(testSuite.getName()).isEqualTo("shared.undertest.basic.ClassUnderTest");
         assertThat(testSuite.getClassName()).isEqualTo("ClassUnderTest");
-        assertThat(testSuite.getPackageName()).isEqualTo("shared.undertest");
-        assertThat(testSuite.getMethodNames()).containsExactly("testMethod", "paramTest", "paramTest", "paramTest");
+        assertThat(testSuite.getPackageName()).isEqualTo("shared.undertest.basic");
+        assertThat(testSuite.getMethodNames()).containsExactly(
+            "testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls");
         assertThat(testSuite.getSummary()).isEqualTo(
             aTestSuiteSummary()
-                .withTestCase(4)
-                .withPassed(4)
+                .withTestCase(6)
+                .withPassed(6)
                 .build());
         assertThat(testSuite.getTestCases()).contains(passingTestCase());
         assertThat(testSuite.getTestCases()).contains(passingParamTestCase());
@@ -49,7 +50,7 @@ public class ReportAssertions {
             .withName("testMethod")
             .withMethodName("testMethod")
             .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
+            .withPackageName("shared.undertest.basic")
             .build();
     }
 
@@ -60,7 +61,7 @@ public class ReportAssertions {
             .withName("paramTest value 1")
             .withMethodName("paramTest")
             .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest")
+            .withPackageName("shared.undertest.basic")
             .build();
     }
 }
