@@ -18,6 +18,10 @@
 
 package io.bitsmart.bdd.report.junit5.results.model.notes;
 
+import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,10 +31,15 @@ import java.util.Objects;
  */
 public class Notes {
     private final TextNotes textNotes = new TextNotes();
-//  UmlDiagrams - List<UmlDiagrams> or
+    private final List<SequenceDiagram> diagrams = new ArrayList<>();
 
+    //TODO this needs to be the usual getter/setter and another object is the feature file view layer??
     public TextNotes text() {
         return textNotes;
+    }
+
+    public List<SequenceDiagram> diagram() {
+        return diagrams;
     }
 
     @Override
@@ -38,18 +47,19 @@ public class Notes {
         if (this == o) return true;
         if (!(o instanceof Notes)) return false;
         Notes notes = (Notes) o;
-        return Objects.equals(textNotes, notes.textNotes);
+        return Objects.equals(textNotes, notes.textNotes) && Objects.equals(diagrams, notes.diagrams);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNotes);
+        return Objects.hash(textNotes, diagrams);
     }
 
     @Override
     public String toString() {
         return "Notes{" +
             "textNotes=" + textNotes +
+            ", diagrams=" + diagrams +
             '}';
     }
 }

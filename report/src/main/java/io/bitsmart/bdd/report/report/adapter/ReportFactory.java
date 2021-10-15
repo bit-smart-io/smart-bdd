@@ -24,12 +24,13 @@ import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
-import io.bitsmart.bdd.report.junit5.results.model.notes.TextNotes;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.notes.TextNotes;
 import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
 import java.util.Collection;
@@ -105,9 +106,9 @@ public class ReportFactory {
             return null;
         }
 
-        final TextNotes textNotes = new TextNotes();
-        textNotes.getNotes().addAll(notes.text().getNotes());
-        return new io.bitsmart.bdd.report.report.model.notes.Notes(textNotes);
+        TextNotes textNotes = new TextNotes(notes.text().getNotes());
+        List<String> diagrams = notes.diagram().stream().map(SequenceDiagram::generate).collect(toList());
+        return new io.bitsmart.bdd.report.report.model.notes.Notes(textNotes, diagrams);
     }
 
     private static Status statusFrom(TestCaseResultStatus status) {

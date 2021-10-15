@@ -35,7 +35,7 @@ import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
  * Tutorial and example usage of builders
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EatCucumbersTest extends BaseTest {
+public class EatCucumbersTest extends BaseCucumberTest {
 
     /**
      * TODO Work in progress for the feature documentation and notes. See README.md.

@@ -20,20 +20,35 @@ package io.bitsmart.bdd.report.report.model.notes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.bitsmart.bdd.report.junit5.results.model.notes.TextNotes;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Notes {
+    //TODO below could be simplified
+    // "notes" : { text: ["Not hungry, so will not eat"],  diagrams: [] }
+//    "notes" : {
+//        "textNotes" : {
+//            "notes" : [ "Not hungry, so will not eat" ]
+//        }
+//    }
     private final TextNotes textNotes;
+    private final List<String> diagrams;
 
     @JsonCreator
-    public Notes(@JsonProperty("textNotes") TextNotes textNotes) {
+    public Notes(
+        @JsonProperty("textNotes") TextNotes textNotes,
+        @JsonProperty("diagrams") List<String> diagrams) {
         this.textNotes = textNotes;
+        this.diagrams = diagrams;
     }
 
     public TextNotes getTextNotes() {
         return textNotes;
+    }
+
+    public List<String> getDiagrams() {
+        return diagrams;
     }
 
     @Override
@@ -41,18 +56,19 @@ public class Notes {
         if (this == o) return true;
         if (!(o instanceof Notes)) return false;
         Notes notes = (Notes) o;
-        return Objects.equals(textNotes, notes.textNotes);
+        return Objects.equals(textNotes, notes.textNotes) && Objects.equals(diagrams, notes.diagrams);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNotes);
+        return Objects.hash(textNotes, diagrams);
     }
 
     @Override
     public String toString() {
         return "Notes{" +
             "textNotes=" + textNotes +
+            ", diagrams=" + diagrams +
             '}';
     }
 }

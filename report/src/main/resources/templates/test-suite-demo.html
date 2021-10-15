@@ -23,6 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Test Suite Result</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({startOnLoad:true});
@@ -35,7 +36,6 @@
     <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
         <ul>
             <li><a href="./index.html">index</a></li>
-            <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
         </ul>
     </nav>
 
@@ -45,39 +45,51 @@
                 <span class="has-text-success">Feature: </span>
                 <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
             </h1>
-            <h2 class="subtitle" th:if="${testSuite.notes}">
-                <span th:each="note : ${testSuite.notes.textNotes.notes}">
-                    <p>
-                        <span style="white-space: pre-wrap" th:text="${note}"></span>
+            <h2 class="subtitle">
+                <span>
+                    <p>Note: <span style="white-space: pre-wrap">This is demo to show extra features of Smart BDD</span>
                     </p>
                 </span>
             </h2>
         </div> <!-- end title -->
-        <div class="content pb-4" th:each="testCase : ${testCases}">
+        <div class="content pb-4">
             <h4 class="title">
                 <span class="has-text-success">Scenario: </span>
-                <span th:text="${testCase.name} + ' (' + ${testCase.status} + ')'"/>
+                <span> Show downstream http requests and response headers and body. Show a UML diagram. (Passed)</span>
             </h4>
-            <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
-
-            <span th:if="${testCase.notes and testCase.notes.textNotes}">
-                <span th:each="note : ${testCase.notes.textNotes.notes}">
+            <p style="white-space: pre-wrap">Downstream A will return "A ok"
+Downstream B will return "B ok" </p>
+            <span>
+                <span>
                     <p>
-                        <span>Note: </span>
-                        <span style="white-space: pre-wrap" class="green" th:text="${note}"></span>
+                        <span>Note:</span>
+                        <span style="white-space: pre-wrap" class="green">example note for the scenario</span>
                     </p>
                 </span>
-            </span>
-            <span th:if="${testCase.notes}">
-                <span th:each="diagram : ${testCase.notes.diagrams}">
-                    <span class="mermaid" style="white-space: pre-wrap" th:text="${diagram}" ></span>
-                </span>
+                <span class="mermaid">
+graph LR
+  A --- B
+  B-->C[fa:fa-ban forbidden]
+  B-->D(fa:fa-spinner);
+</span>
+             <div class="mermaid">
+                 sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+             </div>
+
             </span>
         </div>
     </div><!-- end container -->
 </section>
-</div>
-</div>
 </body>
 
 <footer class="footer">
