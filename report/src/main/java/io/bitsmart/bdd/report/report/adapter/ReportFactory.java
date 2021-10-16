@@ -102,7 +102,7 @@ public class ReportFactory {
     }
 
     private static io.bitsmart.bdd.report.report.model.notes.Notes notes(Notes notes) {
-        if (notes.text().getNotes().size() == 0) {
+        if (notes.text().getNotes().size() == 0 && notes.diagram().size() ==  0) {
             return null;
         }
 

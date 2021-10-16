@@ -21,6 +21,7 @@ package com.example.cucumbers;
 import com.example.cucumbers.builders.CucumberBuilder;
 import com.example.cucumbers.builders.CucumberGivenBuilder;
 import com.example.cucumbers.builders.UserGivenBuilder;
+import com.example.cucumbers.model.Cucumber;
 import com.example.cucumbers.model.CucumberGiven;
 import com.example.cucumbers.model.CucumberThen;
 import com.example.cucumbers.model.CucumberWhen;
@@ -31,6 +32,7 @@ import io.bitsmart.bdd.report.utils.ThenBuilder;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +40,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BaseCucumberTest extends BaseTest {
 
     private final CucumberService cucumberService = new CucumberService();
-//    private SequenceDiagram sequenceDiagram = new SequenceDiagram();
 
     @BeforeEach
     void setUp() {
+        // notes() -> doc()?
+        // doc().request(cucumberService).method(setHungry).value(false)
+        // doc().setup().request()
+        // doc().setup().updatePersistence()
+        // doc().setState()
+
+        // if you did want to document set state would you ever want:
+        //   1. a diagram, notes and or capture request/response header/bodies/messages etc...
+        //   2. If you did want a diagram, would you want a separate one for setup? Or just different arrows?
+
         context.test().notes().diagram().add(new SequenceDiagram());
         context.test().notes().diagram().get(0).addActor("User");
         context.test().notes().diagram().get(0).addParticipant("CucumberService");
@@ -59,12 +70,7 @@ public class BaseCucumberTest extends BaseTest {
         if (!given.isHungry()) {
             notes().text().add("Not hungry, so will not eat");
         }
-        // notes() -> doc()?
-        // doc().request(cucumberService).method(setHungry).value(false)
-        // doc().setup().request()
-        // doc().setup().updatePersistence()
-        // doc().setState()
-        // below is setting state:
+        // below is both given and kinda is when:
         //   should setting state be on a sequence diagram? should it have different arrows?
         sequenceDiagram().addMessage(new Message("User", "CucumberService", "setHungry false"));
         cucumberService.setHungry(given.isHungry());
@@ -78,17 +84,20 @@ public class BaseCucumberTest extends BaseTest {
     public void when(WhenBuilder<CucumberWhen> builder) {
         CucumberWhen cucumberWhen = builder.build();
         cucumberService.eat(cucumberWhen.getQuantity(), cucumberWhen.getColour());
+        sequenceDiagram().addMessage(new Message("User", "CucumberService", "eat " + cucumberWhen.getQuantity() + " " + cucumberWhen.getColour()));
     }
 
     public void then(ThenBuilder<CucumberThen> builder) {
         CucumberThen cucumberThen = builder.build();
+        final List<Cucumber> actualCucumbers = cucumberService.getCucumbers();
+        sequenceDiagram().addMessage(new Message("CucumberService", "User", "getCucumbers: " + actualCucumbers));
 
-        cucumberThen.getColour().ifPresent(colour -> cucumberService.getCucumbers()
+        cucumberThen.getColour().ifPresent(colour -> actualCucumbers
             .forEach((cucumber -> assertThat(cucumber.getColour()).isEqualTo(colour))));
-        cucumberThen.getQuantity().ifPresent(quantity -> assertThat(cucumberService.getCucumbers().size()).isEqualTo(quantity));
+        cucumberThen.getQuantity().ifPresent(quantity -> assertThat(actualCucumbers.size()).isEqualTo(quantity));
 
         cucumberThen.getCucumbers().ifPresent(
-            cucumbers -> assertThat(cucumberService.getCucumbers()).containsAll(
+            cucumbers -> assertThat(actualCucumbers).containsAll(
                 cucumbers.stream().map(CucumberBuilder::build).collect(Collectors.toList())));
     }
 }
