@@ -46,7 +46,7 @@
                 <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
             </h1>
             <h2 class="subtitle" th:if="${testSuite.notes}">
-                <span th:each="note : ${testSuite.notes.textNotes.notes}">
+                <span th:each="note : ${testSuite.notes.textNotes}">
                     <p>
                         <span style="white-space: pre-wrap" th:text="${note}"></span>
                     </p>
@@ -61,7 +61,7 @@
             <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
 
             <span th:if="${testCase.notes and testCase.notes.textNotes}">
-                <span th:each="note : ${testCase.notes.textNotes.notes}">
+                <span th:each="note : ${testCase.notes.textNotes}">
                     <p>
                         <span>Note: </span>
                         <span style="white-space: pre-wrap" class="green" th:text="${note}"></span>

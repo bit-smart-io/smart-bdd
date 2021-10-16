@@ -106,9 +106,8 @@ public class ReportFactory {
             return null;
         }
 
-        TextNotes textNotes = new TextNotes(notes.text().getNotes());
         List<String> diagrams = notes.diagram().stream().map(SequenceDiagram::generate).collect(toList());
-        return new io.bitsmart.bdd.report.report.model.notes.Notes(textNotes, diagrams);
+        return new io.bitsmart.bdd.report.report.model.notes.Notes(notes.text().getNotes(), diagrams);
     }
 
     private static Status statusFrom(TestCaseResultStatus status) {

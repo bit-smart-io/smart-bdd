@@ -25,25 +25,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Notes {
-    //TODO below could be simplified
-    // "notes" : { text: ["Not hungry, so will not eat"],  diagrams: [] }
-//    "notes" : {
-//        "textNotes" : {
-//            "notes" : [ "Not hungry, so will not eat" ]
-//        }
-//    }
-    private final TextNotes textNotes;
+    private final List<String> textNotes;
     private final List<String> diagrams;
 
     @JsonCreator
     public Notes(
-        @JsonProperty("textNotes") TextNotes textNotes,
+        @JsonProperty("textNotes") List<String> textNotes,
         @JsonProperty("diagrams") List<String> diagrams) {
         this.textNotes = textNotes;
         this.diagrams = diagrams;
     }
 
-    public TextNotes getTextNotes() {
+    public List<String> getTextNotes() {
         return textNotes;
     }
 
