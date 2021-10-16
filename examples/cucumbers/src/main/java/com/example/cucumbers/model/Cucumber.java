@@ -49,4 +49,12 @@ public class Cucumber {
     public int hashCode() {
         return Objects.hash(size, colour);
     }
+
+    @Override
+    public String toString() {
+        return "Cucumber{" +
+            "size=" + size +
+            ", colour='" + colour + '\'' +
+            '}';
+    }
 }

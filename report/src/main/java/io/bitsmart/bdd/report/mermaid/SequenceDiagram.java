@@ -49,6 +49,7 @@ public class SequenceDiagram implements Expression {
     }
 
     public void addActor(String name) {
+        //TODO if "Actor" throw illegal state exception
         participants.add(new Participant(name, ParticipantType.ACTOR));
     }
 

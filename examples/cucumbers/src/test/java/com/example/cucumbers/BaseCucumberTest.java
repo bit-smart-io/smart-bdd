@@ -31,6 +31,8 @@ import io.bitsmart.bdd.report.utils.ThenBuilder;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseCucumberTest extends BaseTest {
@@ -57,7 +59,14 @@ public class BaseCucumberTest extends BaseTest {
         if (!given.isHungry()) {
             notes().text().add("Not hungry, so will not eat");
         }
-        sequenceDiagram().addMessage(new Message("User", "CucumberService", "Not hungry, so will not eat"));
+        // notes() -> doc()?
+        // doc().request(cucumberService).method(setHungry).value(false)
+        // doc().setup().request()
+        // doc().setup().updatePersistence()
+        // doc().setState()
+        // below is setting state:
+        //   should setting state be on a sequence diagram? should it have different arrows?
+        sequenceDiagram().addMessage(new Message("User", "CucumberService", "setHungry false"));
         cucumberService.setHungry(given.isHungry());
     }
 
@@ -77,6 +86,9 @@ public class BaseCucumberTest extends BaseTest {
         cucumberThen.getColour().ifPresent(colour -> cucumberService.getCucumbers()
             .forEach((cucumber -> assertThat(cucumber.getColour()).isEqualTo(colour))));
         cucumberThen.getQuantity().ifPresent(quantity -> assertThat(cucumberService.getCucumbers().size()).isEqualTo(quantity));
-        cucumberThen.getCucumbers().ifPresent(cucumbers -> assertThat(cucumberService.getCucumbers().containsAll(cucumbers)));
+
+        cucumberThen.getCucumbers().ifPresent(
+            cucumbers -> assertThat(cucumberService.getCucumbers()).containsAll(
+                cucumbers.stream().map(CucumberBuilder::build).collect(Collectors.toList())));
     }
 }
