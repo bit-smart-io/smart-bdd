@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers;
+package io.bitsmart.bdd.report.junit5.test;
 
 import io.bitsmart.bdd.report.junit5.annotations.InjectTestCaseResult;
 import io.bitsmart.bdd.report.junit5.annotations.InjectTestSuiteResult;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith({ReportExtension.class, TestSuiteResultParameterResolver.class})
 public abstract class BaseTest {
 
-    Context context;
+    private Context context;
 
     /**
      * Example of what can be injected in the before class.
@@ -125,6 +125,10 @@ public abstract class BaseTest {
     }
 
     public abstract void doc();
+
+    public Context context() {
+        return context;
+    }
 
     // addOnce(), then this logic doesn't have to be here
     public void featureNotes(String notes) {

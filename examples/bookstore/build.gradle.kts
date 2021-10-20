@@ -16,7 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//apply(from = "../gradle/dependencies.gradle")
 plugins {
     `java-library`
     id("org.springframework.boot") version "2.5.3"
@@ -32,9 +31,21 @@ repositories {
     mavenCentral()
 }
 
+//java {
+//    toolchain {
+//        languageVersion.set(JavaLanguageVersion.of(11))
+//    }
+//}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.github.tomakehurst:wiremock-jre8:2.31.0")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.1")
+    implementation("org.apache.httpcomponents.client5:httpclient5-fluent:5.1")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
     testImplementation(project(":report"))
+    testImplementation(project(":test-utils")) // should this be an additional dependency or report api?
 }

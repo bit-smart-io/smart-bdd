@@ -26,6 +26,7 @@ import com.example.cucumbers.model.CucumberGiven;
 import com.example.cucumbers.model.CucumberThen;
 import com.example.cucumbers.model.CucumberWhen;
 import com.example.cucumbers.model.UserGiven;
+import io.bitsmart.bdd.report.junit5.test.BaseTest;
 import io.bitsmart.bdd.report.mermaid.Message;
 import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
 import io.bitsmart.bdd.report.utils.ThenBuilder;
@@ -53,9 +54,9 @@ public class BaseCucumberTest extends BaseTest {
         //   1. a diagram, notes and or capture request/response header/bodies/messages etc...
         //   2. If you did want a diagram, would you want a separate one for setup? Or just different arrows?
 
-        context.test().notes().diagram().add(new SequenceDiagram());
-        context.test().notes().diagram().get(0).addActor("User");
-        context.test().notes().diagram().get(0).addParticipant("CucumberService");
+        context().test().notes().diagram().add(new SequenceDiagram());
+        context().test().notes().diagram().get(0).addActor("User");
+        context().test().notes().diagram().get(0).addParticipant("CucumberService");
     }
 
     @Override

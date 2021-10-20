@@ -18,36 +18,52 @@
 
 package com.example.bookstore.bdd;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import com.example.bookstore.bdd.builders.IsbnBookBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.example.bookstore.bdd.builders.IsbnBookBuilder.anIsbnBook;
+import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.IsbnDbContains;
+import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
+import static com.example.bookstore.bdd.builders.bdd.WhenIsbnDbBuilder.aUserRequestsABook;
+import static com.example.bookstore.bdd.model.bdd.ThenGetBookByIsbnBuilder.theResponseContains;
+import static java.util.Collections.singletonList;
 
-@ExtendWith(ReportExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetBookTest {
+public class GetBookTest extends BaseBookStoreTest {
 
-	@Autowired
-	private TestRestTemplate template;
-
-    private ResponseEntity<String> response;
-
+    /**
+     * TODO document the different approaches!
+     * bookIsbnDbContains(anIsbn("...").thatWillReturn(aBook().withIsbn(""))
+     * bookIsbnDbContainsAnEntry().withIsbn("...").for(aBook().withIsbn(""))
+     * bookIsbnDbContains()
+     *     .anEntry(forAnIsbn("...").thatWillReturn(aBook().withIsbn("")))
+     *     .anEntry(forAnIsbn("...").thatWillReturn(aBook().withIsbn("")));
+     * bookIsbnDbContains()
+     *     .entries(
+     *         forAnIsbn("...").thatWillReturn(aBook().withIsbn("")),
+     *         forAnIsbn("...").thatWillReturn(aBook().withIsbn(""))
+     *     );
+     *
+     */
     @Test
-    public void getBook() {
-        whenGetBookIsCalled();
-        thenTheBookIsReturned();
+    public void getBookByIsbn() {
+        given(IsbnDbContains().anEntry(
+            forAnIsbn("default-isbn")
+                .thatWillReturn(anIsbnBook()
+                    .withIsbn("default-isbn")
+                    .withTitle("default-title")
+                    .withAuthor("default-author"))));
+        when(aUserRequestsABook().withIsbn("default-isbn"));
+        then(theResponseContains(anIsbnBook()
+            .withIsbn("default-isbn")
+            .withTitle("default-title")
+            .withAuthors(singletonList("default-author"))));
     }
 
-    private void whenGetBookIsCalled() {
-        response = template.getForEntity("/book", String.class);
-    }
-
-    private void thenTheBookIsReturned() {
-        assertThat(response.getBody()).isEqualTo("Book");
+    /** Can use this if we don't want to expose all the book fields */
+    private IsbnBookBuilder aDefaultIsbnBook() {
+        return anIsbnBook()
+            .withIsbn("default-isbn")
+            .withTitle("default-title")
+            .withAuthors(singletonList("default-author"));
     }
 }
