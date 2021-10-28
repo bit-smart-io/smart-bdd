@@ -18,53 +18,33 @@
 
 package io.bitsmart.wordify;
 
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaParameter;
+import io.bitsmart.wordify.sourcecode.MethodWrapper;
+import io.bitsmart.wordify.sourcecode.ParameterWrapper;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
 
 public class WordifyClass {
     private static final Logger logger = Logger.getLogger(WordifyClass.class.getName());
+    private final MethodExtractor methodExtractor = new MethodExtractor();
 
     public String wordify(Class<?> clazz, String methodName) {
         return wordify(clazz, methodName, emptyList());
     }
 
     public String wordify(Class<?> clazz, String methodName, List<Object> parameterValues) {
-        try {
-            JavaSourceWrapper sourceWrapper = new JavaSourceWrapper(clazz);
-            List<JavaMethod> allMethods = sourceWrapper.getMethods();
-            List<JavaMethod> matchedMethods = allMethods.stream().filter(m -> m.getName().contains(methodName)).collect(toList());
-            JavaMethod matchedMethod = matchedMethods.get(0);
-            String sourceCode = matchedMethod.getSourceCode();
-            List<JavaParameter> parameters = sourceWrapper.getParams(matchedMethod.getName());
-            sourceCode = updateSourceCode(sourceCode, parameters, parameterValues);
-            String wordify = new WordifyString(sourceCode).wordify();
-            return wordify;
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Could not load Java source", e);
-            return "Could not load Java source: " + e;
-        }
+        MethodWrapper method = methodExtractor.methodWrapper(clazz, methodName, parameterValues);
+        String sourceCode = updateSourceCode(method.getSource(), method.getParameters());
+        return new WordifyString(sourceCode).wordify();
     }
 
-    private String updateSourceCode(String sourceCode, List<JavaParameter> parameters, List<Object> parameterValues) {
-        try {
-            int count = 0;
-            for (JavaParameter param : parameters) {
-                String value = parameterValues.get(count) == null ? "null" : parameterValues.get(count).toString();
-                sourceCode = sourceCode.replace(param.getName(), value);
-                count++;
-            }
-            return sourceCode;
-        } catch (Exception e) {
-            System.out.println("WordifyClass Error - parameters: " + parameters + ", parameterValues: " + parameterValues + ", sourceCode: " + sourceCode);
-            return sourceCode;
+    private String updateSourceCode(String sourceCode, List<ParameterWrapper> parameters) {
+        for (ParameterWrapper parameter: parameters) {
+            String value = parameter.getValue() == null ? "null" : parameter.getValue().toString();
+            sourceCode = sourceCode.replace(parameter.getParameter().getName(), value);
         }
+        return sourceCode;
     }
 }

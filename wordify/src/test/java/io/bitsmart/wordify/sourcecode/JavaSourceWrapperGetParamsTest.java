@@ -16,21 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.wordify.source;
+package io.bitsmart.wordify.sourcecode;
 
-import io.bitsmart.wordify.JavaSourceWrapper;
+import com.thoughtworks.qdox.model.JavaParameter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JavaSourceWrapperGetMethodsTest {
+class JavaSourceWrapperGetParamsTest {
+
+    public void methodWithParams(String param1) {
+    }
 
     @Test
     void returnsMethodsFromClass() throws IOException {
         JavaSourceWrapper javaSourceWrapper = new JavaSourceWrapper(this.getClass());
-        assertThat(javaSourceWrapper.getMethods()).hasSize(1);
-        assertThat(javaSourceWrapper.getMethods().get(0).getName()).isEqualTo("returnsMethodsFromClass");
+        List<JavaParameter> params = javaSourceWrapper.getParams("methodWithParams");
+        assertThat(params).hasSize(1);
+        assertThat(params.get(0).getName()).isEqualTo("param1");
     }
 }

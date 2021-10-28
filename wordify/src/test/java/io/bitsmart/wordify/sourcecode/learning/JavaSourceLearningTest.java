@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.wordify.source.learning;
+package io.bitsmart.wordify.sourcecode.learning;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -42,8 +42,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JavaSourceLearningTest {
     private static final String CLASS_NAME = "JavaSourceLearningTest";
-    private static final String QUALIFIED_CLASS_NAME = "io.bitsmart.wordify.source.learning.JavaSourceLearningTest";
-    private static final String QUALIFIED_CLASS_PATH = "io/bitsmart/wordify/source/learning/JavaSourceLearningTest.java";
+    private static final String QUALIFIED_CLASS_NAME = "io.bitsmart.wordify.sourcecode.learning.JavaSourceLearningTest";
+    private static final String QUALIFIED_CLASS_PATH = "io/bitsmart/wordify/sourcecode/learning/JavaSourceLearningTest.java";
 
     /**
      * https://www.baeldung.com/java-list-directory-files
