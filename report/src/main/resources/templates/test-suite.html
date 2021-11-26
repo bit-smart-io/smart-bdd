@@ -27,6 +27,7 @@
     <script>
         mermaid.initialize({startOnLoad:true});
     </script>
+    <script src="https://kit.fontawesome.com/d298eef3d4.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -55,6 +56,11 @@
         </div> <!-- end title -->
         <div class="content pb-4" th:each="testCase : ${testCases}">
             <h4 class="title">
+                <span class="icon-text">
+                  <span class="icon has-text-success">
+                    <i class="far fa-play-circle"></i>
+                  </span>
+                </span>
                 <span class="has-text-success">Scenario: </span>
                 <span th:text="${testCase.name} + ' (' + ${testCase.status} + ')'"/>
             </h4>
