@@ -26,10 +26,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
-import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import io.bitsmart.bdd.report.junit5.test.BaseTest;
 import io.bitsmart.bdd.report.mermaid.Message;
-import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +42,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getAllServeEvents;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,8 +58,6 @@ public class BaseBookStoreTest extends BaseTest {
 
     private ResponseEntity<String> response;
 
-    // how to configure this as WireMockExtension is static. Static life cycle means reset before and after class.
-    //@Value("${downstream.port}")
     private static final int PORT = 8080;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -74,16 +65,14 @@ public class BaseBookStoreTest extends BaseTest {
     @RegisterExtension
     static WireMockExtension wm1 = WireMockExtension.newInstance()
         .options(wireMockConfig().port(PORT))
-        //.configureStaticDsl(true) //what does this do?
         .build();
-
 
     @BeforeEach
     void setUp() {
-        context().test().notes().diagram().add(new SequenceDiagram());
-        context().test().notes().diagram().get(0).addActor("User");
-        context().test().notes().diagram().get(0).addParticipant("BookStore");
-        context().test().notes().diagram().get(0).addParticipant("ISBNdb");
+        sequenceDiagram()
+            .addActor("User")
+            .addParticipant("BookStore")
+            .addParticipant("ISBNdb");
     }
 
     @Override

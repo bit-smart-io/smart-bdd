@@ -48,16 +48,19 @@ public class SequenceDiagram implements Expression {
             + messages.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", ""));
     }
 
-    public void addActor(String name) {
+    public SequenceDiagram addActor(String name) {
         //TODO if "Actor" throw illegal state exception
         participants.add(new Participant(name, ParticipantType.ACTOR));
+        return this;
     }
 
-    public void addParticipant(String name) {
+    public SequenceDiagram addParticipant(String name) {
         participants.add(new Participant(name));
+        return this;
     }
 
-    public void addMessage(Message message) {
+    public SequenceDiagram addMessage(Message message) {
         messages.add(message);
+        return this;
     }
 }

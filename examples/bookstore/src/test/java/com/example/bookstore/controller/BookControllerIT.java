@@ -33,7 +33,7 @@ public class BookControllerIT {
 	private TestRestTemplate template;
 
     @Test
-    public void getBook() throws Exception {
+    public void getBook() {
         ResponseEntity<String> response = template.getForEntity("/book", String.class);
         assertThat(response.getBody()).isEqualTo("Book");
     }

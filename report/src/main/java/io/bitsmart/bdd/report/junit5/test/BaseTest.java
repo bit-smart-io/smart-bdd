@@ -72,21 +72,9 @@ public abstract class BaseTest {
         public CurrentTest test() {
             return test;
         }
-
-        // feature().doc().text() or feature().doc().uml()
-        // test().doc() or just text(), diagram(). diagram().createAnother("id")
-        // internal() access to internal stuff
-        // could create a context
-        // context.notes().textOnce()
-        // context().testSuite()
-        // context().testCase()
-        // context().testInfo()
-        // context().testReporter()
-        // testSuite().addNote()
-        // testCase().addNote()
     }
 
-    public static class Internal {
+    private static class Internal {
         private final TestCaseResult testCaseResult;
         private final TestSuiteResult testSuiteResult;
         private final TestInfo testInfo;
@@ -142,7 +130,10 @@ public abstract class BaseTest {
     }
 
     public SequenceDiagram sequenceDiagram() {
-        return context.test().notes().diagram().get(0);
+        if (context.test().notes().diagrams().getAll().isEmpty()) {
+            context().test().notes().diagrams().add(new SequenceDiagram());
+        }
+        return context.test().notes().diagrams().get("diagram-1");
     }
 
     // would you need a helper method?

@@ -30,9 +30,9 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
-import io.bitsmart.bdd.report.report.model.notes.TextNotes;
 import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -102,12 +102,13 @@ public class ReportFactory {
     }
 
     private static io.bitsmart.bdd.report.report.model.notes.Notes notes(Notes notes) {
-        if (notes.text().getNotes().size() == 0 && notes.diagram().size() ==  0) {
+        if (notes.text().getNotes().size() == 0 && notes.diagrams().getAll().size() ==  0) {
             return null;
         }
 
-        List<String> diagrams = notes.diagram().stream().map(SequenceDiagram::generate).collect(toList());
-        return new io.bitsmart.bdd.report.report.model.notes.Notes(notes.text().getNotes(), diagrams);
+        List<SequenceDiagram> diagrams = new ArrayList<>(notes.diagrams().getAll().values());
+        List<String> generatedDiagrams = diagrams.stream().map(SequenceDiagram::generate).collect(toList());
+        return new io.bitsmart.bdd.report.report.model.notes.Notes(notes.text().getNotes(), generatedDiagrams);
     }
 
     private static Status statusFrom(TestCaseResultStatus status) {

@@ -17,44 +17,50 @@
  */
 
 package io.bitsmart.bdd.report.junit5.results.model.notes;
-
+import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
-/**
- * usage:
- * note().text.add("This is a note")
- * note().uml.add(...)
- */
-public class Notes {
-    private final TextNotes textNotes = new TextNotes();
-    private final SequenceDiagramFactory diagramFactory = new SequenceDiagramFactory();
+public class SequenceDiagramFactory {
+    HashMap<String, SequenceDiagram> map = new LinkedHashMap<>();
 
-    public TextNotes text() {
-        return textNotes;
+    //TODO this concept works, needs testing so that we can add "diagram-1"
+    public SequenceDiagram add(SequenceDiagram diagram) {
+        map.put("diagram-1", diagram);
+        return diagram;
     }
 
-    public SequenceDiagramFactory diagrams() {
-        return diagramFactory;
+    public SequenceDiagram add(String name, SequenceDiagram diagram) {
+        map.put(name, diagram);
+        return diagram;
+    }
+
+    public SequenceDiagram get(String name) {
+        return  map.get(name);
+    }
+
+    public HashMap<String, SequenceDiagram> getAll() {
+        return map;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Notes)) return false;
-        Notes notes = (Notes) o;
-        return Objects.equals(textNotes, notes.textNotes) && Objects.equals(diagramFactory, notes.diagramFactory);
+        if (!(o instanceof SequenceDiagramFactory)) return false;
+        SequenceDiagramFactory that = (SequenceDiagramFactory) o;
+        return Objects.equals(map, that.map);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNotes, diagramFactory);
+        return Objects.hash(map);
     }
 
     @Override
     public String toString() {
-        return "Notes{" +
-            "textNotes=" + textNotes +
-            ", diagrams=" + diagramFactory +
+        return "SequenceDiagramFactory{" +
+            "map=" + map +
             '}';
     }
 }

@@ -54,9 +54,9 @@ public class BaseCucumberTest extends BaseTest {
         //   1. a diagram, notes and or capture request/response header/bodies/messages etc...
         //   2. If you did want a diagram, would you want a separate one for setup? Or just different arrows?
 
-        context().test().notes().diagram().add(new SequenceDiagram());
-        context().test().notes().diagram().get(0).addActor("User");
-        context().test().notes().diagram().get(0).addParticipant("CucumberService");
+        sequenceDiagram()
+            .addActor("User")
+            .addParticipant("CucumberService");
     }
 
     @Override

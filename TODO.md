@@ -104,7 +104,24 @@ Feature and scenario can have the same notes() object, but feature has a title.
 `scenario().notes()` or just `notes()` as it will be used more and it could be implied. Prefix scenario and feature is
 better than testCase and testSuite as it would look like:
 
+`feature`/`scenario` vs `testSuite`/`testCase`
+
+this is long way to access but the user navigate. 
 ```
+context().feature().notes().diagrams().add(new SequenceDiagram())
+  .addActor("User")
+  .addParticipant("BookStore")
+  .addParticipant("ISBNdb");
+
+context().test().notes().diagrams().add(new SequenceDiagram())
+  .addActor("User")
+  .addParticipant("BookStore")
+  .addParticipant("ISBNdb");
+```
+
+```
+notes().uml() or uml()
+
 testCase().notes().uml()
 testSuite().notes().uml()
 ```
