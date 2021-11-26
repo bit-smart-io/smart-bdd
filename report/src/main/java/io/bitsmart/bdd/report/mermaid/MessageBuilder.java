@@ -16,28 +16,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.builders.bdd;
+package io.bitsmart.bdd.report.mermaid;
 
-import com.example.bookstore.bdd.defaults.DefaultIsbnBook;
-import com.example.bookstore.bdd.model.bdd.WhenGetBookByIsbn;
-import io.bitsmart.bdd.report.utils.Builder;
+public final class MessageBuilder {
+    private String from;
+    private String to;
+    private String text;
+    private String type = "->>";
 
-public final class WhenIsbnDbBuilder implements Builder<WhenGetBookByIsbn> {
-    private String isbn = DefaultIsbnBook.ISBN;
-
-    private WhenIsbnDbBuilder() {
+    private MessageBuilder() {
     }
 
-    public static WhenIsbnDbBuilder aUserRequestsABook() {
-        return new WhenIsbnDbBuilder();
+    public static MessageBuilder aMessage() {
+        return new MessageBuilder();
     }
 
-    public WhenIsbnDbBuilder withIsbn(String isbn) {
-        this.isbn = isbn;
+    public MessageBuilder from(String from) {
+        this.from = from;
         return this;
     }
 
-    public WhenGetBookByIsbn build() {
-        return new WhenGetBookByIsbn(isbn);
+    public MessageBuilder to(String to) {
+        this.to = to;
+        return this;
+    }
+
+    public MessageBuilder text(String text) {
+        this.text = text;
+        return this;
+    }
+
+    public MessageBuilder type(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public Message build() {
+        return new Message(from, to, text, type);
     }
 }

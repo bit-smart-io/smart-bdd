@@ -16,28 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.builders.bdd;
+package com.example.bookstore.bdd.defaults;
 
-import com.example.bookstore.bdd.defaults.DefaultIsbnBook;
-import com.example.bookstore.bdd.model.bdd.WhenGetBookByIsbn;
-import io.bitsmart.bdd.report.utils.Builder;
-
-public final class WhenIsbnDbBuilder implements Builder<WhenGetBookByIsbn> {
-    private String isbn = DefaultIsbnBook.ISBN;
-
-    private WhenIsbnDbBuilder() {
-    }
-
-    public static WhenIsbnDbBuilder aUserRequestsABook() {
-        return new WhenIsbnDbBuilder();
-    }
-
-    public WhenIsbnDbBuilder withIsbn(String isbn) {
-        this.isbn = isbn;
-        return this;
-    }
-
-    public WhenGetBookByIsbn build() {
-        return new WhenGetBookByIsbn(isbn);
-    }
+/** would this helpful for should we have the defaults in the builders? */
+public class DefaultIsbnBook {
+    public static final String ISBN = "default-isbn";
+    public static final String TITLE = "default-title";
+    public static final String AUTHOR = "default-author";
 }

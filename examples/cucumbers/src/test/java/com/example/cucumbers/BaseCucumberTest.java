@@ -36,6 +36,7 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseCucumberTest extends BaseTest {
@@ -44,16 +45,6 @@ public class BaseCucumberTest extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        // notes() -> doc()?
-        // doc().request(cucumberService).method(setHungry).value(false)
-        // doc().setup().request()
-        // doc().setup().updatePersistence()
-        // doc().setState()
-
-        // if you did want to document set state would you ever want:
-        //   1. a diagram, notes and or capture request/response header/bodies/messages etc...
-        //   2. If you did want a diagram, would you want a separate one for setup? Or just different arrows?
-
         sequenceDiagram()
             .addActor("User")
             .addParticipant("CucumberService");
@@ -71,9 +62,7 @@ public class BaseCucumberTest extends BaseTest {
         if (!given.isHungry()) {
             notes().text().add("Not hungry, so will not eat");
         }
-        // below is both given and kinda is when:
-        //   should setting state be on a sequence diagram? should it have different arrows?
-        sequenceDiagram().addMessage(new Message("User", "CucumberService", "setHungry false"));
+        sequenceDiagram().add(aMessage().from("User").to("CucumberService").text("setHungry false"));
         cucumberService.setHungry(given.isHungry());
     }
 
@@ -85,13 +74,13 @@ public class BaseCucumberTest extends BaseTest {
     public void when(WhenBuilder<CucumberWhen> builder) {
         CucumberWhen cucumberWhen = builder.build();
         cucumberService.eat(cucumberWhen.getQuantity(), cucumberWhen.getColour());
-        sequenceDiagram().addMessage(new Message("User", "CucumberService", "eat " + cucumberWhen.getQuantity() + " " + cucumberWhen.getColour()));
+        sequenceDiagram().add(aMessage().from("User").to("CucumberService").text("eat " + cucumberWhen.getQuantity() + " " + cucumberWhen.getColour()));
     }
 
     public void then(ThenBuilder<CucumberThen> builder) {
         CucumberThen cucumberThen = builder.build();
         final List<Cucumber> actualCucumbers = cucumberService.getCucumbers();
-        sequenceDiagram().addMessage(new Message("CucumberService", "User", "getCucumbers: " + actualCucumbers));
+        sequenceDiagram().add(aMessage().from("CucumberService").to("User").text("getCucumbers: " + actualCucumbers));
 
         cucumberThen.getColour().ifPresent(colour -> actualCucumbers
             .forEach((cucumber -> assertThat(cucumber.getColour()).isEqualTo(colour))));

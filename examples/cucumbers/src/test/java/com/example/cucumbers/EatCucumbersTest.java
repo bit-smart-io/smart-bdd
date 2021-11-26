@@ -37,9 +37,6 @@ import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EatCucumbersTest extends BaseCucumberTest {
 
-    /**
-     * TODO Work in progress for the feature documentation and notes. See README.md.
-     */
     @Override
     public void doc() {
         featureNotes("Working progress for example of usage Smart BDD");
@@ -161,41 +158,11 @@ public class EatCucumbersTest extends BaseCucumberTest {
     /**
      * <pre>
      * Next tests:
-     * - show how to add uml, maybe an interaction diagram.
-     *  - notes().uml().add() Very useful for downstream dependencies.
-     *  - Explore testCase().notes().uml(), testSuites().notes().uml()
-     * - show async set actions. given body in an action.
-     * - show how to add new wordify expressions. wordify().add(). Maybe
-     * From: When I request to eat cucumbers with quantity 1 with colour "red"
-     * To: When I request to eat 1 red cucumber
-     * 1 and red need to be highlighted in the html test report
-     * You need to specify verbs, nouns, subjects etc... and it may be possible
      * - show my_test(@Given int amount, @Given String colour).
      * </pre>
      */
     @Test
     void todo() {
-        //TODO
-    }
-
-    /**
-     * Idea:
-     * - can you generate a better title for the test?
-     * - or just wordify the title?
-     * <p>
-     * In this class, the method titles are same as the test wordify but condensed
-     * <p>
-     * For example
-     * "Given user given builder I am not hungry
-     * Given I have a cucumber with colour "red" and a cucumber with colour "blue"
-     * When I request to eat cucumbers with quantity 1 with colour "red"
-     * Then I should have cucumbers with quantity 2"
-     * <p>
-     * Has the title givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft
-     * The title is kinda what the test should have been
-     */
-    @Test
-    void generate_title_idea() {
         //TODO
     }
 }

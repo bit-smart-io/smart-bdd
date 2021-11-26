@@ -63,4 +63,11 @@ public class SequenceDiagram implements Expression {
         messages.add(message);
         return this;
     }
+
+    // TODO what if we don't have any actors and or participants should we create?
+    // first from being an actor, then participants
+    public SequenceDiagram add(MessageBuilder message) {
+        messages.add(message.build());
+        return this;
+    }
 }

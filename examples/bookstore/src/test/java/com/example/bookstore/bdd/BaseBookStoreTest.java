@@ -20,6 +20,7 @@ package com.example.bookstore.bdd;
 
 import com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder;
 import com.example.bookstore.bdd.builders.bdd.WhenIsbnDbBuilder;
+import com.example.bookstore.bdd.mappings.DefaultMappings;
 import com.example.bookstore.bdd.model.bdd.ThenGetBookByIsbnBuilder;
 import com.example.bookstore.model.IsbnBook;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import io.bitsmart.bdd.report.junit5.test.BaseTest;
-import io.bitsmart.bdd.report.mermaid.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getAllServeEvents;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,6 +63,8 @@ public class BaseBookStoreTest extends BaseTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    private final DefaultMappings defaultMappings = new DefaultMappings(this);
+
     @RegisterExtension
     static WireMockExtension wm1 = WireMockExtension.newInstance()
         .options(wireMockConfig().port(PORT))
@@ -73,6 +76,7 @@ public class BaseBookStoreTest extends BaseTest {
             .addActor("User")
             .addParticipant("BookStore")
             .addParticipant("ISBNdb");
+        defaultMappings.initDefaultMappings();
     }
 
     @Override
@@ -94,18 +98,18 @@ public class BaseBookStoreTest extends BaseTest {
         headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
 
         String isbn = whenBuilder.build().getIsbn();
-        sequenceDiagram().addMessage(new Message("User", "BookStore", "/book/" + isbn));
+        sequenceDiagram().add(aMessage().from("User").to("BookStore").text("/book/" + isbn));
         response = template.getForEntity("/book/" + isbn, String.class, headers);
 
         List<ServeEvent> allServeEvents = getAllServeEvents();
         allServeEvents.forEach(event -> {
-            sequenceDiagram().addMessage(new Message("BookStore", "ISBNdb", event.getRequest().getUrl()));
-            sequenceDiagram().addMessage(new Message("ISBNdb", "BookStore", event.getResponse().getBodyAsString()));
+            sequenceDiagram().add(aMessage().from("BookStore").to("ISBNdb").text(event.getRequest().getUrl()));
+            sequenceDiagram().add(aMessage().from("ISBNdb").to("BookStore").text(event.getResponse().getBodyAsString()));
         }) ;
     }
 
     public void then(ThenGetBookByIsbnBuilder thenBuilder) {
-        sequenceDiagram().addMessage(new Message("BookStore", "User", response.getBody()));
+        sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
         assertThat(isbnBook(response.getBody())).isEqualTo(thenBuilder.build().getBook());
     }
 
@@ -125,17 +129,5 @@ public class BaseBookStoreTest extends BaseTest {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void checkWiremockIsRunning() {
-        URI uri = null;
-        try {
-            uri = new URI("http://localhost:"+ PORT + "/__admin/mappings");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        final ResponseEntity<String> forEntity = template.getForEntity(uri, String.class);
-        final String body = forEntity.getBody();
-        assertThat(body).isNotNull();
     }
 }

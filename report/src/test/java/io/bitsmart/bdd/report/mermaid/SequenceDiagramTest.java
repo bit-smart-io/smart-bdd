@@ -20,6 +20,7 @@ package io.bitsmart.bdd.report.mermaid;
 
 import org.junit.jupiter.api.Test;
 
+import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -52,6 +53,23 @@ class SequenceDiagramTest {
             "\tparticipant Bob\n" +
             "\tAlice->>Bob: Hello John, how are you?\n" +
             "\tBob->>Alice: Great!"
+        );
+    }
+
+    @Test
+    void basicSequenceDiagramWithTwoParticipantsIsGeneratedWithBuilder() {
+        SequenceDiagram diagram = new SequenceDiagram();
+        diagram.addParticipant("Alice");
+        diagram.addParticipant("Bob");
+        diagram.add(aMessage().from("Alice").to("Bob").text("Hello John, how are you?"));
+        diagram.add(aMessage().from("Bob").to("Alice").text("Great!"));
+
+        assertThat(diagram.generate()).isEqualTo(
+            "sequenceDiagram\n" +
+                "\tparticipant Alice\n" +
+                "\tparticipant Bob\n" +
+                "\tAlice->>Bob: Hello John, how are you?\n" +
+                "\tBob->>Alice: Great!"
         );
     }
 

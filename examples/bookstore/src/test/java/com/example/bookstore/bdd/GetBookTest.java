@@ -18,34 +18,26 @@
 
 package com.example.bookstore.bdd;
 
-import com.example.bookstore.bdd.builders.IsbnBookBuilder;
 import org.junit.jupiter.api.Test;
 
 import static com.example.bookstore.bdd.builders.IsbnBookBuilder.anIsbnBook;
 import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.IsbnDbContains;
 import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
 import static com.example.bookstore.bdd.builders.bdd.WhenIsbnDbBuilder.aUserRequestsABook;
+import static com.example.bookstore.bdd.factories.IsbnBookFactory.aDefaultIsbnBook;
 import static com.example.bookstore.bdd.model.bdd.ThenGetBookByIsbnBuilder.theResponseContains;
 import static java.util.Collections.singletonList;
 
 public class GetBookTest extends BaseBookStoreTest {
 
-    /**
-     * TODO document the different approaches!
-     * bookIsbnDbContains(anIsbn("...").thatWillReturn(aBook().withIsbn(""))
-     * bookIsbnDbContainsAnEntry().withIsbn("...").for(aBook().withIsbn(""))
-     * bookIsbnDbContains()
-     *     .anEntry(forAnIsbn("...").thatWillReturn(aBook().withIsbn("")))
-     *     .anEntry(forAnIsbn("...").thatWillReturn(aBook().withIsbn("")));
-     * bookIsbnDbContains()
-     *     .entries(
-     *         forAnIsbn("...").thatWillReturn(aBook().withIsbn("")),
-     *         forAnIsbn("...").thatWillReturn(aBook().withIsbn(""))
-     *     );
-     *
-     */
     @Test
-    public void getBookByIsbn() {
+    public void getBookByIsbnUsingDefaults() {
+        when(aUserRequestsABook());
+        then(theResponseContains(aDefaultIsbnBook()));
+    }
+
+    @Test
+    public void getBookByIsbnShowingAllDefaultValues() {
         given(IsbnDbContains().anEntry(
             forAnIsbn("default-isbn")
                 .thatWillReturn(anIsbnBook()
@@ -57,13 +49,5 @@ public class GetBookTest extends BaseBookStoreTest {
             .withIsbn("default-isbn")
             .withTitle("default-title")
             .withAuthors(singletonList("default-author"))));
-    }
-
-    /** Can use this if we don't want to expose all the book fields */
-    private IsbnBookBuilder aDefaultIsbnBook() {
-        return anIsbnBook()
-            .withIsbn("default-isbn")
-            .withTitle("default-title")
-            .withAuthors(singletonList("default-author"));
     }
 }
