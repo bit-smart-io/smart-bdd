@@ -16,35 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("smart-bdd.java-lib")
-    id("maven-publish")
-}
+package io.bitsmart.wordify.tokenize;
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("com.thoughtworks.qdox:qdox:2.0.0")
-
-    testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation(project(":test-utils"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-    exclude("**/ClassUnderTest.class")
-    exclude("**/undertest")
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            group = "io.bitsmart.bdd"
-            version = "1.0-SNAPSHOT"
-            description = "Wordify Java methods"
-            from(components["java"])
-        }
-    }
+public enum TokenType {
+    // TODO maybe just ARGUMENT, DEFAULT, STRING_LITERAL
+    // argument means it was passed in to the test method as a param
+    DEFAULT, NUMBER, STRING_LITERAL, CHAR, WHITE_SPACE, PARAMETER, ARGUMENT, GIVEN, WHEN, THEN
 }

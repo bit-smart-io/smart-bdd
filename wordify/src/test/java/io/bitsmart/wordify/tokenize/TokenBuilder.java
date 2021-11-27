@@ -16,35 +16,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("smart-bdd.java-lib")
-    id("maven-publish")
-}
+package io.bitsmart.wordify.tokenize;
 
-repositories {
-    mavenCentral()
-}
+import io.bitsmart.bdd.report.utils.Builder;
 
-dependencies {
-    implementation("com.thoughtworks.qdox:qdox:2.0.0")
+public final class TokenBuilder implements Builder<Token> {
+    private String value;
+    private TokenType type;
 
-    testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation(project(":test-utils"))
-}
+    private TokenBuilder() {
+    }
 
-tasks.test {
-    useJUnitPlatform()
-    exclude("**/ClassUnderTest.class")
-    exclude("**/undertest")
-}
+    public static TokenBuilder token(String value) {
+        return new TokenBuilder().withValue(value);
+    }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            group = "io.bitsmart.bdd"
-            version = "1.0-SNAPSHOT"
-            description = "Wordify Java methods"
-            from(components["java"])
-        }
+    public static TokenBuilder token(String value, TokenType type) {
+        return new TokenBuilder().withValue(value).withType(type);
+    }
+
+    public TokenBuilder withValue(String value) {
+        this.value = value;
+        return this;
+    }
+
+    public TokenBuilder withType(TokenType type) {
+        this.type = type;
+        return this;
+    }
+
+    public Token build() {
+        return new Token(value, type);
     }
 }
