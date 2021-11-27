@@ -32,7 +32,7 @@ public final class GivenIsbnDbBuilder implements Builder<GivenIsbnDb> {
     private GivenIsbnDbBuilder() {
     }
 
-    public static GivenIsbnDbBuilder IsbnDbContains() {
+    public static GivenIsbnDbBuilder theIsbnDbContains() {
         return new GivenIsbnDbBuilder();
     }
 

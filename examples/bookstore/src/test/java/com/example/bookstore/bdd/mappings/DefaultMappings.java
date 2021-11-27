@@ -22,7 +22,7 @@ import com.example.bookstore.bdd.BaseBookStoreTest;
 import com.example.bookstore.bdd.defaults.DefaultIsbnBook;
 
 import static com.example.bookstore.bdd.builders.IsbnBookBuilder.anIsbnBook;
-import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.IsbnDbContains;
+import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.theIsbnDbContains;
 import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
 
 public class DefaultMappings {
@@ -34,7 +34,7 @@ public class DefaultMappings {
     }
 
     public void initDefaultMappings() {
-        baseBookStoreTest.given(IsbnDbContains().anEntry(
+        baseBookStoreTest.given(theIsbnDbContains().anEntry(
             forAnIsbn(DefaultIsbnBook.ISBN)
                 .thatWillReturn(anIsbnBook()
                     .withIsbn(DefaultIsbnBook.ISBN)

@@ -21,7 +21,7 @@ package com.example.bookstore.bdd;
 import org.junit.jupiter.api.Test;
 
 import static com.example.bookstore.bdd.builders.IsbnBookBuilder.anIsbnBook;
-import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.IsbnDbContains;
+import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.theIsbnDbContains;
 import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
 import static com.example.bookstore.bdd.builders.bdd.WhenIsbnDbBuilder.aUserRequestsABook;
 import static com.example.bookstore.bdd.factories.IsbnBookFactory.aDefaultIsbnBook;
@@ -38,7 +38,7 @@ public class GetBookTest extends BaseBookStoreTest {
 
     @Test
     public void getBookByIsbnShowingAllDefaultValues() {
-        given(IsbnDbContains().anEntry(
+        given(theIsbnDbContains().anEntry(
             forAnIsbn("default-isbn")
                 .thatWillReturn(anIsbnBook()
                     .withIsbn("default-isbn")
