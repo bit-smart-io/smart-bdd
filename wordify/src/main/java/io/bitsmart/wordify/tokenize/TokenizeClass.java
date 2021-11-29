@@ -35,52 +35,29 @@ public class TokenizeClass {
         this.methodExtractor = methodExtractor;
     }
 
-    public List<JavaSourceTokens> tokenize(Class<?> clazz, String methodName) {
+    public String tokenizeAsString(Class<?> clazz, String methodName) {
+        return tokenizeAsString(clazz, methodName, emptyList());
+    }
+
+    public String tokenizeAsString(Class<?> clazz, String methodName, List<Object> parameterValues) {
+        JavaSourceTokens tokens = tokenize(clazz, methodName, parameterValues);
+        return tokens.asString();
+    }
+
+    public JavaSourceTokens tokenize(Class<?> clazz, String methodName) {
         return tokenize(clazz, methodName, emptyList());
     }
 
-    public List<JavaSourceTokens> tokenize(Class<?> clazz, String methodName, List<Object> parameterValues) {
+    public JavaSourceTokens tokenize(Class<?> clazz, String methodName, List<Object> parameterValues) {
         MethodWrapper methodWrapper = methodExtractor.methodWrapper(clazz, methodName, parameterValues);
-
-        //ParametersWrapper
         List<ParameterWrapper> parameters = methodWrapper.getParameters();
+        TokenizeParameterMap parameterMap = new TokenizeParameterMap();
+        parameters.forEach(p -> {
+            parameterMap.put(new TokenizeParameter(p.getParameter().getName(), p.getValue(), p.getParameter().getCanonicalName()));
+        });
 
-        // TokenizeSource(source, parameters) when it matches a parameter that has the same name it can mark it.
-        // i.e. parameters = name: bob. name(name) = name:method, bob:argument or printName(name) = printName:method, bob:argument
-        // i.e. parameters = []. printName(name) = printName:method, name:parameter
-
-        // should line be source or code or sourceCode
-        new TokenizeSource(methodWrapper.getSource()).tokenize();
-        return null;
-
-//        try {
-//            JavaSourceWrapper sourceWrapper = new JavaSourceWrapper(clazz);
-//            List<JavaMethod> allMethods = sourceWrapper.getMethods();
-//            List<JavaMethod> matchedMethods = allMethods.stream().filter(m -> m.getName().contains(methodName)).collect(toList());
-//            JavaMethod matchedMethod = matchedMethods.get(0);
-//            String sourceCode = matchedMethod.getSourceCode();
-//            List<JavaParameter> parameters = sourceWrapper.getParams(matchedMethod.getName());
-//            sourceCode = updateSourceCode(sourceCode, parameters, parameterValues);
-//            String wordify = new WordifyString(sourceCode).wordify();
-//            return wordify;
-//        } catch (IOException e) {
-//            logger.log(Level.WARNING, "Could not load Java source", e);
-//            return "Could not load Java source: " + e;
-//        }
+        String src = TokenizeStringUtil.stripJavaCode(methodWrapper.getSource());
+        return new TokenizeSource(src, parameterMap).tokenize();
     }
 
-//    private String updateSourceCode(String sourceCode, List<JavaParameter> parameters, List<Object> parameterValues) {
-//        try {
-//            int count = 0;
-//            for (JavaParameter param : parameters) {
-//                String value = parameterValues.get(count) == null ? "null" : parameterValues.get(count).toString();
-//                sourceCode = sourceCode.replace(param.getName(), value);
-//                count++;
-//            }
-//            return sourceCode;
-//        } catch (Exception e) {
-//            System.out.println("WordifyClass Error - parameters: " + parameters + ", parameterValues: " + parameterValues + ", sourceCode: " + sourceCode);
-//            return sourceCode;
-//        }
-//    }
 }

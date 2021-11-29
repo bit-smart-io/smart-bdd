@@ -18,8 +18,21 @@
 
 package io.bitsmart.wordify.tokenize;
 
-public enum TokenType {
-    // TODO maybe just ARGUMENT, DEFAULT, STRING_LITERAL
-    // argument means it was passed in to the test method as a param
-    DEFAULT, NUMBER, STRING_LITERAL, CHAR, NEW_LINE, WHITE_SPACE, PARAMETER, ARGUMENT, GIVEN, WHEN, THEN
+import java.util.HashMap;
+import java.util.Map;
+
+public class TokenizeParameterMap {
+    private final Map<String, TokenizeParameter> map = new HashMap<>();
+
+    public void put(TokenizeParameter parameter) {
+        map.put(parameter.getName(), parameter);
+    }
+
+    public boolean contains(String key) {
+        return map.containsKey(key);
+    }
+
+    public TokenizeParameter get(String key) {
+        return map.get(key);
+    }
 }

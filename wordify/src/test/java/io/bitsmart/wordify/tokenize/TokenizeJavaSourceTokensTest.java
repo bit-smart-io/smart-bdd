@@ -22,9 +22,8 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static io.bitsmart.wordify.tokenize.TokenType.CHAR;
+import static io.bitsmart.wordify.tokenize.TokenType.NEW_LINE;
 import static io.bitsmart.wordify.tokenize.TokenType.NUMBER;
 import static io.bitsmart.wordify.tokenize.TokenType.STRING_LITERAL;
 import static java.util.Arrays.asList;
@@ -48,26 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TokenizeJavaSourceTokensTest {
 
     @Test
-    void bookstoreFirstLine() {
-        String input = "" +
-            "        given(theIsbnDbContains().anEntry(\n";
-
-        JavaSourceTokens javaSourceTokens = tokenizeSource(input);
-        assertThat(javaSourceTokens.getWhiteSpace()).isEqualTo(8);
-        List<Token> tokens = javaSourceTokens.getTokens();
-        assertThat(tokens.get(0).asString()).isEqualTo("given");
-        assertThat(tokens.get(1).asString()).isEqualTo("theIsbnDbContains");
-        assertThat(tokens.get(2).asString()).isEqualTo("anEntry");
-        assertThat(tokens.get(3).asString()).isEqualTo("\n");
-        assertThat(tokens).hasSize(4);
-    }
-
-    /**
-     * TODO address new line followed by white space
-     * "\n    " -> TYPE_NEW_LINE and INDENT_LEVEL = 1
-     */
-    @Test
-    void bookstore() {
+    void bookstoreAsString() {
         String input = "" +
             "        given(theIsbnDbContains().anEntry(\n" +
             "            forAnIsbn(\"default-isbn\")\n" +
@@ -82,15 +62,79 @@ class TokenizeJavaSourceTokensTest {
             "            .withAuthors(singletonList(\"default-author\"))));";
 
         JavaSourceTokens javaSourceTokens = tokenizeSource(input);
+
         assertThat(javaSourceTokens.getWhiteSpace()).isEqualTo(8);
-        List<Token> tokens = javaSourceTokens.getTokens();
-        assertThat(tokens.get(0).asString()).isEqualTo("given");
-        assertThat(tokens.get(1).asString()).isEqualTo("theIsbnDbContains");
-        assertThat(tokens.get(2).asString()).isEqualTo("anEntry");
-        assertThat(tokens.get(3).asString()).isEqualTo("\n    ");
-        assertThat(tokens.get(4).asString()).isEqualTo("forAnIsbn");
-        assertThat(tokens.get(5)).isEqualTo(t("\"default-isbn\"", STRING_LITERAL));
-        System.out.println(javaSourceTokens);
+        assertThat(javaSourceTokens.asString()).isEqualTo("" +
+            "Given the isbn db contains an entry\n" +
+            "    for an isbn \"default-isbn\"\n" +
+            "        that will return an isbn book\n" +
+            "            with isbn \"default-isbn\"\n" +
+            "            with title \"default-title\"\n" +
+            "            with author \"default-author\"\n" +
+            "When a user requests a book with isbn \"default-isbn\"\n" +
+            "Then the response contains an isbn book\n" +
+            "    with isbn \"default-isbn\"\n" +
+            "    with title \"default-title\"\n" +
+            "    with authors singleton list \"default-author\"");
+    }
+
+    @Test
+    void bookstoreFirstLineAsString() {
+        String input = "" +
+            "        given(theIsbnDbContains().anEntry(\n";
+
+        JavaSourceTokens javaSourceTokens = tokenizeSource(input);
+
+        assertThat(javaSourceTokens.getWhiteSpace()).isEqualTo(8);
+        assertThat(javaSourceTokens.asString()).isEqualTo("" +
+            "Given the isbn db contains an entry\n");
+    }
+
+    @Test
+    void oneNewLineAsString() {
+        String input = "" +
+            "    given\n" +
+            "        something";
+
+        JavaSourceTokens javaSourceTokens = tokenizeSource(input);
+
+        assertThat(javaSourceTokens.getWhiteSpace()).isEqualTo(4);
+        assertThat(javaSourceTokens.asString()).isEqualTo("" +
+            "Given\n" +
+            "    something");
+    }
+
+    @Test
+    void givenWhenThenAsString() {
+        String input = "" +
+            "    given()\n" +
+            "    when()\n" +
+            "    then()";
+
+        JavaSourceTokens javaSourceTokens = tokenizeSource(input);
+
+        assertThat(javaSourceTokens.getWhiteSpace()).isEqualTo(4);
+        assertThat(javaSourceTokens.asString()).isEqualTo("" +
+            "Given\n" +
+            "When\n" +
+            "Then");
+    }
+
+
+    /**
+     * Given, when, then token type or meta token type?. At the start of a new line.
+     * Technically only given, when, then should be uppercase
+     *
+     * Well have a name resolver
+     *  given = t("Given", TokenType.GIVEN)
+     *  param1 = = t("param1 value", TokenType.ARG, metadata etc...) metadata = object type, maybe allowed values
+     */
+    @Disabled
+    @Test
+    void handlesGivenWhenThen() {
+        assertTokenize("given(doSomething());", t("Given", TokenType.GIVEN), t("doSomething"));
+        assertTokenize("when(doSomething());", t("Given", TokenType.WHEN), t("doSomething"));
+        assertTokenize("then(doSomething());", t("Given", TokenType.THEN), t("doSomething"));
     }
 
     @Test
@@ -106,30 +150,30 @@ class TokenizeJavaSourceTokensTest {
         assertEmptyTokenListStartingAt("\t ", 5);
         assertEmptyTokenListStartingAt(" \t", 5);
         assertEmptyTokenListStartingAt(" \t ", 6);
-        assertTokenizeStartingAt(" a", 1, t("a"));
+        assertTokenizeStartingAt(" a", 1, t("A"));
     }
 
     @Test
     void handlesFieldAndMethodsNames() {
-        assertTokenize("doSomething();", t("doSomething"));
-        assertTokenize("field.doSomething();", t("field"), t("doSomething"));
-        assertTokenize("field. doSomething();", t("field"), t("doSomething"));
-        assertTokenize("field .doSomething();", t("field"), t("doSomething"));
-        assertTokenize("field . doSomething();", t("field"), t("doSomething"));
+        assertTokenize("doSomething();", t("Do something"));
+        assertTokenize("field.doSomething();", t("Field"), t("do something"));
+        assertTokenize("field. doSomething();", t("Field"), t("do something"));
+        assertTokenize("field .doSomething();", t("Field"), t("do something"));
+        assertTokenize("field . doSomething();", t("Field"), t("do something"));
     }
 
     @Test
     void handlesFieldAndMethodsNames_multiLine() {
-        assertTokenize("field\n.doSomething();", t("field"), t("\n"), t("doSomething"));
-        assertTokenize("field. \ndoSomething();", t("field"), t("\n"), t("doSomething"));
-        assertTokenize("field\n .doSomething();", t("field"), t("\n "), t("doSomething"));
-        assertTokenize("field\n  .doSomething();", t("field"), t("\n  "), t("doSomething"));
+        assertTokenize("field\n.doSomething();", t("Field"), t("\n", NEW_LINE), t("Do something"));
+        assertTokenize("field. \ndoSomething();", t("Field"), t("\n", NEW_LINE), t("Do something"));
+        assertTokenize("field\n .doSomething();", t("Field"), t("\n ", NEW_LINE), t("do something"));
+        assertTokenize("field\n  .doSomething();", t("Field"), t("\n  ", NEW_LINE), t("do something"));
     }
 
     @Test
     void handlesFieldAndMethodsNamesWithNumbers() {
-        assertTokenize("doSomething99();", t("doSomething99"));
-        assertTokenize("field99.doSomething99();", t("field99"), t("doSomething99"));
+        assertTokenize("doSomething99();", t("Do something99"));
+        assertTokenize("field99.doSomething99();", t("Field99"), t("do something99"));
     }
 
     /**
@@ -148,30 +192,22 @@ class TokenizeJavaSourceTokensTest {
      */
     @Test
     void handlesFieldAndMethodsNamesCommas() {
-        assertTokenize("a,b", t("a"), t("b"));
-        assertTokenize("a, b", t("a"), t("b"));
-        assertTokenize("a,  b", t("a"), t("b"));
-        assertTokenize("a ,b", t("a"), t("b"));
-        assertTokenize("a , b", t("a"), t("b"));
+        assertTokenize("a,b", t("A"), t("b"));
+        assertTokenize("a, b", t("A"), t("b"));
+        assertTokenize("a,  b", t("A"), t("b"));
+        assertTokenize("a ,b", t("A"), t("b"));
+        assertTokenize("a , b", t("A"), t("b"));
     }
 
     @Test
-    void handlesParameters() {
-        assertTokenize("a(b,c)", t("a"), t("b"), t("c"));
-        assertTokenize("a(b,c.d())", t("a"), t("b"), t("c"), t("d"));
-
-        // assertThat(new TokenizeSource("a,b").tokenize()).isEqualTo(new Line(asList(new Token("A"), new Token("b")), 0));
-        // assertThat(new TokenizeSource(("a, b")).wordify()).isEqualTo("A b");
-        // assertThat(new TokenizeSource(("a,  b")).wordify()).isEqualTo("A b");
-        //
-        // assertThat(new TokenizeSource(("a(b,c)")).wordify()).isEqualTo("A b c");
-        // assertThat(new TokenizeSource(("a(b, c)")).wordify()).isEqualTo("A b c");
-        //
-        // assertThat(new TokenizeSource(("a( b, c )")).wordify()).isEqualTo("A b c");
-        // assertThat(new TokenizeSource(("a ( b, c )")).wordify()).isEqualTo("A b c");
-        // assertThat(new TokenizeSource(("a  (  b  ,  c  )")).wordify()).isEqualTo("A b c");
-        //
-        // assertThat(new TokenizeSource((" a ( b, c )")).wordify()).isEqualTo("A b c");
+    void handlesBrackets() {
+        assertTokenize("a(b,c)", t("A"), t("b"), t("c"));
+        assertTokenize("a(b,c.d())", t("A"), t("b"), t("c"), t("d"));
+        assertTokenize("a(b,c)", t("A"), t("b"), t("c"));
+        assertTokenize("a(b, c)", t("A"), t("b"), t("c"));
+        assertTokenize("a( b, c)", t("A"), t("b"), t("c"));
+        assertTokenize("a ( b, c )", t("A"), t("b"), t("c"));
+        assertTokenize("a  (  b  ,  c  )", t("A"), t("b"), t("c"));
     }
 
     @Test
@@ -187,31 +223,27 @@ class TokenizeJavaSourceTokensTest {
 
     @Test
     void handlesChars() {
-        assertTokenize("char i = 'a'", t("char"), t("i"), t("'a'", CHAR));
+        assertTokenize("char i = 'a'", t("Char"), t("i"), t("'a'", CHAR));
         assertTokenize("('a','b')", t("'a'", CHAR), t("'b'", CHAR));
     }
 
     @Test
     void handlesNumbers() {
         assertTokenize("99.99", t("99.99", NUMBER));
-        assertTokenize("doSomething(99.99);", t("doSomething"), t("99.99", NUMBER));
-        assertTokenize("long i = 0;", t("long"), t("i"), t("0", NUMBER));
-        assertTokenize("long i = 0L;", t("long"), t("i"), t("0", NUMBER));
-        assertTokenize("float i = 0f;", t("float"), t("i"), t("0", NUMBER));
-        assertTokenize("float i = 0.0f;", t("float"), t("i"), t("0.0", NUMBER));
-        assertTokenize("char i = 0x0;", t("char"), t("i"), t("0x0", NUMBER));
-        assertTokenize("char i = 0xF;", t("char"), t("i"), t("0xF", NUMBER));
+        assertTokenize("doSomething(99.99);", t("Do something"), t("99.99", NUMBER));
+        assertTokenize("long i = 0;", t("Long"), t("i"), t("0", NUMBER));
+        assertTokenize("long i = 0L;", t("Long"), t("i"), t("0", NUMBER));
+        assertTokenize("float i = 0f;", t("Float"), t("i"), t("0", NUMBER));
+        assertTokenize("float i = 0.0f;", t("Float"), t("i"), t("0.0", NUMBER));
+        assertTokenize("char i = 0x0;", t("Char"), t("i"), t("0x0", NUMBER));
+        assertTokenize("char i = 0xF;", t("Char"), t("i"), t("0xF", NUMBER));
     }
 
-    @Disabled("This is the second pass")
     @Test
-    void SecondPass_handlesFieldAndMethodsNames_multiLine() {
-        assertTokenize("doSomething();", t("Do"), t("something"));
-        assertTokenize("field\n.doSomething();", t("Field"), t("\n"), t("do"), t("something"));
-        assertTokenize("field. \ndoSomething();", t("Field"), t("\n"), t("do"), t("something"));
-        assertTokenize("field\n .doSomething();", t("Field"), t("\n"), t(" "), t("do"), t("something"));
-        assertTokenize("field . doSomething();", t("Field"), t("do"), t("something"));
-        assertTokenize("field . doSomething();", t("Field"), t("do"), t("something"));
+    void handlesParameters() {
+        TokenizeParameterMap parameterMap = new TokenizeParameterMap();
+        parameterMap.put(new TokenizeParameter("paramName", "paramValue", "paramType"));
+        assertTokenize("doSomething(paramName);", parameterMap, t("Do something"), t("param value"));
     }
 
     /**
@@ -231,34 +263,45 @@ class TokenizeJavaSourceTokensTest {
 
     @Disabled
     @Test
-    void LearningTestForLamdas() {
+    void LearningTestForGeneralJavaCode() {
         String str1 = "roots.forEach(root -> logger.debug(\"tags: \" + root.getTags()));";
-        String str2 = "logger.info(() -> \"message\"));";
+        String str2 = "logger.info(() -> \"message\");";
         String str3 = "givenBuilder.build().getBooks().forEach((isbn, book) -> {";
+        String str4 = "String[] arr = {}";
 
-        System.out.println(new TokenizeSource(str1).tokenize());
-        System.out.println(new TokenizeSource(str2).tokenize());
-        System.out.println(new TokenizeSource(str3).tokenize());
+        System.out.println(tokenizeSource(str1));
+        System.out.println(tokenizeSource(str2));
+        System.out.println(tokenizeSource(str3));
+        System.out.println(tokenizeSource(str4));
 
-        System.out.println("as string: " + new TokenizeSource(str1).tokenize().asString());
-        System.out.println("as string: " + new TokenizeSource(str2).tokenize().asString());
-        System.out.println("as string: " + new TokenizeSource(str3).tokenize().asString());
+        System.out.println("as string: " + tokenizeSource(str1).asString());
+        System.out.println("as string: " + tokenizeSource(str2).asString());
+        System.out.println("as string: " + tokenizeSource(str3).asString());
+        System.out.println("as string: " + tokenizeSource(str4).asString());
     }
 
     private JavaSourceTokens tokenizeSource(String source) {
-        return new TokenizeSource(source).tokenize();
+        return new TokenizeSource(source, new TokenizeParameterMap()).tokenize();
+    }
+
+    private JavaSourceTokens tokenizeSource(String source, TokenizeParameterMap parameterMap) {
+        return new TokenizeSource(source, parameterMap).tokenize();
     }
 
     private void assertEmptyTokenListStartingAt(String source, int lineStart) {
-        assertThat(new TokenizeSource(source).tokenize()).isEqualTo(new JavaSourceTokens(Lists.emptyList(), lineStart));
+        assertThat(new TokenizeSource(source, new TokenizeParameterMap()).tokenize()).isEqualTo(new JavaSourceTokens(Lists.emptyList(), lineStart));
     }
 
     private void assertTokenizeStartingAt(String source, int lineStart, Token... expected) {
-        assertThat(new TokenizeSource(source).tokenize()).isEqualTo(new JavaSourceTokens(asList(expected), lineStart));
+        assertThat(new TokenizeSource(source, new TokenizeParameterMap()).tokenize()).isEqualTo(new JavaSourceTokens(asList(expected), lineStart));
     }
 
     private void assertTokenize(String source, Token... expected) {
-        assertThat(new TokenizeSource(source).tokenize()).isEqualTo(new JavaSourceTokens(asList(expected), 0));
+        assertThat(new TokenizeSource(source, new TokenizeParameterMap()).tokenize()).isEqualTo(new JavaSourceTokens(asList(expected), 0));
+    }
+
+    private void assertTokenize(String source, TokenizeParameterMap parameterMap, Token... expected) {
+        assertThat(new TokenizeSource(source, parameterMap).tokenize()).isEqualTo(new JavaSourceTokens(asList(expected), 0));
     }
 
     private Token t(String source) {

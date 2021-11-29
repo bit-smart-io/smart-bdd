@@ -33,6 +33,10 @@ public class Token {
         return value;
     }
 
+    public TokenType getType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

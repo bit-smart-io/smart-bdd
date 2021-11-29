@@ -18,34 +18,26 @@
 
 package io.bitsmart.wordify.tokenize;
 
-import io.bitsmart.bdd.report.utils.Builder;
+public class TokenizeParameter {
+    private final String name;
+    private final Object value;
+    private final String type;
 
-public final class TokenBuilder implements Builder<Token> {
-    private String value;
-    private TokenType type;
-
-    private TokenBuilder() {
-    }
-
-    public static TokenBuilder token(String value) {
-        return new TokenBuilder().withValue(value);
-    }
-
-    public static TokenBuilder token(String value, TokenType type) {
-        return new TokenBuilder().withValue(value).withType(type);
-    }
-
-    public TokenBuilder withValue(String value) {
+    public TokenizeParameter(String name, Object value, String type) {
+        this.name = name;
         this.value = value;
-        return this;
-    }
-
-    public TokenBuilder withType(TokenType type) {
         this.type = type;
-        return this;
     }
 
-    public Token build() {
-        return new Token(value, type);
+    public String getName() {
+        return name;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public String getType() {
+        return type;
     }
 }

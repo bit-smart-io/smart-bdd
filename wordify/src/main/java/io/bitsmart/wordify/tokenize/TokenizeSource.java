@@ -21,15 +21,13 @@ package io.bitsmart.wordify.tokenize;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static io.bitsmart.wordify.tokenize.TokenType.CHAR;
-import static io.bitsmart.wordify.tokenize.TokenType.DEFAULT;
 import static io.bitsmart.wordify.tokenize.TokenType.NUMBER;
 import static io.bitsmart.wordify.tokenize.TokenType.STRING_LITERAL;
 
 public class TokenizeSource {
-    private static final char NEW_LINE = '\n';
+    public static final char NEW_LINE = '\n';
     private static final char SPACE = ' ';
     private static final char TAB = '\t';
     private static final char COMMA = ',';
@@ -46,11 +44,15 @@ public class TokenizeSource {
     private int index = 0;
     private final char[] input;
     private final String original;
+    private final TokenizeParameterMap parameterMap;
     private int startingWhiteSpace;
+    private boolean newLineOfCode = true;
 
-    public TokenizeSource(String original) {
+
+    public TokenizeSource(String original, TokenizeParameterMap parameterMap) {
         this.input = original.toCharArray();
         this.original = original;
+        this.parameterMap = parameterMap;
     }
 
     public JavaSourceTokens tokenize() {
@@ -80,7 +82,7 @@ public class TokenizeSource {
     }
 
     /**
-     * newline, FieldOrMethodName, string litteral
+     * newline, FieldOrMethodName, string literal
      */
     private Optional<Token> handleNextToken() {
         char ch = get();
@@ -139,7 +141,20 @@ public class TokenizeSource {
         if (count == 0) {
             return Optional.empty();
         }
-        return Optional.of(new Token(substring(beginIndex, beginIndex + count), TokenType.DEFAULT));
+
+        String str = substring(beginIndex, beginIndex + count);
+        if (parameterMap.contains(str)) {
+            Object value = parameterMap.get(str).getValue();
+            str = value == null ? "null" : String.valueOf(value);
+            str = WordifyStringUtil.wordifyMethodOrFieldName(str);
+        } else {
+            str = WordifyStringUtil.wordifyMethodOrFieldName(input, beginIndex, beginIndex + count);
+        }
+        if (newLineOfCode) {
+            str = WordifyStringUtil.upperCaseFirstChar(str);
+        }
+        newLineOfCode = false;
+        return Optional.of(new Token(str, TokenType.DEFAULT));
     }
 
     private Optional<Token> handleNumber() {
@@ -182,17 +197,19 @@ public class TokenizeSource {
         int whiteSpace = incrementIndexPastWhiteSpace(0);
         int adjusted = 0;
 
-        __println("**** new beginIndex: " + beginIndex);
         if (whiteSpace > startingWhiteSpace) {
             adjusted = whiteSpace - startingWhiteSpace;
             endIndex = endIndex + adjusted;
+        }
+        if (adjusted == 0) {
+            newLineOfCode = true;
         }
         __println("<end> " + " handling new line whiteSpace: " + whiteSpace + ", adjusted whiteSpace: " + adjusted + "index: " + index + ", input.length: " + input.length + ", beginIndex: " + beginIndex + ", endIndex: " + endIndex);
 
         if (beginIndex == endIndex) {
             return Optional.empty();
         }
-        return Optional.of(new Token(substring(beginIndex, endIndex), TokenType.DEFAULT));
+        return Optional.of(new Token(substring(beginIndex, endIndex), TokenType.NEW_LINE));
     }
 
     private Optional<Token> handleStringLiteral() {
@@ -334,7 +351,7 @@ public class TokenizeSource {
         return whiteSpace;
     }
 
-    private static final boolean PRINT = true;
+    private static final boolean PRINT = false;
 
     private void __print(Object obj) {
         if (PRINT) {

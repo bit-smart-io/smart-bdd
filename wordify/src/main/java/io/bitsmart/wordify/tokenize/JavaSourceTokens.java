@@ -20,7 +20,8 @@ package io.bitsmart.wordify.tokenize;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static io.bitsmart.wordify.tokenize.TokenType.NEW_LINE;
 
 /**
  *  maybe it should be
@@ -50,7 +51,17 @@ public class JavaSourceTokens {
     }
 
     public String asString() {
-        return tokens.stream().map(Token::asString).collect(Collectors.joining(" ", " ", ""));
+        StringBuilder stringBuilder = new StringBuilder();
+        TokenType prevTokenType = null;
+
+        for(Token token: tokens) {
+            if (token.getType() != NEW_LINE && prevTokenType != null && prevTokenType != NEW_LINE) {
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append(token.asString());
+            prevTokenType = token.getType();
+        }
+        return stringBuilder.toString();
     }
 
     @Override

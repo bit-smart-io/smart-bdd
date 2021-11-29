@@ -18,16 +18,25 @@
 
 package io.bitsmart.wordify;
 
+import io.bitsmart.wordify.tokenize.TokenizeClass;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.List;
 import java.util.Optional;
 
 public class WordifyExtensionContext {
+    static final boolean WORDIFY_NEW = false;
+
     private WordifyClass wordify = new WordifyClass();
+    private TokenizeClass tokenizeClass = new TokenizeClass(new MethodExtractor());
 
     public Optional<String> wordify(ExtensionContext context, List<Object> parameters) {
-        return context.getTestMethod()
-            .map(method -> wordify.wordify(context.getRequiredTestClass(), method.getName(), parameters));
+        if (WORDIFY_NEW) {
+            return context.getTestMethod()
+                .map(method -> tokenizeClass.tokenizeAsString(context.getRequiredTestClass(), method.getName(), parameters));
+        } else {
+            return context.getTestMethod()
+                .map(method -> wordify.wordify(context.getRequiredTestClass(), method.getName(), parameters));
+        }
     }
 }
