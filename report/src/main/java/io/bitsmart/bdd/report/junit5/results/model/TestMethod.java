@@ -21,6 +21,9 @@ package io.bitsmart.bdd.report.junit5.results.model;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import static io.bitsmart.wordify.tokenize.WordifyStringUtil.upperCaseFirstChar;
+import static io.bitsmart.wordify.tokenize.WordifyStringUtil.wordifyMethodOrFieldName;
+
 /**
  * Fields for the test suite method that are available at compile time: name, params, tags etc...
  *
@@ -31,11 +34,15 @@ public class TestMethod {
     /** Name i.e. testMethod */
     private final String name;
 
+    /** Readable name i.e. Test Method */
+    private final String wordify;
+
 //    /** Name i.e. testMethod(), testMethod(Method) etc... */
 //    private final String nameWithParams;
 
     public TestMethod(String name) {
         this.name = name;
+        this.wordify = upperCaseFirstChar(wordifyMethodOrFieldName(name));
     }
 
     public static TestMethod testMethod(Method method) {
@@ -49,23 +56,28 @@ public class TestMethod {
         return name;
     }
 
+    public String getWordify() {
+        return wordify;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestMethod)) return false;
         TestMethod that = (TestMethod) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(name, that.name) && Objects.equals(wordify, that.wordify);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, wordify);
     }
 
     @Override
     public String toString() {
         return "TestMethod{" +
             "name='" + name + '\'' +
+            ", wordify='" + wordify + '\'' +
             '}';
     }
 }

@@ -64,7 +64,7 @@ public class ReportForPassingTestSuiteTest {
     }
 
     @Test
-    void reportForOneClassGeneratedCorrectly() throws IOException {
+    void reportForOneClassGeneratedCorrectly() {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
         Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
        

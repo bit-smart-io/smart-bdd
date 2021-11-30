@@ -34,6 +34,7 @@ public class TestCase {
     private final Status status;
     private final String name;
     private final String methodName;
+    private final String methodNameWordified;
     private final String className;
     private final String packageName;
     private final Notes notes;
@@ -47,6 +48,7 @@ public class TestCase {
         @JsonProperty("status") Status status,
         @JsonProperty("name") String name,
         @JsonProperty("methodName") String methodName,
+        @JsonProperty("methodNameWordified") String methodNameWordified,
         @JsonProperty("className") String className,
         @JsonProperty("packageName") String packageName,
         @JsonProperty("notes") Notes notes)
@@ -55,6 +57,7 @@ public class TestCase {
         this.status = status;
         this.name = name;
         this.methodName = methodName;
+        this.methodNameWordified = methodNameWordified;
         this.className = className;
         this.packageName = packageName;
         this.notes = notes;
@@ -76,6 +79,10 @@ public class TestCase {
         return methodName;
     }
 
+    public String getMethodNameWordified() {
+        return methodNameWordified;
+    }
+
     public String getClassName() {
         return className;
     }
@@ -93,12 +100,12 @@ public class TestCase {
         if (this == o) return true;
         if (!(o instanceof TestCase)) return false;
         TestCase testCase = (TestCase) o;
-        return Objects.equals(wordify, testCase.wordify) && status == testCase.status && Objects.equals(name, testCase.name) && Objects.equals(methodName, testCase.methodName) && Objects.equals(className, testCase.className) && Objects.equals(packageName, testCase.packageName) && Objects.equals(notes, testCase.notes);
+        return Objects.equals(wordify, testCase.wordify) && status == testCase.status && Objects.equals(name, testCase.name) && Objects.equals(methodName, testCase.methodName) && Objects.equals(methodNameWordified, testCase.methodNameWordified) && Objects.equals(className, testCase.className) && Objects.equals(packageName, testCase.packageName) && Objects.equals(notes, testCase.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, name, methodName, className, packageName, notes);
+        return Objects.hash(wordify, status, name, methodName, methodNameWordified, className, packageName, notes);
     }
 
     @Override
@@ -108,6 +115,7 @@ public class TestCase {
             ", status=" + status +
             ", name='" + name + '\'' +
             ", methodName='" + methodName + '\'' +
+            ", methodNameWordified='" + methodNameWordified + '\'' +
             ", className='" + className + '\'' +
             ", packageName='" + packageName + '\'' +
             ", notes=" + notes +

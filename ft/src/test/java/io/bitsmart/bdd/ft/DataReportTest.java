@@ -149,6 +149,7 @@ public class DataReportTest {
                 .withClassName("ClassUnderTest")
                 .withPackageName("io.bitsmart.bdd.ft")
                 .withMethodName("testMethod")
+                .withMethodNamWordified("Test method")
                 .withName("testMethod")
                 .withStatus(Status.PASSED)
                 .withWordify("Passing assertion")

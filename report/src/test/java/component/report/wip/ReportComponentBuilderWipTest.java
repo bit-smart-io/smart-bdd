@@ -171,6 +171,7 @@ public class ReportComponentBuilderWipTest {
             .withStatus(Status.PASSED)
             .withName("testMethod")
             .withMethodName("testMethod")
+            .withMethodNamWordified("Test method")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
             .build();

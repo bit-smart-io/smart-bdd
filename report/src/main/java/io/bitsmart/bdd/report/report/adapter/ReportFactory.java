@@ -96,6 +96,7 @@ public class ReportFactory {
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getName(),
             testCaseResult.getMethod().getName(),
+            testCaseResult.getMethod().getWordify(),
             testCaseResult.getTestSuiteClass().getClassName(),
             testCaseResult.getTestSuiteClass().getPackageName(),
             notes(testCaseResult.getNotes()));

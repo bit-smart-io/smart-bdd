@@ -49,6 +49,7 @@ public class ReportAssertions {
             .withStatus(Status.PASSED)
             .withName("testMethod")
             .withMethodName("testMethod")
+            .withMethodNamWordified("Test method")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
             .build();
@@ -60,6 +61,7 @@ public class ReportAssertions {
             .withStatus(Status.PASSED)
             .withName("paramTest value 1")
             .withMethodName("paramTest")
+            .withMethodNamWordified("Param test")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
             .build();

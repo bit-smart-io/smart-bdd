@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class WordifyExtensionContext {
-    static final boolean WORDIFY_NEW = false;
+    static final boolean WORDIFY_NEW = true;
 
     private WordifyClass wordify = new WordifyClass();
     private TokenizeClass tokenizeClass = new TokenizeClass(new MethodExtractor());
