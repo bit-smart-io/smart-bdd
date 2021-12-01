@@ -60,11 +60,16 @@ public class EatCucumbersTest extends BaseCucumberTest {
      * - iRequestToEatCucumbers() is syntax sugar for CucumberWhenBuilder - request state
      * - iShouldHaveCucumbers() is syntax sugar for CucumberThenBuilder - expected state
      * <p>
-     * Try not to be tempted to do use factory methods below are ant-patterns:
+     * Factory methods below can be considered ant-patterns, if you add more fields you have maintenance issues and hard to use defaults. In the long run they will be limiting.
      * - iHave(5, "red")
+     * - iHave(5, "red").cucumbers()
      * - iEatCucumbers(5, "red")
      * - iEatCucumbers(5, redCucumber())
-     * In the long run they will be limiting.
+     * - iEatCucumbers(5, cucumbers("red"))
+     * Above it definitely reads better.
+     *  * Hopefully generating builders will resolve this issue in the future.
+     *  * iRequestToEatCucumbers().withQuantity(1).withColour("red") could generate "I request to eat 1 red cucumber"
+     *
      * <p>
      * Starting to test any project and thinking about the nouns, verbs and or the bounded context is hard.
      * The boilerplate code can be a little tricky.
@@ -144,7 +149,6 @@ public class EatCucumbersTest extends BaseCucumberTest {
      *   notes().text().add("Not hungry, so will not eat");
      * }
      * </pre>
-     * The is
      */
     @Order(5)
     @Test
