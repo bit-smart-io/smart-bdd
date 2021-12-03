@@ -41,24 +41,40 @@ public class CucumberService {
         return cucumbers;
     }
 
-    public void eat(int amount, String colour) {
+    public void eat(String colour) {
         if (user.isHungry()) {
-            // cucumbers don't have identity - temp code
-            for (int i = 0; i < amount; i++) {
+            for (int i = 0; i < cucumbers.size(); i++) {
                 if (cucumbers.get(i).getColour().equals(colour)) {
                     cucumbers.remove(i);
+                    break;
                 }
             }
         }
     }
 
+    public void eat(int quantity, String colour) {
+        if (user.isHungry()) {
+            // cucumbers don't have identity - temp code
+            int removedCount = 0;
+            for (int i = 0; i < cucumbers.size(); i++) {
+                if (cucumbers.get(i).getColour().equals(colour)) {
+                    cucumbers.remove(i);
+                    removedCount++;
+                    if (removedCount == quantity) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+//
 //    /**  this will not work as cucumbers don't have identity */
-//    public void eat(int amount, String colour) {
+//    public void eat(int quantity, String colour) {
 //        if (user.isHungry()) {
 //
 //            List<Cucumber> matchedCucumbers = cucumbers.stream()
 //                .filter(cucumber -> colour.equals(cucumber.getColour()))
-//                .limit(amount)
+//                .limit(quantity)
 //                .collect(Collectors.toList());
 //            cucumbers.removeAll(matchedCucumbers);
 //        }

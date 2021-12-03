@@ -28,7 +28,7 @@ import static com.example.cucumbers.builders.CucumberBuilder.andACucumber;
 import static com.example.cucumbers.builders.CucumberGivenBuilder.iHave;
 import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHave;
 import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHaveCucumbers;
-import static com.example.cucumbers.builders.CucumberWhenBuilder.iRequestToEatCucumbers;
+import static com.example.cucumbers.builders.CucumberWhenBuilder.iRequestToEatACucumber;
 import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
 
 /**
@@ -47,44 +47,36 @@ public class EatCucumbersTest extends BaseCucumberTest {
      * Builders are not mandatory - if you have a non-trivial app to test, using builders is your best option!
      * <p>
      * - given() accepts a GivenBuilder - setup state for the scenario.
-     * - when() accepts a WhenBuilder - the request state for the scenario.
-     * - then() accepts a ThenBuilder - the expected state for the scenario.
-     * <p>
+     * - when()  accepts a WhenBuilder  - the request state for the scenario.
+     * - then()  accepts a ThenBuilder  - the expected state for the scenario.
+     * </p>
      * Output:
      * Given I have a cucumber with colour "red"
-     * When I request to eat cucumbers with quantity 1 with colour "red"
+     * When I request to eat a cucumbers with colour "red"
      * Then I should have cucumbers with quantity 0
      * <p>
      * If you follow the naming convention you should construct an API that is easy to read, use and maintain.
      * - iHave() is syntax sugar for CucumberGivenBuilder - setup state
      * - iRequestToEatCucumbers() is syntax sugar for CucumberWhenBuilder - request state
      * - iShouldHaveCucumbers() is syntax sugar for CucumberThenBuilder - expected state
-     * <p>
-     * Factory methods below can be considered ant-patterns, if you add more fields you have maintenance issues and hard to use defaults. In the long run they will be limiting.
-     * - iHave(5, "red")
-     * - iHave(5, "red").cucumbers()
-     * - iEatCucumbers(5, "red")
-     * - iEatCucumbers(5, redCucumber())
-     * - iEatCucumbers(5, cucumbers("red"))
-     * Above it definitely reads better.
-     *  * Hopefully generating builders will resolve this issue in the future.
-     *  * iRequestToEatCucumbers().withQuantity(1).withColour("red") could generate "I request to eat 1 red cucumber"
+     * </p>
      *
      * <p>
      * Starting to test any project and thinking about the nouns, verbs and or the bounded context is hard.
      * The boilerplate code can be a little tricky.
+     * </p>
      */
     @Order(0)
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft() {
         given(iHave(aCucumber().withColour("red")));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(0));
     }
 
     /**
      * For this given() you can technically omit iHave() and pass in CucumberBuilders to build the state.
-     * For when() and then() makes no sense to omit the When and Given Builders.
+     * This is an anti-pattern - you should use iHave that returns a CucumberGivenBuilder
      * <p>
      * Original Output: Given I have a cucumber with colour "red"
      * Shorter  Output: Given a cucumber with colour "red"
@@ -95,7 +87,7 @@ public class EatCucumbersTest extends BaseCucumberTest {
     @Test
     void givenOneRedCucumber_whenIEatOneRed_IHaveNoneLeft_omittingIHave() {
         given(aCucumber().withColour("red"));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(0));
     }
 
@@ -111,20 +103,18 @@ public class EatCucumbersTest extends BaseCucumberTest {
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneCucumberLeft() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(1));
     }
 
     /**
      * Let's update the expected state to assert on colour.
-     * <p>
-     * withColour is a little ambitious. It really means all expected cucumbers to be blue.
      */
     @Order(3)
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(1).withColour("blue"));
     }
 
@@ -135,7 +125,7 @@ public class EatCucumbersTest extends BaseCucumberTest {
     @Test
     void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft_betterAssertion() {
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHave(aCucumber().withColour("blue")));
     }
 
@@ -155,7 +145,7 @@ public class EatCucumbersTest extends BaseCucumberTest {
     void givenOneRedAndOneBlueCucumberAndNotHungry_whenIRequestToEatOneRed_IhaveOneRedAndOneBlueCucumberLeft() {
         given(iAm().notHungry());
         given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-        when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+        when(iRequestToEatACucumber().withColour("red"));
         then(iShouldHaveCucumbers().withQuantity(2));
     }
 
@@ -167,6 +157,23 @@ public class EatCucumbersTest extends BaseCucumberTest {
      */
     @Test
     void todo() {
+        //TODO
+    }
+
+    /**
+     * Maybe tackle quantities
+     * Factory methods below can be considered ant-patterns, if you add more fields you have maintenance issues and hard to use defaults. In the long run they will be limiting.
+     * - iHave(5, "red")
+     * - iHave(5, "red").cucumbers()
+     * - iEatCucumbers(5, "red")
+     * - iEatCucumbers(5, redCucumber())
+     * - iEatCucumbers(5, cucumbers("red"))
+     * Above it definitely reads better.
+     *  * Hopefully generating builders will resolve this issue in the future.
+     *  * iRequestToEatCucumbers().withQuantity(1).withColour("red") could generate "I request to eat 1 red cucumber"
+     **/
+    @Test
+    void todo2() {
         //TODO
     }
 }

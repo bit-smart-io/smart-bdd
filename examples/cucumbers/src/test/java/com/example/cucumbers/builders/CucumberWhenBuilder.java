@@ -22,19 +22,13 @@ import com.example.cucumbers.model.CucumberWhen;
 import io.bitsmart.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
-    private int quantity;
     private String colour;
 
     private CucumberWhenBuilder() {
     }
 
-    public static CucumberWhenBuilder iRequestToEatCucumbers() {
+    public static CucumberWhenBuilder iRequestToEatACucumber() {
         return new CucumberWhenBuilder();
-    }
-
-    public CucumberWhenBuilder withQuantity(int quantity) {
-        this.quantity = quantity;
-        return this;
     }
 
     public CucumberWhenBuilder withColour(String colour) {
@@ -43,6 +37,6 @@ public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
     }
 
     public CucumberWhen build() {
-        return new CucumberWhen(quantity, colour);
+        return new CucumberWhen(colour);
     }
 }

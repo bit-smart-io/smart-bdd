@@ -73,14 +73,15 @@ public class BaseCucumberTest extends BaseTest {
 
     public void when(WhenBuilder<CucumberWhen> builder) {
         CucumberWhen cucumberWhen = builder.build();
-        cucumberService.eat(cucumberWhen.getQuantity(), cucumberWhen.getColour());
-        sequenceDiagram().add(aMessage().from("User").to("CucumberService").text("eat " + cucumberWhen.getQuantity() + " " + cucumberWhen.getColour()));
+        cucumberService.eat(cucumberWhen.getColour());
+        sequenceDiagram().add(aMessage().from("User").to("CucumberService").text("eat " + cucumberWhen.getColour()));
     }
 
     public void then(ThenBuilder<CucumberThen> builder) {
         CucumberThen cucumberThen = builder.build();
         final List<Cucumber> actualCucumbers = cucumberService.getCucumbers();
-        sequenceDiagram().add(aMessage().from("CucumberService").to("User").text("getCucumbers: " + actualCucumbers));
+        sequenceDiagram().add(aMessage().from("User").to("CucumberService").text("get cucumbers").type("-->>"));
+        sequenceDiagram().add(aMessage().from("CucumberService").to("User").text("cucumbers: " + actualCucumbers).type("-->>"));
 
         cucumberThen.getColour().ifPresent(colour -> actualCucumbers
             .forEach((cucumber -> assertThat(cucumber.getColour()).isEqualTo(colour))));
