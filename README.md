@@ -5,6 +5,7 @@
 Create interactive feature files from Java code:
 
 - Ability to re-run tests.
+- Ability to modify the state under test.
 - Show downstream interactions with diagrams.
 - Capture downstream data such as HTTP request/response headers and body.
 - Steps wrapped in actions:
@@ -20,27 +21,32 @@ The projects aim is to:
 - Improve the performance of the tests 
 - Improve the productivity of writing and maintaining the tests
 
+Stretch  Goals:
+* Define the data and behaviour i.e. rest endpoints in JSON and generate the builders. 
+* The above declarative JSON could also be used to generate a demo application. 
+
 The fundamental approach is in stark contrast to existing frameworks: Cucumber, JBehave, Concordion etc...
 
-Traditionally have approximately four layers:
+Traditionally BDD frameworks have approximately four layers:
 
-1. Feature file / specification / UI.
+1. Feature file / specification / UI:
     - A feature is a text description of a feature that consists of scenarios and are made up of steps
     - This is the first thing that is writen and leads the design for the following.
-1. The glue layer.
+1. The glue layer:
     - Matches Java method for that step and the corresponding arguments. Usually a regular expression.
-1. Orchestrate your actual FT framework.
+1. Orchestration of the actual FT framework:
     - A Java method has been supplied data from the glue layer. You'll need to orchestrate your actual FT framework to
       actually do any testing.
     - You may have more data than you require - in non-trivial steps you have to chose code re-use or code duplication.
       Opting for code reuse makes glue layer and down more complex.
     - You may have a different domain and or bounded context for the feature file and the actual FT framework domain.
       This means adapting/transforming the data for the FT framework.
-1. The actual FT framework.
+1. The actual FT framework:
     - This usually would have the following functionality:
         - Set state before and after tests.
         - Exercise the thing under test.
         - Store state so that you assert on expected behaviour.
+        - State and behaviour verification.
     - This has been designed to accommodate additional complexities from above.
 
 Adding new data, steps and or features is not linear because of the following:
@@ -136,7 +142,7 @@ Questions:
     * file data json/xml
     * data to db
     * data to rest service
-
+* Create builders from JSON
 
 ### Testing Locally
 
