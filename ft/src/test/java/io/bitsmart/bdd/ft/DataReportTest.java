@@ -18,22 +18,22 @@
 
 package io.bitsmart.bdd.ft;
 
-import io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteNameToFileBuilder;
-import io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteSummaryBuilder;
-import io.bitsmart.bdd.ft.report.ports.json.model.DataReportIndex;
-import io.bitsmart.bdd.ft.report.ports.json.model.Status;
-import io.bitsmart.bdd.ft.report.ports.json.model.TestSuite;
+import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteNameToFileBuilder;
+import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.Status;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static io.bitsmart.bdd.ft.report.ports.json.builders.TestCaseBuilder.aTestCase;
-import static io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
-import static io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
-import static io.bitsmart.bdd.ft.report.ports.utils.DataReportTestUtils.loadReportIndex;
-import static io.bitsmart.bdd.ft.report.ports.utils.DataReportTestUtils.loadTestSuite;
+import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestCaseBuilder.aTestCase;
+import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
+import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadReportIndex;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadTestSuite;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,16 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.builders;
+package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.Report;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.Report;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.bitsmart.bdd.ft.report.ports.json.builders.ReportIndexBuilder.aReportIndex;
+import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.ReportIndexBuilder.aReportIndex;
 
 public final class ReportBuilder implements Builder<Report> {
     private ReportIndexBuilder reportIndex = aReportIndex();

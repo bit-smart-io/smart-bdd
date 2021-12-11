@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.model;
+package io.bitsmart.bdd.ft.report.infrastructure.json.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.bitsmart.bdd.ft.report.ports.json.model.notes.Notes;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.notes.Notes;
 
 import java.util.Objects;
 

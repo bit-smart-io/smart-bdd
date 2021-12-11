@@ -16,17 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.builders;
+package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.TestSuite;
-import io.bitsmart.bdd.ft.report.ports.json.model.notes.Notes;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.bitsmart.bdd.ft.report.ports.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 
 public final class TestSuiteBuilder implements Builder<TestSuite> {
     private String title;

@@ -16,31 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.builders;
+package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.TestSuiteLinks;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.utils.Builder;
-import io.bitsmart.bdd.report.utils.BuilderUtils;
 
-import java.util.List;
+public final class TestSuiteNameToFileBuilder implements Builder<TestSuiteNameToFile>  {
+    private String name;
+    private String file;
 
-public final class TestSuiteLinksBuilder implements Builder<TestSuiteLinks> {
-    private List<TestSuiteNameToFileBuilder> testSuites;
-
-    private TestSuiteLinksBuilder() {
+    private TestSuiteNameToFileBuilder() {
     }
 
-    public static TestSuiteLinksBuilder aTestSuiteLinks() {
-        return new TestSuiteLinksBuilder();
+    public static TestSuiteNameToFileBuilder aTestSuiteNameToFile() {
+        return new TestSuiteNameToFileBuilder();
     }
 
-    public TestSuiteLinksBuilder withTestSuites(List<TestSuiteNameToFileBuilder> testSuites) {
-        this.testSuites = testSuites;
+    public TestSuiteNameToFileBuilder withName(String name) {
+        this.name = name;
         return this;
     }
 
-    @Override
-    public TestSuiteLinks build() {
-        return new TestSuiteLinks(BuilderUtils.build((testSuites)));
+    public TestSuiteNameToFileBuilder withFile(String file) {
+        this.file = file;
+        return this;
+    }
+
+    public TestSuiteNameToFile build() {
+        return new TestSuiteNameToFile(name, file);
     }
 }

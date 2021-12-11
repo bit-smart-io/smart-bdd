@@ -16,43 +16,51 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.model.notes;
+package io.bitsmart.bdd.ft.report.infrastructure.json.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.bitsmart.bdd.report.junit5.results.model.notes.TextNotes;
 
 import java.util.Objects;
 
-public class Notes {
-    private final TextNotes textNotes;
+public class DataReportIndex {
+    private final TestSuiteLinks links;
+    private final TestSuiteSummary summary;
 
     @JsonCreator
-    public Notes(@JsonProperty("textNotes") TextNotes textNotes) {
-        this.textNotes = textNotes;
+    public DataReportIndex(
+        @JsonProperty("links") TestSuiteLinks links,
+        @JsonProperty("summary") TestSuiteSummary summary) {
+        this.links = links;
+        this.summary = summary;
     }
 
-    public TextNotes getTextNotes() {
-        return textNotes;
+    public TestSuiteLinks getLinks() {
+        return links;
+    }
+
+    public TestSuiteSummary getSummary() {
+        return summary;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Notes)) return false;
-        Notes notes = (Notes) o;
-        return Objects.equals(textNotes, notes.textNotes);
+        if (!(o instanceof DataReportIndex)) return false;
+        DataReportIndex that = (DataReportIndex) o;
+        return Objects.equals(links, that.links) && Objects.equals(summary, that.summary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNotes);
+        return Objects.hash(links, summary);
     }
 
     @Override
     public String toString() {
-        return "Notes{" +
-            "textNotes=" + textNotes +
+        return "ReportIndex{" +
+            "links=" + links +
+            ", summary=" + summary +
             '}';
     }
 }

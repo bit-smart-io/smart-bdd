@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.builders;
+package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.Status;
-import io.bitsmart.bdd.ft.report.ports.json.model.TestCase;
-import io.bitsmart.bdd.ft.report.ports.json.model.notes.Notes;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.Status;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestCase;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 
 public final class TestCaseBuilder implements Builder<TestCase> {

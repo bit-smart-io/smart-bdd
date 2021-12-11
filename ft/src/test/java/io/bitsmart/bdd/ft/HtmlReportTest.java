@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static io.bitsmart.bdd.ft.report.ports.utils.HtmlReportTestUtils.loadReportIndex;
-import static io.bitsmart.bdd.ft.report.ports.utils.HtmlReportTestUtils.loadTestSuite;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HtmlReportTest {

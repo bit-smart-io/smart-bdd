@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.model;
+package io.bitsmart.bdd.ft.report.infrastructure.json.model;
 
 import java.util.List;
 import java.util.Objects;

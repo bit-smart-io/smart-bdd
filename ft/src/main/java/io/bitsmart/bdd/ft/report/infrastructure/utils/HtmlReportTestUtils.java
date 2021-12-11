@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.utils;
+package io.bitsmart.bdd.ft.report.infrastructure.utils;
 
 import java.io.File;
 import java.io.IOException;

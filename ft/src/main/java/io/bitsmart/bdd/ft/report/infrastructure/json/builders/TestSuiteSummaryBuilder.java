@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.json.builders;
+package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
 
-import io.bitsmart.bdd.ft.report.ports.json.model.TestSuiteSummary;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuiteSummary;
 import io.bitsmart.bdd.report.utils.Builder;
 
 public final class TestSuiteSummaryBuilder implements Builder<TestSuiteSummary> {

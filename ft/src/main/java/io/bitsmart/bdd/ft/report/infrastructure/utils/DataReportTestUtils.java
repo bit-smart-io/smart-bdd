@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.ports.utils;
+package io.bitsmart.bdd.ft.report.infrastructure.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitsmart.bdd.ft.report.ports.json.model.DataReportIndex;
-import io.bitsmart.bdd.ft.report.ports.json.model.TestSuite;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
+import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
 
 import java.io.File;
 import java.io.IOException;
