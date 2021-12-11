@@ -1,12 +1,21 @@
-# smart-bdd
+# Smart BDD
 
 ### Overview
 
-Create interactive feature files from Java code:
+Create interactive html documentation / feature files from Java code:
 
+#### Source Code
+
+![alt text](docs/images/code01.png "Code Snippet")
+
+#### Below is an interactive html snippet that is generated from the above source code
+
+![alt text](docs/images/doc01.png "Doc Snippet")
+
+#### Features
 - Ability to re-run tests.
-- Ability to modify the state under test.
-- Show downstream interactions with diagrams.
+- Ability to modify the state under test, for example a textbox or a dropdown to modify values.
+- Capture downstream interactions and show with diagrams.
 - Capture downstream data such as HTTP request/response headers and body.
 - Steps wrapped in actions:
   - So that they can be executed asynchronously to improve performance
@@ -102,7 +111,7 @@ Then the book is returned
 ```
 void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
     given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-    when(iRequestToEatCucumbers().withQuantity(1).withColour("red"));
+    when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
 }
 ```
@@ -110,7 +119,7 @@ void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
 Will produce the following step defs:
 ```
 Given I have a cucumber with colour "red" and a cucumber with colour "blue" 
-When I request to eat cucumbers with quantity 1 with colour "red" 
+When I request to eat cucumbers with colour "red" 
 Then I should have cucumbers with quantity 1 with colour "blue"
 ```
 
