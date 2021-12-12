@@ -18,7 +18,7 @@
 
 package io.bitsmart.wordify;
 
-import io.bitsmart.wordify.tokenize.TokenizeClass;
+import io.bitsmart.wordify.legacy.TokenizeClass;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.List;

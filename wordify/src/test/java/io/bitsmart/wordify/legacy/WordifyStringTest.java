@@ -16,13 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.wordify;
+package io.bitsmart.wordify.legacy;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Deprecated
 public class WordifyStringTest {
     // 'a,b'      = A b
     // 'a, b'     = A b

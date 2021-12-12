@@ -19,7 +19,5 @@
 package io.bitsmart.wordify.tokenize;
 
 public enum TokenType {
-    // TODO maybe just ARGUMENT, DEFAULT, STRING_LITERAL
-    // argument means it was passed in to the test method as a param
     DEFAULT, NUMBER, STRING_LITERAL, CHAR, NEW_LINE, WHITE_SPACE, PARAMETER, ARGUMENT, GIVEN, WHEN, THEN
 }

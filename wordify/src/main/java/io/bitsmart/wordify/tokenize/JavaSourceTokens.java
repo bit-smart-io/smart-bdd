@@ -23,16 +23,6 @@ import java.util.Objects;
 
 import static io.bitsmart.wordify.tokenize.TokenType.NEW_LINE;
 
-/**
- *  maybe it should be
- *  method name. method params, args.
- *  with space at start
- *  TYPE = method
- *  method, function
- *  variable, local, global, argument
- *  white space
- *  startsWithUppercase
- */
 public class JavaSourceTokens {
     private List<Token> tokens;
     private final int whiteSpace;

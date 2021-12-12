@@ -16,8 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.wordify;
+package io.bitsmart.wordify.legacy;
 
+@Deprecated
 public class WordifyString {
     private static final char NEW_LINE = '\n';
     private static final char SPACE = ' ';

@@ -16,9 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.wordify.tokenize;
+package io.bitsmart.wordify.legacy;
 
 import io.bitsmart.wordify.MethodExtractor;
+import io.bitsmart.wordify.legacy.TokenizeClass;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +29,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Deprecated
 class TokenizeClassTest {
     private TokenizeClass tokenizeClass = new TokenizeClass(new MethodExtractor());
 

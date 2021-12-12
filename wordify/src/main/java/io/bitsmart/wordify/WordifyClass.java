@@ -20,6 +20,7 @@ package io.bitsmart.wordify;
 
 import io.bitsmart.wordify.sourcecode.MethodWrapper;
 import io.bitsmart.wordify.sourcecode.ParameterWrapper;
+import io.bitsmart.wordify.legacy.WordifyString;
 
 import java.util.List;
 import java.util.logging.Logger;
