@@ -21,15 +21,15 @@ package component.report;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.TestSuite;
-import org.junit.jupiter.api.BeforeEach;
+import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 
-import java.io.IOException;
+import java.time.ZonedDateTime;
 
 import static component.report.ReportAssertions.assertPassingTestSuite;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -55,28 +55,24 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-public class ReportForPassingTestSuiteTest {
+public class ReportForPassingTestSuiteTest extends AbstractReportTest{
     private static final Class<?> PASSING_CLASS_UNDER_TEST = ClassUnderTest.class;
-
-    @BeforeEach
-    void setUp() {
-        ReportExtension.getTestContext().reset();
-    }
 
     @Test
     void reportForOneClassGeneratedCorrectly() {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
-       
-        assertReport(report);
-    }
+        report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), CLOCK);
 
-    public static void assertReport(Report report) {
-        assertThat(report).isNotNull();
+        assertSuiteLinks();
+        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(6, 6, 0, 0, 0));
+        assertThat(report.getDateTime()).isEqualTo(ZonedDateTime.now(CLOCK));
         assertThat(report.getTestCases()).hasSize(6);
         assertThat(report.getTestSuites()).hasSize(1);
+        assertPassingTestSuite(report.getTestSuites().get(0));
+    }
 
-        TestSuite testSuite = report.getTestSuites().get(0);
-        assertPassingTestSuite(testSuite);
+    private void assertSuiteLinks() {
+        assertSuiteLinks(singletonList(
+            new TestSuiteNameToFile("shared.undertest.basic.ClassUnderTest", "TEST-shared.undertest.basic.ClassUnderTest.json")));
     }
 }

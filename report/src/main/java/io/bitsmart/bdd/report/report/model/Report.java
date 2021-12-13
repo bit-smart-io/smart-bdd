@@ -18,19 +18,26 @@
 
 package io.bitsmart.bdd.report.report.model;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This is not marshalled, it's a holder for infrastructure/json
+ * Used by data and html
+ * As and when the project gets more mature this has to be refactored
+ */
 public class Report {
-    // ReportIndex is for data. Maybe need one for html?
     private final DataReportIndex dataReportIndex;
     private final List<TestCase> testCases;
     private final List<TestSuite> testSuites;
+    private final ZonedDateTime dateTime;
 
-    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites) {
+    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites, ZonedDateTime dateTime) {
         this.dataReportIndex = dataReportIndex;
         this.testCases = testCases;
         this.testSuites = testSuites;
+        this.dateTime = dateTime;
     }
 
     public DataReportIndex getIndex() {
@@ -45,13 +52,8 @@ public class Report {
         return testSuites;
     }
 
-    @Override
-    public String toString() {
-        return "Report{" +
-            "reportIndex=" + dataReportIndex +
-            ", testCases=" + testCases +
-            ", testSuites=" + testSuites +
-            '}';
+    public ZonedDateTime getDateTime() {
+        return dateTime;
     }
 
     @Override
@@ -59,11 +61,21 @@ public class Report {
         if (this == o) return true;
         if (!(o instanceof Report)) return false;
         Report report = (Report) o;
-        return Objects.equals(dataReportIndex, report.dataReportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites);
+        return Objects.equals(dataReportIndex, report.dataReportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites) && Objects.equals(dateTime, report.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dataReportIndex, testCases, testSuites);
+        return Objects.hash(dataReportIndex, testCases, testSuites, dateTime);
+    }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+            "dataReportIndex=" + dataReportIndex +
+            ", testCases=" + testCases +
+            ", testSuites=" + testSuites +
+            ", dateTime=" + dateTime +
+            '}';
     }
 }

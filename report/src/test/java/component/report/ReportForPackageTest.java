@@ -22,52 +22,52 @@ import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
+import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
-import shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest;
-import shared.undertest.basic.FailedTestCasesUnderTest;
 
-import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
+import static component.report.ReportAssertions.assertPassingTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
-public class ReportForPackageTest {
+public class ReportForPackageTest extends AbstractReportTest {
     private static final String PACKAGE_NAME = ClassUnderTest.class.getPackage().getName();
 
-    @BeforeAll
-    public static void enableTest() {
-        FailedTestCasesUnderTest.setEnabled(true);
-        FailedDueToExceptionTestCasesUnderTest.setEnabled(true);
-    }
-
-    @AfterAll
-    public static void disableTest() {
-        FailedTestCasesUnderTest.setEnabled(false);
-        FailedDueToExceptionTestCasesUnderTest.setEnabled(false);
-    }
-
-    @BeforeEach
-    void setUp() {
-        ReportExtension.getTestContext().reset();
-    }
-
     @Test
-    void reportForOnePackageGeneratedCorrectly() throws IOException {
+    void reportForOnePackageGeneratedCorrectly() {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
+        report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), CLOCK);
 
-        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
-        TestSuiteLinks testSuiteLinks = report.getIndex().getLinks();
-        assertThat(testSuiteLinks.getTestSuites()).contains(
-            new TestSuiteNameToFile(
-                "shared.undertest.basic.ClassUnderTest",
-                "TEST-shared.undertest.basic.ClassUnderTest.json"));
+        assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));
+        assertThat(report.getDateTime()).isEqualTo(ZonedDateTime.now(CLOCK));
+        assertThat(report.getTestCases()).hasSize(28);
+        assertThat(report.getTestSuites()).hasSize(7);
+        assertPassingTestSuite(passingTestSuite(report));
+    }
+
+    private void assertSuiteLinks() {
+        List<TestSuiteNameToFile> suiteNameToFiles = Arrays.asList(
+            new TestSuiteNameToFile("shared.undertest.basic.ClassUnderTest", "TEST-shared.undertest.basic.ClassUnderTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.OutputStreamClassUnderTest", "TEST-shared.undertest.basic.OutputStreamClassUnderTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.FailedTestCasesUnderTest", "TEST-shared.undertest.basic.FailedTestCasesUnderTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest", "TEST-shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.DisabledTestCasesUnderTest", "TEST-shared.undertest.basic.DisabledTestCasesUnderTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.TestNamesTest", "TEST-shared.undertest.basic.TestNamesTest.json"),
+            new TestSuiteNameToFile("shared.undertest.basic.AbortedTestCasesUnderTest", "TEST-shared.undertest.basic.AbortedTestCasesUnderTest.json"));
+        assertSuiteLinks(suiteNameToFiles);
+    }
+
+    private TestSuite passingTestSuite(Report report) {
+        return Objects.requireNonNull(
+            report.getTestSuites().stream().findFirst().filter(suite -> suite.getClassName().equals("ClassUnderTest")).orElse(null)
+        );
     }
 }

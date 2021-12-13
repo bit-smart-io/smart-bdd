@@ -23,6 +23,8 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 
+import java.time.Clock;
+
 /**
  * Will need a strategy - write the results/report and or http post the results/report
  */
@@ -32,7 +34,7 @@ public class ReportWriter {
 
     /** TODO in transition. Please see TestResults for more details. */
     public void write(TestResults testResults) {
-        Report report = ReportFactory.create(testResults);
+        Report report = ReportFactory.create(testResults, Clock.systemDefaultZone());
         dataReportWriter.write(report.getIndex());
         htmlReportWriter.write(report.getIndex());
     }

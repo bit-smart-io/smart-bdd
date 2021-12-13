@@ -22,6 +22,7 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public final class ReportBuilder implements Builder<Report> {
     private ReportIndexBuilder reportIndex = aReportIndex();
     final private List<TestCaseBuilder> testCases = new ArrayList<>();
     final private List<TestSuiteBuilder> testSuites = new ArrayList<>();
+    private ZonedDateTime dateTime;
 
     private ReportBuilder() {
     }
@@ -56,7 +58,12 @@ public final class ReportBuilder implements Builder<Report> {
         return this;
     }
 
+    public ReportBuilder withDateTime(ZonedDateTime dateTime) {
+        this.dateTime = dateTime;
+        return this;
+    }
+
     public Report build() {
-        return new Report(reportIndex.build(), BuilderUtils.build(testCases), BuilderUtils.build(testSuites));
+        return new Report(reportIndex.build(), BuilderUtils.build(testCases), BuilderUtils.build(testSuites), dateTime);
     }
 }

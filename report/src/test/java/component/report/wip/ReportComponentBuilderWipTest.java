@@ -29,6 +29,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 
+import java.time.Clock;
+
 import static component.report.builders.TestCaseBuilder.aTestCase;
 import static component.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,7 +56,7 @@ public class ReportComponentBuilderWipTest {
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults());
+        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), Clock.systemDefaultZone());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(6);
 
