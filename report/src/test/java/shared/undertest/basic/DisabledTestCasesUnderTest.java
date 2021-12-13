@@ -28,6 +28,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * To generate run `./gradlew test` there are located build/test-results/test/
+ *
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.results.undertest.DisabledTestCasesUnderTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2021-04-12T20:09:43" hostname="Jamess-MacBook-Pro.local" time="0.0">
  *   <properties/>

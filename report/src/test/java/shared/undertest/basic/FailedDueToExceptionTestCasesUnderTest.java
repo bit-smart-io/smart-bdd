@@ -26,6 +26,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
+ * To generate run `./gradlew test` there are located build/test-results/test/
+ *
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.results.undertest.ExceptionThrownTestCasesUnderTest" tests="4" skipped="0" failures="4" errors="0" timestamp="2021-04-12T20:09:43" hostname="Jamess-MacBook-Pro.local" time="0.024">
  *   <properties/>

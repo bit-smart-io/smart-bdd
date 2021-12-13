@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
- * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
+ * To generate run `./gradlew test` there are located build/test-results/test/
  *
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.results.undertest.AbortedTestCasesUnderTest" tests="4" skipped="4" failures="0" errors="0" timestamp="2021-04-12T20:09:43" hostname="Jamess-MacBook-Pro.local" time="0.011">
@@ -47,6 +47,8 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  *   <system-out><![CDATA[]]></system-out>
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
+ *
+ * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
  */
 @ExtendWith(ReportExtension.class)
 public class AbortedTestCasesUnderTest {
