@@ -32,12 +32,6 @@ dependencies {
     testImplementation(project(":test-utils"))
 }
 
-tasks.test {
-    useJUnitPlatform()
-    exclude("**/ClassUnderTest.class")
-    exclude("**/undertest")
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {

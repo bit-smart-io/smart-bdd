@@ -28,11 +28,4 @@ repositories {
 }
 
 dependencies {
-
-}
-
-tasks.test {
-    useJUnitPlatform()
-    exclude("**/ClassUnderTest.class")
-    exclude("**/undertest")
 }

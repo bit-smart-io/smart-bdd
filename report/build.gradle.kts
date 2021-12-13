@@ -38,12 +38,6 @@ dependencies {
     testImplementation("com.google.jimfs:jimfs:1.1")
 }
 
-tasks.test {
-    useJUnitPlatform()
-    exclude("**/ClassUnderTest.class")
-    exclude("**/undertest")
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {

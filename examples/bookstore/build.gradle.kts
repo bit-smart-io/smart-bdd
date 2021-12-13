@@ -49,3 +49,7 @@ dependencies {
     testImplementation(project(":report"))
     testImplementation(project(":test-utils")) // should this be an additional dependency or report api?
 }
+
+tasks.test {
+    useJUnitPlatform()
+}
