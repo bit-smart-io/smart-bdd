@@ -65,7 +65,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite {
             method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
+        TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, aFailedTestMethod());
         assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
 

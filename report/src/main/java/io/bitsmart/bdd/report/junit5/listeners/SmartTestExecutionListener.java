@@ -45,7 +45,7 @@ public class SmartTestExecutionListener implements TestExecutionListener {
 
     @Override
     public void testPlanExecutionFinished(TestPlan testPlan) {
-        logger.debug("testPlanExecutionFinished123: " + methodNames + " " + testPlan.containsTests());
+        logger.debug("testPlanExecutionFinished: " + methodNames + " " + testPlan.containsTests());
 //        final Set<TestIdentifier> roots = testPlan.getRoots();
 //        roots.forEach(root -> logger.debug("tags: " + root.getTags()));
 //        roots.forEach(root -> logger.debug("source: " + root.getSource()));

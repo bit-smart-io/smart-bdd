@@ -57,7 +57,7 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
             method("paramTestWithNulls")
         );
 
-        assertThat(testSuiteResult().getTestCaseResult(method("testMethod"))).isEqualTo(aPassedTestCaseResult());
+        assertThat(testCaseResult("testMethod")).isEqualTo(aPassedTestCaseResult());
 
         assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()

@@ -47,16 +47,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * </testsuite>
  */
 @ExtendWith(ReportExtension.class)
+@EnabledIf("isEnabled")
 public class FailedTestCasesUnderTest {
     private static Boolean enabled = false;
 
-    @EnabledIf("isEnabled")
     @Test
     void testMethod() {
         failingAssertion();
     }
 
-    @EnabledIf("isEnabled")
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {

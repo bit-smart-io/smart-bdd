@@ -55,7 +55,7 @@ public class TestCaseResult {
     private Throwable cause;
     private List<Object> args = new ArrayList<>();
     private String name;
-    private TestMethod method;
+    private final TestMethod method;
     private final TestSuiteClass testSuiteClass;
     private final Notes notes;
 

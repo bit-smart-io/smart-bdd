@@ -28,6 +28,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractResultsForTestSuite {
@@ -51,7 +52,16 @@ public abstract class AbstractResultsForTestSuite {
     }
 
     public TestCaseResult testCaseResult(String methodName) {
-        return testSuiteResult().getTestCaseResult(method(methodName));
+        return testSuiteResult().getTestCaseResults().stream()
+            .findAny()
+            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
+            .orElse(null);
+    }
+
+    public List<TestCaseResult> testCaseResults(String methodName) {
+        return testSuiteResult().getTestCaseResults().stream()
+            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
+            .collect(toList());
     }
 
     public TestCaseResult firstTestCaseResult(String methodName) {
@@ -64,10 +74,6 @@ public abstract class AbstractResultsForTestSuite {
 
     public TestCaseResult thirdTestCaseResult(String methodName) {
         return testCaseResults(methodName).get(2);
-    }
-
-    public List<TestCaseResult> testCaseResults(String methodName) {
-        return testSuiteResult().getTestCaseResults(method(methodName));
     }
 
     public TestSuiteResult testSuiteResult() {

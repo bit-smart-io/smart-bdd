@@ -48,16 +48,15 @@ import org.junit.jupiter.params.provider.ValueSource;
  * </testsuite>
  */
 @ExtendWith(ReportExtension.class)
+@EnabledIf("isEnabled")
 public class FailedDueToExceptionTestCasesUnderTest {
     private static Boolean enabled = false;
 
-    @EnabledIf("isEnabled")
     @Test
     void testMethod() {
         methodThatThrowsAPointerMethod();
     }
 
-    @EnabledIf("isEnabled")
     @ParameterizedTest
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {

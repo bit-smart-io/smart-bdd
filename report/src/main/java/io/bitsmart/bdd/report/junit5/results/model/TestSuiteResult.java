@@ -60,15 +60,6 @@ public class TestSuiteResult {
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
     private final ConcurrentHashMap<ExtensionContext, TestCaseResult> contextToTestCaseResult = new ConcurrentHashMap<>();
 
-    /**
-     * This seems to be only used for tests!!
-     * could this be test instance to params/repeat i.e. Method to List<ExtensionContext>
-     * paramTest(int i)
-     * paramTest(int i, String s)
-     * method name is paramTest. But to uniquely identify it should be Method?
-     */
-    private final ConcurrentHashMap<TestMethod, List<ExtensionContext>> methodToContexts = new ConcurrentHashMap<>();
-
     private final String title;
 
     private final Notes notes;
@@ -85,15 +76,6 @@ public class TestSuiteResult {
         TestCaseResult testCaseResult = createTestCaseResult(context);
         TestMethod method = method(context);
         methods.add(method);
-
-        if (methodToContexts.containsKey(method)) {
-            methodToContexts.get(method).add(context);
-        } else {
-            List<ExtensionContext> contexts = new ArrayList<>();
-            contexts.add(context);
-            methodToContexts.put(method, contexts);
-        }
-
         this.testCaseResults.add(testCaseResult);
         contextToTestCaseResult.put(context, testCaseResult);
         return testCaseResult;
@@ -107,19 +89,6 @@ public class TestSuiteResult {
         return contextToTestCaseResult.get(context);
     }
 
-    /** only used for testing. Prod code uses getTestCaseResults */
-    public TestCaseResult getTestCaseResult(TestMethod method) {
-        ExtensionContext extensionContext = methodToContexts.get(method).get(0);
-        return contextToTestCaseResult.get(extensionContext);
-    }
-
-    /** only used for testing. Prod code uses getTestCaseResults */
-    public List<TestCaseResult> getTestCaseResults(TestMethod method) {
-        return methodToContexts.get(method).stream()
-            .map(contextToTestCaseResult::get)
-            .collect(Collectors.toList());
-    }
-
     public String getTitle() {
         return title;
     }
@@ -130,10 +99,6 @@ public class TestSuiteResult {
 
     public TestSuiteResultsMetadata getMetadata() {
         return metadata;
-    }
-
-    public ConcurrentHashMap<TestMethod, List<ExtensionContext>> getMethodNameToContext() {
-        return methodToContexts;
     }
 
     public List<TestMethod> getMethods() {

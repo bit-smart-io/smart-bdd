@@ -66,7 +66,7 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
             method("paramTest")
         );
 
-        TestCaseResult testMethod = testSuiteResult().getTestCaseResult(method("testMethod"));
+        TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, aFailedTestMethodDueToException());
         assertNullPointerCause(testMethod);
 
