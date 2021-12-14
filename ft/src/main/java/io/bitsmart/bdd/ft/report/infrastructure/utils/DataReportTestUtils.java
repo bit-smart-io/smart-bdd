@@ -45,7 +45,7 @@ public class DataReportTestUtils {
     }
 
     public static File testSuiteFile(Class<?> clazz) {
-        return new File(outputDirectory(), "TEST-" + clazz.getName() + ".json");
+        return new File(outputDirectory(), "TEST-" + clazz.getCanonicalName() + ".json");
     }
 
     public static File outputDirectory() {

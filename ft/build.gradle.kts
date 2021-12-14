@@ -34,5 +34,21 @@ dependencies {
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
+    implementation("org.awaitility:awaitility:3.0.0")
+
     testImplementation("org.mockito:mockito-all:1.10.19")
+}
+
+tasks.test {
+    // Unless this is added, tests in undertest are run.
+    // When AbstractResultsForTestSuite loads the index file  when launching ClassUnderTest.
+    // the index file contains all the tests. I can only assume gradle runs the tests in parallel.
+    exclude("**/ClassUnderTest.class")
+    exclude("**/undertest")
+
+    // This doesn't fix the issue above for IDEs. I haven't found a proper solution, because although this will work for Gradle
+    // an IDE could run in to issues with tests run in parallel. Another option is use env variables or static flags/booleans
+    // using @EnabledIf("isEnabled") or @EnabledIf("isClassUnderTestEnabled") on the class under test.
+    // maxParallelForks = 1 // Will not do parallel execution
+    // systemProperties["junit.jupiter.execution.parallel.enabled"] = false
 }

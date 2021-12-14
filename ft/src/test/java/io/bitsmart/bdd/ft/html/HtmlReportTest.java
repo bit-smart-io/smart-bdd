@@ -1,0 +1,69 @@
+/*
+ * Smart BDD - The smart way to do behavior-driven development.
+ * Copyright (C)  2021  James Bayliss
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package io.bitsmart.bdd.ft.html;
+
+import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
+import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
+import io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * TODO could this be the same as the data with the abstract class?
+ *
+ * Reports are one test class
+ * */
+public class HtmlReportTest {
+
+    private static String testSuite;
+
+    @BeforeAll
+    static void beforeAll() throws IOException {
+        TestLauncher.launch(ClassUnderTest.class, new TestExecutionListener());
+        testSuite = loadTestSuite(ClassUnderTest.class);
+    }
+
+    /**
+     * Summary of all Tests
+     * Summary: passed: 4, skipped: 0, failed: 0, aborted: 0, tests: 4
+     *
+     * io.bitsmart.bdd.ft.ClassUnderTest
+     *
+     * @throws IOException
+     */
+    @Test
+    void generatesIndexJson() throws IOException {
+        String reportIndex = loadReportIndex();
+        assertThat(reportIndex).isNotNull();
+    }
+
+    /**
+     * TODO bsoup
+     */
+    @Test
+    void generatesTestSuiteJson() {
+        assertThat(testSuite).isNotNull();
+    }
+}

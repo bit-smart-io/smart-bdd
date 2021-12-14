@@ -18,7 +18,6 @@
 
 package io.bitsmart.bdd.report.report.model;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,13 +30,13 @@ public class Report {
     private final DataReportIndex dataReportIndex;
     private final List<TestCase> testCases;
     private final List<TestSuite> testSuites;
-    private final ZonedDateTime dateTime;
+    private final String timeStamp;
 
-    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites, ZonedDateTime dateTime) {
+    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites, String timeStamp) {
         this.dataReportIndex = dataReportIndex;
         this.testCases = testCases;
         this.testSuites = testSuites;
-        this.dateTime = dateTime;
+        this.timeStamp = timeStamp;
     }
 
     public DataReportIndex getIndex() {
@@ -52,8 +51,8 @@ public class Report {
         return testSuites;
     }
 
-    public ZonedDateTime getDateTime() {
-        return dateTime;
+    public String getTimeStamp() {
+        return timeStamp;
     }
 
     @Override
@@ -61,12 +60,12 @@ public class Report {
         if (this == o) return true;
         if (!(o instanceof Report)) return false;
         Report report = (Report) o;
-        return Objects.equals(dataReportIndex, report.dataReportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites) && Objects.equals(dateTime, report.dateTime);
+        return Objects.equals(dataReportIndex, report.dataReportIndex) && Objects.equals(testCases, report.testCases) && Objects.equals(testSuites, report.testSuites) && Objects.equals(timeStamp, report.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dataReportIndex, testCases, testSuites, dateTime);
+        return Objects.hash(dataReportIndex, testCases, testSuites, timeStamp);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class Report {
             "dataReportIndex=" + dataReportIndex +
             ", testCases=" + testCases +
             ", testSuites=" + testSuites +
-            ", dateTime=" + dateTime +
+            ", timeStamp=" + timeStamp +
             '}';
     }
 }

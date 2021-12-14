@@ -27,6 +27,7 @@ import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSu
 public final class ReportIndexBuilder implements Builder<DataReportIndex> {
     private TestSuiteLinksBuilder links = aTestSuiteLinks();
     private TestSuiteSummaryBuilder summary = aTestSuiteSummary();
+    private String timeStamp;
 
     private ReportIndexBuilder() {
     }
@@ -45,8 +46,13 @@ public final class ReportIndexBuilder implements Builder<DataReportIndex> {
         return this;
     }
 
+    public ReportIndexBuilder withTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+        return this;
+    }
+
     @Override
     public DataReportIndex build() {
-        return new DataReportIndex(links.build(), summary.build());
+        return new DataReportIndex(links.build(), summary.build(), timeStamp);
     }
 }

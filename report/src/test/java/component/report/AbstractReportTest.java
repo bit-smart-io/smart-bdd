@@ -35,7 +35,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractReportTest {
-    static final Clock CLOCK = Clock.fixed(Instant.parse("2000-01-29T09:15:30.00Z"), ZoneId.of("UTC"));
+    static final String DEFAULT_DATE_TIME = "2000-01-29T09:15:30.00Z";
+    static final Clock CLOCK = Clock.fixed(Instant.parse(DEFAULT_DATE_TIME), ZoneId.of("UTC"));
     Report report;
 
     @BeforeAll
@@ -58,37 +59,4 @@ public abstract class AbstractReportTest {
     void assertSuiteLinks(List<TestSuiteNameToFile> suiteNameToFiles) {
         assertThat(report.getIndex().getLinks().getTestSuites()).containsAll(suiteNameToFiles);
     }
-
-//    @Test
-//    void reportForOnePackageGeneratedCorrectly() {
-//        TestLauncher.launch(selectPackage(PACKAGE_NAME));
-//        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), CLOCK);
-//
-//        TestSuiteLinks testSuiteLinks = report.getIndex().getLinks();
-//        assertThat(testSuiteLinks.getTestSuites()).contains(
-//            new TestSuiteNameToFile(
-//                "shared.undertest.basic.ClassUnderTest",
-//                "TEST-shared.undertest.basic.ClassUnderTest.json"));
-//        assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));
-//        assertThat(report.getDateTime()).isEqualTo(ZonedDateTime.now(CLOCK));
-//        assertPassingTestSuite(passingTestSuite(report));
-//    }
-//
-//    private void assertSuiteLinks(TestSuiteLinks testSuiteLinks) {
-//        List<TestSuiteNameToFile> suiteNameToFiles = Arrays.asList(
-//            new TestSuiteNameToFile("shared.undertest.basic.ClassUnderTest", "TEST-shared.undertest.basic.ClassUnderTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.OutputStreamClassUnderTest", "TEST-shared.undertest.basic.OutputStreamClassUnderTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.FailedTestCasesUnderTest", "TEST-shared.undertest.basic.FailedTestCasesUnderTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest", "TEST-shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.DisabledTestCasesUnderTest", "TEST-shared.undertest.basic.DisabledTestCasesUnderTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.TestNamesTest", "TEST-shared.undertest.basic.TestNamesTest.json"),
-//            new TestSuiteNameToFile("shared.undertest.basic.AbortedTestCasesUnderTest", "TEST-shared.undertest.basic.AbortedTestCasesUnderTest.json"));
-//        assertThat(testSuiteLinks.getTestSuites()).containsAll(suiteNameToFiles);
-//    }
-//
-//    private TestSuite passingTestSuite(Report report) {
-//        return Objects.requireNonNull(
-//            report.getTestSuites().stream().findFirst().filter(suite -> suite.getClassName().equals("ClassUnderTest")).orElse(null)
-//        );
-//    }
 }

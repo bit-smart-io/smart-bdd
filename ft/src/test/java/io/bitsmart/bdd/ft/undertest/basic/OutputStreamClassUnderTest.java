@@ -16,36 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft;
+package io.bitsmart.bdd.ft.undertest.basic;
 
-import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import org.junit.jupiter.api.BeforeAll;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.IOException;
-
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HtmlReportTest {
+@TestMethodOrder(OrderAnnotation.class)
+@ExtendWith(ReportExtension.class)
+public class OutputStreamClassUnderTest {
 
-    private static String testSuite;
-
-    @BeforeAll
-    static void beforeAll() throws IOException {
-        TestLauncher.launch(ClassUnderTest.class);
-        testSuite = loadTestSuite(ClassUnderTest.class);
+    @Order(0)
+    @Test
+    void testMethod() {
+        System.out.println("system.out for testMethod");
+        System.err.println("system.err for testMethod");
+        passingAssertion();
     }
 
-    @Test
-    void generatesIndexJson() throws IOException {
-        String reportIndex = loadReportIndex();
-        assertThat(reportIndex).isNotNull();
-    }
-
-    @Test
-    void generatesTestSuiteJson() {
-        assertThat(testSuite).isNotNull();
+    private void passingAssertion() {
+        assertThat(true).isTrue();
     }
 }

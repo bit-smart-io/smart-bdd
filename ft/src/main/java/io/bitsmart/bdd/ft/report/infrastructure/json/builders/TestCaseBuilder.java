@@ -55,8 +55,8 @@ public final class TestCaseBuilder implements Builder<TestCase> {
         return this;
     }
 
-    public TestCaseBuilder withMethodNamWordified(String methodNamWordified) {
-        this.methodNamWordified = methodNamWordified;
+    public TestCaseBuilder withMethodNameWordified(String methodNameWordified) {
+        this.methodNamWordified = methodNameWordified;
         return this;
     }
 

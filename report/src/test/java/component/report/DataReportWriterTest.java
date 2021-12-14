@@ -53,7 +53,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class DataReportWriterTest {
-
+    static final String DEFAULT_DATE_TIME = "2000-01-29T09:15:30.00Z";
     private final FileNameProvider dataFileNameProvider = mock(FileNameProvider.class);
     private final FileSystem fileSystem = Jimfs.newFileSystem(Configuration.unix());
     private final ReportLoadFileUtils fileUtils = new ReportLoadFileUtils();
@@ -86,7 +86,7 @@ class DataReportWriterTest {
     }
 
     @Test
-    void prepareDataDirectory_createsDirectory() throws IOException {
+    void prepareDataDirectory_createsDirectory() {
         assertThat(dataPath).doesNotExist();
 
         dataReportWriter.prepareDataDirectory();
@@ -113,7 +113,8 @@ class DataReportWriterTest {
         return ReportBuilder.aReport()
             .withReportIndex(aDefaultReportIndex())
             .withTestSuites(singletonList(aDefaultTestSuiteBuilder()))
-            .withTestCases(singletonList(aDefaultTestCaseBuilder()));
+            .withTestCases(singletonList(aDefaultTestCaseBuilder()))
+            .withTimeStamp(DEFAULT_DATE_TIME);
     }
 
     public static TestSuiteBuilder aDefaultTestSuiteBuilder() {
@@ -148,6 +149,7 @@ class DataReportWriterTest {
         return aReportIndex()
             .withLinks(aTestSuiteLinks()
                 .withTestSuites(singletonList(aTestSuiteNameToFile().withName("defaultName").withFile("defaultFileName"))))
-            .withSummary(aTestSuiteSummary());
+            .withSummary(aTestSuiteSummary())
+            .withTimeStamp(DEFAULT_DATE_TIME);
     }
 }

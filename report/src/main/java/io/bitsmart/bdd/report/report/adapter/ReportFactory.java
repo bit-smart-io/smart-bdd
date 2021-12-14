@@ -26,14 +26,16 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
-import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
+import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
 import java.time.Clock;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,11 +49,14 @@ public class ReportFactory {
         Collection<TestSuiteResult> testSuiteResults = testResults.getTestSuiteResults();
         List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
         List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SS'Z'").withZone(ZoneId.systemDefault());
+        String timeStamp = formatter.format(ZonedDateTime.now(clock));
 
-         DataReportIndex dataReportIndex = new DataReportIndex(
-             dataTestSuiteLinksFactory.create(testSuites),
-            ReportSummaryFactory.create(testSuites));
-        return new Report(dataReportIndex, testCases, testSuites, ZonedDateTime.now(clock));
+        DataReportIndex dataReportIndex = new DataReportIndex(
+            dataTestSuiteLinksFactory.create(testSuites),
+            ReportSummaryFactory.create(testSuites),
+            timeStamp);
+        return new Report(dataReportIndex, testCases, testSuites, timeStamp);
     }
 
     private static List<io.bitsmart.bdd.report.report.model.TestCase> testCases(Collection<TestSuiteResult> testSuiteResults) {

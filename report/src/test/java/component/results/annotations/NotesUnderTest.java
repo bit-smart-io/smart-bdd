@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ReportExtension.class, TestCaseNotesParameterResolver.class})
 public class NotesUnderTest {
 
-    private Notes notes = new Notes();
+    private Notes notes;
 
     @BeforeEach
     public void setUp(@InjectNotes Notes notes) {

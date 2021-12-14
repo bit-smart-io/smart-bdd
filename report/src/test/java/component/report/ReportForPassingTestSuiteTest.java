@@ -65,7 +65,7 @@ public class ReportForPassingTestSuiteTest extends AbstractReportTest{
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(6, 6, 0, 0, 0));
-        assertThat(report.getDateTime()).isEqualTo(ZonedDateTime.now(CLOCK));
+        assertThat(report.getTimeStamp()).isEqualTo(DEFAULT_DATE_TIME);
         assertThat(report.getTestCases()).hasSize(6);
         assertThat(report.getTestSuites()).hasSize(1);
         assertPassingTestSuite(report.getTestSuites().get(0));

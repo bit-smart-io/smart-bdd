@@ -24,11 +24,6 @@ import io.bitsmart.bdd.ft.report.infrastructure.json.model.notes.Notes;
 
 import java.util.Objects;
 
-/**
- * Name ideas: ReportItem, Item, ResultItem
- * java.lang.reflect.Parameter
- * java.lang.reflect.Method#getParameterTypes()
- */
 public class TestCase {
     private final String wordify;
     private final Status status;

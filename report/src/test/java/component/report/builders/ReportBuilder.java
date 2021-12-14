@@ -32,7 +32,7 @@ public final class ReportBuilder implements Builder<Report> {
     private ReportIndexBuilder reportIndex = aReportIndex();
     final private List<TestCaseBuilder> testCases = new ArrayList<>();
     final private List<TestSuiteBuilder> testSuites = new ArrayList<>();
-    private ZonedDateTime dateTime;
+    private String timeStamp;
 
     private ReportBuilder() {
     }
@@ -58,12 +58,12 @@ public final class ReportBuilder implements Builder<Report> {
         return this;
     }
 
-    public ReportBuilder withDateTime(ZonedDateTime dateTime) {
-        this.dateTime = dateTime;
+    public ReportBuilder withTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
         return this;
     }
 
     public Report build() {
-        return new Report(reportIndex.build(), BuilderUtils.build(testCases), BuilderUtils.build(testSuites), dateTime);
+        return new Report(reportIndex.build(), BuilderUtils.build(testCases), BuilderUtils.build(testSuites), timeStamp);
     }
 }

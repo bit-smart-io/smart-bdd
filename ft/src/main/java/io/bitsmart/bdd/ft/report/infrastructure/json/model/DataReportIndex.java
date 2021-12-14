@@ -26,13 +26,16 @@ import java.util.Objects;
 public class DataReportIndex {
     private final TestSuiteLinks links;
     private final TestSuiteSummary summary;
+    private final String timeStamp;
 
     @JsonCreator
     public DataReportIndex(
         @JsonProperty("links") TestSuiteLinks links,
-        @JsonProperty("summary") TestSuiteSummary summary) {
+        @JsonProperty("summary") TestSuiteSummary summary,
+        @JsonProperty("timeStamp") String timeStamp) {
         this.links = links;
         this.summary = summary;
+        this.timeStamp = timeStamp;
     }
 
     public TestSuiteLinks getLinks() {
@@ -43,24 +46,29 @@ public class DataReportIndex {
         return summary;
     }
 
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DataReportIndex)) return false;
         DataReportIndex that = (DataReportIndex) o;
-        return Objects.equals(links, that.links) && Objects.equals(summary, that.summary);
+        return Objects.equals(links, that.links) && Objects.equals(summary, that.summary) && Objects.equals(timeStamp, that.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(links, summary);
+        return Objects.hash(links, summary, timeStamp);
     }
 
     @Override
     public String toString() {
-        return "ReportIndex{" +
+        return "DataReportIndex{" +
             "links=" + links +
             ", summary=" + summary +
+            ", timeStamp=" + timeStamp +
             '}';
     }
 }
