@@ -18,10 +18,10 @@
 
 plugins {
     `java-library`
+//    `java-test-fixtures` //TODO use this if we want to export test code to be used in the fts
     id("org.springframework.boot") version "2.5.3"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
-
-apply(plugin = "io.spring.dependency-management")
 
 group = "io.bitsmart.bdd.example"
 version = "1.0-SNAPSHOT"

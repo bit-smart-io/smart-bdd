@@ -30,6 +30,11 @@ import static java.util.Collections.singletonList;
 
 public class GetBookTest extends BaseBookStoreTest {
 
+    @Override
+    public void doc() {
+        featureNotes("Working progress for example of usage Smart BDD");
+    }
+
     @Test
     public void getBookByIsbnUsingDefaults() {
         when(aUserRequestsABook());

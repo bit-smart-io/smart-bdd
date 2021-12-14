@@ -18,52 +18,76 @@
 
 package io.bitsmart.bdd.ft.html;
 
-import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
-import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
 import io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO could this be the same as the data with the abstract class?
- *
- * Reports are one test class
+ * TODO use https://jsoup.org/
  * */
-public class HtmlReportTest {
+public class HtmlReportTest extends AbstractResultsForHtml {
 
-    private static String testSuite;
-
-    @BeforeAll
-    static void beforeAll() throws IOException {
-        TestLauncher.launch(ClassUnderTest.class, new TestExecutionListener());
-        testSuite = loadTestSuite(ClassUnderTest.class);
+    @Override
+    public Class<?> classUnderTest() {
+        return ClassUnderTest.class;
     }
 
     /**
      * Summary of all Tests
-     * Summary: passed: 4, skipped: 0, failed: 0, aborted: 0, tests: 4
+     * Summary: passed: 6, skipped: 0, failed: 0, aborted: 0, tests: 6
      *
-     * io.bitsmart.bdd.ft.ClassUnderTest
-     *
-     * @throws IOException
+     * io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest
      */
     @Test
-    void generatesIndexJson() throws IOException {
-        String reportIndex = loadReportIndex();
-        assertThat(reportIndex).isNotNull();
+    void generatesIndexJson()  {
+        assertThat(reportIndex()).isNotNull();
+        assertThat(reportIndex())
+            .contains("Summary of all Tests")
+            .contains("Summary: passed: 6, skipped: 0, failed: 0, aborted: 0, tests: 6")
+            .contains("<a href=\"TEST-io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest.html\">io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest</a>");
     }
 
     /**
-     * TODO bsoup
+     * <pre>
+     * Feature: Class under test
+     *
+     *  Scenario: Test method (PASSED)
+     * Passing assertion
+     *
+     *  Scenario: Param test (PASSED)
+     * Passing assertion with value 1
+     *
+     *  Scenario: Param test (PASSED)
+     * Passing assertion with value 2
+     *
+     *  Scenario: Param test (PASSED)
+     * Passing assertion with value 3
+     *
+     *  Scenario: Param test with nulls (PASSED)
+     * Passing assertion with null value 2
+     *
+     *  Scenario: Param test with nulls (PASSED)
+     * Passing assertion with value 3 null
+     * </pre>
      */
     @Test
     void generatesTestSuiteJson() {
-        assertThat(testSuite).isNotNull();
+        assertThat(testSuite()).isNotNull();
+        assertThat(testSuite())
+            .contains("<a href=\"./index.html\">index</a>")
+            .contains("io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest")
+            .contains("Feature:")
+            .contains("Class under test")
+            .contains("Scenario:")
+            .contains("Test method (PASSED)")
+            .contains("Passing assertion")
+            .contains("Param test (PASSED)")
+            .contains("Passing assertion with value 1")
+            .contains("Passing assertion with value 2")
+            .contains("Passing assertion with value 3")
+            .contains("Param test with nulls (PASSED)")
+            .contains("Passing assertion with null value 2")
+            .contains("Passing assertion with value 3 null");
     }
 }

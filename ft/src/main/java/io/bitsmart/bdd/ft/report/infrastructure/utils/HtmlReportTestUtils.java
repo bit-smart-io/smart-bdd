@@ -37,7 +37,7 @@ public class HtmlReportTestUtils {
     }
 
     public static File testSuiteFile(Class<?> clazz) {
-        return new File(outputDirectory(), "TEST-" + clazz.getName() + ".html");
+        return new File(outputDirectory(), "TEST-" + clazz.getCanonicalName() + ".html");
     }
 
     public static File outputDirectory() {

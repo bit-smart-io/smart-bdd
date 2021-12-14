@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft;
+package io.bitsmart.bdd.ft.data;
 
 import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteNameToFileBuilder;
 import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder;
@@ -42,7 +42,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
-public abstract class AbstractResultsForTestSuite {
+public abstract class AbstractResultsForData {
     private TestSuite testSuite;
     private DataReportIndex reportIndex;
     private LocalDateTime startTime;
