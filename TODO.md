@@ -4,9 +4,8 @@
 
 - [x] Static webpage for test suites - maybe Thymeleaf
 - [x] Static webpage menu
-- [ ] Add examples
-    - [ ] Book store?
-    - [ ] Calculator microservice - see cucumber examples
+- [x] Add examples
+    - [x] Book store
 - [x] Move learning tests to own project
 - [x] General code tidy
 - [x] Copy write every class
@@ -298,3 +297,14 @@ private TestSuite assertFirstTestCase() {
 * Send reports to report aggregator on each test, suite, package or at the end
 * Keep track of irregular issues
 
+### smart-bdd projects to do:
+
+* client-side-report or webpage or webapp - dynamic React web app. Have created a Vue.js app, React would be better.
+* test-re-runner - rest app to select a test and parse in params. FT's have a dependency on this and can therefore spin
+  up Spring Boot app?
+* smart-report-shipper - shipping results
+  * create webpage?
+  * file data json/xml
+  * data to db
+  * data to rest service
+* Create builders from JSON
