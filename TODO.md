@@ -1,6 +1,6 @@
 # List of TODOs for the mono repo
 
-### MVP:
+## MVP:
 
 - [x] Static webpage for test suites - maybe Thymeleaf
 - [x] Static webpage menu
@@ -11,11 +11,11 @@
 - [x] Copy write every class
     - https://choosealicense.com/licenses/mit/ - short and cucumber has this
     - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
-- [ ] Investigate META-INF/Services SmartTestExecutionListener gets exported
+- [ ] Investigate if META-INF/Services SmartTestExecutionListener gets exported
 
-### Post MVP:
+## Post MVP:
 
-- [ ] Add to github
+- [ ] Migrate to github
 - [ ] Parametrised tests (see testCaseResult.setName(...) and verifyThirdTest_paramsWithCustomName). See Notes below.
 - [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
@@ -27,7 +27,6 @@
 - [ ] @Notes - Can add notes for the feature/scenario
 - [ ] UnderTest fields - this is to highlight fields, possible change the values
 - [ ] Logger than can added extra text in the report - `log.add('some notes')`
-- [ ] Sequence diagrams - mermaid
 - [ ] Re-run tests endpoints
 - [ ] Re-run tests ui
 - [ ] Update test values in the ui - so that the test can be re-run with different values
@@ -35,8 +34,9 @@
 - [ ] Explore when and how builders should be the same for ft and unit tests. Is it feasible to sync builders classes
   and packages?
 - [ ] Add Java 9 modules?
+- [ ] Update all internal tests to JDK 11 or 17.
 
-### Done
+## Done
 
 - [x] Parse params
 - [x] Have a context
@@ -49,90 +49,56 @@
 - [x] Website prototype
 - [x] Use Kotlin for Gradle
 - [x] Project structure - need modules/projects
+- [x] Sequence diagrams - mermaid
+- [x] Test titles to be wordified
 
-### Actions
+# Notes
 
-Wrap given() body in async actions. This is make test set parallel
+## Actions
+
+Wrap steps given(), when(), then() etc... body in async actions. This can make test set parallel
 
 ### Mutation tests
 
-#### Setup and givens:
+Given this example that is work in progress:
 
-Once givens steps are wrapped in actions. You can check if all the setup actions are required. Imagine you have 4 setup
-actions numbered 1,2,3,4. You could run 1. 1,2. 1,2,3. 1,2,3,4. 1,3 etc... Setup actions could duplicate default state,
-that is valid.
-
-The @Given annotation allows for running the test with different values. I.e. my_test(@Given int quantity) could be run
-for argument value 0,1,2,3 etc...
-
-It gets interesting when combine actions and parameter values for mutation tests.
-
-### Adding notes
-
-#### Feature notes
-
-For docs there are 2 choices:
-
-1. @BeforeEach calls notes()/doc() once. If testSuiteNotes().text().size() == 0 then add notes. Means that notes could
-   only be added in the setuo()/notes()/doc() method.
-2. @Notes/@Doc annotation
-
-With feature documentation you probably only want text, html and or markdown. If you want to inject uml then you'll need
-to insert notes that are of type text, html, markdown, uml. Maybe need feature().notes().text() .html(), .markdown(),
-.uml(). The corresponding scenario().notes()
-Add in order you have added. i.e. using add():
-
-```
-scenario().notes().text().add("this is an explanation. Below is a diagram.")
-scenario().notes().uml().add(...)
-scenario().notes().markdown().add("some notes with markdown formatting")
+```java
+void countRedBooksBook(@Given Colour firstColour,@Given Colour secondColour,@Then int quantity){
+    given(iHave(aBook().withColour(firstColour)));
+    and(iHave(anotherBook().withColour(secondColour)));
+    when(iCountAllMyBooks());
+    then(iShouldHave(quantity,books()).withColour(RED));
+    }
 ```
 
-Or assuming `add` is the only thing you want to do it can be omitted:
+The framework can mutate:
 
-```
-scenario().notes().text("this is an explanation. Below is a diagram.")
-scenario().notes().uml(...)
-scenario().notes().markdown("some notes with markdown formatting")
-```
+1. Parameters i.e. make the `secondColour` blue and the above test should fail.
+2. Mutate what steps are run. Given we have created actions and above we have 4 (given, and, when, then), if we don't
+   run the `and` step the above test should fail. This checks if all the `setup` and `step` actions are required.
 
-Feature and scenario can have the same notes() object, but feature has a title.
+Notice I mentioned `setup` actions. It's quite common to have setup actions that are superfluous such as resetting
+metrics that are not required for every test, the mutation tests aim to identify unnecessary code and improve the
+performance and correctness of the tests.
 
-#### Scenario Notes
+## Notes
 
-`scenario().notes()` or just `notes()` as it will be used more and it could be implied. Prefix scenario and feature is
-better than testCase and testSuite as it would look like:
+Explore feature notes: `notes()`/`doc()` vs `@Notes`/`@Doc` annotations. Currently using ` doc()`. Annotations could
+prove very useful.
 
-`feature`/`scenario` vs `testSuite`/`testCase`
+Explore how data is captured:
 
-this is long way to access but the user navigate. 
-```
-context().feature().notes().diagrams().add(new SequenceDiagram())
-  .addActor("User")
-  .addParticipant("BookStore")
-  .addParticipant("ISBNdb");
-
-context().test().notes().diagrams().add(new SequenceDiagram())
-  .addActor("User")
-  .addParticipant("BookStore")
-  .addParticipant("ISBNdb");
+```java
+sequenceDiagram().add(aMessage().from("BookStore").to("ISBNdb").text(event.getRequest().getUrl()));
+    sequenceDiagram().add(aMessage().from("ISBNdb").to("BookStore").text(event.getResponse().getBodyAsString()));
+    sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
 ```
 
+Should we capture data agnostic of the notion of a sequence diagram to be used for example:
+
+```java
+scenario().request().add(from("BookStore").to("ISBNdb").endpoint(event.getRequest().getUrl()));
 ```
-notes().uml() or uml()
-
-testCase().notes().uml()
-testSuite().notes().uml()
-```
-
-Parent object/accessor `scenario()`/`feature()`. Else `notes().feature()` and `notes().uml()` adding a note and
-specifying where to add the note doesn't work keyed off of off `notes()`
-Could there be `scenario().store(key, value)`, `scenario().context()` or `scenario().metric()` etc...?
-
-### Test titles to be wordified
-
-Test method names could benefit from being wordified. How to implement. Java properties, overridden in test via an
-injected config object?
 
 ### Parametrised tests
 
@@ -180,50 +146,6 @@ This means something like:
   "className": "ClassUnderTest",
   "packageName": "shared.undertest"
 }
-```
-
-
-### Dummy Objects
-
-Objects that are not under test, but needed to build objects. Potentially these could be ignored when assertJ checks to
-equality. We have defaultBuilders that build a default object
-
-```
-private SimpleCarBuilder aDefaultCar() {
-    return aCar()
-        .withEngine(anEngine()
-            .withType(ENGINE_TYPE)
-            .withSize(ENGINE_SIZE));
-}
-
-// style 1
-private SimpleCarBuilder aDummyCar() {
-    return aCar()
-        .withEngine(anEngine()
-            .withType(DUMMY_ENGINE_TYPE)
-            .withSize(DUMMY_ENGINE_SIZE));
-}
-SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
-
-// style 2
-private SimpleCarBuilder aDummyCar() {
-    return aCar().withEngine(aDummyEngine());
-}
-// updating a dummy engine - it needs to be a real engine with dummy values. This doesn't quite work as it would need lots of boiler plate code.
-SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
-
-
-// style 3
-private SimpleCarBuilder aDummyCar() {
-    SimpleCarBuilder car1 = aCar().withEngine(aDefaultEngine()).setAsDummy() 
-    SimpleCarBuilder car2 = dummy(aCar().withEngine(aDefaultEngine()));
-    ...
-}
-// updating a dummy engine - it needs to be a real engine with dummy values. If dummy was an annotation then we could add remove at runtime.
-SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
-
-// assert
-assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
 ```
 
 ### Linting Builders
@@ -297,14 +219,57 @@ private TestSuite assertFirstTestCase() {
 * Send reports to report aggregator on each test, suite, package or at the end
 * Keep track of irregular issues
 
+### Dummy Objects
+
+Objects that are not under test, but needed to build objects. Potentially these could be ignored when assertJ checks to
+equality. We have defaultBuilders that build a default object
+
+```
+private SimpleCarBuilder aDefaultCar() {
+    return aCar()
+        .withEngine(anEngine()
+            .withType(ENGINE_TYPE)
+            .withSize(ENGINE_SIZE));
+}
+
+// style 1
+private SimpleCarBuilder aDummyCar() {
+    return aCar()
+        .withEngine(anEngine()
+            .withType(DUMMY_ENGINE_TYPE)
+            .withSize(DUMMY_ENGINE_SIZE));
+}
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+// style 2
+private SimpleCarBuilder aDummyCar() {
+    return aCar().withEngine(aDummyEngine());
+}
+// updating a dummy engine - it needs to be a real engine with dummy values. This doesn't quite work as it would need lots of boiler plate code.
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+
+// style 3
+private SimpleCarBuilder aDummyCar() {
+    SimpleCarBuilder car1 = aCar().withEngine(aDefaultEngine()).setAsDummy() 
+    SimpleCarBuilder car2 = dummy(aCar().withEngine(aDefaultEngine()));
+    ...
+}
+// updating a dummy engine - it needs to be a real engine with dummy values. If dummy was an annotation then we could add remove at runtime.
+SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).build;
+
+// assert
+assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
+```
+
 ### smart-bdd projects to do:
 
 * client-side-report or webpage or webapp - dynamic React web app. Have created a Vue.js app, React would be better.
 * test-re-runner - rest app to select a test and parse in params. FT's have a dependency on this and can therefore spin
   up Spring Boot app?
 * smart-report-shipper - shipping results
-  * create webpage?
-  * file data json/xml
-  * data to db
-  * data to rest service
+    * create webpage?
+    * file data json/xml
+    * data to db
+    * data to rest service
 * Create builders from JSON

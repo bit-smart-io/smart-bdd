@@ -19,7 +19,6 @@ Create interactive html documentation / feature files from Java code:
 - Capture downstream data such as HTTP request/response headers and body
 - More consistent as builders are used to set state and exercise the system under test
 - More productive as you are encouraged to use best practices and don't have the complexities of traditional glue layers
-- Results can be persisted so that previous test results can be queried
 
 The projects aim is to:
 
@@ -38,7 +37,7 @@ The projects aim is to:
   behavior.
 - Define the data and behaviour JSON documents and generate the builders
 - The above declarative JSON could also be used to generate a demo application
-- Store reports
+- Results can be persisted so that previous test results can be queried
 
 ## smart-bdd usage:
 
