@@ -71,12 +71,12 @@ The projects aim is to:
 
 ## smart-bdd usage:
 
-Please see `example:cucumbers`.
+Please see `example:bookstore` and `example:cucumbers`. Run `GetBookTest` and or `EatCucumbersTest`. You'll see in the
+console there is a link to the generated html and json files.
 
 1. Import the `report` project `testImplementation("io.bitsmart.bdd:report:1.0-SNAPSHOT")`
-   or `testImplementation(project(":report"))`
-2. Copy the file `org.junit.platform.launcher.TestExecutionListener` to `src/test/resources/META-INF/services`
-3. Add `@ExtendWith(ReportExtension.class)` to any class that you want to generate a report from.
+   or locally withing this repo `testImplementation(project(":report"))`
+2. Add `@ExtendWith(ReportExtension.class)` to any class that you want to generate a report from.
 
 ### Example to from `example:bookstore`
 
@@ -103,10 +103,10 @@ Then the book is returned
 
 ```java
 void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft(){
-    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+    given(iHave(aCucumber().withColour("red"),andACucumber().withColour("blue")));
     when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
-}
+    }
 ```
 
 Will produce the following step defs:
