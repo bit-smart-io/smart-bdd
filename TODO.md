@@ -16,6 +16,7 @@
 ## Post MVP:
 
 - [ ] Migrate to github
+- [ ] Update documentation and housekeeping
 - [ ] Parametrised tests (see testCaseResult.setName(...) and verifyThirdTest_paramsWithCustomName). See Notes below.
 - [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)

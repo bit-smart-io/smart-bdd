@@ -198,3 +198,6 @@ The `wordify` process isn't finished, you can't simply get rid of complexity and
 project to reduce both of them.
 
 With thanks to https://github.com/bodar/yatspec who did a similar project that worked with JUnit 4.
+
+I'm looking for more real world usages, I've love help anyone write new tests and or migrate legacy tests to this
+framework. If you're interested please contact me - see https://github.com/jrbayliss for my contact details.
