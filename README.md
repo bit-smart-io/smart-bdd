@@ -2,11 +2,41 @@
 
 ## Overview
 
-Create interactive html documentation / feature files from Java code:
+Create interactive html documentation / feature files from Java code. This can be considered as a productive replacement
+to existing frameworks where you write the features/scenarios/acceptance tests in plain text first.
 
 ## Source Code
 
-![alt text](docs/images/code01.png "Code Snippet")
+```java
+public class GetBookTest extends BaseBookStoreTest {
+
+    @Override
+    public void doc() {
+        featureNotes("Working progress for example of usage Smart BDD");
+    }
+
+    @Test
+    public void getBookByIsbnUsingDefaults() {
+        when(aUserRequestsABook());
+        then(theResponseContains(aDefaultIsbnBook()));
+    }
+
+    @Test
+    public void getBookByIsbnShowingAllDefaultValues() {
+        given(theIsbnDbContains().anEntry(
+            forAnIsbn("default-isbn")
+                .thatWillReturn(anIsbnBook()
+                    .withIsbn("default-isbn")
+                    .withTitle("default-title")
+                    .withAuthor("default-author"))));
+        when(aUserRequestsABook().withIsbn("default-isbn"));
+        then(theResponseContains(anIsbnBook()
+            .withIsbn("default-isbn")
+            .withTitle("default-title")
+            .withAuthors(singletonList("default-author"))));
+    }
+}
+```
 
 ## Below is an interactive html snippet that is generated from the above source code
 
@@ -50,7 +80,8 @@ Please see `example:cucumbers`.
 
 ### Example to from `example:bookstore`
 
-```
+```java
+
 @ExtendWith(ReportExtension.class)
 public class GetBookTest {
     @Test
@@ -71,12 +102,12 @@ Then the book is returned
 
 ### Example to from `example:cucumbers`
 
-```
-void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
-    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
+```java
+void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft(){
+    given(iHave(aCucumber().withColour("red"),andACucumber().withColour("blue")));
     when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
-}
+    }
 ```
 
 Will produce the following step defs:
@@ -87,16 +118,16 @@ When I request to eat cucumbers with colour "red"
 Then I should have cucumbers with quantity 1 with colour "blue"
 ```
 
-## smart-bdd projects:
+## Smart BDD projects:
 
 | project name  | package  | description  | notes  |
 |------------|-------------|--------------|--------|
 | root       | io.bitsmart.bdd | root for repo  |
-| report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation (.html and .json)  | Should be `@smart-bdd`? |
+| report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation (.html and .json)  | Should be `@Smart BDD`? |
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
-| examples   | n/a| examples of using smart-bdd |  | 
+| examples   | n/a| examples of using Smart BDD |  | 
 | webpage    | n/a| legacy vue js | to be replaced with react |
 
 Notes:
@@ -158,7 +189,7 @@ These 3 forces can unfortunately can compound each other. Complexity and couplin
 of the solution. Layers 1-3 exist so that we can have feature files, these serve as static documentation for the system.
 There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
 
-The alternative to this is generating dynamic, consistent documentation. With smart-bdd you leg up on developing the
+The alternative to this is generating dynamic, consistent documentation. With Smart BDD you leg up on developing the
 actual FT framework, so you can focus on testing your application. You add `@ReportExtension` annotation to your class,
 this will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences.
 For example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore

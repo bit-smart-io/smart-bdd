@@ -63,12 +63,12 @@ Wrap steps given(), when(), then() etc... body in async actions. This can make t
 Given this example that is work in progress:
 
 ```java
-void countRedBooksBook(@Given Colour firstColour,@Given Colour secondColour,@Then int quantity){
+void countRedBooksBook(@Given Colour firstColour,@Given Colour secondColour, @Then int quantity){
     given(iHave(aBook().withColour(firstColour)));
     and(iHave(anotherBook().withColour(secondColour)));
     when(iCountAllMyBooks());
-    then(iShouldHave(quantity,books()).withColour(RED));
-    }
+    then(iShouldHave(quantity, books()).withColour(RED));
+}
 ```
 
 The framework can mutate:
@@ -90,8 +90,8 @@ Explore how data is captured:
 
 ```java
 sequenceDiagram().add(aMessage().from("BookStore").to("ISBNdb").text(event.getRequest().getUrl()));
-    sequenceDiagram().add(aMessage().from("ISBNdb").to("BookStore").text(event.getResponse().getBodyAsString()));
-    sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
+sequenceDiagram().add(aMessage().from("ISBNdb").to("BookStore").text(event.getResponse().getBodyAsString()));
+sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
 ```
 
 Should we capture data agnostic of the notion of a sequence diagram to be used for example:
