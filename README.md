@@ -5,7 +5,7 @@
 Create interactive html documentation / feature files from Java code. This can be considered as a productive replacement
 to existing frameworks where you write the features/scenarios/acceptance tests in plain text first.
 
-## Source Code
+### Source Code
 
 ```java
 public class GetBookTest extends BaseBookStoreTest {
@@ -38,7 +38,7 @@ public class GetBookTest extends BaseBookStoreTest {
 }
 ```
 
-## Below is an interactive html snippet that is generated from the above source code
+### Interactive html snippet that is generated from the above source code
 
 ![alt text](docs/images/doc01.png "Doc Snippet")
 
@@ -89,7 +89,6 @@ public class GetBookTest {
         whenGetBookIsCalled();
         thenTheBookIsReturned();
     }
-    ...
 }
 ```
 
@@ -104,10 +103,10 @@ Then the book is returned
 
 ```java
 void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft(){
-    given(iHave(aCucumber().withColour("red"),andACucumber().withColour("blue")));
+    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
     when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
-    }
+}
 ```
 
 Will produce the following step defs:
