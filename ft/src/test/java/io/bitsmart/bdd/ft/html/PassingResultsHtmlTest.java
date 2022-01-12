@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TODO use https://jsoup.org/
  * */
-public class HtmlReportTest extends AbstractResultsForHtml {
+public class PassingResultsHtmlTest extends AbstractResultsForHtml {
 
     @Override
     public Class<?> classUnderTest() {

@@ -19,7 +19,6 @@
 package io.bitsmart.bdd.ft.html;
 
 import io.bitsmart.bdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * TODO use https://jsoup.org/
  * TODO work lifecycle testing issues.
  * */
-@Disabled
 public class BookStoreHtmlTest extends AbstractResultsForHtml {
 
     @Override
@@ -46,15 +44,31 @@ public class BookStoreHtmlTest extends AbstractResultsForHtml {
     }
 
     @Test
-    void generatesTestSuiteJson() {
+    void generatesScenario() {
+        assertThat(testSuite()).isNotNull();
+        assertThat(testSuite())
+            .contains("Given a book exists")
+            .contains("When a user requests a book")
+            .contains("Then the response contains a default isbn book");
+    }
+
+    @Test
+    void generatesIndexLinks() {
         assertThat(testSuite()).isNotNull();
         assertThat(testSuite())
             .contains("<a href=\"./index.html\">index</a>")
-            .contains("io.bitsmart.bdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest")
-            .contains("Bookstore Feature notes")
-            .contains("Given a book exists")
-            .contains("When a user requests a book")
-            .contains("Then the response contains a default isbn book")
+            .contains("io.bitsmart.bdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest");
+    }
+
+    @Test
+    void generatesFeatureNotes() {
+        assertThat(testSuite())
+            .contains("Bookstore Feature notes");
+    }
+
+    @Test
+    void generatesUml() {
+        assertThat(testSuite())
             .contains("<span class=\"mermaid\"")
             .contains("actor User")
             .contains("participant BookStore")

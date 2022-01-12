@@ -25,6 +25,7 @@ import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestCase;
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
 import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
 import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public abstract class AbstractResultsForData {
 
     @BeforeEach
     void beforeEach() throws IOException {
+        ReportExtension.getTestContext().reset();
         startTime = LocalDateTime.now();
         TestExecutionListener testListener = new TestExecutionListener();
         TestLauncher.launch(classUnderTest(), testListener);
