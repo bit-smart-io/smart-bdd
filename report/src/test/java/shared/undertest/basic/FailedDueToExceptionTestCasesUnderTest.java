@@ -18,7 +18,7 @@
 
 package shared.undertest.basic;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +47,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(ReportExtension.class)
+@ExtendWith(SmartReport.class)
 @EnabledIf("isEnabled")
 public class FailedDueToExceptionTestCasesUnderTest {
     private static Boolean enabled = false;

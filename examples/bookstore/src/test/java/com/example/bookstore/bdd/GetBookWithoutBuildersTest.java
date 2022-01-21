@@ -18,7 +18,7 @@
 
 package com.example.bookstore.bdd;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(ReportExtension.class)
+@ExtendWith(SmartReport.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GetBookWithoutBuildersTest {
 

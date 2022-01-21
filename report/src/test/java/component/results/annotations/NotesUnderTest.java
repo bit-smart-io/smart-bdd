@@ -19,7 +19,7 @@
 package component.results.annotations;
 
 import io.bitsmart.bdd.report.junit5.annotations.InjectNotes;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith({ReportExtension.class, TestCaseNotesParameterResolver.class})
+@ExtendWith({SmartReport.class, TestCaseNotesParameterResolver.class})
 public class NotesUnderTest {
 
     private Notes notes;

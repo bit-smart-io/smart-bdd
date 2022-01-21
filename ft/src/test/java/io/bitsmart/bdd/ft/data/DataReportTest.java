@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Notes:
- * Due to the static nature of ReportExtension, this class can't be annotated with ReportExtension.
+ * Due to the static nature of SmartReport, this class can't be annotated with SmartReport.
  * <p>
  * TODO address the below
  * SmartTestExecutionListener will write the index and test suites files twice as it will also listen to this as a test.

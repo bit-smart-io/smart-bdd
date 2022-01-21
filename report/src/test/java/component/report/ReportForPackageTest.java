@@ -19,7 +19,7 @@
 package component.report;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuite;
@@ -42,7 +42,7 @@ public class ReportForPackageTest extends AbstractReportTest {
     @Test
     void reportForOnePackageGeneratedCorrectly() {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
-        report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), CLOCK);
+        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), CLOCK);
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));

@@ -18,7 +18,7 @@
 
 package io.bitsmart.bdd.report.junit5.listeners;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -40,7 +40,7 @@ public class SmartTestExecutionListener implements TestExecutionListener {
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
         logger.debug("testPlanExecutionStarted: " + testPlan.containsTests() + ", roots: " + testPlan.getRoots());
-        // init the ReportExtension?
+        // init the SmartReport?
     }
 
     @Override
@@ -51,8 +51,8 @@ public class SmartTestExecutionListener implements TestExecutionListener {
 //        roots.forEach(root -> logger.debug("source: " + root.getSource()));
 //        roots.forEach(root -> logger.debug("id: " + root.getParentId()));
 
-        ReportExtension.getTestContext().writeIndex();
-        ReportExtension.getTestContext().writeTestSuiteResults();
+        SmartReport.getTestContext().writeIndex();
+        SmartReport.getTestContext().writeTestSuiteResults();
     }
 
     @Override

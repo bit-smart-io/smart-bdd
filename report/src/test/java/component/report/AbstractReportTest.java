@@ -18,7 +18,7 @@
 
 package component.report;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import org.junit.jupiter.api.AfterAll;
@@ -53,7 +53,7 @@ public abstract class AbstractReportTest {
 
     @BeforeEach
     void setUp() {
-        ReportExtension.getTestContext().reset();
+        SmartReport.getTestContext().reset();
     }
 
     void assertSuiteLinks(List<TestSuiteNameToFile> suiteNameToFiles) {

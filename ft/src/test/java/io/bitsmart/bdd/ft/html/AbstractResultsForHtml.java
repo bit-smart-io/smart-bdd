@@ -21,7 +21,7 @@ package io.bitsmart.bdd.ft.html;
 import io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils;
 import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
 import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public abstract class AbstractResultsForHtml {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        ReportExtension.getTestContext().reset();
+        SmartReport.getTestContext().reset();
         startTime = LocalDateTime.now();
         TestExecutionListener testListener = new TestExecutionListener();
         TestLauncher.launch(classUnderTest(), testListener);

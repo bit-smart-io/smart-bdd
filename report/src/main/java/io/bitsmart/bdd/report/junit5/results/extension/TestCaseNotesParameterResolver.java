@@ -33,7 +33,7 @@ public class TestCaseNotesParameterResolver implements ParameterResolver {
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-        TestResults testResults = ReportExtension.getTestContext().getTestResults();
+        TestResults testResults = SmartReport.getTestContext().getTestResults();
         return testResults.getTestResultsForClass(extensionContext).getTestCaseResult(extensionContext).getNotes();
     }
 }

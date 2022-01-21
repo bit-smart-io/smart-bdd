@@ -20,7 +20,7 @@ package io.bitsmart.bdd.report.junit5.test;
 
 import io.bitsmart.bdd.report.junit5.annotations.InjectTestCaseResult;
 import io.bitsmart.bdd.report.junit5.annotations.InjectTestSuiteResult;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.junit5.results.extension.TestSuiteResultParameterResolver;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith({ReportExtension.class, TestSuiteResultParameterResolver.class})
+@ExtendWith({SmartReport.class, TestSuiteResultParameterResolver.class})
 public abstract class BaseTest {
 
     private Context context;

@@ -19,7 +19,7 @@
 package component.report.wip;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
@@ -49,14 +49,14 @@ public class ReportComponentBuilderWipTest {
 
     @BeforeEach
     void setUp() {
-        ReportExtension.getTestContext().reset();
+        SmartReport.getTestContext().reset();
     }
 
     @Test
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), Clock.systemDefaultZone());
+        Report report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), Clock.systemDefaultZone());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(6);
 

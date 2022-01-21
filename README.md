@@ -76,13 +76,13 @@ console there is a link to the generated html and json files.
 
 1. Import the `report` project `testImplementation("io.bitsmart.bdd:report:1.0-SNAPSHOT")`
    or locally withing this repo `testImplementation(project(":report"))`
-2. Add `@ExtendWith(ReportExtension.class)` to any class that you want to generate a report from.
+2. Add `@ExtendWith(SmartReport.class)` to any class that you want to generate a report from.
 
 ### Example to from `example:bookstore`
 
 ```java
 
-@ExtendWith(ReportExtension.class)
+@ExtendWith(SmartReport.class)
 public class GetBookTest {
     @Test
     public void getBook() {
@@ -122,7 +122,7 @@ Then I should have cucumbers with quantity 1 with colour "blue"
 | project name  | package  | description  | notes  |
 |------------|-------------|--------------|--------|
 | root       | io.bitsmart.bdd | root for repo  |
-| report     | io.bitsmart.bdd.report | reporting extension `@ReportExtension` and report creation (.html and .json)  | Should be `@Smart BDD`? |
+| report     | io.bitsmart.bdd.report | reporting extension `@SmartReport` and report creation (.html and .json)  | Should be `@Smart BDD`? |
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
@@ -189,7 +189,7 @@ of the solution. Layers 1-3 exist so that we can have feature files, these serve
 There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
 
 The alternative to this is generating dynamic, consistent documentation. With Smart BDD you leg up on developing the
-actual FT framework, so you can focus on testing your application. You add `@ReportExtension` annotation to your class,
+actual FT framework, so you can focus on testing your application. You add `@SmartReport` annotation to your class,
 this will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences.
 For example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore
 forcing you to create a fluent API.

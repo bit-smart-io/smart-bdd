@@ -19,14 +19,12 @@
 package component.report;
 
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
-
-import java.time.ZonedDateTime;
 
 import static component.report.ReportAssertions.assertPassingTestSuite;
 import static java.util.Collections.singletonList;
@@ -61,7 +59,7 @@ public class ReportForPassingTestSuiteTest extends AbstractReportTest{
     @Test
     void reportForOneClassGeneratedCorrectly() {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        report = ReportFactory.create(ReportExtension.getTestContext().getTestResults(), CLOCK);
+        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), CLOCK);
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(6, 6, 0, 0, 0));

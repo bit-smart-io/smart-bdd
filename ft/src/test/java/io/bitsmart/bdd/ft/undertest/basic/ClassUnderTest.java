@@ -18,7 +18,7 @@
 
 package io.bitsmart.bdd.ft.undertest.basic;
 
-import io.bitsmart.bdd.report.junit5.results.extension.ReportExtension;
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
  * </testsuite>
  */
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(ReportExtension.class)
+@ExtendWith(SmartReport.class)
 public class ClassUnderTest {
 
     @Order(0)
