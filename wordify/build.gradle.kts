@@ -35,7 +35,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            group = "io.bitsmart.bdd"
+            group = "io.bit-smart.bdd"
             version = "1.0-SNAPSHOT"
             description = "Wordify Java methods"
             from(components["java"])

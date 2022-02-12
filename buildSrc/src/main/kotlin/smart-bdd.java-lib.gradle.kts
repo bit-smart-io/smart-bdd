@@ -20,7 +20,7 @@ plugins {
     `java-library`
 }
 
-group = "io.bitsmart.bdd"
+group = "io.bit-smart.bdd"
 version = "1.0-SNAPSHOT"
 description = "Java dependencies"
 

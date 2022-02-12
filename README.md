@@ -2,8 +2,8 @@
 
 ## Overview
 
-Create interactive html documentation / feature files from Java code. This can be considered as a productive replacement
-to existing frameworks where you write the features/scenarios/acceptance tests in plain text first.
+Create interactive html documentation / feature files from Java test code. This can be considered as a productive replacement
+to existing frameworks (such as Cucumber) where you write the features/scenarios/acceptance tests in plain text first.
 
 ### Source Code
 
