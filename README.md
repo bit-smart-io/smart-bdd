@@ -1,4 +1,5 @@
 # Smart BDD
+![example workflow](https://github.com/bit-smart-io/smart-bdd/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 
