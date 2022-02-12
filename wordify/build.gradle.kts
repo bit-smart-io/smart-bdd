@@ -36,9 +36,21 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             group = "io.bit-smart.bdd"
-            version = "1.0-SNAPSHOT"
-            description = "Wordify Java methods"
+            version = "0.1-SNAPSHOT"
+            description = "Wordify Java source code"
             from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            val releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            name = "OSSRH"
+            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
         }
     }
 }

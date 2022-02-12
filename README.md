@@ -2,8 +2,9 @@
 
 ## Overview
 
-Create interactive html documentation / feature files from Java test code. This can be considered as a productive replacement
-to existing frameworks (such as Cucumber) where you write the features/scenarios/acceptance tests in plain text first.
+Create interactive html documentation / feature files from Java test code. This can be considered as a productive
+replacement to existing frameworks (such as Cucumber) where you write the features/scenarios/acceptance tests in plain
+text first.
 
 ### Source Code
 
@@ -74,7 +75,7 @@ The projects aim is to:
 Please see `example:bookstore` and `example:cucumbers`. Run `GetBookTest` and or `EatCucumbersTest`. You'll see in the
 console there is a link to the generated html and json files.
 
-1. Import the `report` project `testImplementation("io.bitsmart.bdd:report:1.0-SNAPSHOT")`
+1. Import the `report` project `testImplementation("io.bit-smart.bdd:report:0.1-SNAPSHOT")`
    or locally withing this repo `testImplementation(project(":report"))`
 2. Add `@ExtendWith(SmartReport.class)` to any class that you want to generate a report from.
 
@@ -106,7 +107,7 @@ void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft(){
     given(iHave(aCucumber().withColour("red"),andACucumber().withColour("blue")));
     when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
-    }
+}
 ```
 
 Will produce the following step defs:
@@ -122,18 +123,18 @@ Then I should have cucumbers with quantity 1 with colour "blue"
 | project name  | package  | description  | notes  |
 |------------|-------------|--------------|--------|
 | root       | io.bitsmart.bdd | root for repo  |
-| report     | io.bitsmart.bdd.report | reporting extension `@SmartReport` and report creation (.html and .json)  | Should be `@Smart BDD`? |
+| report     | io.bitsmart.bdd.report | reporting extension `@SmartReport` and report creation (.html and .json)  | |
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
 | examples   | n/a| examples of using Smart BDD |  | 
 | webpage    | n/a| legacy vue js | to be replaced with react |
 
-Notes:
+Notes on naming:
 
-* Should everything be prefixed with `smart-`? `smart-report`, `smart-wordify`, `smart-test-utils` etc...
-* Need to understand what projects relate to bdd, tdd and or testing.
-* Maybe all `io.bitsmart.bdd`, `io.bitsmart.tdd`, and `io.bitsmart.test`?
+* `@SmartReport` or is `@SmartBdd` a better annotation?
+* Current group name `io.bit-smart.bdd` as everything is BDD orientated. Using `io.bit-smart.bdd` implies new group
+  names like `io.bit-smart.nft` for performance testing artifacts.
 
 ## Testing Locally
 
@@ -141,14 +142,14 @@ Notes:
 
 ## Deploying Locally
 
-Create report, test-utils, test-utils  
+Create report, wordify, test-utils  
 `./gradlew publishToMavenLocal`
 
 To check the jar was created in maven local  
-`ls -la ~/.m2/repository/io/bitsmart/bdd/report/1.0-SNAPSHOT`
+`ls -la ~/.m2/repository/io/bit-smart/bdd/report/0.1-SNAPSHOT`
 
 Then use the following in your app  
-`testImplementation("io.bitsmart.bdd:report:1.0-SNAPSHOT")`
+`testImplementation("io.bit-smart.bdd:report:0.1-SNAPSHOT")`
 
 ## Comparison to existing approaches:
 
@@ -189,9 +190,9 @@ of the solution. Layers 1-3 exist so that we can have feature files, these serve
 There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
 
 The alternative to this is generating dynamic, consistent documentation. With Smart BDD you leg up on developing the
-actual FT framework, so you can focus on testing your application. You add `@SmartReport` annotation to your class,
-this will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences.
-For example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore
+actual FT framework, so you can focus on testing your application. You add `@SmartReport` annotation to your class, this
+will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences. For
+example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore
 forcing you to create a fluent API.
 
 The `wordify` process isn't finished, you can't simply get rid of complexity and coupling, but it's the gaol of this

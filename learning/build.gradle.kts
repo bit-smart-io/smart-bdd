@@ -21,7 +21,7 @@ plugins {
 }
 
 group = "io.bitsmart.bdd.learning"
-version = "1.0-SNAPSHOT"
+version = "0.1-SNAPSHOT"
 description = "Project for learning"
 
 repositories {

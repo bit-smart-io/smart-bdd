@@ -24,7 +24,7 @@ plugins {
 }
 
 group = "io.bitsmart.bdd.example"
-version = "1.0-SNAPSHOT"
+version = "0.1-SNAPSHOT"
 description = "Bookstore example"
 
 repositories {
