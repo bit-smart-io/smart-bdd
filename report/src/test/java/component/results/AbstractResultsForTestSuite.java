@@ -35,7 +35,7 @@ public abstract class AbstractResultsForTestSuite {
     private TestSuiteResult testSuiteResult;
 
     @BeforeEach
-    void beforeAll() {
+    void setupEachTest() {
         SmartReport.getTestContext().reset();
         TestLauncher.launch(classUnderTest());
         testSuiteResult = testSuiteResult(classUnderTest());
