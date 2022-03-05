@@ -25,7 +25,15 @@ import static java.lang.System.getProperty;
 public class SmartBddConfig implements TestExecutionListener {
     public static final String dataFolder = "io.bitsmart.bdd.report/data/";
     public static final String reportFolder = "io.bitsmart.bdd.report/report/";
-    public static final String baseFolder = getProperty("java.io.tmpdir");
+    public static String baseFolder = getProperty("java.io.tmpdir");
+
+    public static void setBaseFolder(String folder) {
+        baseFolder = folder;
+    }
+
+    public static void resetBaseFolder() {
+        baseFolder = getProperty("java.io.tmpdir");
+    }
 
     public static String getDataFolder() {
         return dataFolder;

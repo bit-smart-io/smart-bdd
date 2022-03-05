@@ -23,20 +23,31 @@ import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBu
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestCase;
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
+import io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils;
 import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
 import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
+import io.bitsmart.bdd.report.junit5.listeners.SmartBddConfig;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadReportIndex;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadTestSuite;
+import static java.lang.System.getProperty;
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toList;
@@ -44,9 +55,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 public abstract class AbstractResultsForData {
+    private static final Logger log = LoggerFactory.getLogger(AbstractResultsForData.class.getName());
     private TestSuite testSuite;
     private DataReportIndex reportIndex;
     private LocalDateTime startTime;
+
+    @BeforeAll
+    static void setPath() {
+        if (System.getenv("GITHUB_WORKSPACE") != null) {
+            SmartBddConfig.setBaseFolder(System.getenv("GITHUB_WORKSPACE"));
+            DataReportTestUtils.overrideBaseFolder(System.getenv("GITHUB_WORKSPACE"));
+        }
+        log.info("java.io.tmpdir" + getProperty("java.io.tmpdir"));
+        log.info("GITHUB_WORKSPACE" + System.getenv("GITHUB_WORKSPACE"));
+        logPathExists(getProperty("java.io.tmpdir"));
+        logPathExists(System.getenv("GITHUB_WORKSPACE"));
+    }
+
+    private static void logPathExists(String pathAsString) {
+        Optional.ofNullable(pathAsString).ifPresent(p -> {
+            final Path path = Paths.get(pathAsString);
+            log.info("path: " + path + " exists:" + Files.exists(path));
+        });
+    }
+
+    @AfterAll
+    static void resetPath() {
+        SmartBddConfig.resetBaseFolder();
+    }
 
     @BeforeEach
     void beforeEach() throws IOException {

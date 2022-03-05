@@ -29,6 +29,7 @@ import static java.lang.System.getProperty;
 
 public class DataReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static String baseFolder = getProperty("java.io.tmpdir");
 
     public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
         String contents = new FileLoader().toString(testSuiteFile(clazz));
@@ -49,6 +50,10 @@ public class DataReportTestUtils {
     }
 
     public static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir") +  "io.bitsmart.bdd.report/data/");
+        return new File(baseFolder +  "io.bitsmart.bdd.report/data/");
+    }
+
+    public static void overrideBaseFolder(String baseFolderOverride) {
+        baseFolder = baseFolderOverride;
     }
 }
