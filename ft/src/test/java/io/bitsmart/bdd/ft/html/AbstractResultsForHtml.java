@@ -18,22 +18,63 @@
 
 package io.bitsmart.bdd.ft.html;
 
-import io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils;
+import io.bitsmart.bdd.ft.common.AbstractReportTest;
+import io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig;
 import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
 import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
+import io.bitsmart.bdd.report.config.ResolvedSmartBddConfig;
+import io.bitsmart.bdd.report.config.SmartBddConfig;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.debugInfo;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.dirInMem;
+import static java.lang.System.getProperty;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
-public abstract class AbstractResultsForHtml {
+public abstract class AbstractResultsForHtml extends AbstractReportTest {
+    private static final Logger log = LoggerFactory.getLogger(AbstractResultsForHtml.class.getName());
     private String testSuite;
     private String reportIndex;
     private LocalDateTime startTime;
+
+    @BeforeAll
+    static void setPath() {
+        // do gradlew dir=in-mem, root, class, tmp-dir
+        // run this as failsafe/it
+        if (dirInMem) {
+            SmartBddConfig.overrideBasePath(TestConfig.getBasePath());
+            log.info("basePath: " + TestConfig.getBasePath());
+            log.info("resolved path: " + ResolvedSmartBddConfig.getBasePath().resolve(SmartBddConfig.getDataFolder()));
+        }
+
+        if (debugInfo) {
+            log.info("java.io.tmpdir: " + getProperty("java.io.tmpdir"));
+            log.info("GITHUB_WORKSPACE: " + System.getenv("GITHUB_WORKSPACE"));
+            logPathExists(getProperty("java.io.tmpdir"));
+            logPathExists(System.getenv("GITHUB_WORKSPACE"));
+        }
+    }
+
+    private static void logPathExists(String pathAsString) {
+        Optional.ofNullable(pathAsString).ifPresent(p -> {
+            final Path path = Paths.get(pathAsString);
+            log.info("path: " + path + " exists:" + Files.exists(path));
+        });
+    }
 
     @BeforeEach
     void beforeEach() throws IOException {
@@ -42,8 +83,8 @@ public abstract class AbstractResultsForHtml {
         TestExecutionListener testListener = new TestExecutionListener();
         TestLauncher.launch(classUnderTest(), testListener);
         await().atMost(5, SECONDS).until(testListener::testsHasFinished);
-        testSuite = HtmlReportTestUtils.loadTestSuite(classUnderTest());
-        reportIndex = HtmlReportTestUtils.loadReportIndex();
+        testSuite = loadTestSuite(classUnderTest());
+        reportIndex = loadReportIndex();
     }
 
     public abstract Class<?> classUnderTest();

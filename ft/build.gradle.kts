@@ -35,6 +35,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
     implementation("org.awaitility:awaitility:3.0.0")
+    implementation("com.google.jimfs:jimfs:1.1")
 
     testImplementation("org.mockito:mockito-all:1.10.19")
 }

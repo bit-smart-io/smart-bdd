@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.infrastructure.utils;
+package io.bitsmart.bdd.report.config;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
-public class FileLoader {
-    public String read(final Path path) {
-        try {
-            return new String(Files.readAllBytes(path));
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+public class ResolvedSmartBddConfig {
+    private static FileSystem fileSystem = FileSystems.getDefault();
+
+    public static Path getBasePath() {
+        return SmartBddConfig.getOverriddenBasePath().orElse(fileSystem.getPath(SmartBddConfig.getDefaultBaseFolder()));
     }
 }

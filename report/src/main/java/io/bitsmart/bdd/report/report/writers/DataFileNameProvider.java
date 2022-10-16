@@ -18,17 +18,17 @@
 
 package io.bitsmart.bdd.report.report.writers;
 
-import io.bitsmart.bdd.report.junit5.listeners.SmartBddConfig;
+import io.bitsmart.bdd.report.config.ResolvedSmartBddConfig;
+import io.bitsmart.bdd.report.config.SmartBddConfig;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class DataFileNameProvider implements FileNameProvider {
 
     @Override
     public Path path() {
-        return Paths.get(SmartBddConfig.getBaseFolder(), SmartBddConfig.getDataFolder());
+        return ResolvedSmartBddConfig.getBasePath().resolve(SmartBddConfig.getDataFolder());
     }
 
     @Override

@@ -47,8 +47,8 @@ import org.junit.jupiter.params.provider.ValueSource;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@EnabledIf("isEnabled")
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
 public class FailedDueToExceptionTestCasesUnderTest {
     private static Boolean enabled = false;
 

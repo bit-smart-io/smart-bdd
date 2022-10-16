@@ -19,6 +19,8 @@
 package io.bitsmart.bdd.report.report.writers;
 
 import io.bitsmart.bdd.report.report.filehandling.FileRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +28,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 
 public abstract class AbstractReportWriter {
+    private static final Logger log = LoggerFactory.getLogger(AbstractReportWriter.class.getName());
     final FileRepository fileRepository = new FileRepository();
     final FileNameProvider fileNameProvider;
 
@@ -61,6 +64,6 @@ public abstract class AbstractReportWriter {
             fileRepository.create(path);
         }
         fileRepository.update(path, contents);
-        System.out.println("output: file://" + path);
+        System.out.println("*** write output: file://" + path);
     }
 }

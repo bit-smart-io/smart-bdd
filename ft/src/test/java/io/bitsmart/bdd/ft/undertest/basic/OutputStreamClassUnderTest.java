@@ -23,13 +23,16 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestMethodOrder(OrderAnnotation.class)
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
+@TestMethodOrder(OrderAnnotation.class)
 public class OutputStreamClassUnderTest {
+    private static Boolean enabled = false;
 
     @Order(0)
     @Test
@@ -41,5 +44,13 @@ public class OutputStreamClassUnderTest {
 
     private void passingAssertion() {
         assertThat(true).isTrue();
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

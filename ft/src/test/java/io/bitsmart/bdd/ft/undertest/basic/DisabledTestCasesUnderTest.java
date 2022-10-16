@@ -21,6 +21,7 @@ package io.bitsmart.bdd.ft.undertest.basic;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -41,7 +42,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * </testsuite>
  */
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
 public class DisabledTestCasesUnderTest {
+    private static Boolean enabled = false;
 
     @Disabled
     @Test
@@ -62,5 +65,13 @@ public class DisabledTestCasesUnderTest {
 
     private void disabledAssertionWith(String param) {
         assertThat(param).isNotNull();
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

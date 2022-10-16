@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.report.junit5.listeners;
+package io.bitsmart.bdd.report.config;
 
-import org.junit.platform.launcher.TestExecutionListener;
+import java.nio.file.Path;
+import java.util.Optional;
 
 import static java.lang.System.getProperty;
 
-public class SmartBddConfig implements TestExecutionListener {
-    public static final String dataFolder = "io.bitsmart.bdd.report/data/";
-    public static final String reportFolder = "io.bitsmart.bdd.report/report/";
-    public static String baseFolder = getProperty("java.io.tmpdir");
+public class SmartBddConfig  {
+    private static final String dataFolder = "io.bitsmart.bdd.report/data/";
+    private static final String reportFolder = "io.bitsmart.bdd.report/report/";
+    private static String defaultBaseFolder = getProperty("java.io.tmpdir");
+    private static Path overriddenBasePath = null;
 
     public static void setBaseFolder(String folder) {
-        baseFolder = folder;
-    }
-
-    public static void resetBaseFolder() {
-        baseFolder = getProperty("java.io.tmpdir");
+        defaultBaseFolder = folder;
     }
 
     public static String getDataFolder() {
@@ -43,7 +41,15 @@ public class SmartBddConfig implements TestExecutionListener {
         return reportFolder;
     }
 
-    public static String getBaseFolder() {
-        return baseFolder;
+    public static String getDefaultBaseFolder() {
+        return defaultBaseFolder;
+    }
+
+    public static void overrideBasePath(Path path) {
+        overriddenBasePath = path;
+    }
+
+    public static Optional<Path> getOverriddenBasePath() {
+        return Optional.ofNullable(overriddenBasePath);
     }
 }

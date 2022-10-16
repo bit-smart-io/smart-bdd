@@ -20,6 +20,7 @@ package io.bitsmart.bdd.ft.undertest.basic;
 
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -51,7 +52,9 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
  */
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
 public class AbortedTestCasesUnderTest {
+    private static Boolean enabled = false;
 
     @Test
     void testMethod() {
@@ -70,5 +73,13 @@ public class AbortedTestCasesUnderTest {
 
     private void abortingAssertionWith(String param) {
         assumeTrue(param.contains("z"), param + " does not contain z");
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

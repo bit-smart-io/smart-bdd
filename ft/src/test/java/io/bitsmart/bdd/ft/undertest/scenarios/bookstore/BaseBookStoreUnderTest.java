@@ -20,10 +20,13 @@ package io.bitsmart.bdd.ft.undertest.scenarios.bookstore;
 
 import io.bitsmart.bdd.report.junit5.test.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
 
+@EnabledIf("isEnabled")
 public class BaseBookStoreUnderTest extends BaseTest {
+    private static Boolean enabled = false;
 
     @BeforeEach
     void setUp() {
@@ -58,5 +61,13 @@ public class BaseBookStoreUnderTest extends BaseTest {
 
     public String theResponseContainsADefaultIsbnBook() {
         return "theResponseContainsADefaultIsbnBook";
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

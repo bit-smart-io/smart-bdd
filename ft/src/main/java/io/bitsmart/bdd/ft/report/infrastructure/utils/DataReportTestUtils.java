@@ -22,38 +22,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
 import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
 
-import java.io.File;
 import java.io.IOException;
-
-import static java.lang.System.getProperty;
+import java.nio.file.Path;
 
 public class DataReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static String baseFolder = getProperty("java.io.tmpdir");
 
     public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
-        String contents = new FileLoader().toString(testSuiteFile(clazz));
+        String contents = new FileLoader().read(testSuiteFile(clazz));
         return MAPPER.readValue(contents, TestSuite.class);
     }
 
     public static DataReportIndex loadReportIndex() throws IOException {
-        String contents = new FileLoader().toString(homePageFile());
+        String contents = new FileLoader().read(homePageFile());
         return MAPPER.readValue(contents, DataReportIndex.class);
     }
 
-    public static File homePageFile() {
-        return new File(outputDirectory(), "index.json");
+    public static Path homePageFile() {
+        return outputDirectory().resolve("index.json");
     }
 
-    public static File testSuiteFile(Class<?> clazz) {
-        return new File(outputDirectory(), "TEST-" + clazz.getCanonicalName() + ".json");
+    public static Path testSuiteFile(Class<?> clazz) {
+        return outputDirectory().resolve("TEST-" + clazz.getCanonicalName() + ".json");
     }
 
-    public static File outputDirectory() {
-        return new File(baseFolder +  "io.bitsmart.bdd.report/data/");
-    }
-
-    public static void overrideBaseFolder(String baseFolderOverride) {
-        baseFolder = baseFolderOverride;
+    public static Path outputDirectory() {
+        return TestConfig.getBasePath().resolve("io.bitsmart.bdd.report/data/");
     }
 }

@@ -46,8 +46,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@EnabledIf("isEnabled")
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
 public class FailedTestCasesUnderTest {
     private static Boolean enabled = false;
 

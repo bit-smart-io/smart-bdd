@@ -23,6 +23,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -48,9 +49,11 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@TestMethodOrder(OrderAnnotation.class)
 @ExtendWith(SmartReport.class)
+@EnabledIf("isEnabled")
+@TestMethodOrder(OrderAnnotation.class)
 public class ClassUnderTest {
+    private static Boolean enabled = false;
 
     @Order(0)
     @Test
@@ -87,5 +90,13 @@ public class ClassUnderTest {
     }
 
     private void passingAssertionWith(String param1, String param2) {
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(Boolean isEnabled) {
+        enabled = isEnabled;
     }
 }

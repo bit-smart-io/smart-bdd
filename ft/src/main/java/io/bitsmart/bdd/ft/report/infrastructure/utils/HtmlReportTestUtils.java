@@ -18,29 +18,27 @@
 
 package io.bitsmart.bdd.ft.report.infrastructure.utils;
 
-import java.io.File;
 import java.io.IOException;
-
-import static java.lang.System.getProperty;
+import java.nio.file.Path;
 
 public class HtmlReportTestUtils {
     public static String loadTestSuite(Class<?> clazz) throws IOException {
-        return new FileLoader().toString(testSuiteFile(clazz));
+        return new FileLoader().read(testSuiteFile(clazz));
     }
 
     public static String loadReportIndex() throws IOException {
-        return new FileLoader().toString(homePageFile());
+        return new FileLoader().read(homePageFile());
     }
 
-    public static File homePageFile() {
-        return new File(outputDirectory(), "index.html");
+    public static Path homePageFile() {
+        return outputDirectory().resolve("index.html");
     }
 
-    public static File testSuiteFile(Class<?> clazz) {
-        return new File(outputDirectory(), "TEST-" + clazz.getCanonicalName() + ".html");
+    public static Path testSuiteFile(Class<?> clazz) {
+        return outputDirectory().resolve("TEST-" + clazz.getCanonicalName() + ".html");
     }
 
-    public static File outputDirectory() {
-        return new File(getProperty("java.io.tmpdir") +  "io.bitsmart.bdd.report/report/");
+    public static Path outputDirectory() {
+        return TestConfig.getBasePath().resolve("io.bitsmart.bdd.report/report/");
     }
 }
