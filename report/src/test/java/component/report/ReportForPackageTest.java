@@ -55,7 +55,6 @@ public class ReportForPackageTest extends AbstractReportTest {
         List<String> classNames = report.getTestSuites().stream().map(TestSuite::getClassName).collect(Collectors.toList());
         assertThat(classNames).describedAs("failed class names are: " + classNames).hasSize(7);
         assertThat(classNames).describedAs("failed class names are: " + classNames).contains("ClassUnderTest");
-//        assertPassingTestSuite(passingTestSuite(report));
     }
 
     private void assertSuiteLinks() {
@@ -69,10 +68,4 @@ public class ReportForPackageTest extends AbstractReportTest {
             new TestSuiteNameToFile("shared.undertest.basic.AbortedTestCasesUnderTest", "TEST-shared.undertest.basic.AbortedTestCasesUnderTest.json"));
         assertSuiteLinks(suiteNameToFiles);
     }
-
-//    private TestSuite passingTestSuite(Report report) {
-//        return Objects.requireNonNull(
-//            report.getTestSuites().stream().findFirst().filter(suite -> suite.getClassName().equals("ClassUnderTest")).orElse(null)
-//        );
-//    }
 }
