@@ -28,9 +28,11 @@ import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static component.report.ReportAssertions.assertPassingTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +51,10 @@ public class ReportForPackageTest extends AbstractReportTest {
         assertThat(report.getTimeStamp()).isEqualTo(DEFAULT_DATE_TIME);
         assertThat(report.getTestCases()).hasSize(28);
         assertThat(report.getTestSuites()).hasSize(7);
-        assertPassingTestSuite(passingTestSuite(report));
+
+        List<String> classNames = report.getTestSuites().stream().map(TestSuite::getClassName).collect(Collectors.toList());
+        assertThat(classNames).describedAs("failed class names are: " + classNames).hasSize(7);
+        assertThat(classNames).describedAs("failed class names are: " + classNames).contains("ClassUnderTest");
     }
 
     private void assertSuiteLinks() {
@@ -62,11 +67,5 @@ public class ReportForPackageTest extends AbstractReportTest {
             new TestSuiteNameToFile("shared.undertest.basic.TestNamesTest", "TEST-shared.undertest.basic.TestNamesTest.json"),
             new TestSuiteNameToFile("shared.undertest.basic.AbortedTestCasesUnderTest", "TEST-shared.undertest.basic.AbortedTestCasesUnderTest.json"));
         assertSuiteLinks(suiteNameToFiles);
-    }
-
-    private TestSuite passingTestSuite(Report report) {
-        return Objects.requireNonNull(
-            report.getTestSuites().stream().findFirst().filter(suite -> suite.getClassName().equals("ClassUnderTest")).orElse(null)
-        );
     }
 }
