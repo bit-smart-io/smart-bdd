@@ -16,25 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.model.bdd;
+package com.example.bookstore.bdd.builder_example.model.bdd;
 
-import com.example.bookstore.model.IsbnBook;
+import org.springframework.http.HttpStatus;
 
-public class GivenIsbnDbEntry {
+public class ThenGetBookByIsbnError {
+    private HttpStatus statusCode;
+    private String errorMessage;
 
-    private final String isbn;
-    private final IsbnBook book;
-
-    public GivenIsbnDbEntry(String isbn, IsbnBook book) {
-        this.isbn = isbn;
-        this.book = book;
+    public ThenGetBookByIsbnError(HttpStatus statusCode, String errorMessage) {
+        this.statusCode = statusCode;
+        this.errorMessage = errorMessage;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public HttpStatus getStatusCode() {
+        return statusCode;
     }
 
-    public IsbnBook getBook() {
-        return book;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

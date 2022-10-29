@@ -16,11 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.defaults;
+package com.example.bookstore.controller;
 
-/** would this helpful for should we have the defaults in the builders? */
-public class DefaultIsbnBook {
-    public static final String ISBN = "default-isbn";
-    public static final String TITLE = "default-title";
-    public static final String AUTHOR = "default-author";
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class StatusController {
+
+    @GetMapping("/status")
+    public String status() {
+        return "running";
+    }
 }

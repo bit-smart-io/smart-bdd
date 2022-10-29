@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd;
+package com.example.bookstore.bdd.builder_example;
 
-import com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder;
-import com.example.bookstore.bdd.builders.bdd.WhenIsbnDbBuilder;
-import com.example.bookstore.bdd.mappings.DefaultMappings;
-import com.example.bookstore.bdd.model.bdd.ThenGetBookByIsbnBuilder;
+import com.example.bookstore.bdd.builder_example.builders.bdd.GivenIsbnDbBuilder;
+import com.example.bookstore.bdd.builder_example.builders.bdd.WhenIsbnDbBuilder;
+import com.example.bookstore.bdd.builder_example.mappings.DefaultMappings;
+import com.example.bookstore.bdd.builder_example.model.bdd.ThenGetBookByIsbnBuilder;
+import com.example.bookstore.bdd.builder_example.model.bdd.ThenGetBookByIsbnErrorBuilder;
 import com.example.bookstore.model.IsbnBook;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,8 +38,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -66,7 +65,7 @@ public class BaseBookStoreTest extends BaseTest {
     private final DefaultMappings defaultMappings = new DefaultMappings(this);
 
     @RegisterExtension
-    static WireMockExtension wm1 = WireMockExtension.newInstance()
+    static WireMockExtension wireMockExtension = WireMockExtension.newInstance()
         .options(wireMockConfig().port(PORT))
         .build();
 
@@ -111,6 +110,17 @@ public class BaseBookStoreTest extends BaseTest {
     public void then(ThenGetBookByIsbnBuilder thenBuilder) {
         sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
         assertThat(isbnBook(response.getBody())).isEqualTo(thenBuilder.build().getBook());
+    }
+
+    public void then(ThenGetBookByIsbnErrorBuilder thenBuilder) {
+        sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody()));
+
+        if (thenBuilder.build().getStatusCode() != null) {
+            assertThat(response.getStatusCode()).isEqualTo(thenBuilder.build().getStatusCode());
+        }
+        if (thenBuilder.build().getErrorMessage() != null) {
+            assertThat(response.getBody()).isEqualTo(thenBuilder.build().getErrorMessage());
+        }
     }
 
     private IsbnBook isbnBook(String json) {

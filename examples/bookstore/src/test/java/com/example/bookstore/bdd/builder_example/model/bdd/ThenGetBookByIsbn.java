@@ -16,27 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.model.bdd;
+package com.example.bookstore.bdd.builder_example.model.bdd;
 
-import com.example.bookstore.bdd.builders.IsbnBookBuilder;
-import io.bitsmart.bdd.report.utils.Builder;
+import com.example.bookstore.model.IsbnBook;
 
-public final class ThenGetBookByIsbnBuilder implements Builder<ThenGetBookByIsbn> {
-    private IsbnBookBuilder book;
+public class ThenGetBookByIsbn {
+    private final IsbnBook book;
 
-    private ThenGetBookByIsbnBuilder() {
-    }
-
-    public static ThenGetBookByIsbnBuilder theResponseContains(IsbnBookBuilder book) {
-        return new ThenGetBookByIsbnBuilder().withBook(book);
-    }
-
-    protected ThenGetBookByIsbnBuilder withBook(IsbnBookBuilder book) {
+    public ThenGetBookByIsbn(IsbnBook book) {
         this.book = book;
-        return this;
     }
 
-    public ThenGetBookByIsbn build() {
-        return new ThenGetBookByIsbn(book.build());
+    public IsbnBook getBook() {
+        return book;
     }
 }

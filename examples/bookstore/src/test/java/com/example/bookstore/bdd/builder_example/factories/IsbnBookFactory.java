@@ -16,16 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.model.bdd;
+package com.example.bookstore.bdd.builder_example.factories;
 
-public class WhenGetBookByIsbn {
-    private final String isbn;
+import com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder;
+import com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook;
 
-    public WhenGetBookByIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+import static com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder.anIsbnBook;
+import static java.util.Collections.singletonList;
 
-    public String getIsbn() {
-        return isbn;
+public class IsbnBookFactory {
+    public static IsbnBookBuilder aDefaultIsbnBook() {
+        return anIsbnBook()
+            .withIsbn(DefaultIsbnBook.isbn)
+            .withTitle(DefaultIsbnBook.title)
+            .withAuthors(singletonList(DefaultIsbnBook.author));
     }
 }

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.builders;
+package com.example.bookstore.bdd.builder_example.builders;
 
 import com.example.bookstore.model.IsbnBook;
 import io.bitsmart.bdd.report.utils.Builder;

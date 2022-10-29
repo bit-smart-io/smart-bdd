@@ -16,16 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.controller;
+package com.example.bookstore.bdd.builder_example.model.bdd;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.bookstore.model.IsbnBook;
 
-@RestController
-public class HelloController {
+import java.util.Map;
 
-	@GetMapping("/")
-	public String index() {
-		return "Greetings from Spring Boot!";
-	}
+public class GivenIsbnDb {
+    private final Map<String, IsbnBook> books;
+
+    public GivenIsbnDb(Map<String, IsbnBook> books) {
+        this.books = books;
+    }
+
+    public Map<String, IsbnBook> getBooks() {
+        return books;
+    }
 }

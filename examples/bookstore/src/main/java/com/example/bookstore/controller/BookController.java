@@ -20,6 +20,8 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.model.IsbnBook;
 import com.example.bookstore.service.BookIsbnService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,38 +30,37 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 /**
- * Additional endpoint required.
- * /get-price/{isbn}
- *
- * Notes:
- * 	// get book (IsbnBook) from IsbnBookDB
- * 	// get books (BookVendorSummary) from OldBookSellerAPI and NewBookSellerAPI
- * 	// BookEnquiry = all fields from or the 2 objects BookIsbnData + BookIsbnData
- *
- * 	// workflow
- * 	// all book-sellers return BookVendorSummary (isbns, price and condition (new, old))
- * 	// for each isbn call IsbnBookDB and return IsbnBook
- * 	// return to the user CustomerEnquiry list of BookEnquiry
- *
- * 	// /book/{isbn} returns BookIsbnData.             or /book/{isbn}
- * 	// /books/enquiry/{isbn} returns CustomerEnquiry. or /books/{isbn}
+ * <pre>
+ * Additional endpoints for more testing.
+ * - /book/isbn/{isbn} return IsbnBook from IsbnBookDB
+ * - /book/search-vendors? return: BookSearchResultToBuy from OldBookSellerAPI and NewBookSellerAPI
+ * - /book/search? return BookSearchResult
+ * 	 - title = harry+potter
+ * 	 - author = jk
+ * 	 - isFistEdition = true
+ * 	 - type = paper, hardback etc...
+ * 	 - genre = action, adventure
+ * 	 - condition = new, old
+ * </pre>
  */
 @RestController
 public class BookController {
-	private final BookIsbnService service;
+    private final BookIsbnService service;
 
-	public BookController(BookIsbnService service) {
-		this.service = service;
-	}
+    public BookController(BookIsbnService service) {
+        this.service = service;
+    }
 
-	@GetMapping("/book")
-	public String book() {
-		return "Book";
-	}
-
-	@GetMapping(value = "/book/{isbn}", produces = "application/json")
-	public @ResponseBody
-	IsbnBook bookByIsbn(@PathVariable String isbn) throws IOException {
-		return service.get(isbn);
-	}
+    /**
+     * Two standards for ISBN. ISBN 10 and ISBN 13
+     * There is an algorithm to validate ISBN 10. Could be a downstream api call.
+     */
+    @GetMapping(value = "/book/{isbn}", produces = "application/json")
+    public @ResponseBody
+    Object getBookByIsbn(@PathVariable String isbn) throws IOException {
+        if (isbn.length() != 10 && isbn.length() != 13) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Expectation Failed - ISBN should be 10 or 13 characters");
+        }
+        return service.get(isbn);
+    }
 }

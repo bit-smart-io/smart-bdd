@@ -16,28 +16,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.builders.bdd;
+package com.example.bookstore.bdd.builder_example.builders.bdd;
 
-import com.example.bookstore.bdd.defaults.DefaultIsbnBook;
-import com.example.bookstore.bdd.model.bdd.WhenGetBookByIsbn;
+import com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder;
+import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDbEntry;
 import io.bitsmart.bdd.report.utils.Builder;
 
-public final class WhenIsbnDbBuilder implements Builder<WhenGetBookByIsbn> {
-    private String isbn = DefaultIsbnBook.ISBN;
+public final class GivenIsbnDbEntryBuilder implements Builder<GivenIsbnDbEntry> {
+    private String isbn;
+    private IsbnBookBuilder book;
 
-    private WhenIsbnDbBuilder() {
+    private GivenIsbnDbEntryBuilder() {
     }
 
-    public static WhenIsbnDbBuilder aUserRequestsABook() {
-        return new WhenIsbnDbBuilder();
+    public static GivenIsbnDbEntryBuilder forAnIsbn(String isbn) {
+        return new GivenIsbnDbEntryBuilder().withIsbn(isbn);
     }
 
-    public WhenIsbnDbBuilder withIsbn(String isbn) {
+    protected GivenIsbnDbEntryBuilder withIsbn(String isbn) {
         this.isbn = isbn;
         return this;
     }
 
-    public WhenGetBookByIsbn build() {
-        return new WhenGetBookByIsbn(isbn);
+    public GivenIsbnDbEntryBuilder thatWillReturn(IsbnBookBuilder book) {
+        this.book = book;
+        return this;
+    }
+
+    public GivenIsbnDbEntry build() {
+        return new GivenIsbnDbEntry(isbn, book.build());
     }
 }

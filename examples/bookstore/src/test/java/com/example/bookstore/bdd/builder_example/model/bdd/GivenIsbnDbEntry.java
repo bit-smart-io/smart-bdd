@@ -16,15 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.model.bdd;
+package com.example.bookstore.bdd.builder_example.model.bdd;
 
 import com.example.bookstore.model.IsbnBook;
 
-public class ThenGetBookByIsbn {
+public class GivenIsbnDbEntry {
+
+    private final String isbn;
     private final IsbnBook book;
 
-    public ThenGetBookByIsbn(IsbnBook book) {
+    public GivenIsbnDbEntry(String isbn, IsbnBook book) {
+        this.isbn = isbn;
         this.book = book;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     public IsbnBook getBook() {

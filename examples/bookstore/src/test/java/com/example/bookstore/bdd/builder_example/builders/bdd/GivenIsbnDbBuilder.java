@@ -16,10 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.builders.bdd;
+package com.example.bookstore.bdd.builder_example.builders.bdd;
 
-import com.example.bookstore.bdd.model.bdd.GivenIsbnDb;
-import com.example.bookstore.bdd.model.bdd.GivenIsbnDbEntry;
+import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDb;
+import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDbEntry;
 import io.bitsmart.bdd.report.utils.Builder;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class GivenIsbnDbBuilder implements Builder<GivenIsbnDb> {
-    private List<GivenIsbnDbEntryBuilder> isbnDbEntries = new ArrayList<>();
+    private final List<GivenIsbnDbEntryBuilder> isbnDbEntries = new ArrayList<>();
 
     private GivenIsbnDbBuilder() {
     }

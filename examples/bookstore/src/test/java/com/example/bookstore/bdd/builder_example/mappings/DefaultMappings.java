@@ -16,14 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.mappings;
+package com.example.bookstore.bdd.builder_example.mappings;
 
-import com.example.bookstore.bdd.BaseBookStoreTest;
-import com.example.bookstore.bdd.defaults.DefaultIsbnBook;
+import com.example.bookstore.bdd.builder_example.BaseBookStoreTest;
+import com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook;
 
-import static com.example.bookstore.bdd.builders.IsbnBookBuilder.anIsbnBook;
-import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbBuilder.theIsbnDbContains;
-import static com.example.bookstore.bdd.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
+import static com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder.anIsbnBook;
+import static com.example.bookstore.bdd.builder_example.builders.bdd.GivenIsbnDbBuilder.theIsbnDbContains;
+import static com.example.bookstore.bdd.builder_example.builders.bdd.GivenIsbnDbEntryBuilder.forAnIsbn;
 
 public class DefaultMappings {
 
@@ -35,10 +35,10 @@ public class DefaultMappings {
 
     public void initDefaultMappings() {
         baseBookStoreTest.given(theIsbnDbContains().anEntry(
-            forAnIsbn(DefaultIsbnBook.ISBN)
+            forAnIsbn(DefaultIsbnBook.isbn)
                 .thatWillReturn(anIsbnBook()
-                    .withIsbn(DefaultIsbnBook.ISBN)
-                    .withTitle(DefaultIsbnBook.TITLE)
-                    .withAuthor(DefaultIsbnBook.AUTHOR))));
+                    .withIsbn(DefaultIsbnBook.isbn)
+                    .withTitle(DefaultIsbnBook.title)
+                    .withAuthor(DefaultIsbnBook.author))));
     }
 }

@@ -16,9 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.controller;
+package com.example.bookstore.bdd;
 
+import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -26,15 +28,39 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * This is very similar to a standard Spring integration test.
+ * <p>
+ * For comparison please see StatusControllerIT and StatusControllerMvcIT.
+ * Notice that we have the addition of global state for the response that was not necessary in StatusControllerIT.
+ *
+ * <pre>
+ * The output of this is:
+ * Feature: Get book without builders test
+ *  Scenario: Get book (PASSED)
+ *    When get status is called
+ *    Then status running is return
+ * </pre>
+ */
+@ExtendWith(SmartReport.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloControllerIT {
+public class StatusTest {
 
-	@Autowired
-	private TestRestTemplate template;
+    @Autowired
+    private TestRestTemplate template;
+    private ResponseEntity<String> response;
 
     @Test
-    public void getHello() {
-        ResponseEntity<String> response = template.getForEntity("/", String.class);
-        assertThat(response.getBody()).isEqualTo("Greetings from Spring Boot!");
+    public void getBook() {
+        whenGetStatusIsCalled();
+        thenStatusRunningIsReturned();
+    }
+
+    private void whenGetStatusIsCalled() {
+        response = template.getForEntity("/status", String.class);
+    }
+
+    private void thenStatusRunningIsReturned() {
+        assertThat(response.getBody()).isEqualTo("running");
     }
 }

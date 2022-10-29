@@ -16,20 +16,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.bookstore.bdd.model.bdd;
+package com.example.bookstore.bdd.builder_example.model.bdd;
 
-import com.example.bookstore.model.IsbnBook;
+import com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder;
+import io.bitsmart.bdd.report.utils.Builder;
 
-import java.util.Map;
+public final class ThenGetBookByIsbnBuilder implements Builder<ThenGetBookByIsbn> {
+    private IsbnBookBuilder book;
 
-public class GivenIsbnDb {
-    private final Map<String, IsbnBook> books;
-
-    public GivenIsbnDb(Map<String, IsbnBook> books) {
-        this.books = books;
+    private ThenGetBookByIsbnBuilder() {
     }
 
-    public Map<String, IsbnBook> getBooks() {
-        return books;
+    public static ThenGetBookByIsbnBuilder theResponseContains(IsbnBookBuilder book) {
+        return new ThenGetBookByIsbnBuilder().withBook(book);
+    }
+
+    protected ThenGetBookByIsbnBuilder withBook(IsbnBookBuilder book) {
+        this.book = book;
+        return this;
+    }
+
+    public ThenGetBookByIsbn build() {
+        return new ThenGetBookByIsbn(book.build());
     }
 }
