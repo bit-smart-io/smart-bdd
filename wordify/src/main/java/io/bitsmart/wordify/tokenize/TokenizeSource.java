@@ -146,7 +146,7 @@ public class TokenizeSource {
         if (parameterMap.contains(str)) {
             Object value = parameterMap.get(str).getValue();
             str = value == null ? "null" : String.valueOf(value);
-            str = WordifyStringUtil.wordifyMethodOrFieldName(str);
+            //str = WordifyStringUtil.wordifyMethodOrFieldName(str);
         } else {
             str = WordifyStringUtil.wordifyMethodOrFieldName(input, beginIndex, beginIndex + count);
         }
@@ -157,7 +157,7 @@ public class TokenizeSource {
         return Optional.of(new Token(str, TokenType.DEFAULT));
     }
 
-    private Optional<Token> handleNumber() {
+    private Optional<Token>  handleNumber() {
         int beginIndex = index();
         int count = 0;
         char ch = get();
@@ -186,6 +186,12 @@ public class TokenizeSource {
         if (count == 0) {
             return Optional.empty();
         }
+
+        // consume if ends in .
+        if (getPrevious() == '.') {
+            count--;
+        }
+
         return Optional.of(new Token(substring(beginIndex, beginIndex + count), NUMBER));
     }
 
@@ -307,6 +313,10 @@ public class TokenizeSource {
         } else {
             return END;
         }
+    }
+
+    private char getPrevious() {
+        return input[index - 1];
     }
 
     private char peekNext() {

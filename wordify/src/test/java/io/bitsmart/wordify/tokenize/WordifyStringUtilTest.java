@@ -18,7 +18,6 @@
 
 package io.bitsmart.wordify.tokenize;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -46,9 +45,10 @@ class WordifyStringUtilTest {
         assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do_something")).isEqualTo("do something");
         assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do_something_")).isEqualTo("do something");
         assertThat(WordifyStringUtil.wordifyMethodOrFieldName("_do_something_")).isEqualTo("do something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("__do_something_")).isEqualTo("do something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("__do__something__")).isEqualTo("do something");
     }
 
-    @Disabled
     @Test
     void wordifyMoreThanOneUnderscoreInARow() {
         char[] chars = "__do__something__".toCharArray();
@@ -67,23 +67,25 @@ class WordifyStringUtilTest {
     }
 
     /**
-     * Not sure what to do
-     * 'aB'       = A b
-     * 'aBCD'     = A BCD
-     * 'aBCDEe'   = A BCD ee
+     * If we only have uppercase then we can assume that we have a const
      */
-    @Disabled
     @Test
     void wordifyAcronyms() {
-        char[] chars = "__do__something__".toCharArray();
-        assertThat(WordifyStringUtil.wordifyMethodOrFieldName(chars, 0, chars.length)).isEqualTo("do something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("CONST")).isEqualTo("CONST");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("CONST_99")).isEqualTo("CONST_99");
     }
 
-    /**
-     *  doSomething99" t("do something 99"));
-     * */
-
-    /**
-     *  DoSomething" t("Do something 99"));
-     * */
+    @Test
+    void wordifyNamesWithNumbers() {
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("doSomething99")).isEqualTo("do something 99");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do_something99")).isEqualTo("do something 99");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do_something_99")).isEqualTo("do something 99");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("_do_something_99")).isEqualTo("do something 99");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do99something")).isEqualTo("do 99 something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do99Something")).isEqualTo("do 99 something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do99_Something")).isEqualTo("do 99 something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do99__Something")).isEqualTo("do 99 something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("do_99_something")).isEqualTo("do 99 something");
+        assertThat(WordifyStringUtil.wordifyMethodOrFieldName("getBookByIsbn_whenIsbnNumberIsNot10or13_return417StatusCode")).isEqualTo("get book by isbn when isbn number is not 10 or 13 return 417 status code");
+    }
 }

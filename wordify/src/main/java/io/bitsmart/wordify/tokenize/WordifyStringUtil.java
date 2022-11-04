@@ -20,6 +20,8 @@ package io.bitsmart.wordify.tokenize;
 
 public class WordifyStringUtil {
 
+    private static boolean PRINT = false;
+
     public static String wordifyMethodOrFieldName(String input) {
         return wordifyMethodOrFieldName(input.toCharArray(), 0, input.length());
     }
@@ -27,21 +29,73 @@ public class WordifyStringUtil {
     public static String wordifyMethodOrFieldName(char[] input, int from, int to) {
         StringBuilder stringBuilder = new StringBuilder();
         char ch;
+        char chPrevious = input[from];
+
+        StringBuilder allCapsStringBuilder = new StringBuilder();
+        boolean allCapsAssertion = true;
+        for (int i = from; i < to; i++) {
+            if (Character.isLowerCase(input[i]))  {
+                allCapsAssertion = false;
+                break;
+            }
+            allCapsStringBuilder.append(input[i]);
+        }
+        if (allCapsAssertion) {
+            __print(allCapsStringBuilder);
+            return allCapsStringBuilder.toString();
+        }
+
+        // remove trailing underscores
+        for (int i = to - 1; i >= 0; i--) {
+            if (input[i] == '_') {
+                to--;
+            } else {
+                break;
+            }
+        }
+
         for (int i = from; i < to; i++) {
             ch = input[i];
 
-            if (Character.isUpperCase(ch)) {
-                stringBuilder.append(" ").append(Character.toLowerCase(ch));
-            } else if (ch == '_') {
-                if (i == 0) {
-                } else if (i == to - 1) {
-                } else {
+            // underscores get turned to spaces
+            if (ch == '_') {
+                if (i != to - 1) {
+                    if (chPrevious != '_') {
+                        stringBuilder.append(" ");
+                    }
+                }
+            }
+
+            // transition to digit
+            else if (!Character.isDigit(chPrevious) && Character.isDigit(ch)) {
+                if (chPrevious != '_') {
                     stringBuilder.append(" ");
                 }
-            } else {
                 stringBuilder.append(ch);
             }
+
+            // transition from digit to char
+            else if (Character.isDigit(chPrevious) && !Character.isDigit(ch)) {
+                if (chPrevious != '_') {
+                    stringBuilder.append(" ");
+                }
+                stringBuilder.append(Character.toLowerCase(ch));
+            }
+
+            else if (Character.isUpperCase(ch)) {
+                if (chPrevious != '_') {
+                    stringBuilder.append(" ");
+                }
+                stringBuilder.append(Character.toLowerCase(ch));
+            }
+
+            else {
+                stringBuilder.append(ch);
+            }
+            chPrevious = ch;
         }
+
+        __print(stringBuilder);
         return stringBuilder.toString();
     }
 
@@ -50,6 +104,12 @@ public class WordifyStringUtil {
             return input;
         } else {
             return input.substring(0, 1).toUpperCase() + input.substring(1);
+        }
+    }
+
+    static private void __print(Object obj) {
+        if (PRINT) {
+            System.out.println("wordifyMethodOrFieldName: " + obj);
         }
     }
 }

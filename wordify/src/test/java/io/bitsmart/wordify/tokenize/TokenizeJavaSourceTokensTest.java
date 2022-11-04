@@ -172,8 +172,8 @@ class TokenizeJavaSourceTokensTest {
 
     @Test
     void handlesFieldAndMethodsNamesWithNumbers() {
-        assertTokenize("doSomething99();", t("Do something99"));
-        assertTokenize("field99.doSomething99();", t("Field99"), t("do something99"));
+        assertTokenize("doSomething99();", t("Do something 99"));
+        assertTokenize("field99.doSomething99();", t("Field 99"), t("do something 99"));
     }
 
     /**
@@ -243,12 +243,30 @@ class TokenizeJavaSourceTokensTest {
     void handlesParameters() {
         TokenizeParameterMap parameterMap = new TokenizeParameterMap();
         parameterMap.put(new TokenizeParameter("paramName", "paramValue", "paramType"));
-        assertTokenize("doSomething(paramName);", parameterMap, t("Do something"), t("param value"));
+        assertTokenize("doSomething(paramName);", parameterMap, t("Do something"), t("paramValue"));
+    }
+
+    /**
+     * a1 = A 1
+     * aB1 = A b 1
+     * is10or13 = Is 10 or 13
+     */
+    @Test
+    void handlesNumbersInNames() {
+        assertTokenize("a1", t("A 1"));
+        assertTokenize("aB1", t("A b 1"));
+        assertTokenize("is10or13", t("Is 10 or 13"));
+    }
+
+    @Test
+    void handlesAllCaps() {
+        assertTokenize("AB", t("AB"));
+        assertTokenize("AB_CD", t("AB_CD"));
     }
 
     /**
      * Maybe users will need an underscore
-     * GivenIWant = Given I Want
+     * GivenIWant = Given I want
      * IThinkITIsGreat = I think IT is great
      * ITIsGreat = IT is great
      * IWantToWorkInIT = I want to work in IT

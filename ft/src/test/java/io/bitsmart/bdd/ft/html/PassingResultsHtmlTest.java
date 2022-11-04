@@ -83,11 +83,11 @@ public class PassingResultsHtmlTest extends AbstractResultsForHtml {
             .contains("Test method (PASSED)")
             .contains("Passing assertion")
             .contains("Param test (PASSED)")
-            .contains("Passing assertion with value 1")
-            .contains("Passing assertion with value 2")
-            .contains("Passing assertion with value 3")
+            .contains("Passing assertion with one param value 1")
+            .contains("Passing assertion with one param value 2")
+            .contains("Passing assertion with one param value 3")
             .contains("Param test with nulls (PASSED)")
-            .contains("Passing assertion with null value 2")
-            .contains("Passing assertion with value 3 null");
+            .contains("Passing assertion with two params null value 4")
+            .contains("Passing assertion with two params value 5 null");
     }
 }

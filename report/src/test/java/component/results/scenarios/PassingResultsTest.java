@@ -61,21 +61,21 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
 
         assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withWordify("Passing assertion with value 1")
+                .withWordify("Passing assertion with one param value 1")
                 .withArgs(singletonList("value 1"))
                 .withName("paramTest value 1")
                 .build()
         );
         assertThat(secondTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withWordify("Passing assertion with value 2")
+                .withWordify("Passing assertion with one param value 2")
                 .withArgs(singletonList("value 2"))
                 .withName("paramTest value 2")
                 .build()
         );
         assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withWordify("Passing assertion with value 3")
+                .withWordify("Passing assertion with one param value 3")
                 .withArgs(singletonList("value 3"))
                 .withName("paramTest value 3")
                 .build()

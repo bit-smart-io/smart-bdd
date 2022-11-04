@@ -62,30 +62,30 @@ public class ClassUnderTest {
     @Order(1)
     @ValueSource(strings = { "value 1", "value 2", "value 3" })
     void paramTest(String param) {
-        passingAssertionWith(param);
+        passingAssertionWithOneParam(param);
     }
 
     @ParameterizedTest
     @MethodSource
     @Order(2)
     void paramTestWithNulls(String param1, String param2) {
-        passingAssertionWith(param1, param2);
+        passingAssertionWithTwoParams(param1, param2);
     }
 
     static Stream<Arguments> paramTestWithNulls() {
         return Stream.of(
-            arguments(null, "value 2"),
-            arguments("value 3", null));
+            arguments(null, "value 4"),
+            arguments("value 5", null));
     }
 
     private void passingAssertion() {
         assertThat(true).isTrue();
     }
 
-    private void passingAssertionWith(String param) {
+    private void passingAssertionWithOneParam(String param) {
         assertThat(param).isNotNull();
     }
 
-    private void passingAssertionWith(String param1, String param2) {
+    private void passingAssertionWithTwoParams(String param1, String param2) {
     }
 }

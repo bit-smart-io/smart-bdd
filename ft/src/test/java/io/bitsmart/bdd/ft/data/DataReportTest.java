@@ -142,21 +142,21 @@ public class DataReportTest extends AbstractResultsForData {
         assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withName("paramTest value 1")
-                .withWordify("Passing assertion with value 1")
+                .withWordify("Passing assertion with one param value 1")
                 //.withArgs(singletonList("value 1")) //TODO
                 .build()
         );
         assertThat(secondTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withName("paramTest value 2")
-                .withWordify("Passing assertion with value 2")
+                .withWordify("Passing assertion with one param value 2")
                 //.withArgs(singletonList("value 2")) //TODO
                 .build()
         );
         assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withName("paramTest value 3")
-                .withWordify("Passing assertion with value 3")
+                .withWordify("Passing assertion with one param value 3")
                 //.withArgs(singletonList("value 3")) //TODO
                 .build()
         );

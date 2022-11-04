@@ -57,7 +57,7 @@ public class ReportAssertions {
 
     public static TestCase passingParamTestCase() {
         return aTestCase()
-            .withWordify("Passing assertion with value 1")
+            .withWordify("Passing assertion with one param value 1")
             .withStatus(Status.PASSED)
             .withName("paramTest value 1")
             .withMethodName("paramTest")
