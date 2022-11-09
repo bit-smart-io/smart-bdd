@@ -53,7 +53,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-public class ReportForPassingTestSuiteTest extends AbstractReportTest{
+public class ReportForPassingTestSuiteTest extends AbstractReportTest {
     private static final Class<?> PASSING_CLASS_UNDER_TEST = ClassUnderTest.class;
 
     @Test

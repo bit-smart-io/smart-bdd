@@ -59,13 +59,6 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
                 .build()
         );
 
-        assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
-            method("testMethod"),
-            method("paramTest"),
-            method("paramTest"),
-            method("paramTest")
-        );
-
         TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, aFailedTestMethodDueToException());
         assertNullPointerCause(testMethod);
@@ -74,7 +67,8 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 1")
                 .withArgs(singletonList("value 1"))
-                .withName("paramTest value 1")
+                .withName("paramTest")
+                .withDisplayName("Param test value 1")
                 .build()
         );
         assertNullPointerCause(firstTestCaseResult("paramTest"));
@@ -83,7 +77,8 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 2")
                 .withArgs(singletonList("value 2"))
-                .withName("paramTest value 2")
+                .withName("paramTest")
+                .withDisplayName("Param test value 2")
                 .build()
         );
         assertNullPointerCause(secondTestCaseResult("paramTest"));
@@ -92,7 +87,8 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
             aFailedParamTestCaseResultDueToException()
                 .withWordify("Method that throws a pointer method with value 3")
                 .withArgs(singletonList("value 3"))
-                .withName("paramTest value 3")
+                .withName("paramTest")
+                .withDisplayName("Param test value 3")
                 .build()
         );
         assertNullPointerCause(thirdTestCaseResult("paramTest"));
@@ -108,7 +104,6 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
 
     private TestCaseResultBuilder aFailedParamTestCaseResultDueToException() {
         return aTestCaseResult()
-            .withMethod(method("paramTest"))
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass())
             .withNotes(new Notes());
@@ -116,8 +111,8 @@ public class FailedNullToExceptionResultsTest extends AbstractResultsForTestSuit
 
     private TestCaseResult aFailedTestMethodDueToException() {
         return aTestCaseResult()
-            .withMethod(method("testMethod"))
             .withName("testMethod")
+            .withDisplayName("Test method")
             .withWordify("Method that throws a pointer method")
             .withStatus(FAILED)
             .withTestSuiteClass(testSuiteClass())

@@ -32,6 +32,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -41,6 +42,8 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.A
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.DISABLED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.FAILED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
+import static io.bitsmart.wordify.tokenize.WordifyStringUtil.upperCaseFirstChar;
+import static io.bitsmart.wordify.tokenize.WordifyStringUtil.wordifyMethodOrFieldName;
 
 /**
  *
@@ -68,17 +71,20 @@ public class TestContext implements
         this.reportWriter = reportWriter;
     }
 
+    /** Start test suite */
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         startReporting();
         testResults.startTestSuite(context);
     }
 
+    /** Start test case */
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).startTestCase(context);
     }
 
+    /** Complete test suite */
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         getTestSuiteResult(context).completeTestSuite();
@@ -104,16 +110,14 @@ public class TestContext implements
         invocation.proceed();
     }
 
-    /** normal test without params */
+    /** Update test case - normal test without params */
     @Override
     public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         updateTestCaseResult(invocationContext, extensionContext);
         invocation.proceed();
     }
 
-    /**
-     * Using (at)TestFactory??? Not tested.
-     * */
+    /** Update test case - Using (at)TestFactory??? Not tested. */
     @Override
     public <T> T interceptTestFactoryMethod(Invocation<T> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         updateTestCaseResult(invocationContext, extensionContext);
@@ -121,6 +125,8 @@ public class TestContext implements
     }
 
     /**
+     * Update test case
+     *
      * Pass in params:
      * (at)ParameterizedTest
      * (at)ValueSource(strings = { "value 1", "value 2", "value 3" })
@@ -134,9 +140,7 @@ public class TestContext implements
         invocation.proceed();
     }
 
-    /**
-     * Using (at)TestFactory??? Not tested.
-     */
+    /** Update test case - Using (at)TestFactory??? Not tested. */
     @Override
     public void interceptDynamicTest(Invocation<Void> invocation, ExtensionContext extensionContext) throws Throwable {
         // no invocationContext???
@@ -204,6 +208,12 @@ public class TestContext implements
         return testSuiteResult.getTestCaseResult(context);
     }
 
+    /**
+     * Implementation of update test case.
+     *
+     * @param invocationContext - This is later in the life cycle. getArguments() etc...
+     * @param extensionContext - we have this at the start of the life cycle. getDisplayName() etc...
+     */
     public void updateTestCaseResult(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) {
         TestCaseResult testCaseResult = getTestCaseResult(extensionContext);
 //        List<Object> arguments = invocationContext.getArguments();
@@ -211,10 +221,31 @@ public class TestContext implements
 //        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 //        String displayName = extensionContext.getDisplayName();
 
-        wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).ifPresent(testCaseResult::setWordify);
+        // TODO logic should really be inside testResults!
+        testCaseResult.setWordify(wordifyExtensionContext.wordify(extensionContext, invocationContext.getArguments()).orElse(null));
         testCaseResult.setArgs(invocationContext.getArguments());
-        testCaseResult.setName(testCaseNameFactory.createName(testCaseResult));
-        // testCaseResult.setName(extensionContext.getDisplayName());
+        setTestCaseName(invocationContext, extensionContext, testCaseResult);
+    }
+
+    private void setTestCaseName(ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext, TestCaseResult testCaseResult) {
+        if (!extensionContext.getTestMethod().isPresent()) {
+            return;
+        }
+        final Method method = extensionContext.getTestMethod().get();
+        final ParameterizedTest parameterizedTest = method.getAnnotation(ParameterizedTest.class);
+        testCaseResult.setName(method.getName());
+        if (parameterizedTest != null) {
+            String testName = parameterizedTest.name();
+            // the default pattern doesn't work well it shows "[0] value 1"
+            if (testName.equals("[{index}] {argumentsWithNames}")) {
+                String methodNameWordify = upperCaseFirstChar(wordifyMethodOrFieldName(method.getName()));
+                testCaseResult.setDisplayName(testCaseNameFactory.createName(methodNameWordify, testCaseResult.getArgs()));
+            } else {
+                testCaseResult.setDisplayName(extensionContext.getDisplayName());
+            }
+        } else {
+            testCaseResult.setDisplayName(upperCaseFirstChar(wordifyMethodOrFieldName(method.getName())));
+        }
     }
 
     public void reset() {

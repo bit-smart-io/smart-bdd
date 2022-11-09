@@ -54,13 +54,13 @@ public abstract class AbstractResultsForTestSuite {
     public TestCaseResult testCaseResult(String methodName) {
         return testSuiteResult().getTestCaseResults().stream()
             .findAny()
-            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
+            .filter(testCase -> testCase.getName().equals(methodName))
             .orElse(null);
     }
 
     public List<TestCaseResult> testCaseResults(String methodName) {
         return testSuiteResult().getTestCaseResults().stream()
-            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
+            .filter(testCase -> testCase.getName().equals(methodName))
             .collect(toList());
     }
 
@@ -84,8 +84,9 @@ public abstract class AbstractResultsForTestSuite {
         return SmartReport.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
     }
 
+    //TODO remove
     protected TestMethod method(String name) {
-        return new TestMethod(name);
+        return new TestMethod(name, name);
     }
 
     protected void assertTestSuitClass(TestSuiteResult testSuiteResult, Class<?> clazz) {

@@ -76,7 +76,6 @@ public class ReportFactory {
             testSuiteResult.getTestSuiteClass().getFullyQualifiedName(),
             testSuiteResult.getTestSuiteClass().getClassName(),
             testSuiteResult.getTestSuiteClass().getPackageName(),
-            testSuiteResult.getMethods().stream().map(TestMethod::getName).collect(toList()),
             testResults(testSuiteResult.getTestCaseResults()),
             testSuiteSummary(testSuiteResult.getMetadata()),
             notes(testSuiteResult.getNotes()));
@@ -100,8 +99,7 @@ public class ReportFactory {
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
             testCaseResult.getName(),
-            testCaseResult.getMethod().getName(),
-            testCaseResult.getMethod().getWordify(),
+            testCaseResult.getDisplayName(),
             testCaseResult.getTestSuiteClass().getClassName(),
             testCaseResult.getTestSuiteClass().getPackageName(),
             notes(testCaseResult.getNotes()));

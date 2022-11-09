@@ -33,7 +33,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
     private String name;
     private String className;
     private String packageName;
-    private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseBuilder> testCases = new ArrayList<>();;
     private TestSuiteSummaryBuilder summary = aTestSuiteSummary();
     private Notes notes;
@@ -65,12 +64,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
         return this;
     }
 
-    public TestSuiteBuilder withMethodNames(List<String> methodNames) {
-        this.methodNames.clear();
-        this.methodNames.addAll(methodNames);
-        return this;
-    }
-
     public TestSuiteBuilder withTestCases(List<TestCaseBuilder> testCases) {
         this.testCases.clear();
         this.testCases.addAll(testCases);
@@ -88,6 +81,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
     }
 
     public TestSuite build() {
-        return new TestSuite(title, name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build(), notes);
+        return new TestSuite(title, name, className, packageName, BuilderUtils.build(testCases), summary.build(), notes);
     }
 }

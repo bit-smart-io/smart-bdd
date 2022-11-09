@@ -30,7 +30,6 @@ public class TestSuite {
     private final String name;
     private final String className;
     private final String packageName;
-    private final List<String> methodNames;
     private final List<TestCase> testCases;
     private final TestSuiteSummary summary;
     private final Notes notes;
@@ -44,7 +43,6 @@ public class TestSuite {
         @JsonProperty("name") String name,
         @JsonProperty("className") String className,
         @JsonProperty("packageName") String packageName,
-        @JsonProperty("methodNames") List<String> methodNames,
         @JsonProperty("testResults") List<TestCase> testCases,
         @JsonProperty("summary") TestSuiteSummary summary,
         @JsonProperty("notes") Notes notes)
@@ -53,7 +51,6 @@ public class TestSuite {
         this.name = name;
         this.className = className;
         this.packageName = packageName;
-        this.methodNames = methodNames;
         this.testCases = testCases;
         this.summary = summary;
         this.notes = notes;
@@ -75,10 +72,6 @@ public class TestSuite {
         return packageName;
     }
 
-    public List<String> getMethodNames() {
-        return methodNames;
-    }
-
     public List<TestCase> getTestCases() {
         return testCases;
     }
@@ -96,12 +89,12 @@ public class TestSuite {
         if (this == o) return true;
         if (!(o instanceof TestSuite)) return false;
         TestSuite testSuite = (TestSuite) o;
-        return Objects.equals(title, testSuite.title) && Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(methodNames, testSuite.methodNames) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary) && Objects.equals(notes, testSuite.notes);
+        return Objects.equals(title, testSuite.title) && Objects.equals(name, testSuite.name) && Objects.equals(className, testSuite.className) && Objects.equals(packageName, testSuite.packageName) && Objects.equals(testCases, testSuite.testCases) && Objects.equals(summary, testSuite.summary) && Objects.equals(notes, testSuite.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, name, className, packageName, methodNames, testCases, summary, notes);
+        return Objects.hash(title, name, className, packageName, testCases, summary, notes);
     }
 
     @Override
@@ -111,7 +104,6 @@ public class TestSuite {
             ", name='" + name + '\'' +
             ", className='" + className + '\'' +
             ", packageName='" + packageName + '\'' +
-            ", methodNames=" + methodNames +
             ", testCases=" + testCases +
             ", summary=" + summary +
             ", notes=" + notes +

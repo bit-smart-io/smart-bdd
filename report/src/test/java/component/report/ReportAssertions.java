@@ -32,8 +32,6 @@ public class ReportAssertions {
         assertThat(testSuite.getName()).isEqualTo("shared.undertest.basic.ClassUnderTest");
         assertThat(testSuite.getClassName()).isEqualTo("ClassUnderTest");
         assertThat(testSuite.getPackageName()).isEqualTo("shared.undertest.basic");
-        assertThat(testSuite.getMethodNames()).containsExactly(
-            "testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls");
         assertThat(testSuite.getSummary()).isEqualTo(
             aTestSuiteSummary()
                 .withTestCase(6)
@@ -47,7 +45,6 @@ public class ReportAssertions {
         return aTestCase()
             .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
-            .withName("testMethod")
             .withMethodName("testMethod")
             .withMethodNamWordified("Test method")
             .withClassName("ClassUnderTest")
@@ -59,9 +56,8 @@ public class ReportAssertions {
         return aTestCase()
             .withWordify("Passing assertion with one param value 1")
             .withStatus(Status.PASSED)
-            .withName("paramTest value 1")
             .withMethodName("paramTest")
-            .withMethodNamWordified("Param test")
+            .withMethodNamWordified("Param test value 1")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
             .build();

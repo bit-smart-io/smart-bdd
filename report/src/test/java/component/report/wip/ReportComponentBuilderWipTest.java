@@ -75,16 +75,13 @@ public class ReportComponentBuilderWipTest {
             .withName("shared.undertest.basic.ClassUnderTest")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
-            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls")
             .withTestCaseContains(firstTestCase());
-
 
         // uses contains as the last statement
         AssertTestSuite.assertTestSuite(testSuite)
             .withName("shared.undertest.basic.ClassUnderTest")
             .withClassName("ClassUnderTest")
             .withPackageName("shared.undertest.basic")
-            .withMethodNames("testMethod", "paramTest", "paramTest", "paramTest", "paramTestWithNulls", "paramTestWithNulls")
             .withTestCase(
                 assertTestCase(testSuite.getTestCases().get(0))
                     .withWordify("Passing assertion")
@@ -117,11 +114,6 @@ public class ReportComponentBuilderWipTest {
 
         protected AssertTestSuite withPackageName(String packageName) {
             assertThat(testSuite.getPackageName()).isEqualTo(packageName);
-            return this;
-        }
-
-        protected AssertTestSuite withMethodNames(String... methodNames) {
-            assertThat(testSuite.getMethodNames()).containsExactly(methodNames);
             return this;
         }
 
@@ -171,7 +163,6 @@ public class ReportComponentBuilderWipTest {
         return aTestCase()
             .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
-            .withName("testMethod")
             .withMethodName("testMethod")
             .withMethodNamWordified("Test method")
             .withClassName("ClassUnderTest")

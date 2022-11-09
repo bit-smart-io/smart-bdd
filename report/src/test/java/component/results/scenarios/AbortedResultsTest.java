@@ -46,13 +46,6 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
                 .withAbortedCount(4)
                 .build());
 
-        assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
-            method("testMethod"),
-            method("paramTest"),
-            method("paramTest"),
-            method("paramTest")
-        );
-
         TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, anAbortedTestMethod());
         assertThat(testMethod).isEqualToIgnoringGivenFields(anAbortedTestMethod(), "cause");
@@ -63,7 +56,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 1")
                 .withArgs(singletonList("value 1"))
-                .withName("paramTest value 1")
+                .withName("paramTest")
+                .withDisplayName("Param test value 1")
                 .build()
         );
         assertCauseWithMessage(firstTestCaseResult("paramTest"), "Assumption failed: value 1 does not contain z");
@@ -72,7 +66,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 2")
                 .withArgs(singletonList("value 2"))
-                .withName("paramTest value 2")
+                .withName("paramTest")
+                .withDisplayName("Param test value 2")
                 .build()
         );
         assertCauseWithMessage(secondTestCaseResult("paramTest"), "Assumption failed: value 2 does not contain z");
@@ -81,7 +76,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
             anAbortedParamTestCaseResultDueToException()
                 .withWordify("Aborting assertion with value 3")
                 .withArgs(singletonList("value 3"))
-                .withName("paramTest value 3")
+                .withName("paramTest")
+                .withDisplayName("Param test value 3")
                 .build()
         );
         assertCauseWithMessage(thirdTestCaseResult("paramTest"), "Assumption failed: value 3 does not contain z");
@@ -89,7 +85,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
 
     private TestCaseResultBuilder anAbortedParamTestCaseResultDueToException() {
         return aTestCaseResult()
-            .withMethod(method("paramTest"))
+            .withName("paramTest")
+            .withDisplayName("param test")
             .withStatus(ABORTED)
             .withTestSuiteClass(testSuiteClass())
             .withNotes(new Notes());
@@ -97,8 +94,8 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
 
     private TestCaseResult anAbortedTestMethod() {
         return aTestCaseResult()
-            .withMethod(method("testMethod"))
             .withName("testMethod")
+            .withDisplayName("Test method")
             .withWordify("Aborting assertion")
             .withStatus(ABORTED)
             .withTestSuiteClass(testSuiteClass())

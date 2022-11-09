@@ -25,6 +25,8 @@ import static io.bitsmart.wordify.tokenize.WordifyStringUtil.upperCaseFirstChar;
 import static io.bitsmart.wordify.tokenize.WordifyStringUtil.wordifyMethodOrFieldName;
 
 /**
+ * TODO delete!!!!!
+ *
  * Fields for the test suite method that are available at compile time: name, params, tags etc...
  *
  * For runtime time information please see TestSuiteMethodInvocation
@@ -37,19 +39,24 @@ public class TestMethod {
     /** Readable name i.e. Test Method */
     private final String wordify;
 
+
+    /** Display name. This is when you override the name using an annotation */
+    private final String displayName;
+
 //    /** Name i.e. testMethod(), testMethod(Method) etc... */
 //    private final String nameWithParams;
 
-    public TestMethod(String name) {
+    public TestMethod(String name, String displayName) {
         this.name = name;
         this.wordify = upperCaseFirstChar(wordifyMethodOrFieldName(name));
+        this.displayName = displayName;
     }
 
-    public static TestMethod testMethod(Method method) {
+    public static TestMethod testMethod(Method method, String displayName) {
         if (method == null) {
-            new TestMethod("error-could-not-get-method");
+            new TestMethod("error-could-not-get-method", displayName);
         }
-        return new TestMethod(method.getName());
+        return new TestMethod(method.getName(), displayName);
     }
 
     public String getName() {
@@ -60,17 +67,21 @@ public class TestMethod {
         return wordify;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestMethod)) return false;
         TestMethod that = (TestMethod) o;
-        return Objects.equals(name, that.name) && Objects.equals(wordify, that.wordify);
+        return Objects.equals(name, that.name) && Objects.equals(wordify, that.wordify) && Objects.equals(displayName, that.displayName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, wordify);
+        return Objects.hash(name, wordify, displayName);
     }
 
     @Override
@@ -78,6 +89,7 @@ public class TestMethod {
         return "TestMethod{" +
             "name='" + name + '\'' +
             ", wordify='" + wordify + '\'' +
+            ", displayName='" + displayName + '\'' +
             '}';
     }
 }

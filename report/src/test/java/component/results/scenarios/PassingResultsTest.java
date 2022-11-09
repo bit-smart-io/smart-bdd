@@ -48,43 +48,36 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
                 .build()
         );
 
-        assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
-            method("testMethod"),
-            method("paramTest"),
-            method("paramTest"),
-            method("paramTest"),
-            method("paramTestWithNulls"),
-            method("paramTestWithNulls")
-        );
-
         assertThat(testCaseResult("testMethod")).isEqualTo(aPassedTestCaseResult());
 
         assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with one param value 1")
                 .withArgs(singletonList("value 1"))
-                .withName("paramTest value 1")
+                .withName("paramTest")
+                .withDisplayName("Param test value 1")
                 .build()
         );
         assertThat(secondTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with one param value 2")
                 .withArgs(singletonList("value 2"))
-                .withName("paramTest value 2")
+                .withName("paramTest")
+                .withDisplayName("Param test value 2")
                 .build()
         );
         assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
                 .withWordify("Passing assertion with one param value 3")
                 .withArgs(singletonList("value 3"))
-                .withName("paramTest value 3")
+                .withName("paramTest")
+                .withDisplayName("Param test value 3")
                 .build()
         );
     }
 
     private TestCaseResultBuilder aPassedParamTestCaseResult() {
         return aTestCaseResult()
-            .withMethod(method("paramTest"))
             .withStatus(PASSED)
             .withTestSuiteClass(testSuiteClass())
             .withNotes(new Notes());
@@ -92,8 +85,8 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
 
     private TestCaseResult aPassedTestCaseResult() {
         return aTestCaseResult()
-            .withMethod(method("testMethod"))
             .withName("testMethod")
+            .withDisplayName("Test method")
             .withWordify("Passing assertion")
             .withStatus(PASSED)
             .withTestSuiteClass(testSuiteClass())

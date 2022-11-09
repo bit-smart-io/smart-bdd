@@ -39,10 +39,5 @@ public class DisabledResultsTest extends AbstractResultsForTestSuite {
                 .withTestCaseCount(2)
                 .withSkippedCount(2)
                 .build());
-
-        assertThat(testSuiteResult().getMethods()).containsExactlyInAnyOrder(
-            method("testMethod"),
-            method("paramTest")
-        );
     }
 }

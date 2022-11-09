@@ -122,14 +122,12 @@ class DataReportWriterTest {
             .withName("defaultName")
             .withClassName("defaultClassName")
             .withPackageName("defaultPackageName")
-            .withMethodNames(singletonList("defaultMethodName"))
             .withTestCases(singletonList(aDefaultTestCase()))
             .withSummary(aDefaultSummary());
     }
 
     public static TestCaseBuilder aDefaultTestCaseBuilder() {
         return aTestCase()
-            .withName("defaultTestCaseName")
             .withClassName("defaultClassName")
             .withPackageName("defaultPackageName")
             .withMethodName("defaultMethodName")

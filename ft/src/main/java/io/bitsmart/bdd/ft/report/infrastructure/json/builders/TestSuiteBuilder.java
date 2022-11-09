@@ -88,6 +88,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
     }
 
     public TestSuite build() {
-        return new TestSuite(title, name, className, packageName, methodNames, BuilderUtils.build(testCases), summary.build(), notes);
+        return new TestSuite(title, name, className, packageName, BuilderUtils.build(testCases), summary.build(), notes);
     }
 }

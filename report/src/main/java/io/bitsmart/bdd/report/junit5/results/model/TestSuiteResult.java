@@ -24,10 +24,8 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
-import static io.bitsmart.bdd.report.junit5.results.model.TestMethod.testMethod;
 
 /**
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -54,7 +52,7 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestMethod.testMethod;
  */
 public class TestSuiteResult {
     private final TestSuiteClass testSuiteClass;
-    private final List<TestMethod> methods = new ArrayList<>();
+    private final TestCaseNameFactory testCaseNameFactory =  new TestCaseNameFactory();
 
     /** all results including different params and or repeated test */
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
@@ -72,10 +70,9 @@ public class TestSuiteResult {
         this.notes = notes;
     }
 
+    /** Creates the testcase, before we have invocationContext */
     public TestCaseResult startTestCase(ExtensionContext context) {
         TestCaseResult testCaseResult = createTestCaseResult(context);
-        TestMethod method = method(context);
-        methods.add(method);
         this.testCaseResults.add(testCaseResult);
         contextToTestCaseResult.put(context, testCaseResult);
         return testCaseResult;
@@ -101,10 +98,6 @@ public class TestSuiteResult {
         return metadata;
     }
 
-    public List<TestMethod> getMethods() {
-        return methods;
-    }
-
     public List<TestCaseResult> getTestCaseResults() {
         return testCaseResults;
     }
@@ -113,11 +106,8 @@ public class TestSuiteResult {
         return notes;
     }
 
-    private TestMethod method(ExtensionContext context) {
-        return testMethod(context.getTestMethod().orElse(null));
-    }
-
     private TestCaseResult createTestCaseResult(ExtensionContext context) {
-        return new TestCaseResult(method(context), testSuiteClass(context.getRequiredTestClass()), new Notes());
+        final TestCaseResult testCaseResult = new TestCaseResult(testSuiteClass(context.getRequiredTestClass()), new Notes());
+        return testCaseResult;
     }
 }

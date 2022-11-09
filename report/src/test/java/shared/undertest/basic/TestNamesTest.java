@@ -46,7 +46,7 @@ public class TestNamesTest {
         passingAssertionWith(param);
     }
 
-    @ParameterizedTest(name = "{index} - value = {0}")
+    @ParameterizedTest(name = "index:{index} arg = {0}")
     @Order(2)
     @ValueSource(strings = {"value 1", "value 2", "value 3"})
     void paramTestWithCustomName(String param) {

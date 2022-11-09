@@ -128,34 +128,28 @@ public class DataReportTest extends AbstractResultsForData {
     @Test
     void verifyResultsForPassingTestCases() {
         assertTestSuitClass(testSuiteResult(), classUnderTest());
-        assertThat(testSuiteResult().getMethodNames()).containsExactlyInAnyOrder(
-            "testMethod",
-            "paramTest",
-            "paramTest",
-            "paramTest",
-            "paramTestWithNulls",
-            "paramTestWithNulls"
-        );
-
         assertThat(testCaseResult("testMethod")).isEqualTo(aPassedTestCaseResult());
 
         assertThat(firstTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withName("paramTest value 1")
+                .withMethodName("paramTest")
+                .withMethodNameWordified("Param test value 1")
                 .withWordify("Passing assertion with one param value 1")
                 //.withArgs(singletonList("value 1")) //TODO
                 .build()
         );
         assertThat(secondTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withName("paramTest value 2")
+                .withMethodName("paramTest")
+                .withMethodNameWordified("Param test value 2")
                 .withWordify("Passing assertion with one param value 2")
                 //.withArgs(singletonList("value 2")) //TODO
                 .build()
         );
         assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
             aPassedParamTestCaseResult()
-                .withName("paramTest value 3")
+                .withMethodName("paramTest")
+                .withMethodNameWordified("Param test value 3")
                 .withWordify("Passing assertion with one param value 3")
                 //.withArgs(singletonList("value 3")) //TODO
                 .build()
@@ -174,9 +168,8 @@ public class DataReportTest extends AbstractResultsForData {
 
     private TestCase aPassedTestCaseResult() {
         return aTestCase()
-            .withName("testMethod")
-            .withMethodNameWordified("Test method")
             .withMethodName("testMethod")
+            .withMethodNameWordified("Test method")
             .withWordify("Passing assertion")
             .withStatus(PASSED)
             .withClassName(testSuiteClass())

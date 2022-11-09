@@ -72,7 +72,7 @@ public class TestResults {
 
     public TestSuiteResult startTestSuite(ExtensionContext context) {
         TestSuiteClass testSuiteClass = testSuiteClass(context.getRequiredTestClass());
-        String title = new WordifyString(testSuiteClass.getClassName()).wordify();
+        String title = new WordifyString(testSuiteClass.getClassName()).wordify(); //TODO
         TestSuiteResult testSuiteResult = new TestSuiteResult(testSuiteClass, title, new Notes());
         testSuiteToTestSuiteResults.put(getTestSuiteClass(context), testSuiteResult);
         return testSuiteResult;

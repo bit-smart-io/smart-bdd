@@ -28,14 +28,24 @@ class TestMethodTest {
 
     @Test
     void createsTestMethod() {
-        TestMethodTest testMethodTest = new TestMethodTest();
-        Class<? extends TestMethodTest> clazz = testMethodTest.getClass();
-        Method javaMethod = method(clazz, "myTestMethod");
-
-        TestMethod testMethod = TestMethod.testMethod(javaMethod);
-
+        TestMethod testMethod = TestMethod.testMethod(createMyTestMethod(), null);
         assertThat(testMethod.getName()).isEqualTo("myTestMethod");
         assertThat(testMethod.getWordify()).isEqualTo("My test method");
+        assertThat(testMethod.getDisplayName()).isEqualTo(null);
+    }
+
+    @Test
+    void createsTestMethodWithDisplayName() {
+        TestMethod testMethod = TestMethod.testMethod(createMyTestMethod(), "Display name");
+        assertThat(testMethod.getName()).isEqualTo("myTestMethod");
+        assertThat(testMethod.getWordify()).isEqualTo("My test method");
+        assertThat(testMethod.getDisplayName()).isEqualTo("Display name");
+    }
+
+    private Method createMyTestMethod() {
+        TestMethodTest testMethodTest = new TestMethodTest();
+        Class<? extends TestMethodTest> clazz = testMethodTest.getClass();
+        return method(clazz, "myTestMethod");
     }
 
     private Method method(Class<? extends TestMethodTest> clazz, String methodName) {

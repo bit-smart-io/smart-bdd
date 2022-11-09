@@ -49,18 +49,16 @@ public class TestCaseResult {
     // TestSuiteMethodInvocation
     // - args, repeat, etc...
     //TODO How to handle repeats?
-
     private String wordify;
+    private String name; // methodName!!
+    private String displayName; // methodNameWordify or methodDisplayName ???
     private TestCaseResultStatus status;
     private Throwable cause;
     private List<Object> args = new ArrayList<>();
-    private String name;
-    private final TestMethod method;
     private final TestSuiteClass testSuiteClass;
     private final Notes notes;
 
-    public TestCaseResult(TestMethod method, TestSuiteClass testSuiteClass, Notes notes) {
-        this.method = method;
+    public TestCaseResult(TestSuiteClass testSuiteClass, Notes notes) {
         this.testSuiteClass = testSuiteClass;
         this.notes = notes;
     }
@@ -81,8 +79,8 @@ public class TestCaseResult {
         return name;
     }
 
-    public TestMethod getMethod() {
-        return method;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public TestSuiteClass getTestSuiteClass() {
@@ -107,6 +105,10 @@ public class TestCaseResult {
         return this;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public TestCaseResult setStatus(TestCaseResultStatus status) {
         this.status = status;
         return this;
@@ -127,23 +129,23 @@ public class TestCaseResult {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(name, that.name) && Objects.equals(method, that.method) && Objects.equals(testSuiteClass, that.testSuiteClass) && Objects.equals(notes, that.notes);
+        return Objects.equals(wordify, that.wordify) && Objects.equals(name, that.name) && Objects.equals(displayName, that.displayName) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(testSuiteClass, that.testSuiteClass) && Objects.equals(notes, that.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, cause, args, name, method, testSuiteClass, notes);
+        return Objects.hash(wordify, name, displayName, status, cause, args, testSuiteClass, notes);
     }
 
     @Override
     public String toString() {
         return "TestCaseResult{" +
             "wordify='" + wordify + '\'' +
+            ", name='" + name + '\'' +
+            ", displayName='" + displayName + '\'' +
             ", status=" + status +
             ", cause=" + cause +
             ", args=" + args +
-            ", name='" + name + '\'' +
-            ", method=" + method +
             ", testSuiteClass=" + testSuiteClass +
             ", notes=" + notes +
             '}';

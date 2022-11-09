@@ -28,7 +28,6 @@ public final class TestCaseBuilder implements Builder<TestCase> {
     private Status status;
     private String methodName;
     private String methodNamWordified;
-    private String name;
     private String className;
     private String packageName;
     private Notes notes;
@@ -60,11 +59,6 @@ public final class TestCaseBuilder implements Builder<TestCase> {
         return this;
     }
 
-    public TestCaseBuilder withName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public TestCaseBuilder withClassName(String className) {
         this.className = className;
         return this;
@@ -82,6 +76,6 @@ public final class TestCaseBuilder implements Builder<TestCase> {
 
     @Override
     public TestCase build() {
-        return new TestCase(wordify, status, name, methodName, methodNamWordified, className, packageName, notes);
+        return new TestCase(wordify, status, methodName, methodNamWordified, className, packageName, notes);
     }
 }
