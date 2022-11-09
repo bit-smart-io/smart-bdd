@@ -21,7 +21,6 @@ package component.results;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestMethod;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,11 +81,6 @@ public abstract class AbstractResultsForTestSuite {
 
     private TestSuiteResult testSuiteResult(Class<?> clazz) {
         return SmartReport.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
-    }
-
-    //TODO remove
-    protected TestMethod method(String name) {
-        return new TestMethod(name, name);
     }
 
     protected void assertTestSuitClass(TestSuiteResult testSuiteResult, Class<?> clazz) {
