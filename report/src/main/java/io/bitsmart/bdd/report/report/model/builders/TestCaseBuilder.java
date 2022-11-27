@@ -16,21 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.report.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.TestCaseTimings;
 import io.bitsmart.bdd.report.report.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 
 public final class TestCaseBuilder implements Builder<TestCase> {
     private String wordify;
     private Status status;
-    private String methodName;
-    private String methodNamWordified;
-    private String className;
-    private String packageName;
+    private ThrowableBuilder cause;
+    private MethodBuilder method;
+    private ClazzBuilder clazz;
     private Notes notes;
+    private TestCaseTimings timings;
 
     private TestCaseBuilder() {
     }
@@ -49,23 +50,18 @@ public final class TestCaseBuilder implements Builder<TestCase> {
         return this;
     }
 
-    public TestCaseBuilder withMethodName(String methodName) {
-        this.methodName = methodName;
+    public TestCaseBuilder withCause(ThrowableBuilder cause) {
+        this.cause = cause;
         return this;
     }
 
-    public TestCaseBuilder withMethodNamWordified(String methodNamWordified) {
-        this.methodNamWordified = methodNamWordified;
+    public TestCaseBuilder withMethod(MethodBuilder method) {
+        this.method = method;
         return this;
     }
 
-    public TestCaseBuilder withClassName(String className) {
-        this.className = className;
-        return this;
-    }
-
-    public TestCaseBuilder withPackageName(String packageName) {
-        this.packageName = packageName;
+    public TestCaseBuilder withClazz(ClazzBuilder clazz) {
+        this.clazz = clazz;
         return this;
     }
 
@@ -74,8 +70,20 @@ public final class TestCaseBuilder implements Builder<TestCase> {
         return this;
     }
 
+    public TestCaseBuilder withTimings(TestCaseTimings timings) {
+        this.timings = timings;
+        return this;
+    }
+
     @Override
     public TestCase build() {
-        return new TestCase(wordify, status, methodName, methodNamWordified, className, packageName, notes);
+        return new TestCase(
+            wordify,
+            status,
+            cause != null ? cause.build() : null,
+            method != null ? method.build() : null,
+            clazz != null ? clazz.build() : null,
+            notes,
+            timings);
     }
 }

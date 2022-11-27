@@ -19,17 +19,17 @@
 package io.bitsmart.bdd.ft.data;
 
 import io.bitsmart.bdd.ft.common.AbstractReportTest;
-import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteNameToFileBuilder;
-import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestCase;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
 import io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig;
 import io.bitsmart.bdd.ft.report.launcher.TestExecutionListener;
 import io.bitsmart.bdd.ft.report.launcher.TestLauncher;
 import io.bitsmart.bdd.report.config.ResolvedSmartBddConfig;
 import io.bitsmart.bdd.report.config.SmartBddConfig;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import io.bitsmart.bdd.report.report.model.DataReportIndex;
+import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.builders.TestSuiteNameToFileBuilder;
+import io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
@@ -45,11 +45,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadReportIndex;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.DataReportTestUtils.loadTestSuite;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.debugInfo;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.dirInMem;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static java.lang.System.getProperty;
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -116,13 +116,13 @@ public abstract class AbstractResultsForData extends AbstractReportTest {
     public TestCase testCaseResult(String methodName) {
         return testSuiteResult().getTestCases().stream()
             .findAny()
-            .filter(testCase -> testCase.getMethodName().equals(methodName))
+            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
             .orElse(null);
     }
 
     public List<TestCase> testCaseResults(String methodName) {
         return testSuiteResult().getTestCases().stream()
-            .filter(testCase -> testCase.getMethodName().equals(methodName))
+            .filter(testCase -> testCase.getMethod().getName().equals(methodName))
             .collect(toList());
     }
 

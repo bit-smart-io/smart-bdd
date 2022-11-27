@@ -18,12 +18,17 @@
 
 package component.report;
 
+import io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 
-import static component.report.builders.TestCaseBuilder.aTestCase;
-import static component.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder.anArgument;
+import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
+import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportAssertions {
@@ -37,18 +42,24 @@ public class ReportAssertions {
                 .withTestCase(6)
                 .withPassed(6)
                 .build());
-        assertThat(testSuite.getTestCases()).contains(passingTestCase());
-        assertThat(testSuite.getTestCases()).contains(passingParamTestCase());
+        assertThat(testSuite.getTestCases().get(0)).isEqualTo(passingTestCase());
+        assertThat(testSuite.getTestCases().get(1)).isEqualTo(passingParamTestCase());
     }
 
+    /**
+     * TestCase{wordify='Passing assertion', status=PASSED, cause=null, method=Method{name='testMethod', wordify='Test method', arguments=[]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}},
+     * TestCase{wordify='Passing assertion with one param value 1', status=PASSED, cause=null, method=Method{name='paramTest', wordify='Param test value 1', arguments=[Argument{clazz=Clazz{fullyQualifiedName='java.lang.String', className='String', packageName='java.lang'}, value='value 1'}]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}},
+     * TestCase{wordify='Passing assertion with one param value 2', status=PASSED, cause=null, method=Method{name='paramTest', wordify='Param test value 2', arguments=[Argument{clazz=Clazz{fullyQualifiedName='java.lang.String', className='String', packageName='java.lang'}, value='value 2'}]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}},
+     * TestCase{wordify='Passing assertion with one param value 3', status=PASSED, cause=null, method=Method{name='paramTest', wordify='Param test value 3', arguments=[Argument{clazz=Clazz{fullyQualifiedName='java.lang.String', className='String', packageName='java.lang'}, value='value 3'}]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}},
+     * TestCase{wordify='Passing assertion with two params null value 4', status=PASSED, cause=null, method=Method{name='paramTestWithNulls', wordify='Param test with nulls null, value 4', arguments=[null, Argument{clazz=Clazz{fullyQualifiedName='java.lang.String', className='String', packageName='java.lang'}, value='value 4'}]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}},
+     * TestCase{wordify='Passing assertion with two params value 5 null', status=PASSED, cause=null, method=Method{name='paramTestWithNulls', wordify='Param test with nulls value 5, null', arguments=[Argument{clazz=Clazz{fullyQualifiedName='java.lang.String', className='String', packageName='java.lang'}, value='value 5'}, null]}, clazz=Clazz{fullyQualifiedName='shared.undertest.basic.ClassUnderTest', className='ClassUnderTest', packageName='shared.undertest.basic'}, notes=null, timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}}]>
+     */
     public static TestCase passingTestCase() {
         return aTestCase()
             .withWordify("Passing assertion")
             .withStatus(Status.PASSED)
-            .withMethodName("testMethod")
-            .withMethodNamWordified("Test method")
-            .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest.basic")
+            .withMethod(aMethod().withName("testMethod").withWordify("Test method"))
+            .withClazz(aDefaultClazz())
             .build();
     }
 
@@ -56,10 +67,20 @@ public class ReportAssertions {
         return aTestCase()
             .withWordify("Passing assertion with one param value 1")
             .withStatus(Status.PASSED)
-            .withMethodName("paramTest")
-            .withMethodNamWordified("Param test value 1")
-            .withClassName("ClassUnderTest")
-            .withPackageName("shared.undertest.basic")
+            .withMethod(aMethod().withName("paramTest").withWordify("Param test value 1").withArgument(aStringArgument("value 1")))
+            .withClazz(aDefaultClazz())
             .build();
+    }
+
+    private static ArgumentBuilder aStringArgument(String value) {
+        return anArgument().withClazz(aStringClazz()).withValue(value);
+    }
+
+    private static ClazzBuilder aStringClazz() {
+        return aClazz().withClassName("String").withPackageName("java.lang").withFullyQualifiedName("java.lang.String");
+    }
+
+    private static ClazzBuilder aDefaultClazz() {
+        return aClazz().withClassName("ClassUnderTest").withPackageName("shared.undertest.basic").withFullyQualifiedName("shared.undertest.basic.ClassUnderTest");
     }
 }

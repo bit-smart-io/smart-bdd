@@ -16,17 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.report.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static component.report.builders.ReportIndexBuilder.aReportIndex;
+import static io.bitsmart.bdd.report.report.model.builders.ReportIndexBuilder.aReportIndex;
 
 public final class ReportBuilder implements Builder<Report> {
     private ReportIndexBuilder reportIndex = aReportIndex();

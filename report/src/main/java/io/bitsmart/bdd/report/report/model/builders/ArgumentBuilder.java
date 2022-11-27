@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,31 +16,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuiteLinks;
+import io.bitsmart.bdd.report.report.model.Argument;
 import io.bitsmart.bdd.report.utils.Builder;
-import io.bitsmart.bdd.report.utils.BuilderUtils;
 
-import java.util.List;
+public final class ArgumentBuilder implements Builder<Argument> {
+    private ClazzBuilder clazz;
+    private String value;
 
-public final class TestSuiteLinksBuilder implements Builder<TestSuiteLinks> {
-    private List<TestSuiteNameToFileBuilder> testSuites;
-
-    private TestSuiteLinksBuilder() {
+    private ArgumentBuilder() {
     }
 
-    public static TestSuiteLinksBuilder aTestSuiteLinks() {
-        return new TestSuiteLinksBuilder();
+    public static ArgumentBuilder anArgument() {
+        return new ArgumentBuilder();
     }
 
-    public TestSuiteLinksBuilder withTestSuites(List<TestSuiteNameToFileBuilder> testSuites) {
-        this.testSuites = testSuites;
+    public ArgumentBuilder withClazz(ClazzBuilder clazz) {
+        this.clazz = clazz;
         return this;
     }
 
-    @Override
-    public TestSuiteLinks build() {
-        return new TestSuiteLinks(BuilderUtils.build((testSuites)));
+    public ArgumentBuilder withValue(String value) {
+        this.value = value;
+        return this;
+    }
+
+    public Argument build() {
+        return new Argument(
+            clazz != null ? clazz.build() : null,
+            value);
     }
 }

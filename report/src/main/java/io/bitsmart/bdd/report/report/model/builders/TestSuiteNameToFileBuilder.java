@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.report.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.utils.Builder;

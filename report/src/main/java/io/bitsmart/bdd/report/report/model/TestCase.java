@@ -25,39 +25,70 @@ import io.bitsmart.bdd.report.report.model.notes.Notes;
 import java.util.Objects;
 
 /**
- * Name ideas: ReportItem, Item, ResultItem
- * java.lang.reflect.Parameter
- * java.lang.reflect.Method#getParameterTypes()
+ *  testMethods - before, after, undertest
+ *  testMethod wordify name? or just contents? uml diagram, notes? drive from annotations?
+ *  Note: only TestMethodUndertest has params? id? parent id?
+ *
+ *  TestMethodUnderTest vs TestMethodSetup  Only underTest has params!!!
+ *  TestMethodUnderTest = method name, method name wordify, params, contents wordify, notes (uml and text, static and runtime)
+ *  TestMethodSetup = No params.
+ *
+ *  test suite that has before all and after all
+ *  test case that has before each and after each
+ *
+ *  //TODO classes to add
+ *  // TestSuiteWordify // wordify method name or the contents
+ *  // - beforeAll
+ *  // - beforeEach
+ *  // - afterAll
+ *  // - afterEach
+ *  // TestCaseWordify
+ *  // - scenario
+ *  // - method
+ *  // - methodInvocation with params
+ *  // Wordify text/markdown/html
+ *  // - text example given something
+ *  // - html example <span class="given">given</> something
+ *  // - markdown
+ *  // Timings
+ *  // - beforeAll
+ *  // - beforeEach
+ *  // - afterAll
+ *  // - afterEach
+ *  // - testcase
+ *  // TestSuiteMethodInvocation
+ *  // - args, repeat, etc...
+ *  // TODO How to handle repeats?
+ *  -- param  tests could have a parent test.
+ *  -- repeat tests could have a parent test.
+ *  This then can all timings!
+ *
  */
 public class TestCase {
     private final String wordify;
-    private final Status status;
-    private final String methodName;
-    private final String methodNameWordified;
-    private final String className;
-    private final String packageName;
+    private final Status status;   // TODO maybe results { status, cause }
+    private final Throwable cause; // TODO maybe results { status, cause }
+    private final Method method;   // TODO maybe TestMethodInvocation vs TestMethodInvocation  Only underTest has params!!!
+    private final Clazz clazz;
     private final Notes notes;
-    //private final List<String> parameters;
-    // time started
-    // time taken
+    private final TestCaseTimings timings; // TODO TestCaseTiming!!!!! Before and After all not needed in this class.
 
     @JsonCreator
     public TestCase(
         @JsonProperty("wordify") String wordify,
         @JsonProperty("status") Status status,
-        @JsonProperty("methodName") String methodName,
-        @JsonProperty("methodNameWordified") String methodNameWordified,
-        @JsonProperty("className") String className,
-        @JsonProperty("packageName") String packageName,
-        @JsonProperty("notes") Notes notes)
-    {
+        @JsonProperty("cause") Throwable cause,
+        @JsonProperty("method") Method method,
+        @JsonProperty("class") Clazz clazz,
+        @JsonProperty("notes") Notes notes,
+        @JsonProperty("timings") TestCaseTimings timings) {
         this.wordify = wordify;
         this.status = status;
-        this.methodName = methodName;
-        this.methodNameWordified = methodNameWordified;
-        this.className = className;
-        this.packageName = packageName;
+        this.cause = cause;
+        this.method = method;
+        this.clazz = clazz;
         this.notes = notes;
+        this.timings = timings;
     }
 
     public String getWordify() {
@@ -68,37 +99,38 @@ public class TestCase {
         return status;
     }
 
-    public String getMethodName() {
-        return methodName;
+    public Throwable getCause() {
+        return cause;
     }
 
-    public String getMethodNameWordified() {
-        return methodNameWordified;
+    public Method getMethod() {
+        return method;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
-    public String getPackageName() {
-        return packageName;
+    public Clazz getClazz() {
+        return clazz;
     }
 
     public Notes getNotes() {
         return notes;
     }
 
+    public TestCaseTimings getTimings() {
+        return timings;
+    }
+
+    /** ignore timings */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestCase)) return false;
         TestCase testCase = (TestCase) o;
-        return Objects.equals(wordify, testCase.wordify) && status == testCase.status && Objects.equals(methodName, testCase.methodName) && Objects.equals(methodNameWordified, testCase.methodNameWordified) && Objects.equals(className, testCase.className) && Objects.equals(packageName, testCase.packageName) && Objects.equals(notes, testCase.notes);
+        return Objects.equals(wordify, testCase.wordify) && status == testCase.status && Objects.equals(cause, testCase.cause) && Objects.equals(method, testCase.method) && Objects.equals(clazz, testCase.clazz) && Objects.equals(notes, testCase.notes); //&& Objects.equals(timings, testCase.timings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, status, methodName, methodNameWordified, className, packageName, notes);
+        return Objects.hash(wordify, status, cause, method, clazz, notes, timings);
     }
 
     @Override
@@ -106,11 +138,11 @@ public class TestCase {
         return "TestCase{" +
             "wordify='" + wordify + '\'' +
             ", status=" + status +
-            ", methodName='" + methodName + '\'' +
-            ", methodNameWordified='" + methodNameWordified + '\'' +
-            ", className='" + className + '\'' +
-            ", packageName='" + packageName + '\'' +
+            ", cause=" + cause +
+            ", method=" + method +
+            ", clazz=" + clazz +
             ", notes=" + notes +
+            ", timings=" + timings +
             '}';
     }
 }

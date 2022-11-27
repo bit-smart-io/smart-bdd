@@ -20,11 +20,14 @@ package component.report;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
-import component.report.builders.ReportBuilder;
-import component.report.builders.ReportIndexBuilder;
-import component.report.builders.TestCaseBuilder;
-import component.report.builders.TestSuiteBuilder;
-import component.report.builders.TestSuiteSummaryBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
+import io.bitsmart.bdd.report.report.model.builders.MethodBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ReportBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ReportIndexBuilder;
+import io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder;
+import io.bitsmart.bdd.report.report.model.builders.TestSuiteBuilder;
+import io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ThrowableBuilder;
 import component.report.utils.ReportLoadFileUtils;
 import io.bitsmart.bdd.report.report.writers.FileNameProvider;
 import io.bitsmart.bdd.report.report.writers.DataReportWriter;
@@ -39,13 +42,18 @@ import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
-import static component.report.builders.ReportIndexBuilder.aReportIndex;
-import static component.report.builders.TestCaseBuilder.aTestCase;
-import static component.report.builders.TestSuiteBuilder.aTestSuite;
-import static component.report.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
-import static component.report.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
-import static component.report.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
+import static io.bitsmart.bdd.report.report.model.builders.ReportIndexBuilder.aReportIndex;
+import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteBuilder.aTestSuite;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.report.report.model.builders.ThrowableBuilder.aThrowable;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -128,11 +136,36 @@ class DataReportWriterTest {
 
     public static TestCaseBuilder aDefaultTestCaseBuilder() {
         return aTestCase()
+            .withWordify("defaultWordify")
+            .withStatus(Status.PASSED)
+            .withCause(aDefaultThrowable())
+            .withMethod(aDefaultMethod())
+            .withClazz(aDefaultClazz())
+//            .withNotes()    // TODO
+//            .withTimings()  // TODO
+            ;
+    }
+
+    public static MethodBuilder aDefaultMethod() {
+        return aMethod()
+            .withName("defaultMethodName")
+            .withWordify("defaultWordify")
+            .withArguments(emptyList());
+    }
+
+    public static ThrowableBuilder aDefaultThrowable() {
+        return aThrowable()
+            .withClazz(aDefaultClazz())
+            .withMessage("defaultMessage")
+            .withCause(null)
+            .withStacktrace(new ArrayList<>());
+    }
+
+    public static ClazzBuilder aDefaultClazz() {
+        return aClazz()
             .withClassName("defaultClassName")
             .withPackageName("defaultPackageName")
-            .withMethodName("defaultMethodName")
-            .withWordify("defaultWordify")
-            .withStatus(Status.PASSED);
+            .withFullyQualifiedName("defaultFullyQualifiedName");
     }
 
     public static TestSuiteSummaryBuilder aDefaultSummary() {

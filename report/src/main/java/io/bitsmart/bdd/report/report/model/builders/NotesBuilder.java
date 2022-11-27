@@ -16,31 +16,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.report.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
-import io.bitsmart.bdd.report.report.model.TestSuiteLinks;
+import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
-import io.bitsmart.bdd.report.utils.BuilderUtils;
 
-import java.util.List;
+/**
+ * TODO should we create builders for things that don't have logic in the build()?
+ *
+ * Usage:
+ * notes().addTextNote("This is a new note").build();
+ * Vs
+ * Notes notes = new Notes();
+ * notes.text().add("This is a new note");
+ */
+public final class NotesBuilder implements Builder<Notes> {
+    private final Notes notes = new Notes();
 
-public final class TestSuiteLinksBuilder implements Builder<TestSuiteLinks> {
-    private List<TestSuiteNameToFileBuilder> testSuites;
-
-    private TestSuiteLinksBuilder() {
+    private NotesBuilder() {
     }
 
-    public static TestSuiteLinksBuilder aTestSuiteLinks() {
-        return new TestSuiteLinksBuilder();
+    public static NotesBuilder notes() {
+        return new NotesBuilder();
     }
 
-    public TestSuiteLinksBuilder withTestSuites(List<TestSuiteNameToFileBuilder> testSuites) {
-        this.testSuites = testSuites;
+    public NotesBuilder addTextNote(String note) {
+        notes.text().add(note);
         return this;
     }
 
-    @Override
-    public TestSuiteLinks build() {
-        return new TestSuiteLinks(BuilderUtils.build((testSuites)));
+    public Notes build() {
+        return notes;
     }
 }

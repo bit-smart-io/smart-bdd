@@ -18,6 +18,9 @@
 
 package io.bitsmart.bdd.report.report.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +35,12 @@ public class Report {
     private final List<TestSuite> testSuites;
     private final String timeStamp;
 
-    public Report(DataReportIndex dataReportIndex, List<TestCase> testCases, List<TestSuite> testSuites, String timeStamp) {
+    @JsonCreator
+    public Report(
+        @JsonProperty("dataReportIndex") DataReportIndex dataReportIndex,
+        @JsonProperty("testCases") List<TestCase> testCases,
+        @JsonProperty("testSuites") List<TestSuite> testSuites,
+        @JsonProperty("timeStamp") String timeStamp) {
         this.dataReportIndex = dataReportIndex;
         this.testCases = testCases;
         this.testSuites = testSuites;

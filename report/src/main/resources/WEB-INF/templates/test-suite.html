@@ -68,7 +68,7 @@
                   </span>
                 </span>
                 <span class="has-text-success">Scenario: </span>
-                <span th:text="${testCase.methodNameWordified} + ' (' + ${testCase.status} + ')'"/>
+                <span th:text="${testCase.method.wordify} + ' (' + ${testCase.status} + ')'"/>
             </h4>
             <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
 

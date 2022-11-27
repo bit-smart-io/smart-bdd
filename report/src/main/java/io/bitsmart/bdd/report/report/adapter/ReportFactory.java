@@ -21,14 +21,20 @@ package io.bitsmart.bdd.report.report.adapter;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
+import io.bitsmart.bdd.report.report.model.Argument;
+import io.bitsmart.bdd.report.report.model.Clazz;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
+import io.bitsmart.bdd.report.report.model.Method;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.Throwable;
+import io.bitsmart.bdd.report.report.model.TestCaseTimings;
 import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
 import java.time.Clock;
@@ -36,6 +42,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -97,11 +104,52 @@ public class ReportFactory {
         return new io.bitsmart.bdd.report.report.model.TestCase(
             testCaseResult.getWordify(),
             statusFrom(testCaseResult.getStatus()),
-            testCaseResult.getName(),
-            testCaseResult.getDisplayName(),
-            testCaseResult.getTestSuiteClass().getClassName(),
-            testCaseResult.getTestSuiteClass().getPackageName(),
-            notes(testCaseResult.getNotes()));
+            testCaseResult.getCause().map(ReportFactory::throwableParent).orElse(null),
+            method(testCaseResult),
+            clazz(testCaseResult.getTestSuiteClass()),
+            notes(testCaseResult.getNotes()),
+            new TestCaseTimings(0L, 0L, 0L, 0L));
+    }
+
+    private static Method method(TestCaseResult testCaseResult) {
+        return new Method(testCaseResult.getName(), testCaseResult.getDisplayName(), arguments(testCaseResult.getArgs()));
+    }
+
+    private static List<Argument> arguments(List<Object> args) {
+        List<Argument> argResults = new ArrayList<>();
+        for (Object arg: args) {
+            argResults.add(arg == null ? null : new Argument(clazz(arg.getClass()), arg.toString()));
+        }
+        return argResults;
+    }
+
+    private static Throwable throwableParent(java.lang.Throwable throwable) {
+        if (throwable == null) return null;
+        return new Throwable(
+            clazz(throwable.getClass()),
+            throwable.getMessage(),
+            throwableChild(throwable),
+            Arrays.asList("TODO stacktrace"));
+    }
+
+    private static Throwable throwableChild(java.lang.Throwable throwable) {
+        if (throwable == null) return null;
+        return new Throwable(
+            clazz(throwable.getClass()),
+            throwable.getMessage(),
+            null,
+            Arrays.asList("TODO stacktrace"));
+    }
+
+    private static Clazz clazz(TestSuiteClass testSuiteClass) {
+        return new Clazz(
+            testSuiteClass.getFullyQualifiedName(),
+            testSuiteClass.getClassName(),
+            testSuiteClass.getPackageName());
+    }
+
+    private static Clazz clazz(Class<?> clazz) {
+        return new Clazz(clazz.getName(), clazz.getSimpleName(), clazz.getPackage().getName());
     }
 
     private static io.bitsmart.bdd.report.report.model.notes.Notes notes(Notes notes) {

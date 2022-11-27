@@ -16,36 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package component.report.builders;
+package component.results;
 
-import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
-import io.bitsmart.bdd.report.utils.Builder;
+import org.junit.jupiter.api.Test;
+import shared.undertest.basic.ClassUnderTest;
 
-/**
- * TODO should we create builders for things that don't have logic in the build()?
- *
- * Usage:
- * notes().addTextNote("This is a new note").build();
- * Vs
- * Notes notes = new Notes();
- * notes.text().add("This is a new note");
- */
-public final class NotesBuilder implements Builder<Notes> {
-    private final Notes notes = new Notes();
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private NotesBuilder() {
+public class TestSuiteClazzResultsTest extends AbstractResultsForTestSuite  {
+
+    @Override
+    public Class<?> classUnderTest() {
+        return ClassUnderTest.class;
     }
 
-    public static NotesBuilder notes() {
-        return new NotesBuilder();
-    }
-
-    public NotesBuilder addTextNote(String note) {
-        notes.text().add(note);
-        return this;
-    }
-
-    public Notes build() {
-        return notes;
+    @Test
+    void verifyTestSuiteClass() {
+        assertThat(testSuiteClass().getFullyQualifiedName()).isEqualTo("shared.undertest.basic.ClassUnderTest");
+        assertThat(testSuiteClass().getClassName()).isEqualTo("ClassUnderTest");
+        assertThat(testSuiteClass().getPackageName()).isEqualTo("shared.undertest.basic");
     }
 }

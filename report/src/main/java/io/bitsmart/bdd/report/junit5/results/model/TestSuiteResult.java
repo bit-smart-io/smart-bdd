@@ -107,7 +107,6 @@ public class TestSuiteResult {
     }
 
     private TestCaseResult createTestCaseResult(ExtensionContext context) {
-        final TestCaseResult testCaseResult = new TestCaseResult(testSuiteClass(context.getRequiredTestClass()), new Notes());
-        return testCaseResult;
+        return new TestCaseResult(testSuiteClass(context.getRequiredTestClass()), new Notes());
     }
 }

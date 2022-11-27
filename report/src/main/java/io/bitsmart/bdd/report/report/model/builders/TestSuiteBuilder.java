@@ -16,24 +16,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.infrastructure.json.builders;
+package io.bitsmart.bdd.report.report.model.builders;
 
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.notes.Notes;
+import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.notes.Notes;
 import io.bitsmart.bdd.report.utils.Builder;
 import io.bitsmart.bdd.report.utils.BuilderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 
 public final class TestSuiteBuilder implements Builder<TestSuite> {
     private String title;
     private String name;
     private String className;
     private String packageName;
-    private final List<String> methodNames = new ArrayList<>();
     private final List<TestCaseBuilder> testCases = new ArrayList<>();;
     private TestSuiteSummaryBuilder summary = aTestSuiteSummary();
     private Notes notes;
@@ -62,12 +61,6 @@ public final class TestSuiteBuilder implements Builder<TestSuite> {
 
     public TestSuiteBuilder withPackageName(String packageName) {
         this.packageName = packageName;
-        return this;
-    }
-
-    public TestSuiteBuilder withMethodNames(List<String> methodNames) {
-        this.methodNames.clear();
-        this.methodNames.addAll(methodNames);
         return this;
     }
 

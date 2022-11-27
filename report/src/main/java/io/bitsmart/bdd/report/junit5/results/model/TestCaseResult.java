@@ -55,7 +55,7 @@ public class TestCaseResult {
     private TestCaseResultStatus status;
     private Throwable cause;
     private List<Object> args = new ArrayList<>();
-    private final TestSuiteClass testSuiteClass;
+    private final TestSuiteClass testSuiteClass; // TODO surely this should be class??!?!?
     private final Notes notes;
 
     public TestCaseResult(TestSuiteClass testSuiteClass, Notes notes) {

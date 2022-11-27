@@ -19,8 +19,8 @@
 package io.bitsmart.bdd.ft.report.infrastructure.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.DataReportIndex;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.DataReportIndex;
+import io.bitsmart.bdd.report.report.model.TestSuite;
 
 import java.io.IOException;
 import java.nio.file.Path;

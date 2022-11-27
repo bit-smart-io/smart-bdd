@@ -17,16 +17,18 @@
  */
 
 package io.bitsmart.bdd.ft.data;
-
-import io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestCaseBuilder;
-import io.bitsmart.bdd.ft.report.infrastructure.json.model.TestCase;
 import io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest;
+import io.bitsmart.bdd.report.report.model.TestCase;
+import io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder;
+import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.Test;
 
-import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestCaseBuilder.aTestCase;
-import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
-import static io.bitsmart.bdd.ft.report.infrastructure.json.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
-import static io.bitsmart.bdd.ft.report.infrastructure.json.model.Status.PASSED;
+import static io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder.anArgument;
+import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
+import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
+import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -78,103 +80,42 @@ public class DataReportTest extends AbstractResultsForData {
         assertIndexTimeStamp();
     }
 
-    /**
-     * <pre>
-     * {
-     *   "title" : "Class under test",
-     *   "name" : "io.bitsmart.bdd.ft.ClassUnderTest",
-     *   "className" : "ClassUnderTest",
-     *   "packageName" : "io.bitsmart.bdd.ft",
-     *   "methodNames" : [ "testMethod", "paramTest", "paramTest", "paramTest" ],
-     *   "summary" : {
-     *     "passed" : 4,
-     *     "skipped" : 0,
-     *     "failed" : 0,
-     *     "aborted" : 0,
-     *     "tests" : 4
-     *   },
-     *   "testCases" : [ {
-     *     "wordify" : "Passing assertion",
-     *     "status" : "PASSED",
-     *     "name" : "testMethod",
-     *     "methodName" : "testMethod",
-     *     "className" : "ClassUnderTest",
-     *     "packageName" : "io.bitsmart.bdd.ft"
-     *   }, {
-     *     "wordify" : "Passing assertion with value 1",
-     *     "status" : "PASSED",
-     *     "name" : "paramTest value 1",
-     *     "methodName" : "paramTest",
-     *     "className" : "ClassUnderTest",
-     *     "packageName" : "io.bitsmart.bdd.ft"
-     *   }, {
-     *     "wordify" : "Passing assertion with value 2",
-     *     "status" : "PASSED",
-     *     "name" : "paramTest value 2",
-     *     "methodName" : "paramTest",
-     *     "className" : "ClassUnderTest",
-     *     "packageName" : "io.bitsmart.bdd.ft"
-     *   }, {
-     *     "wordify" : "Passing assertion with value 3",
-     *     "status" : "PASSED",
-     *     "name" : "paramTest value 3",
-     *     "methodName" : "paramTest",
-     *     "className" : "ClassUnderTest",
-     *     "packageName" : "io.bitsmart.bdd.ft"
-     *   } ]
-     * }
-     * </pre>
-     */
     @Test
     void verifyResultsForPassingTestCases() {
         assertTestSuitClass(testSuiteResult(), classUnderTest());
-        assertThat(testCaseResult("testMethod")).isEqualTo(aPassedTestCaseResult());
-
-        assertThat(firstTestCaseResult("paramTest")).isEqualTo(
-            aPassedParamTestCaseResult()
-                .withMethodName("paramTest")
-                .withMethodNameWordified("Param test value 1")
-                .withWordify("Passing assertion with one param value 1")
-                //.withArgs(singletonList("value 1")) //TODO
-                .build()
-        );
-        assertThat(secondTestCaseResult("paramTest")).isEqualTo(
-            aPassedParamTestCaseResult()
-                .withMethodName("paramTest")
-                .withMethodNameWordified("Param test value 2")
-                .withWordify("Passing assertion with one param value 2")
-                //.withArgs(singletonList("value 2")) //TODO
-                .build()
-        );
-        assertThat(thirdTestCaseResult("paramTest")).isEqualTo(
-            aPassedParamTestCaseResult()
-                .withMethodName("paramTest")
-                .withMethodNameWordified("Param test value 3")
-                .withWordify("Passing assertion with one param value 3")
-                //.withArgs(singletonList("value 3")) //TODO
-                .build()
-        );
+        assertThat(testCaseResult("testMethod")).isEqualTo(passingTestCase());
+        assertThat(firstTestCaseResult("paramTest")).isEqualTo(passingParamTestCase("1"));
+        assertThat(secondTestCaseResult("paramTest")).isEqualTo(passingParamTestCase("2"));
+        assertThat(thirdTestCaseResult("paramTest")).isEqualTo(passingParamTestCase("3"));
     }
 
-    private TestCaseBuilder aPassedParamTestCaseResult() {
+    public static TestCase passingTestCase() {
         return aTestCase()
-            .withMethodName("paramTest")
-            .withMethodNameWordified("Param test")
-            .withStatus(PASSED)
-            .withClassName(testSuiteClass())
-            .withPackageName(testSuitePackage())
-            .withNotes(null);
-    }
-
-    private TestCase aPassedTestCaseResult() {
-        return aTestCase()
-            .withMethodName("testMethod")
-            .withMethodNameWordified("Test method")
             .withWordify("Passing assertion")
-            .withStatus(PASSED)
-            .withClassName(testSuiteClass())
-            .withPackageName(testSuitePackage())
-            .withNotes(null)
+            .withStatus(io.bitsmart.bdd.report.report.model.Status.PASSED)
+            .withMethod(aMethod().withName("testMethod").withWordify("Test method"))
+            .withClazz(aDefaultClazz())
             .build();
+    }
+
+    public static TestCase passingParamTestCase(String number) {
+        return aTestCase()
+            .withWordify("Passing assertion with one param value " + number)
+            .withStatus(io.bitsmart.bdd.report.report.model.Status.PASSED)
+            .withMethod(aMethod().withName("paramTest").withWordify("Param test value " + number).withArgument(aStringArgument("value " + number)))
+            .withClazz(aDefaultClazz())
+            .build();
+    }
+
+    private static ArgumentBuilder aStringArgument(String value) {
+        return anArgument().withClazz(aStringClazz()).withValue(value);
+    }
+
+    private static ClazzBuilder aStringClazz() {
+        return aClazz().withClassName("String").withPackageName("java.lang").withFullyQualifiedName("java.lang.String");
+    }
+
+    private static ClazzBuilder aDefaultClazz() {
+        return aClazz().withClassName("ClassUnderTest").withPackageName("io.bitsmart.bdd.ft.undertest.basic").withFullyQualifiedName("io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest");
     }
 }

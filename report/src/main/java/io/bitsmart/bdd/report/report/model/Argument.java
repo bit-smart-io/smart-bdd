@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,43 +16,51 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.report.infrastructure.json.model.notes;
+package io.bitsmart.bdd.report.report.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.Objects;
 
-public class TextNotes {
-    private final List<String> notes;
+public class Argument {
+    private final Clazz clazz;
+    private final String value;
 
     @JsonCreator
-    public TextNotes(@JsonProperty("notes") List<String> notes) {
-        this.notes = notes;
+    public Argument(
+        @JsonProperty("class") Clazz clazz,
+        @JsonProperty("value") String value) {
+        this.clazz = clazz;
+        this.value = value;
     }
 
-    public List<String> getNotes() {
-        return notes;
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TextNotes)) return false;
-        TextNotes textNotes = (TextNotes) o;
-        return Objects.equals(notes, textNotes.notes);
+        if (!(o instanceof Argument)) return false;
+        Argument argument = (Argument) o;
+        return Objects.equals(clazz, argument.clazz) && Objects.equals(value, argument.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(notes);
+        return Objects.hash(clazz, value);
     }
 
     @Override
     public String toString() {
-        return "TextNotes{" +
-            "notes=" + notes +
+        return "Argument{" +
+            "clazz=" + clazz +
+            ", value='" + value + '\'' +
             '}';
     }
 }
