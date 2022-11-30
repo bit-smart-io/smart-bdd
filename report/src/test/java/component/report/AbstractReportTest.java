@@ -21,6 +21,7 @@ package component.report;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ import shared.undertest.basic.FailedTestCasesUnderTest;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,5 +61,12 @@ public abstract class AbstractReportTest {
 
     void assertSuiteLinks(List<TestSuiteNameToFile> suiteNameToFiles) {
         assertThat(report.getIndex().getLinks().getTestSuites()).containsAll(suiteNameToFiles);
+    }
+
+    protected VersionInfo testVersionInfo() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(CLOCK);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SS'Z'").withZone(ZoneId.systemDefault());
+        String dateTimeAsString = formatter.format(zonedDateTime);
+        return new VersionInfo(zonedDateTime, dateTimeAsString, "hostame");
     }
 }

@@ -20,8 +20,8 @@ package io.bitsmart.bdd.report.junit5.results.model;
 
 import java.util.List;
 
-class TestSuiteResultsMetadataFactory {
-    public static TestSuiteResultsMetadata create(List<TestCaseResult> testCaseResults) {
+class TestSuiteTotalsFactory {
+    public static TestSuiteTotals create(List<TestCaseResult> testCaseResults) {
         TestSuiteResultsMetadataBuilder builder = new TestSuiteResultsMetadataBuilder();
         testCaseResults.forEach(testSuite -> builder.increment(testSuite.getStatus()));
         return builder.build();
@@ -33,9 +33,6 @@ class TestSuiteResultsMetadataFactory {
         private int skippedCount;
         private int failedCount;
         private int abortedCount;
-//    private Datetime timestamp="2021-03-30T20:03:44"
-//    private String hostname="Jamess-MacBook-Pro.local"
-//    privat long time="0.021"
 
         public void increment(TestCaseResultStatus status) {
             testCount++;
@@ -55,8 +52,8 @@ class TestSuiteResultsMetadataFactory {
             }
         }
 
-        private TestSuiteResultsMetadata build() {
-            return new TestSuiteResultsMetadata(
+        private TestSuiteTotals build() {
+            return new TestSuiteTotals(
                 testCount,
                 passedCount,
                 skippedCount,

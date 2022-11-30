@@ -59,7 +59,7 @@ public class ReportForPassingTestSuiteTest extends AbstractReportTest {
     @Test
     void reportForOneClassGeneratedCorrectly() {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), CLOCK);
+        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), testVersionInfo());
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(6, 6, 0, 0, 0));

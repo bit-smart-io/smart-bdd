@@ -23,7 +23,7 @@ import io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadata;
+import io.bitsmart.bdd.report.junit5.results.model.TestSuiteTotals;
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
 import io.bitsmart.bdd.report.mermaid.SequenceDiagram;
 import io.bitsmart.bdd.report.report.model.Argument;
@@ -32,15 +32,12 @@ import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.Method;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
-import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
-import io.bitsmart.bdd.report.report.model.Throwable;
 import io.bitsmart.bdd.report.report.model.TestCaseTimings;
+import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
+import io.bitsmart.bdd.report.report.model.Throwable;
 import io.bitsmart.bdd.report.report.writers.DataFileNameProvider;
 
-import java.time.Clock;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -51,18 +48,15 @@ import static java.util.stream.Collectors.toList;
 public class ReportFactory {
     private static final ReportTestSuiteLinksFactory dataTestSuiteLinksFactory = new ReportTestSuiteLinksFactory(new DataFileNameProvider());
 
-    public static Report create(TestResults testResults, Clock clock) {
+    public static Report create(TestResults testResults, VersionInfo versionInfo) {
         Collection<TestSuiteResult> testSuiteResults = testResults.getTestSuiteResults();
-        List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults);
-        List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SS'Z'").withZone(ZoneId.systemDefault());
-        String timeStamp = formatter.format(ZonedDateTime.now(clock));
-
+        List<io.bitsmart.bdd.report.report.model.TestSuite> testSuites = testSuites(testSuiteResults); // TODO add TestVersionInfo?? or just the web??
+        List<io.bitsmart.bdd.report.report.model.TestCase> testCases = testCases(testSuiteResults);    // TODO add TestVersionInfo??
         DataReportIndex dataReportIndex = new DataReportIndex(
             dataTestSuiteLinksFactory.create(testSuites),
             ReportSummaryFactory.create(testSuites),
-            timeStamp);
-        return new Report(dataReportIndex, testCases, testSuites, timeStamp);
+            versionInfo.getDateTimeAsString());
+        return new Report(dataReportIndex, testCases, testSuites,  versionInfo.getDateTimeAsString());
     }
 
     private static List<io.bitsmart.bdd.report.report.model.TestCase> testCases(Collection<TestSuiteResult> testSuiteResults) {
@@ -83,11 +77,11 @@ public class ReportFactory {
             testSuiteResult.getTestSuiteClass().getClassName(),
             testSuiteResult.getTestSuiteClass().getPackageName(),
             testResults(testSuiteResult.getTestCaseResults()),
-            testSuiteSummary(testSuiteResult.getMetadata()),
+            testSuiteSummary(testSuiteResult.getTotals()),
             notes(testSuiteResult.getNotes()));
     }
 
-    private static TestSuiteSummary testSuiteSummary(TestSuiteResultsMetadata metadata) {
+    private static TestSuiteSummary testSuiteSummary(TestSuiteTotals metadata) {
         return new TestSuiteSummary(
             metadata.getTestCaseCount(),
             metadata.getPassedCount(),

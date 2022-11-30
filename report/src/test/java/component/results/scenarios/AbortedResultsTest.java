@@ -27,7 +27,7 @@ import shared.undertest.basic.AbortedTestCasesUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.ABORTED;
-import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
+import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +40,7 @@ public class AbortedResultsTest extends AbstractResultsForTestSuite {
 
     @Test
     void verifyResultsForAbortedTestCases() {
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+        assertThat(testSuiteResult().getTotals()).isEqualTo(
             aTestSuiteResultsMetadata()
                 .withTestCaseCount(4)
                 .withAbortedCount(4)

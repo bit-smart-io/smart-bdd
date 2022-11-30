@@ -22,6 +22,8 @@ import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
 import io.bitsmart.bdd.report.report.writers.ReportWriter;
 import io.bitsmart.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -185,13 +187,9 @@ public class TestContext implements
         isReporting = true;
     }
 
-    public void writeTestSuiteResults() {
-        getTestResults().getTestSuiteResults().forEach((reportWriter::write));
-    }
-
-    public void writeIndex() {
+    public void writeIndex(Report report, VersionInfo versionInfo) {
         if (isReporting) {
-            reportWriter.write(getTestResults());
+            reportWriter.write(report, versionInfo);
         }
     }
 

@@ -18,15 +18,6 @@
 
 package component.report.wip;
 
-//import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-//import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-//import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-//import io.bitsmart.bdd.report.report.model.Report;
-//import io.bitsmart.bdd.report.report.model.Status;
-//import io.bitsmart.bdd.report.report.model.TestCase;
-//import io.bitsmart.bdd.report.report.model.TestSuite;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
@@ -36,16 +27,18 @@ import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.Status;
 import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.TestSuite;
-import io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
 import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 
 import java.time.Clock;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static component.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
-import static io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder.anArgument;
 import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
 import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
 import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
@@ -72,7 +65,7 @@ public class ReportComponentBuilderWipTest {
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), Clock.systemDefaultZone());
+        Report report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), testVersionInfo());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(6);
 
@@ -145,7 +138,6 @@ public class ReportComponentBuilderWipTest {
 
     static class AssertTestCase {
         private final TestCase testCase;
-        private Method method;
 
         private AssertTestCase(TestCase testCase) {
             this.testCase = testCase;
@@ -166,11 +158,13 @@ public class ReportComponentBuilderWipTest {
         }
 
         protected AssertTestCase withMethod(Method method) {
+            // TODO this would be MethodAssert
             //assertThat(testCase.getMethod()).isEqualTo(method);
             return this;
         }
 
         protected AssertTestCase withClazz(Clazz clazz) {
+            // TODO this would be ClazzAssert
             //assertThat(testCase.getClazz()).isEqualTo(clazz);
             return this;
         }
@@ -185,11 +179,14 @@ public class ReportComponentBuilderWipTest {
             .build();
     }
 
-    private static ClazzBuilder aStringClazz() {
-        return aClazz().withClassName("String").withPackageName("java.lang").withFullyQualifiedName("java.lang.String");
-    }
-
     private static ClazzBuilder aDefaultClazz() {
         return aClazz().withClassName("ClassUnderTest").withPackageName("shared.undertest.basic").withFullyQualifiedName("shared.undertest.basic.ClassUnderTest");
+    }
+
+    protected VersionInfo testVersionInfo() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(Clock.systemDefaultZone());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SS'Z'").withZone(ZoneId.systemDefault());
+        String dateTimeAsString = formatter.format(zonedDateTime);
+        return new VersionInfo(zonedDateTime, dateTimeAsString, "hostame");
     }
 }

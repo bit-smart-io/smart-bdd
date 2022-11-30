@@ -52,17 +52,12 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSui
  */
 public class TestSuiteResult {
     private final TestSuiteClass testSuiteClass;
-    private final TestCaseNameFactory testCaseNameFactory =  new TestCaseNameFactory();
-
     /** all results including different params and or repeated test */
     private final List<TestCaseResult> testCaseResults = new ArrayList<>();
     private final ConcurrentHashMap<ExtensionContext, TestCaseResult> contextToTestCaseResult = new ConcurrentHashMap<>();
-
     private final String title;
-
     private final Notes notes;
-
-    private TestSuiteResultsMetadata metadata;
+    private TestSuiteTotals totals;
 
     public TestSuiteResult(TestSuiteClass testSuiteClass, String title, Notes notes) {
         this.testSuiteClass = testSuiteClass;
@@ -79,7 +74,7 @@ public class TestSuiteResult {
     }
 
     public void completeTestSuite() {
-        metadata = TestSuiteResultsMetadataFactory.create(testCaseResults);
+        totals = TestSuiteTotalsFactory.create(testCaseResults);
     }
 
     public TestCaseResult getTestCaseResult(ExtensionContext context) {
@@ -94,8 +89,8 @@ public class TestSuiteResult {
         return testSuiteClass;
     }
 
-    public TestSuiteResultsMetadata getMetadata() {
-        return metadata;
+    public TestSuiteTotals getTotals() {
+        return totals;
     }
 
     public List<TestCaseResult> getTestCaseResults() {

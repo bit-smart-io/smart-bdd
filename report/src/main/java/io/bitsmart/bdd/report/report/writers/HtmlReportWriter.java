@@ -21,6 +21,7 @@ package io.bitsmart.bdd.report.report.writers;
 import io.bitsmart.bdd.report.report.model.DataReportIndex;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -35,13 +36,13 @@ public class HtmlReportWriter extends AbstractReportWriter {
         super(dataFileNameProvider);
     }
 
-    public void write(DataReportIndex dataReportIndex) {
-        String html = templateEngine().process("index.html",  contextForReportIndex(dataReportIndex));
+    public void write(DataReportIndex dataReportIndex, VersionInfo versionInfo) {
+        String html = templateEngine().process("index.html",  contextForReportIndex(dataReportIndex, versionInfo));
         write(fileNameProvider.indexFile(), html);
     }
 
-    public void write(TestSuite testSuite) {
-        String html = templateEngine().process("test-suite.html",  contextForTextSuite(testSuite));
+    public void write(TestSuite testSuite, VersionInfo versionInfo) {
+        String html = templateEngine().process("test-suite.html",  contextForTextSuite(testSuite, versionInfo));
         write(fileNameProvider.file(testSuite), html);
     }
 
@@ -56,7 +57,7 @@ public class HtmlReportWriter extends AbstractReportWriter {
         return templateEngine;
     }
 
-    private Context contextForReportIndex(DataReportIndex dataReportIndex) {
+    private Context contextForReportIndex(DataReportIndex dataReportIndex, VersionInfo versionInfo) {
         List<TestSuiteNameToFile> links = dataReportIndex.getLinks().getTestSuites().stream()
             .map(l ->
                 new TestSuiteNameToFile(l.getName(), l.getFile().replace(".json", ".html")))
@@ -66,13 +67,15 @@ public class HtmlReportWriter extends AbstractReportWriter {
         context.setVariable("dataReportIndex", dataReportIndex);
         context.setVariable("summary", dataReportIndex.getSummary());
         context.setVariable("links", links);
+        context.setVariable("versionInfo", versionInfo);
         return context;
     }
 
-    private Context contextForTextSuite(TestSuite testSuite) {
+    private Context contextForTextSuite(TestSuite testSuite, VersionInfo versionInfo) {
         Context context = new Context();
         context.setVariable("testSuite", testSuite);
         context.setVariable("testCases", testSuite.getTestCases());
+        context.setVariable("versionInfo", versionInfo);
         return context;
     }
 }

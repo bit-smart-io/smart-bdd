@@ -18,46 +18,46 @@
 
 package io.bitsmart.bdd.report.junit5.results.model;
 
-public final class TestSuiteResultsMetadataBuilder {
+public final class TestSuiteTotalsBuilder {
     private int testCaseCount = 0;
     private int passedCount = 0;
     private int skippedCount = 0;
     private int failedCount = 0;
     private int abortedCount = 0;
 
-    private TestSuiteResultsMetadataBuilder() {
+    private TestSuiteTotalsBuilder() {
     }
 
-    public static TestSuiteResultsMetadataBuilder aTestSuiteResultsMetadata() {
-        return new TestSuiteResultsMetadataBuilder();
+    public static TestSuiteTotalsBuilder aTestSuiteResultsMetadata() {
+        return new TestSuiteTotalsBuilder();
     }
 
-    public TestSuiteResultsMetadataBuilder withTestCaseCount(int testCaseCount) {
+    public TestSuiteTotalsBuilder withTestCaseCount(int testCaseCount) {
         this.testCaseCount = testCaseCount;
         return this;
     }
 
-    public TestSuiteResultsMetadataBuilder withPassedCount(int passedCount) {
+    public TestSuiteTotalsBuilder withPassedCount(int passedCount) {
         this.passedCount = passedCount;
         return this;
     }
 
-    public TestSuiteResultsMetadataBuilder withSkippedCount(int skippedCount) {
+    public TestSuiteTotalsBuilder withSkippedCount(int skippedCount) {
         this.skippedCount = skippedCount;
         return this;
     }
 
-    public TestSuiteResultsMetadataBuilder withFailedCount(int failedCount) {
+    public TestSuiteTotalsBuilder withFailedCount(int failedCount) {
         this.failedCount = failedCount;
         return this;
     }
 
-    public TestSuiteResultsMetadataBuilder withAbortedCount(int abortedCount) {
+    public TestSuiteTotalsBuilder withAbortedCount(int abortedCount) {
         this.abortedCount = abortedCount;
         return this;
     }
 
-    public TestSuiteResultsMetadata build() {
-        return new TestSuiteResultsMetadata(testCaseCount, passedCount, skippedCount, failedCount, abortedCount);
+    public TestSuiteTotals build() {
+        return new TestSuiteTotals(testCaseCount, passedCount, skippedCount, failedCount, abortedCount);
     }
 }

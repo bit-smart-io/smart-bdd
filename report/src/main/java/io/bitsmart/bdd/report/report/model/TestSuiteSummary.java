@@ -29,9 +29,6 @@ public class TestSuiteSummary {
     private final int skipped;
     private final int failed;
     private final int aborted;
-//    private Datetime timestamp="2021-03-30T20:03:44
-//    private String hostname="Jamess-MacBook-Pro.local"
-//    privat long time="0.021"
 
     @JsonCreator
     public TestSuiteSummary(

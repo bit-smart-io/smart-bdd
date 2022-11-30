@@ -20,18 +20,14 @@ package io.bitsmart.bdd.report.junit5.results.model;
 
 import java.util.Objects;
 
-public class TestSuiteResultsMetadata {
-    //TODO count class?
+public class TestSuiteTotals {
     private final int testCaseCount;
     private final int passedCount;
     private final int skippedCount;
     private final int failedCount;
     private final int abortedCount;
-//    private Datetime timestamp="2021-03-30T20:03:44"
-//    private String hostname="Jamess-MacBook-Pro.local"
-//    privat long time="0.021"
 
-    public TestSuiteResultsMetadata(int testCaseCount, int passedCount, int skippedCount, int failedCount, int abortedCount) {
+    public TestSuiteTotals(int testCaseCount, int passedCount, int skippedCount, int failedCount, int abortedCount) {
         this.testCaseCount = testCaseCount;
         this.passedCount = passedCount;
         this.skippedCount = skippedCount;
@@ -62,8 +58,8 @@ public class TestSuiteResultsMetadata {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestSuiteResultsMetadata)) return false;
-        TestSuiteResultsMetadata that = (TestSuiteResultsMetadata) o;
+        if (!(o instanceof TestSuiteTotals)) return false;
+        TestSuiteTotals that = (TestSuiteTotals) o;
         return testCaseCount == that.testCaseCount && passedCount == that.passedCount && skippedCount == that.skippedCount && failedCount == that.failedCount && abortedCount == that.abortedCount;
     }
 

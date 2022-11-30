@@ -21,20 +21,16 @@ package component.report;
 import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
 import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.TestSuite;
 import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
 import io.bitsmart.bdd.report.report.model.TestSuiteSummary;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static component.report.ReportAssertions.assertPassingTestSuite;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
@@ -44,7 +40,7 @@ public class ReportForPackageTest extends AbstractReportTest {
     @Test
     void reportForOnePackageGeneratedCorrectly() {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
-        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), CLOCK);
+        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), testVersionInfo());
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));

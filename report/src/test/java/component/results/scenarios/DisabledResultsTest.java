@@ -22,7 +22,7 @@ import component.results.AbstractResultsForTestSuite;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.DisabledTestCasesUnderTest;
 
-import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
+import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DisabledResultsTest extends AbstractResultsForTestSuite {
@@ -34,7 +34,7 @@ public class DisabledResultsTest extends AbstractResultsForTestSuite {
 
     @Test
     void verifyResultsForDisabledTestCases() {
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+        assertThat(testSuiteResult().getTotals()).isEqualTo(
             aTestSuiteResultsMetadata()
                 .withTestCaseCount(2)
                 .withSkippedCount(2)

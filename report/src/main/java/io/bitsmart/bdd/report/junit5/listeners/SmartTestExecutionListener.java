@@ -19,6 +19,10 @@
 package io.bitsmart.bdd.report.junit5.listeners;
 
 import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import io.bitsmart.bdd.report.report.adapter.ReportFactory;
+import io.bitsmart.bdd.report.report.model.Report;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
+import io.bitsmart.bdd.report.report.model.TestVersionInfoFactory;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -27,6 +31,7 @@ import org.junit.platform.launcher.TestPlan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Clock;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,9 +55,9 @@ public class SmartTestExecutionListener implements TestExecutionListener {
 //        roots.forEach(root -> logger.debug("tags: " + root.getTags()));
 //        roots.forEach(root -> logger.debug("source: " + root.getSource()));
 //        roots.forEach(root -> logger.debug("id: " + root.getParentId()));
-
-        SmartReport.getTestContext().writeIndex();
-        SmartReport.getTestContext().writeTestSuiteResults();
+        final VersionInfo versionInfo = TestVersionInfoFactory.create(Clock.systemDefaultZone());
+        final Report report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), versionInfo);
+        SmartReport.getTestContext().writeIndex(report, versionInfo);
     }
 
     @Override

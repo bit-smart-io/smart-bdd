@@ -27,7 +27,7 @@ import shared.undertest.basic.ClassUnderTest;
 
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
-import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteResultsMetadataBuilder.aTestSuiteResultsMetadata;
+import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,7 +41,7 @@ public class PassingResultsTest extends AbstractResultsForTestSuite {
     @Test
     void verifyResultsForPassingTestCases() {
         assertTestSuitClass(testSuiteResult(), classUnderTest());
-        assertThat(testSuiteResult().getMetadata()).isEqualTo(
+        assertThat(testSuiteResult().getTotals()).isEqualTo(
             aTestSuiteResultsMetadata()
                 .withTestCaseCount(6)
                 .withPassedCount(6)

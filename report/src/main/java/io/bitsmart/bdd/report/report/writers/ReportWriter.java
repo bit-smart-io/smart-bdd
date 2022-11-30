@@ -18,12 +18,9 @@
 
 package io.bitsmart.bdd.report.report.writers;
 
-import io.bitsmart.bdd.report.junit5.results.model.TestResults;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
-import io.bitsmart.bdd.report.report.adapter.ReportFactory;
 import io.bitsmart.bdd.report.report.model.Report;
-
-import java.time.Clock;
+import io.bitsmart.bdd.report.report.model.TestSuite;
+import io.bitsmart.bdd.report.report.model.VersionInfo;
 
 /**
  * Will need a strategy - write the results/report and or http post the results/report
@@ -32,17 +29,15 @@ public class ReportWriter {
     private final DataReportWriter dataReportWriter = new DataReportWriter(new DataFileNameProvider());
     private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlFileNameProvider());
 
-    /** TODO in transition. Please see TestResults for more details. */
-    public void write(TestResults testResults) {
-        Report report = ReportFactory.create(testResults, Clock.systemDefaultZone());
+    public void write(Report report, VersionInfo versionInfo) {
         dataReportWriter.write(report.getIndex());
-        htmlReportWriter.write(report.getIndex());
+        htmlReportWriter.write(report.getIndex(), versionInfo);
+        report.getTestSuites().forEach(ts -> write(ts, versionInfo));
     }
 
-    /** TODO in transition - duplicates ReportFactory.testSuite */
-    public void write(TestSuiteResult testSuiteResult) {
-        dataReportWriter.write(ReportFactory.testSuite(testSuiteResult));
-        htmlReportWriter.write(ReportFactory.testSuite(testSuiteResult));
+    public void write(TestSuite testSuite, VersionInfo versionInfo) {
+        dataReportWriter.write(testSuite);
+        htmlReportWriter.write(testSuite, versionInfo);
     }
 
     public void prepare() {
