@@ -1,13 +1,22 @@
 # Smart BDD
+
 ![example workflow](https://github.com/bit-smart-io/smart-bdd/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 
-Create interactive html documentation / feature files from Java test code. This can be considered as a productive
-replacement to existing frameworks (such as Cucumber) where you write the features/scenarios/acceptance tests in plain
-text first.
+Smart BDD is the most productive way to implement Behaviour Driven Development. Traditional frameworks have you write
+the static feature files first, then implement code.
 
-### Source Code
+With Smart BDD you write the code first using best practices and this generates:
+
+* **Interactive** feature files that serve as documentation
+* UML diagrams to better document the product
+* A button to re-run the test
+* UI that allows you to change the parameters of the test
+
+### This is an example of the end result
+
+![alt text](docs/images/doc01.png "Doc Snippet")
 
 ```java
 public class GetBookTest extends BaseBookStoreTest {
@@ -40,9 +49,27 @@ public class GetBookTest extends BaseBookStoreTest {
 }
 ```
 
-### Interactive html snippet that is generated from the above source code
+## How does it work?
 
-![alt text](docs/images/doc01.png "Doc Snippet")
+`when(aUserRequestsABook());` tokenised to `when a user requests a book`. It gives you the freedom to write tests in the
+way you want. There's a simple api to add notes, capture inputs and output, create uml diagrams etc... It uses JUnit5 to
+be powerful and extensible, it even facilities re-running tests. 
+
+## Why is this significant?
+
+The advantages may or may not be obvious, you get to write code that is best suited to test the functionally of your
+product and or service. As a bonus you get better documentation and a demo app.
+
+So what is wrong with existing approach? Far form doing the above, you write a feature file in plain text, then write
+code that is corrupted by the feature file. This is additional complexity and will most likely result in:
+
+* Badly written code
+* Which leads to diminishing returns
+* Which can and often leads to a glass ceiling
+* Which too often results rewriting the testing framework
+
+Yes a small and simple Cucumber, Concordion, JBehave etc... project is simple, the same can be said about most
+frameworks and projects. So the argument for Smart BDD is best made with real world projects.
 
 ## Implemented Features
 

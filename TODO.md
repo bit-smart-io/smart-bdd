@@ -15,11 +15,14 @@
 
 ## Post MVP:
 
-- [ ] Migrate to github
-- [ ] Update documentation and housekeeping
+- [ ] Try scala files
+- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
+- [ ] Add error 
+- [ ] More examples!!!
+- [x] Migrate to github
+- [x] Update documentation and housekeeping
 - [ ] Parametrised tests (see testCaseResult.setName(...) and verifyThirdTest_paramsWithCustomName). See Notes below.
 - [ ] Read the @BeforeEach @BeforeAll etc... and add to the result
-- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Handle all test factories, templates and dynamic
 - [ ] Apply Capture standard output and standard error.
 - [ ] Handle Strings i.e. anything in quotes
