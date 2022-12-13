@@ -18,14 +18,14 @@
 
 package com.example.bookstore.controller;
 
-import com.example.bookstore.model.IsbnBook;
 import com.example.bookstore.service.BookIsbnService;
+import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -54,13 +54,24 @@ public class BookController {
     /**
      * Two standards for ISBN. ISBN 10 and ISBN 13
      * There is an algorithm to validate ISBN 10. Could be a downstream api call.
+     *
+     * Converting ResponseStatusException to ResponseEntity because message isn't working for ResponseStatusException.
+     * //return new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Expectation Failed - ISBN should be 10 or 13 digits");
      */
     @GetMapping(value = "/book/{isbn}", produces = "application/json")
-    public @ResponseBody
-    Object getBookByIsbn(@PathVariable String isbn) throws IOException {
-        if (isbn.length() != 10 && isbn.length() != 13) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Expectation Failed - ISBN should be 10 or 13 characters");
+    public Object getBookByIsbn(@PathVariable String isbn) throws IOException {
+        ISBNValidator validator = new ISBNValidator();
+        if (!validator.isValid(isbn)) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("ISBN should be 10 or 13 digits. Spaces and dashes are allowed.");
         }
-        return service.get(isbn);
+        isbn = validator.validate(isbn);
+        try {
+            return service.get(isbn);
+        } catch (ResponseStatusException e) {
+            if (e.getStatus() == HttpStatus.NOT_FOUND) {
+                return ResponseEntity.status(e.getStatus()).body("No book found for ISBN: " + isbn);
+            }
+            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+        }
     }
 }

@@ -85,7 +85,7 @@ public class GetBookUsingBuildersTest extends BaseBookStoreTest {
     public void getBookByIsbn_whenIsbnNumberIsNot10or13_return417StatusCode(String invalidIsbn) {
         when(aUserRequestsABook().withIsbn(invalidIsbn));
         then(theErrorResponseCodeIs(EXPECTATION_FAILED));
-        then(theErrorResponseMessageIs("Expectation Failed - ISBN should be 10 or 13 characters"));
+        then(theErrorResponseMessageIs("ISBN should be 10 or 13 digits. Spaces and dashes are allowed."));
     }
 
     /**

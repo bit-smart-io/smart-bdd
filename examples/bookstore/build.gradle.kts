@@ -19,13 +19,14 @@
 plugins {
     `java-library`
 //    `java-test-fixtures` //TODO use this if we want to export test code to be used in the fts
-    id("org.springframework.boot") version "2.5.3"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot") version "2.7.6"
+    id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
 group = "io.bitsmart.bdd.example"
 version = "0.1-SNAPSHOT"
 description = "Bookstore example"
+//java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -43,6 +44,7 @@ dependencies {
     implementation("com.github.tomakehurst:wiremock-jre8:2.31.0")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.1")
     implementation("org.apache.httpcomponents.client5:httpclient5-fluent:5.1")
+    implementation("commons-validator:commons-validator:1.7")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

@@ -20,12 +20,12 @@ package com.example.bookstore.bdd.builder_example.defaults;
 
 /** would this helpful for should we have the defaults in the builders? */
 public class DefaultIsbnBook {
-    public static final String isbn = "default-isbn_";
+    public static final String isbn = "9781852860240";
     public static final String title = "default-title";
     public static final String author = "default-author";
 
-    public static final String isbn10 = "1234567890";
-    public static final String isbn13 = "1234567890123";
+    public static final String isbn10 = "9781852860240";
+    public static final String isbn13 = "9781852860240";
 
     public static final String INVALID_ISBN_LENGTH_1 = "1";
     public static final String INVALID_ISBN_LENGTH_9 = "123456789";
