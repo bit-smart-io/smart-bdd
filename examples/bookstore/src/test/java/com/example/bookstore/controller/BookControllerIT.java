@@ -104,6 +104,26 @@ public class BookControllerIT {
                 .withStatus(status)));
     }
 
+    /**
+     * Example of putting everything in to a test
+     */
+    @Order(-1)
+    @Test
+    public void getBookBy13DigitIsbn_returnsTheCorrectBookLongNotation() {
+        final IsbnBook book = new IsbnBook(VALID_13_DIGIT_ISBN_FOR_BOOK_1, "book 1 title", singletonList("book 1 author"));
+        stubFor(get(urlEqualTo("/isbn-db/" + VALID_13_DIGIT_ISBN_FOR_BOOK_1))
+            .withPort(PORT)
+            .willReturn(aResponse()
+                .withHeader("Content-Type", "application/json")
+                .withBody(bookAsString(book))));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
+        ResponseEntity<String> response = template.getForEntity("/book/" + VALID_13_DIGIT_ISBN_FOR_BOOK_1, String.class, headers);
+
+        assertThat(bookFromJson(response.getBody())).isEqualTo(book);
+    }
+
     @Order(0)
     @Test
     public void getBookBy13DigitIsbn_returnsTheCorrectBook() {

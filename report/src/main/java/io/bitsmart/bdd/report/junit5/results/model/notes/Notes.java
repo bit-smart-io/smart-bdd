@@ -29,6 +29,10 @@ public class Notes {
     private final TextNotes textNotes = new TextNotes();
     private final SequenceDiagramFactory diagramFactory = new SequenceDiagramFactory();
 
+    // https://mermaid.js.org/syntax/stateDiagram.html
+    // note().rawDiagram.add(...)
+    //private final RawDiagramFactory rawDiagramFactory = new RawDiagramFactory();
+
     public TextNotes text() {
         return textNotes;
     }

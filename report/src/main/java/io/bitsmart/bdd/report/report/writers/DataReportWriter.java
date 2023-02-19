@@ -36,11 +36,11 @@ public class DataReportWriter extends AbstractReportWriter {
     }
 
     public void write(DataReportIndex dataReportIndex) {
-        write(fileNameProvider.indexFile(), toJson(dataReportIndex));
+        write(fileNameProvider.indexFile(), toJson(dataReportIndex), "Results Index:");
     }
 
     public void write(TestSuite testSuite) {
-        write(fileNameProvider.file(testSuite), toJson(testSuite));
+        write(fileNameProvider.file(testSuite), toJson(testSuite), "Results Suite:");
     }
 
     private String toJson(Object obj) {

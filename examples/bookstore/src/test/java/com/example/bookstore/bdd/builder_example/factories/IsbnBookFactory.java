@@ -27,8 +27,8 @@ import static java.util.Collections.singletonList;
 public class IsbnBookFactory {
     public static IsbnBookBuilder aDefaultIsbnBook() {
         return anIsbnBook()
-            .withIsbn(DefaultIsbnBook.isbn)
-            .withTitle(DefaultIsbnBook.title)
-            .withAuthors(singletonList(DefaultIsbnBook.author));
+            .withIsbn(DefaultIsbnBook.ISBN)
+            .withTitle(DefaultIsbnBook.TITLE)
+            .withAuthors(singletonList(DefaultIsbnBook.AUTHOR));
     }
 }

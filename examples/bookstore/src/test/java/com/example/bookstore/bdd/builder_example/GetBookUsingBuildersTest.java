@@ -32,11 +32,12 @@ import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook
 import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.INVALID_ISBN_LENGTH_12;
 import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.INVALID_ISBN_LENGTH_14;
 import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.INVALID_ISBN_LENGTH_9;
-import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.author;
-import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.isbn;
-import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.isbn10;
-import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.isbn13;
-import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.title;
+import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.AUTHOR;
+import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.ISBN;
+import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.ISBN_10_DIGITS;
+import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.ISBN_13_DIGITS;
+import static com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook.TITLE;
+import static com.example.bookstore.bdd.builder_example.factories.IsbnBookFactory.aDefaultIsbnBook;
 import static com.example.bookstore.bdd.builder_example.model.bdd.ThenGetBookByIsbnBuilder.theResponseContains;
 import static com.example.bookstore.bdd.builder_example.model.bdd.ThenGetBookByIsbnErrorBuilder.theErrorResponseCodeIs;
 import static com.example.bookstore.bdd.builder_example.model.bdd.ThenGetBookByIsbnErrorBuilder.theErrorResponseMessageIs;
@@ -52,7 +53,7 @@ public class GetBookUsingBuildersTest extends BaseBookStoreTest {
     @Test
     public void getBook() {
         when(aUserRequestsABook());
-        then(theResponseContains(IsbnBookFactory.aDefaultIsbnBook()));
+        then(theResponseContains(aDefaultIsbnBook()));
     }
 
     /**
@@ -60,18 +61,18 @@ public class GetBookUsingBuildersTest extends BaseBookStoreTest {
      */
     @Test
     public void getBookUsingIsbn13() {
-        given(theIsbnDbContains().anEntry(forAnIsbn(isbn13)
-            .thatWillReturn(IsbnBookFactory.aDefaultIsbnBook().withIsbn(isbn13))));
-        when(aUserRequestsABook().withIsbn(isbn13));
-        then(theResponseContains(IsbnBookFactory.aDefaultIsbnBook().withIsbn(isbn13)));
+        given(theIsbnDbContains().anEntry(forAnIsbn(ISBN_13_DIGITS)
+            .thatWillReturn(aDefaultIsbnBook().withIsbn(ISBN_13_DIGITS))));
+        when(aUserRequestsABook().withIsbn(ISBN_13_DIGITS));
+        then(theResponseContains(aDefaultIsbnBook().withIsbn(ISBN_13_DIGITS)));
     }
 
     @Test
     public void getBookUsingIsbn10() {
-        given(theIsbnDbContains().anEntry(forAnIsbn(isbn10)
-            .thatWillReturn(IsbnBookFactory.aDefaultIsbnBook().withIsbn(isbn10))));
-        when(aUserRequestsABook().withIsbn(isbn10));
-        then(theResponseContains(IsbnBookFactory.aDefaultIsbnBook().withIsbn(isbn10)));
+        given(theIsbnDbContains().anEntry(forAnIsbn(ISBN_13_DIGITS)
+            .thatWillReturn(aDefaultIsbnBook().withIsbn(ISBN_13_DIGITS))));
+        when(aUserRequestsABook().withIsbn(ISBN_10_DIGITS));
+        then(theResponseContains(aDefaultIsbnBook().withIsbn(ISBN_13_DIGITS)));
     }
 
     /**
@@ -94,16 +95,16 @@ public class GetBookUsingBuildersTest extends BaseBookStoreTest {
     @Test
     public void getBookByIsbnShowingAllDefaultValues() {
         given(theIsbnDbContains().anEntry(
-            forAnIsbn(isbn)
+            forAnIsbn(ISBN)
                 .thatWillReturn(anIsbnBook()
-                    .withIsbn(isbn)
-                    .withTitle(title)
-                    .withAuthor(author))));
-        when(aUserRequestsABook().withIsbn(isbn));
+                    .withIsbn(ISBN)
+                    .withTitle(TITLE)
+                    .withAuthor(AUTHOR))));
+        when(aUserRequestsABook().withIsbn(ISBN));
         then(theResponseContains(anIsbnBook()
-            .withIsbn(isbn)
-            .withTitle(title)
-            .withAuthors(author)));
+            .withIsbn(ISBN)
+            .withTitle(TITLE)
+            .withAuthors(AUTHOR)));
     }
 
 //    /**

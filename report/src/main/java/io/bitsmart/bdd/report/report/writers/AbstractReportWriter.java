@@ -59,11 +59,11 @@ public abstract class AbstractReportWriter {
         return false;
     }
 
-    void write(Path path, String contents) {
+    void write(Path path, String contents, String prefix) {
         if (!Files.exists(path)) {
             fileRepository.create(path);
         }
         fileRepository.update(path, contents);
-        System.out.println("*** write output: file://" + path);
+        System.out.println(prefix + " file://" + path);
     }
 }

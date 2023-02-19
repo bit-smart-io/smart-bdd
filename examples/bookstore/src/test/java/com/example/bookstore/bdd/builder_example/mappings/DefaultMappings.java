@@ -35,10 +35,10 @@ public class DefaultMappings {
 
     public void initDefaultMappings() {
         baseBookStoreTest.given(theIsbnDbContains().anEntry(
-            forAnIsbn(DefaultIsbnBook.isbn)
+            forAnIsbn(DefaultIsbnBook.ISBN)
                 .thatWillReturn(anIsbnBook()
-                    .withIsbn(DefaultIsbnBook.isbn)
-                    .withTitle(DefaultIsbnBook.title)
-                    .withAuthor(DefaultIsbnBook.author))));
+                    .withIsbn(DefaultIsbnBook.ISBN)
+                    .withTitle(DefaultIsbnBook.TITLE)
+                    .withAuthor(DefaultIsbnBook.AUTHOR))));
     }
 }

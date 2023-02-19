@@ -38,12 +38,12 @@ public class HtmlReportWriter extends AbstractReportWriter {
 
     public void write(DataReportIndex dataReportIndex, VersionInfo versionInfo) {
         String html = templateEngine().process("index.html",  contextForReportIndex(dataReportIndex, versionInfo));
-        write(fileNameProvider.indexFile(), html);
+        write(fileNameProvider.indexFile(), html, "HTML    Index:");
     }
 
     public void write(TestSuite testSuite, VersionInfo versionInfo) {
         String html = templateEngine().process("test-suite.html",  contextForTextSuite(testSuite, versionInfo));
-        write(fileNameProvider.file(testSuite), html);
+        write(fileNameProvider.file(testSuite), html, "HTML    Suite:");
     }
 
     private TemplateEngine templateEngine() {
