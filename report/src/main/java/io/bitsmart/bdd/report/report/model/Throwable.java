@@ -26,7 +26,7 @@ import java.util.Objects;
 
 /**
  * TODO is this assertion failure
- *
+ * <pre>{@code
  * expected field
  * actual field
  * org.opentest4j.AssertionFailedError:
@@ -35,6 +35,7 @@ import java.util.Objects;
  * to be equal to:
  *  <false>
  * but was not.
+ * }</pre>
  */
 public class Throwable {
     private final Clazz clazz;

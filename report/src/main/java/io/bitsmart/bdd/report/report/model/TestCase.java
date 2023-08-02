@@ -48,7 +48,7 @@ import java.util.Objects;
  *  // - methodInvocation with params
  *  // Wordify text/markdown/html
  *  // - text example given something
- *  // - html example <span class="given">given</> something
+ *  // - html example span class="given" given something
  *  // - markdown
  *  // Timings
  *  // - beforeAll

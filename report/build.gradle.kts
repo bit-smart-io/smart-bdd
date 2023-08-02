@@ -18,7 +18,18 @@
 
 plugins {
     id("smart-bdd.java-lib")
-    id("maven-publish")
+    `maven-publish`
+    `java-library`
+    signing
+}
+
+group = "io.bit-smart.bdd"
+version = "0.2-SNAPSHOT"
+description = "Generate the report and feature file / documentation"
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {
@@ -40,23 +51,69 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
-            group = "io.bit-smart.bdd"
-            version = "0.1-SNAPSHOT"
-            description = "Generate the report and feature file / documentation"
-            from(components["java"])
+        create<MavenPublication>("mavenJava") {
+            artifactId = "report"
+            //from(components["java"])
+            artifact(tasks["jar"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name.set("Report")
+                description.set("Generate the report and feature file / documentation")
+                url.set("https://github.com/bit-smart-io/smart-bdd")
+
+                licenses {
+                    license {
+                        name.set("GNU General Public License")
+                        url.set("https://www.gnu.org/licenses/")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("jrbayliss")
+                        name.set("James Bayliss")
+                        email.set("mejrbayliss@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("https://github.com/bitsmartio/smart-bdd.git")
+                    url.set("https://github.com/bit-smart-io/smart-bdd")
+                }
+            }
         }
     }
     repositories {
         maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
             val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             val releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+
             name = "OSSRH"
-            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")
             }
         }
+    }
+}
+
+signing {
+    sign(publishing.publications["mavenJava"])
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PRIVATE_PASSWORD")
+    )
+}
+
+tasks.javadoc {
+    if (JavaVersion.current().isJava9Compatible) {
+        (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
 }

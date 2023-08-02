@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class BuilderUtils {
 
     /**
+     * <pre>{@code
      * Builder class
      * public ParentItem build() {
      * return new ParentItem(build(items), childString);
@@ -49,6 +50,7 @@ public class BuilderUtils {
      * this.itemBuilders.add(itemBuilder);
      * return this;
      * }
+     * }</pre>
      */
     public static <T, B extends Builder<T>> List<T> build(List<B> builders) {
         return builders.stream().map(Builder::build).collect(Collectors.toList());

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * <pre>{@code
  *  <div class="mermaid">
  *  sequenceDiagram
  *     participant Alice
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  *     John->>Bob: How about you?
  *     Bob-->>John: Jolly good!
  *   </div>
+ * }</pre>
  */
 public class SequenceDiagram implements Expression {
     private List<Participant> participants = new ArrayList<>();

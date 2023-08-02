@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSuiteClass;
 
 /**
+ * <pre> {@code
  * <?xml version="1.0" encoding="UTF-8"?>
  * <testsuite name="junit5.learning.parameters.LearningTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-03-30T20:03:44" hostname="Jamess-MacBook-Pro.local" time="0.021">
  *   <properties/>
@@ -49,6 +50,7 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass.testSui
  * </testsuite>
  *
  * This could be a service to create an immutable TestSuiteResults??
+ * }</pre>
  */
 public class TestSuiteResult {
     private final TestSuiteClass testSuiteClass;
@@ -65,7 +67,7 @@ public class TestSuiteResult {
         this.notes = notes;
     }
 
-    /** Creates the testcase, before we have invocationContext */
+    // /** Creates the testcase, before we have invocationContext */
     public TestCaseResult startTestCase(ExtensionContext context) {
         TestCaseResult testCaseResult = createTestCaseResult(context);
         this.testCaseResults.add(testCaseResult);
