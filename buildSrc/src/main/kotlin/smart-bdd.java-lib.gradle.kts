@@ -21,7 +21,7 @@ plugins {
 }
 
 group = "io.bit-smart.bdd"
-version = "0.1-SNAPSHOT"
+version = "0.1.1-SNAPSHOT"
 description = "Java dependencies"
 
 repositories {

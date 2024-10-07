@@ -156,7 +156,6 @@ Then I should have cucumbers with quantity 1 with colour "blue"
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
 | examples   | n/a| examples of using Smart BDD |  | 
-| webpage    | n/a| legacy vue js | to be replaced with react |
 
 Notes on naming:
 

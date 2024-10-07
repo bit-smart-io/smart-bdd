@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.html;
+package io.bitsmart.bdd.ft.report.html;
 
 import io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest;
 import org.junit.jupiter.api.Test;

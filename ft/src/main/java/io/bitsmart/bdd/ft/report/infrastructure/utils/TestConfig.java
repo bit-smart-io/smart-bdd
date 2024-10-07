@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2022  James Bayliss
+ * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,24 +29,19 @@ import java.nio.file.Paths;
 import static java.lang.System.getProperty;
 
 public class TestConfig {
-    public static boolean debugInfo = false;
-    public static boolean dirInMem = true;
-    private static Path basePath = Paths.get(getProperty("java.io.tmpdir"));
+    public static boolean inMemoryDirectory = true;
+    private static final Path basePath = Paths.get(getProperty("java.io.tmpdir"));
     private static final FileSystem inMemoryFileSystem = Jimfs.newFileSystem(Configuration.unix());
     private static final Path inMemoryBasePath = inMemoryFileSystem.getPath("/test-base-path/");
 
     static {
-        if (dirInMem) {
+        if (inMemoryDirectory) {
             SmartBddConfig.overrideBasePath(TestConfig.getBasePath());
         }
     }
 
-    public static void setBasePath(Path basePathOverride) {
-        basePath = basePathOverride;
-    }
-
     public static Path getBasePath() {
-        if (dirInMem) {
+        if (inMemoryDirectory) {
             return inMemoryBasePath;
         }
         return basePath;

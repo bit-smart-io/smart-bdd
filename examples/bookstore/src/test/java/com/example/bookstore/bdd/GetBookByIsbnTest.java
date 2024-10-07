@@ -116,22 +116,6 @@ public class GetBookByIsbnTest extends BaseTest {
             .addParticipant("ISBNdb");
     }
 
-    private void stubGetBookByIsbn(String isbn, IsbnBook book) {
-        stubFor(get(urlEqualTo("/isbn-db/" + isbn))
-            .withPort(PORT)
-            .willReturn(aResponse()
-                .withHeader("Content-Type", "application/json")
-                .withBody(bookAsString(book))));
-    }
-
-    private void stubGetBookToReturn(String isbn, int status) {
-        stubFor(get(urlEqualTo("/isbn-db/" + isbn))
-            .withPort(PORT)
-            .willReturn(aResponse()
-                .withHeader("Content-Type", "text/plain")
-                .withStatus(status)));
-    }
-
     @Order(0)
     @Test
     public void getBookBy13DigitIsbn_returnsTheCorrectBook() {
@@ -141,7 +125,7 @@ public class GetBookByIsbnTest extends BaseTest {
 
     @Order(1)
     @Test
-    public void getBookUnknownIsbn_returnsBookNotFound() {
+    public void getBookIsCalledWithUnknownIsbn_returnsBookNotFound() {
         whenGetBookByIsbnIsCalledWith(UNKNOWN_ISBN);
         thenTheResponseStatusIs(NOT_FOUND);
         thenTheResponseErrorMessageIs("No book found for ISBN: 9780141024189");
@@ -171,6 +155,22 @@ public class GetBookByIsbnTest extends BaseTest {
     public void getBookBy10DigitIsbnThatIsConvertedTo13DigitIsbn_returnsTheCorrectBookBasedOn13DigitIsbn() {
         whenGetBookByIsbnIsCalledWith(VALID_10_DIGIT_ISBN_FOR_BOOK_1);
         thenTheResponseIsEqualTo(BOOK_1);
+    }
+
+    private void stubGetBookByIsbn(String isbn, IsbnBook book) {
+        stubFor(get(urlEqualTo("/isbn-db/" + isbn))
+            .withPort(PORT)
+            .willReturn(aResponse()
+                .withHeader("Content-Type", "application/json")
+                .withBody(bookAsString(book))));
+    }
+
+    private void stubGetBookToReturn(String isbn, int status) {
+        stubFor(get(urlEqualTo("/isbn-db/" + isbn))
+            .withPort(PORT)
+            .willReturn(aResponse()
+                .withHeader("Content-Type", "text/plain")
+                .withStatus(status)));
     }
 
     private String bookAsString(IsbnBook book) {
@@ -203,18 +203,22 @@ public class GetBookByIsbnTest extends BaseTest {
         assertThat(response.getBody()).isEqualTo(errorMessage);
     }
 
-    public void whenGetBookByIsbnIsCalledWith(String isbn) {
+    private void whenGetBookByIsbnIsCalledWith(String isbn) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
-
-        sequenceDiagram().add(aMessage().from("User").to("BookStore").text("/book/" + isbn));
         response = template.getForEntity("/book/" + isbn, String.class, headers);
+        generateSequenceDiagram(isbn, response, headers);
+    }
+
+    private void generateSequenceDiagram(String isbn, ResponseEntity<String> response, HttpHeaders headers) {
+        sequenceDiagram().add(aMessage().from("User").to("BookStore").text("/book/" + isbn));
+
 
         List<ServeEvent> allServeEvents = getAllServeEvents();
         allServeEvents.forEach(event -> {
             sequenceDiagram().add(aMessage().from("BookStore").to("ISBNdb").text(event.getRequest().getUrl()));
             sequenceDiagram().add(aMessage().from("ISBNdb").to("BookStore").text(
-               event.getResponse().getBodyAsString() +  " [" + event.getResponse().getStatus() + "]"));
+                event.getResponse().getBodyAsString() +  " [" + event.getResponse().getStatus() + "]"));
         });
 
         sequenceDiagram().add(aMessage().from("BookStore").to("User").text(response.getBody() + " [" + response.getStatusCode().value() + "]"));

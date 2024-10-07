@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.data;
+package io.bitsmart.bdd.ft.report.results;
 import io.bitsmart.bdd.ft.undertest.basic.ClassUnderTest;
 import io.bitsmart.bdd.report.report.model.TestCase;
 import io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder;
@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * There's no point adding logic to SmartTestExecutionListener as this is specific to how it is run here.
  * Else we could check a tag and or annotation maybe?
  */
-public class DataReportTest extends AbstractResultsForData {
+public class PassingResultsTest extends AbstractResultsForData {
 
     @Override
     public Class<?> classUnderTest() {

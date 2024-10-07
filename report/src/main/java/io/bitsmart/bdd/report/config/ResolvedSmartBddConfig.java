@@ -23,7 +23,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class ResolvedSmartBddConfig {
-    private static FileSystem fileSystem = FileSystems.getDefault();
+    private static final FileSystem fileSystem = FileSystems.getDefault();
 
     public static Path getBasePath() {
         return SmartBddConfig.getOverriddenBasePath().orElse(fileSystem.getPath(SmartBddConfig.getDefaultBaseFolder()));

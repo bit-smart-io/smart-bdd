@@ -24,6 +24,7 @@ include(
     "test-utils",
     "examples:bookstore",
     "examples:cucumbers",
+    //TODO "examples:server",
     "learning")
 
 //TODO

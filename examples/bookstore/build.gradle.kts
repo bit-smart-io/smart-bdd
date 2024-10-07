@@ -24,7 +24,7 @@ plugins {
 }
 
 group = "io.bitsmart.bdd.example"
-version = "0.1-SNAPSHOT"
+version = "0.1.1-SNAPSHOT"
 description = "Bookstore example"
 //java.sourceCompatibility = JavaVersion.VERSION_1_8
 

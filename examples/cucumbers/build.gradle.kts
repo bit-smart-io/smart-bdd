@@ -23,7 +23,7 @@ plugins {
 
 
 group = "io.bitsmart.bdd.example"
-version = "0.1-SNAPSHOT"
+version = "0.1.1-SNAPSHOT"
 description = "Eating cucumbers example"
 
 repositories {

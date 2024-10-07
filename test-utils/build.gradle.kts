@@ -24,7 +24,7 @@ plugins {
 }
 
 group = "io.bit-smart.bdd"
-version = "0.2-SNAPSHOT"
+version = "0.1.1-SNAPSHOT"
 description = "Test Utils"
 
 java {
@@ -44,8 +44,8 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             artifactId = "test-utils"
-            //from(components["java"])
-            artifact(tasks["jar"])
+            from(components["java"])
+            //artifact(tasks["jar"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -88,8 +88,8 @@ publishing {
 
             name = "OSSRH"
             credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
+                username = System.getenv("SONATYPE_TOKEN_USERNAME")
+                password = System.getenv("SONATYPE_TOKEN_PASSWORD")
             }
             }
         }

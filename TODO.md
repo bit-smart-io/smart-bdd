@@ -277,3 +277,24 @@ assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
     * data to db
     * data to rest service
 * Create builders from JSON
+
+Temp Bug:
+Bug (L = 2 spaces
+```java
+givenTheFollowingGroceries(List.of(
+item("milk", 9),
+item("bread", 7),
+item("soap", 5)
+));
+whenIPay(25);
+```
+
+```text
+expected: <4> but was: <7>
+Expected :4
+Actual   :7
+<Click to see difference>
+
+org.opentest4j.AssertionFailedError: expected: <4> but was: <7>
+at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+```

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.html;
+package io.bitsmart.bdd.ft.report.html;
 
 import io.bitsmart.bdd.ft.common.AbstractReportTest;
 import io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig;
@@ -31,17 +31,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadReportIndex;
 import static io.bitsmart.bdd.ft.report.infrastructure.utils.HtmlReportTestUtils.loadTestSuite;
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.debugInfo;
-import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.dirInMem;
-import static java.lang.System.getProperty;
+import static io.bitsmart.bdd.ft.report.infrastructure.utils.TestConfig.inMemoryDirectory;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
@@ -55,25 +49,11 @@ public abstract class AbstractResultsForHtml extends AbstractReportTest {
     static void setPath() {
         // do gradlew dir=in-mem, root, class, tmp-dir
         // run this as failsafe/it
-        if (dirInMem) {
+        if (inMemoryDirectory) {
             SmartBddConfig.overrideBasePath(TestConfig.getBasePath());
             log.info("basePath: " + TestConfig.getBasePath());
             log.info("resolved path: " + ResolvedSmartBddConfig.getBasePath().resolve(SmartBddConfig.getDataFolder()));
         }
-
-        if (debugInfo) {
-            log.info("java.io.tmpdir: " + getProperty("java.io.tmpdir"));
-            log.info("GITHUB_WORKSPACE: " + System.getenv("GITHUB_WORKSPACE"));
-            logPathExists(getProperty("java.io.tmpdir"));
-            logPathExists(System.getenv("GITHUB_WORKSPACE"));
-        }
-    }
-
-    private static void logPathExists(String pathAsString) {
-        Optional.ofNullable(pathAsString).ifPresent(p -> {
-            final Path path = Paths.get(pathAsString);
-            log.info("path: " + path + " exists:" + Files.exists(path));
-        });
     }
 
     @BeforeEach

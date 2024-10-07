@@ -1,6 +1,6 @@
 /*
  * Smart BDD - The smart way to do behavior-driven development.
- * Copyright (C)  2022  James Bayliss
+ * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.bitsmart.bdd.ft.data;
+package io.bitsmart.bdd.ft.common.filesystem;
 
 import com.google.common.jimfs.Jimfs;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InMemoryFileSystemTest {
 
     @Test
-    void writeReadUsingPath() throws Exception {
+    void writeReadUsingPath() {
         FileSystem fileSystem = Jimfs.newFileSystem();
         Path path = fileSystem.getPath("my-path");
 
