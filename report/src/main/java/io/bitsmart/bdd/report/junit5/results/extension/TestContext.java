@@ -235,7 +235,7 @@ public class TestContext implements
         if (parameterizedTest != null) {
             String testName = parameterizedTest.name();
             // the default pattern doesn't work well it shows "[0] value 1"
-            if (testName.equals("[{index}] {argumentsWithNames}")) {
+            if (testName.equals("[{index}] {argumentsWithNames}") || extensionContext.getDisplayName().startsWith("[")) {
                 String methodNameWordify = upperCaseFirstChar(wordifyMethodOrFieldName(method.getName()));
                 testCaseResult.setDisplayName(testCaseNameFactory.createName(methodNameWordify, testCaseResult.getArgs()));
             } else {

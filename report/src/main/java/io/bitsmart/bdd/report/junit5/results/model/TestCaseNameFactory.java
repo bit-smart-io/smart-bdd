@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class TestCaseNameFactory {
     public String createName(String name, List<Object> args) {
-        if (args.size() == 0) {
+        if (args.isEmpty()) {
             return name;
         }
         return name + args.stream().map(arg -> arg == null ? "null" : arg.toString()).collect(Collectors.joining(", ", " ", ""));
